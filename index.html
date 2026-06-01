@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pulse — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pulse.css">
+<style>
+/* ── Dashboard body ── */
+.dash-body { flex:1; overflow-y:auto; overflow-x:hidden; padding:14px 20px 16px; background:var(--bg-page); display:flex; flex-direction:column; gap:12px; }
+.dash-body::-webkit-scrollbar { width:4px; }
+.dash-body::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:99px; }
+
+/* Role panels */
+.role-radio { display:none; }
+.role-panel { display:none; flex-direction:column; gap:12px; flex:1; }
+#rp-pm { display:flex; }
+#r-pm:checked ~ .app .dash-body #rp-pm     { display:flex; }
+#r-dev:checked ~ .app .dash-body #rp-dev   { display:flex; }
+#r-design:checked ~ .app .dash-body #rp-design { display:flex; }
+#r-qa:checked ~ .app .dash-body #rp-qa     { display:flex; }
+#r-pm:checked ~ .app .dash-body #rp-pm     { display:flex; }
+#r-pm:not(:checked) ~ .app .dash-body #rp-pm { display:none; }
+#r-dev:not(:checked) ~ .app .dash-body #rp-dev { display:none; }
+#r-design:not(:checked) ~ .app .dash-body #rp-design { display:none; }
+#r-qa:not(:checked) ~ .app .dash-body #rp-qa { display:none; }
+#r-pm:checked ~ .app .dash-body #rp-pm { display:flex!important; }
+#r-dev:checked ~ .app .dash-body #rp-dev { display:flex!important; }
+#r-design:checked ~ .app .dash-body #rp-design { display:flex!important; }
+#r-qa:checked ~ .app .dash-body #rp-qa { display:flex!important; }
+
+/* Profile button */
+.user-details { position:relative; }
+.user-details summary { list-style:none; }
+.user-details summary::-webkit-details-marker { display:none; }
+.upb {
+  display:flex; align-items:center; gap:8px;
+  padding:4px 10px 4px 6px;
+  border:1px solid var(--border); border-radius:var(--r-md);
+  background:transparent; cursor:pointer; font-family:var(--font);
+  transition:all .12s;
+}
+.upb:hover { background:var(--bg-surface); border-color:var(--border-strong); }
+.upb-av { width:22px; height:22px; border-radius:50%; background:var(--accent-light); display:flex; align-items:center; justify-content:center; font-size:8.5px; font-weight:700; color:var(--accent); flex-shrink:0; }
+.upb-name { font-size:12.5px; font-weight:500; color:var(--text-primary); }
+.upb-role { font-size:10.5px; font-weight:500; padding:1px 7px; border-radius:4px; background:var(--accent-light); color:var(--accent); border:1px solid var(--accent-border); }
+.upb-chev { width:12px; height:12px; color:var(--text-muted); transition:transform .15s; }
+.user-details[open] .upb-chev { transform:rotate(180deg); }
+.user-details[open]::before { content:''; position:fixed; inset:0; z-index:49; }
+.udrop {
+  position:absolute; top:calc(100% + 7px); right:0; width:260px; z-index:50;
+  background:var(--bg-white); border:1px solid var(--border); border-radius:var(--r-xl);
+  box-shadow:0 8px 32px rgba(0,0,0,.12); overflow:hidden; display:none;
+}
+.user-details[open] .udrop { display:block; }
+.udrop-hdr { padding:14px 16px 12px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:11px; }
+.udrop-av { width:36px; height:36px; border-radius:50%; background:var(--bg-surface2); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:var(--text-secondary); flex-shrink:0; }
+.udrop-name { font-size:13px; font-weight:600; color:var(--text-primary); }
+.udrop-email { font-size:11.5px; color:var(--text-muted); margin-top:1px; }
+.udrop-badge { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:500; padding:2px 8px; border-radius:4px; background:var(--accent-light); color:var(--accent); border:1px solid var(--accent-border); margin-top:5px; }
+.udrop-mi { display:flex; align-items:center; gap:10px; padding:9px 16px; cursor:pointer; transition:background .1s; }
+.udrop-mi:hover { background:var(--bg-surface); }
+.udrop-mi-ico { width:28px; height:28px; border-radius:var(--r-md); background:var(--bg-surface2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.udrop-mi-ico svg { width:13px; height:13px; color:var(--text-secondary); }
+.udrop-mi-lbl { font-size:13px; font-weight:500; color:var(--text-primary); }
+.udrop-divider { height:1px; background:var(--border); }
+.udrop-sw-hdr { padding:8px 16px 4px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; }
+.udrop-sw-label { font-size:10px; font-weight:500; color:var(--text-muted); text-transform:uppercase; letter-spacing:.6px; }
+.udrop-sw-chev { width:13px; height:13px; color:var(--text-muted); transition:transform .15s; }
+.role-item { display:flex; align-items:center; gap:10px; padding:8px 16px; cursor:pointer; transition:background .1s; }
+.role-item:hover { background:var(--bg-surface); }
+.role-ico { width:28px; height:28px; border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.role-ico svg { width:13px; height:13px; }
+.role-name { font-size:12.5px; font-weight:500; color:var(--text-primary); }
+.role-desc { font-size:11px; color:var(--text-muted); margin-top:1px; }
+.role-check { width:14px; height:14px; color:var(--accent); margin-left:auto; flex-shrink:0; }
+.udrop-signout { display:flex; align-items:center; gap:9px; padding:10px 16px; cursor:pointer; border-top:1px solid var(--border); transition:background .1s; }
+.udrop-signout:hover { background:#fff9f9; }
+.udrop-signout-lbl { font-size:13px; font-weight:500; color:var(--error); }
+.udrop-signout svg { width:14px; height:14px; color:var(--error); }
+#r-pm:checked    ~ .app .topbar #role-pm     { background:var(--accent-light); }
+#r-dev:checked   ~ .app .topbar #role-dev    { background:var(--accent-light); }
+#r-design:checked ~ .app .topbar #role-design { background:var(--accent-light); }
+#r-qa:checked    ~ .app .topbar #role-qa     { background:var(--accent-light); }
+#r-pm:checked    ~ .app .topbar .role-name-pm     { color:var(--accent); font-weight:600; }
+#r-dev:checked   ~ .app .topbar .role-name-dev    { color:var(--accent); font-weight:600; }
+#r-design:checked ~ .app .topbar .role-name-design { color:var(--accent); font-weight:600; }
+#r-qa:checked    ~ .app .topbar .role-name-qa     { color:var(--accent); font-weight:600; }
+#r-pm:checked    ~ .app .topbar #ck-pm     { display:block!important; }
+#r-dev:checked   ~ .app .topbar #ck-dev    { display:block!important; }
+#r-design:checked ~ .app .topbar #ck-design { display:block!important; }
+#r-qa:checked    ~ .app .topbar #ck-qa     { display:block!important; }
+#r-pm:not(:checked)     ~ .app .topbar #ck-pm     { display:none!important; }
+#r-dev:not(:checked)    ~ .app .topbar #ck-dev    { display:none!important; }
+#r-design:not(:checked) ~ .app .topbar #ck-design { display:none!important; }
+#r-qa:not(:checked)     ~ .app .topbar #ck-qa     { display:none!important; }
+
+/* KPI row */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; flex-shrink:0; }
+
+/* Projects table */
+.pt-icon { width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:9.5px; font-weight:700; flex-shrink:0; background:var(--bg-surface2); color:var(--text-secondary); }
+.pt-name { font-weight:500; color:var(--text-primary); }
+.pt-client { font-size:11px; color:var(--text-muted); margin-top:1px; }
+.pt-prog { display:flex; align-items:center; gap:7px; }
+.pt-prog-bar { width:64px; height:4px; background:var(--bg-surface2); border-radius:99px; overflow:hidden; flex-shrink:0; }
+.pt-avs { display:flex; align-items:center; }
+.pt-av { width:18px; height:18px; border-radius:50%; font-size:7px; font-weight:700; display:flex; align-items:center; justify-content:center; border:1.5px solid var(--bg-white); margin-left:-4px; flex-shrink:0; }
+.pt-av:first-child { margin-left:0; }
+.pt-sprint { display:flex; flex-direction:column; gap:3px; min-width:96px; }
+.pt-sprint-lbl { font-size:10.5px; color:var(--text-muted); }
+
+/* Bottom grid */
+.bot-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; height:240px; }
+.bot-grid .card { display:flex; flex-direction:column; overflow:hidden; }
+
+/* Pending Actions + Recent Activity side by side */
+.pa-act-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start; }
+.pa-act-grid > .card { display:flex; flex-direction:column; overflow:hidden; }
+
+/* Upcoming OOO strip */
+.ooo-strip { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+.ooo-card { background:var(--bg-white); border:1px solid var(--border); border-radius:var(--r-lg); padding:11px 13px; display:flex; align-items:center; gap:10px; }
+.ooo-info { flex:1; min-width:0; }
+.ooo-name { font-size:12.5px; font-weight:600; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ooo-proj { font-size:11px; color:var(--text-muted); margin-top:1px; }
+.ooo-meta { text-align:right; flex-shrink:0; }
+.ooo-date { font-size:12px; font-weight:600; color:var(--text-secondary); }
+.ooo-dur  { font-size:11px; color:var(--text-muted); margin-top:1px; }
+
+/* Dev/QA inner panels */
+.dev-panel { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+.dev-tabs { background:var(--bg-white); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:flex-end; flex-shrink:0; overflow-x:auto; }
+.dev-tab { padding:10px 16px; font-size:13px; color:var(--text-secondary); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all .12s; }
+.dev-tab.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:500; }
+.dev-tab-content { display:none; flex:1; overflow:hidden; flex-direction:column; }
+.dev-tab-content.active { display:flex; }
+
+/* KPI strip (project summary) */
+.kpi-strip { background:var(--bg-white); border-bottom:1px solid var(--border); padding:13px 24px; display:flex; align-items:stretch; gap:12px; flex-shrink:0; }
+.kpi-vdiv { width:1px; background:var(--border); flex-shrink:0; margin:0 4px; }
+.proj-summ { display:flex; flex-direction:column; justify-content:space-between; min-width:270px; max-width:300px; flex-shrink:0; }
+.ps-top { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+.ps-name { font-size:15px; font-weight:600; color:var(--text-primary); letter-spacing:-.2px; }
+.ps-client { font-size:12px; color:var(--text-muted); margin-top:2px; }
+.ps-prog { margin-top:10px; }
+.ps-prog-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:5px; font-size:11.5px; color:var(--text-secondary); }
+.ps-prog-pct { font-weight:600; color:var(--text-primary); }
+.ps-bot { display:flex; align-items:center; justify-content:space-between; margin-top:10px; }
+.cta-col { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; flex-shrink:0; padding-left:8px; }
+.cta-btn { display:flex; align-items:center; gap:7px; font-size:13px; font-weight:500; padding:9px 18px; background:var(--accent); color:#fff; border:none; border-radius:var(--r-md); cursor:pointer; font-family:var(--font); transition:background .12s; white-space:nowrap; text-decoration:none; }
+.cta-btn:hover { background:var(--accent-hover); }
+.cta-sub { font-size:12px; color:var(--text-secondary); cursor:pointer; }
+
+/* My tasks list */
+.task-list { overflow-y:auto; flex:1; }
+.task-list::-webkit-scrollbar { width:3px; }
+.task-list::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:99px; }
+.task-row { display:flex; align-items:center; gap:8px; padding:8px 14px; border-bottom:1px solid var(--border); cursor:pointer; transition:background .1s; }
+.task-row:last-child { border-bottom:none; }
+.task-row:hover { background:var(--bg-surface); }
+.task-id { font-size:10px; color:var(--text-muted); font-family:var(--font-mono); min-width:52px; flex-shrink:0; }
+.task-title { flex:1; font-size:12.5px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.task-chip { font-size:10.5px; font-weight:500; padding:2px 7px; border-radius:99px; flex-shrink:0; }
+.chip-prog { background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; }
+.chip-rev  { background:#faf5ff; color:#6d28d9; border:1px solid #ddd6fe; }
+.chip-todo { background:var(--bg-surface2); color:var(--text-secondary); border:1px solid var(--border); }
+.chip-block{ background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+.due-chip { display:flex; align-items:center; gap:3px; font-size:10.5px; color:var(--text-muted); flex-shrink:0; }
+.due-chip svg { width:10px; height:10px; }
+.due-soon { color:#d97706; font-weight:500; }
+.due-late  { color:var(--error); font-weight:500; }
+
+/* Sprint sidebar */
+.sprint-side { display:flex; flex-direction:column; gap:8px; padding:12px 14px; }
+.sprint-card { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--r-md); padding:10px 12px; }
+.sprint-lbl { font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.5px; font-weight:500; margin-bottom:6px; }
+.sprint-ttl { font-size:13px; font-weight:500; color:var(--text-primary); margin-bottom:8px; }
+.sprint-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:5px; font-size:11px; color:var(--text-secondary); }
+.sprint-pct { font-weight:600; color:var(--text-primary); }
+.sprint-stats { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.ss-item { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--r-md); padding:7px 10px; }
+.ss-num { font-size:17px; font-weight:600; line-height:1; letter-spacing:-.3px; }
+.ss-lbl { font-size:11px; color:var(--text-secondary); margin-top:2px; }
+
+/* QA */
+.qa-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; flex-shrink:0; }
+.qa-stat { background:var(--bg-white); border:1px solid var(--border); border-radius:var(--r-lg); padding:14px; }
+.qa-num { font-size:26px; font-weight:600; letter-spacing:-.5px; line-height:1; }
+.qa-lbl { font-size:12px; color:var(--text-secondary); margin-top:3px; }
+.qa-delta { font-size:10.5px; margin-top:4px; }
+
+/* Alert banner (dev/qa) */
+.alert-bar { background:var(--bg-white); border:1px solid var(--border); border-radius:var(--r-lg); display:flex; overflow:hidden; flex-shrink:0; }
+.alert-item { flex:1; display:flex; align-items:center; gap:10px; padding:10px 16px; border-right:1px solid var(--border); cursor:pointer; transition:background .1s; }
+.alert-item:last-child { border-right:none; }
+.alert-item:hover { background:var(--bg-surface); }
+.alert-ico { width:30px; height:30px; border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.alert-ico svg { width:13px; height:13px; }
+.ai-red    { background:#fef2f2; color:var(--error); }
+.ai-amber  { background:var(--warning-light); color:#d97706; }
+.ai-blue   { background:var(--accent-light); color:var(--accent); }
+.ai-purple { background:#faf5ff; color:#7c3aed; }
+.alert-lbl { font-size:11.5px; color:var(--text-secondary); }
+.alert-cnt { font-size:18px; font-weight:600; color:var(--text-primary); line-height:1.1; letter-spacing:-.3px; }
+.alert-cnt.red { color:var(--error); }
+.alert-cnt.amber { color:#d97706; }
+.alert-cta { font-size:11px; font-weight:500; color:var(--accent); white-space:nowrap; flex-shrink:0; display:flex; align-items:center; gap:3px; margin-left:auto; }
+.alert-cta svg { width:10px; height:10px; }
+
+/* Hours logged / budget metric */
+.kpi-hours { display:flex; align-items:baseline; gap:3px; line-height:1; }
+.kh-actual { font-size:19px; font-weight:700; letter-spacing:-.5px; color:var(--text-primary); }
+.kh-sep { font-size:12px; color:var(--text-muted); margin:0 2px; }
+.kh-exp { font-size:12px; font-weight:500; color:var(--text-secondary); }
+
+/* All-projects mini pills in KPI strip */
+.proj-pills { display:flex; flex-direction:column; justify-content:space-around; min-width:160px; gap:4px; }
+.pp-row { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); }
+.pp-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.pp-name { flex:1; }
+.pp-cnt { font-size:11px; font-weight:500; color:var(--text-muted); }
+
+/* Consolidated effort list (All tab) */
+.all-list { flex:1; overflow-y:auto; }
+.all-list::-webkit-scrollbar { width:3px; }
+.all-list::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:99px; }
+.al-grp-hdr { display:flex; align-items:center; gap:8px; padding:7px 24px; background:var(--bg-page); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:1; }
+.al-grp-hdr + .al-grp-hdr { border-top:1px solid var(--border); }
+.al-grp-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; }
+.al-grp-count { font-size:11px; color:var(--text-muted); }
+.al-row { display:flex; align-items:center; gap:8px; padding:9px 24px; border-bottom:1px solid var(--border); cursor:pointer; transition:background .1s; background:var(--bg-white); }
+.al-row:hover { background:var(--bg-surface); }
+.al-proj-badge { font-size:10px; font-weight:600; padding:1.5px 6px; border-radius:4px; background:var(--bg-surface2); color:var(--text-secondary); flex-shrink:0; }
+
+/* ── Log Time tooltip ── */
+.tb-icon { position:relative; }
+.tb-icon[data-tip]::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#111827; color:#fff; font-size:11px; font-family:var(--font); white-space:nowrap; padding:3px 8px; border-radius:5px; pointer-events:none; opacity:0; transition:opacity .15s; z-index:9999; }
+.tb-icon[data-tip]:hover::after { opacity:1; }
+
+/* ── New Time Log Modal ── */
+.ntl-overlay{display:none;position:fixed;inset:0;background:rgba(17,24,39,.48);z-index:800;align-items:center;justify-content:center}
+.ntl-overlay.open{display:flex}
+.ntl-modal{background:#fff;border-radius:16px;width:600px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 28px 70px rgba(0,0,0,.22);animation:ntlIn .18s ease}
+@keyframes ntlIn{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+.ntl-hdr{display:flex;align-items:center;gap:10px;padding:18px 22px 15px;border-bottom:1px solid var(--r-border,#e5e7eb);flex-shrink:0}
+.ntl-hdr-ico{width:32px;height:32px;border-radius:9px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ntl-hdr-ico svg{width:15px;height:15px;color:#3b5bdb}
+.ntl-hdr-text{flex:1}
+.ntl-hdr-title{font-size:14px;font-weight:600;color:#111827;line-height:1.2}
+.ntl-hdr-sub{font-size:11.5px;color:#9ca3af;margin-top:1px}
+.ntl-close{width:28px;height:28px;border-radius:7px;border:1px solid #e5e7eb;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#9ca3af;transition:all .1s;flex-shrink:0}
+.ntl-close:hover{background:#f5f6f8;color:#111827}
+.ntl-close svg{width:11px;height:11px}
+.ntl-body{padding:18px 22px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;flex:1}
+.ntl-body::-webkit-scrollbar{width:3px}
+.ntl-body::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:99px}
+.ntl-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ntl-full-col{grid-column:1/-1}
+.ntl-field{display:flex;flex-direction:column;gap:5px}
+.ntl-label{font-size:11.5px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px}
+.ntl-opt{font-weight:400;color:#9ca3af;text-transform:none;letter-spacing:0}
+.ntl-field input,.ntl-field select,.ntl-field textarea{width:100%;padding:8px 10px;font-size:13px;font-family:var(--font,'DM Sans',sans-serif);color:#111827;background:#fff;border:1px solid #e5e7eb;border-radius:8px;outline:none;transition:border-color .12s;resize:none}
+.ntl-field input:focus,.ntl-field select:focus,.ntl-field textarea:focus{border-color:#3b5bdb;box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ntl-effort-search{position:relative}
+.ntl-effort-search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9ca3af;pointer-events:none}
+.ntl-effort-search input{padding-left:28px!important}
+.ntl-effort-selected{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1.5px solid #3b5bdb;border-radius:8px;background:#eff6ff;cursor:pointer}
+.ntl-effort-selected-text{flex:1;min-width:0}
+.ntl-effort-selected-title{font-size:12.5px;font-weight:500;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ntl-effort-selected-meta{display:none}
+.ntl-effort-clear{width:18px;height:18px;border-radius:50%;border:none;background:rgba(59,91,219,.15);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#3b5bdb;flex-shrink:0;font-size:10px;line-height:1}
+.ntl-effort-clear:hover{background:rgba(59,91,219,.25)}
+.ntl-tags-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-height:36px;cursor:text;transition:border-color .12s}
+.ntl-tags-wrap:focus-within{border-color:#3b5bdb;box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ntl-tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:#eff6ff;color:#3b5bdb;border-radius:99px;font-size:11.5px;font-weight:500}
+.ntl-tag-chip button{border:none;background:none;cursor:pointer;color:#3b5bdb;opacity:.6;font-size:11px;line-height:1;padding:0;display:flex;align-items:center}
+.ntl-tag-chip button:hover{opacity:1}
+.ntl-tags-input{border:none;outline:none;font-size:12.5px;font-family:var(--font,'DM Sans',sans-serif);color:#111827;background:transparent;flex:1;min-width:80px;padding:1px 2px}
+.ntl-suggest{display:flex;flex-direction:column;gap:8px}
+.ntl-suggest-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.ntl-suggest-label{font-size:11.5px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:6px}
+.ntl-suggest-label svg{width:11px;height:11px;color:#3b5bdb}
+.ntl-suggest-viewall{font-size:11.5px;color:#3b5bdb;background:none;border:none;cursor:pointer;font-family:inherit;padding:0}
+.ntl-suggest-viewall:hover{text-decoration:underline}
+.ntl-scard{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;cursor:pointer;transition:all .12s;background:#fff}
+.ntl-scard:hover{border-color:#c5cffa;background:#eff6ff}
+.ntl-scard.sel{border-color:#3b5bdb;background:#eff6ff}
+.ntl-scard-check{width:16px;height:16px;border-radius:50%;border:1.5px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.ntl-scard.sel .ntl-scard-check{background:#3b5bdb;border-color:#3b5bdb}
+.ntl-scard.sel .ntl-scard-check::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff;display:block}
+.ntl-scard-body{flex:1;min-width:0}
+.ntl-scard-title{font-size:12.5px;font-weight:500;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ntl-scard-meta{font-size:11px;color:#9ca3af;margin-top:2px;display:flex;align-items:center;gap:5px}
+.ntl-scard-dot{width:3px;height:3px;border-radius:50%;background:#9ca3af;flex-shrink:0}
+.ntl-scard-badges{display:flex;gap:4px;flex-shrink:0;align-items:center}
+.ntl-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;white-space:nowrap}
+.ntl-badge-unstarted{background:#f1f5f9;color:#64748b}
+.ntl-badge-worked{background:#eff6ff;color:#2563eb}
+.ntl-badge-review{background:#fef9c3;color:#a16207}
+.ntl-badge-done{background:#f0fdf4;color:#16a34a}
+.ntl-suggest-empty{padding:12px 14px;background:#f8fafc;border:1px dashed #e5e7eb;border-radius:9px;font-size:12px;color:#9ca3af;text-align:center;line-height:1.5}
+.ntl-divider{height:1px;background:#e5e7eb;margin:2px 0}
+.ntl-cal-wrap{position:relative}.ntl-cal-search-wrap{position:relative}.ntl-cal-search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--text-muted);pointer-events:none}.ntl-cal-search-wrap input{padding-left:28px!important}.ntl-cal-dd{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:9px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;overflow:hidden}.ntl-cal-dd.open{display:block}.ntl-cal-item{display:flex;align-items:center;gap:9px;padding:8px 11px;cursor:pointer;transition:background .1s}.ntl-cal-item:hover,.ntl-cal-item.foc{background:var(--accent-light)}.ntl-cal-item-ico{width:26px;height:26px;border-radius:6px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0}.ntl-cal-item-ico svg{width:12px;height:12px;color:var(--accent)}.ntl-cal-item-info{flex:1;min-width:0}.ntl-cal-item-title{font-size:12.5px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ntl-cal-item-time{font-size:11px;color:var(--text-muted);margin-top:1px}.ntl-cal-item-dur{font-size:11px;font-weight:600;color:var(--text-secondary);white-space:nowrap;flex-shrink:0}.ntl-cal-chip{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:#f8fafc}.ntl-cal-chip-ico{width:24px;height:24px;border-radius:5px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0}.ntl-cal-chip-ico svg{width:11px;height:11px;color:var(--accent)}.ntl-cal-chip-text{flex:1;min-width:0}.ntl-cal-chip-title{font-size:12.5px;font-weight:500;color:var(--text-primary)}.ntl-cal-chip-meta{font-size:10.5px;color:var(--text-muted);margin-top:1px}.ntl-cal-chip-clear{width:18px;height:18px;border-radius:50%;border:none;background:var(--bg-surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:10px;line-height:1;flex-shrink:0;transition:all .1s}.ntl-cal-chip-clear:hover{background:var(--border-strong);color:var(--text-primary)}
+.ntl-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 22px;border-top:1px solid #e5e7eb;flex-shrink:0}
+.ntl-footer-left{font-size:11.5px;color:#9ca3af}
+.ntl-footer-left strong{color:#111827;font-weight:600}
+.ntl-footer-actions{display:flex;gap:8px}
+.ntl-cancel{font-size:13px;padding:7px 16px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;color:#6b7280;cursor:pointer;font-family:inherit;transition:all .12s}
+.ntl-cancel:hover{border-color:#d1d5db;color:#111827}
+.ntl-submit{font-size:13px;font-weight:500;padding:7px 20px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;cursor:pointer;font-family:inherit;transition:background .12s;display:flex;align-items:center;gap:6px}
+.ntl-submit:hover{background:#2f4ac4}
+.ntl-submit svg{width:13px;height:13px}
+</style>
+</head>
+<body>
+<input type="radio" name="role" id="r-pm"     class="role-radio" checked>
+<input type="radio" name="role" id="r-dev"    class="role-radio">
+<input type="radio" name="role" id="r-design" class="role-radio">
+<input type="radio" name="role" id="r-qa"     class="role-radio">
+
+<div class="sb-backdrop" id="sbBackdrop" onclick="toggleSidebar()"></div>
+<div class="app">
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <a class="sb-top" href="index.html">
+    <div class="sb-logo"><svg viewBox="0 0 20 20" fill="none"><path d="M10 3L16 7V13L10 17L4 13V7L10 3Z" stroke="white" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" fill="white"/></svg></div>
+    <div class="sb-brand">Pulse</div>
+  </a>
+  <div class="sb-scroll">
+    <div class="sb-section">Menu</div>
+    <a class="sb-item active" href="index.html" style="text-decoration:none">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="sb-item" id="projToggle" onclick="sbToggle()" style="cursor:pointer">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
+      Projects
+      <svg class="sb-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+    </div>
+    <div class="sb-sub" id="projSub">
+      <a class="sb-item" href="projects.html" style="text-decoration:none">Current Projects</a>
+      <a class="sb-item" href="projects.html" style="text-decoration:none">Internal</a>
+      <a class="sb-item" href="projects.html" style="text-decoration:none">DesignOps</a>
+      <a class="sb-item" href="projects.html" style="text-decoration:none">Fulfilment</a>
+      <a class="sb-item" href="projects.html" style="text-decoration:none">Maintenance</a>
+      <a class="sb-item" href="projects.html" style="text-decoration:none">Inactive</a>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="3"/><path d="M1 14c0-2.8 2.2-5 5-5"/><circle cx="12" cy="9" r="2.5"/><path d="M9.5 14c0-1.4.9-2.5 2.5-2.5s2.5 1.1 2.5 2.5"/></svg>
+      Team <span class="sb-badge">12</span>
+    </div>
+    <div class="sb-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
+      Time Logs
+      <svg class="sb-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+    </div>
+    <div class="sb-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l4-3 4 3 4-3v7l-4 3-4-3-4 3z"/></svg>
+      Reports
+      <svg class="sb-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+    </div>
+    <a class="sb-item" href="career-tracks.html" style="text-decoration:none">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3.5L13 6l-2.5 2.5.5 3.5L8 10.5 5 12l.5-3.5L3 6l3.5-.5L8 2z"/></svg>
+      Career Tracks
+    </a>
+    <div class="sb-divider"></div>
+    <div class="sb-section">Admin</div>
+    <div class="sb-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>
+      Users
+    </div>
+    <div class="sb-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+      Organizations
+    </div>
+    <div class="sb-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4"/></svg>
+      Settings
+    </div>
+  </div>
+  <div class="sb-bottom">
+    <div class="sb-user">
+      <div class="sb-av">JD</div>
+      <div><div class="sb-uname">John Doe</div><div class="sb-urole" id="sbRoleLabel">Product Manager</div></div>
+      <svg class="sb-more" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="1.5"/><circle cx="3" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+    </button>
+    <div class="topbar-title">Dashboard</div>
+    <div class="topbar-greeting">Good morning, <strong>John</strong> — review your workspace.</div>
+    <div class="tb-spacer"></div>
+    <div class="tb-search"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>Search…</div>
+
+    <button class="tb-icon" data-tip="Log time" onclick="openLogTimeModal()" aria-label="Log time">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2.5 1.5"/></svg>
+    </button>
+
+    <!-- Role switcher as details/summary -->
+    <details class="user-details">
+      <summary class="upb">
+        <div class="upb-av">JD</div>
+        <span class="upb-name">John Doe</span>
+        <span class="upb-role">PM</span>
+        <svg class="upb-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </summary>
+      <div class="udrop">
+        <div class="udrop-hdr">
+          <div class="udrop-av">JD</div>
+          <div>
+            <div class="udrop-name">John Doe</div>
+            <div class="udrop-email">john.doe · pulse.app</div>
+            <div class="udrop-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:10px;height:10px"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>PM</div>
+          </div>
+        </div>
+        <div class="udrop-mi"><div class="udrop-mi-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg></div><div class="udrop-mi-lbl">Profile</div></div>
+        <div class="udrop-mi"><div class="udrop-mi-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg></div><div class="udrop-mi-lbl">Settings</div></div>
+        <div class="udrop-divider"></div>
+        <div class="udrop-sw-hdr"><span class="udrop-sw-label">Switch Role</span><svg class="udrop-sw-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        <label class="role-item" for="r-pm" id="role-pm"><div class="role-ico" style="background:#eef2ff"><svg viewBox="0 0 16 16" fill="none" stroke="#3b5bdb" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></div><div><div class="role-name role-name-pm">Product Manager</div><div class="role-desc">Product reviews &amp; planning</div></div><svg class="role-check" id="ck-pm" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
+        <label class="role-item" for="r-dev" id="role-dev"><div class="role-ico" style="background:#eff6ff"><svg viewBox="0 0 16 16" fill="none" stroke="#2563eb" stroke-width="1.5"><path d="M5 4l-3 4 3 4M11 4l3 4-3 4M9 3l-2 10"/></svg></div><div><div class="role-name role-name-dev">Developer</div><div class="role-desc">Code reviews &amp; dev tasks</div></div><svg class="role-check" id="ck-dev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
+        <label class="role-item" for="r-design" id="role-design"><div class="role-ico" style="background:#fdf2f8"><svg viewBox="0 0 16 16" fill="none" stroke="#9d174d" stroke-width="1.5"><circle cx="10" cy="6" r="3"/><path d="M2 14c0-2.8 2.2-5 6-5"/><path d="M4 9l2 2"/></svg></div><div><div class="role-name role-name-design">Designer</div><div class="role-desc">Design reviews &amp; assets</div></div><svg class="role-check" id="ck-design" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
+        <label class="role-item" for="r-qa" id="role-qa"><div class="role-ico" style="background:#faf5ff"><svg viewBox="0 0 16 16" fill="none" stroke="#6d28d9" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><path d="M5.5 8.5l2 2 3-3.5"/></svg></div><div><div class="role-name role-name-qa">QA Engineer</div><div class="role-desc">QA reviews &amp; testing</div></div><svg class="role-check" id="ck-qa" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
+        <div class="udrop-divider"></div>
+        <div class="udrop-signout"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 11l3-3-3-3M13 8H6M6 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2"/></svg><span class="udrop-signout-lbl">Sign out</span></div>
+      </div>
+    </details>
+
+    <div class="tb-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a4.5 4.5 0 0 1 4.5 4.5c0 3 1.5 4 1.5 4H2s1.5-1 1.5-4A4.5 4.5 0 0 1 8 2z"/><path d="M6.5 13a1.5 1.5 0 0 0 3 0"/></svg><div class="notif-dot"></div></div>
+  </div>
+
+  <!-- DASH BODY -->
+  <div class="dash-body">
+
+    <!-- ═══ PM PANEL ═══ -->
+    <div class="role-panel" id="rp-pm">
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi-card kpi-blue"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div class="kpi-body"><div class="kpi-num">5</div><div class="kpi-label">Active projects</div><div class="kpi-delta up"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8V2M2 5l3-3 3 3"/></svg>+1 this month</div></div></div>
+        <div class="kpi-card kpi-green"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-num">49</div><div class="kpi-label">Open efforts</div><div class="kpi-delta">across 5 projects</div></div></div>
+        <div class="kpi-card kpi-purple"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">8</div><div class="kpi-label">Pending reviews</div><div class="kpi-delta down"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 2v6M2 5l3 3 3-3"/></svg>3 overdue</div></div></div>
+        <div class="kpi-card kpi-red"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">2</div><div class="kpi-label">Active blockers</div><div class="kpi-delta down" style="color:var(--error)">critical</div></div></div>
+      </div>
+
+      <!-- Projects table -->
+      <div class="card">
+        <div class="card-hdr"><div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg>All Projects</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:11.5px;color:var(--text-muted)">5 projects</span><a href="projects.html" class="card-hdr-action">View all</a></div></div>
+        <table class="data-table">
+          <thead><tr><th>Project</th><th>Temperature</th><th>Sprint</th><th>Team</th><th>Efforts</th><th>Due date</th></tr></thead>
+          <tbody>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">ES</div><div><div class="pt-name">EventSquid</div><div class="pt-client">Squid Events Ltd.</div></div></div></td><td><span class="badge s-ontrack"><div class="badge-dot" style="background:#059669"></div>On Track</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 3 · Apr 1–30</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:38%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">38%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:#ecfdf5;color:#065f46">TR</div><div class="pt-av" style="background:#fdf2f8;color:#9d174d">CH</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">11</span><span style="font-size:11px;color:var(--error);font-weight:500">1 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 30, 2026</span></td></tr>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">CM</div><div><div class="pt-name">Chantmasters</div><div class="pt-client">Chantmasters LLC</div></div></div></td><td><span class="badge s-atrisk"><div class="badge-dot" style="background:#d97706"></div>At Risk</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 5 · Mar 15–Apr 14</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:52%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">52%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:#f5eeff;color:#6d28d9">AK</div><div class="pt-av" style="background:#ecfdf5;color:#065f46">TR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">16</span><span style="font-size:11px;color:var(--error);font-weight:500">4 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 30, 2026</span></td></tr>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">CN</div><div><div class="pt-name">Carmnet</div><div class="pt-client">Carmnet Automotive</div></div></div></td><td><span class="badge s-ontrack"><div class="badge-dot" style="background:#059669"></div>On Track</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 2 · Mar 1–Apr 15</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:63%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">63%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fff7ed;color:#9a3412">MV</div><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">JR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">8</span><span style="font-size:11px;color:var(--text-muted)">0 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">May 15, 2026</span></td></tr>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">TA</div><div><div class="pt-name">TAPP</div><div class="pt-client">TAPP Corp</div></div></div></td><td><span class="badge s-delayed"><div class="badge-dot" style="background:var(--error)"></div>Delayed</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl" style="color:var(--error)">Sprint 4 · Behind</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:21%;background:var(--error)"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--error)">21%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:#ecfdf5;color:#065f46">TR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">19</span><span style="font-size:11px;color:var(--error);font-weight:500">3 blocked</span></td><td><span style="font-size:12px;color:var(--error);font-weight:500">May 30 — late</span></td></tr>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">DO</div><div><div class="pt-name">DesignOps</div><div class="pt-client">Internal</div></div></div></td><td><span class="badge s-review"><div class="badge-dot" style="background:#7c3aed"></div>In Review</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl" style="color:var(--text-muted);font-style:italic">Continuous</span></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#fdf2f8;color:#9d174d">CH</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">6</span><span style="font-size:11px;color:var(--text-muted)">0 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 26, 2026</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── Upcoming OOO ── -->
+      <div class="card" style="padding:14px 16px 16px">
+        <div class="card-hdr" style="margin-bottom:12px">
+          <div class="card-hdr-title">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
+            Upcoming Time Off
+          </div>
+          <span class="card-hdr-action">View all</span>
+        </div>
+        <div class="ooo-strip">
+          <div class="ooo-card">
+            <div class="av av-md" style="background:#e8f4fd;color:#1d5fa6">SK</div>
+            <div class="ooo-info"><div class="ooo-name">Sarah Kim</div><div class="ooo-proj">EventSquid</div></div>
+            <div class="ooo-meta"><div class="ooo-date">03/09</div><div class="ooo-dur">4 days</div></div>
+          </div>
+          <div class="ooo-card">
+            <div class="av av-md" style="background:#fde8d8;color:#b45309">LM</div>
+            <div class="ooo-info"><div class="ooo-name">Lucas Mora</div><div class="ooo-proj">Chantmasters</div></div>
+            <div class="ooo-meta"><div class="ooo-date">03/09</div><div class="ooo-dur">3 days</div></div>
+          </div>
+          <div class="ooo-card">
+            <div class="av av-md" style="background:#ecfdf5;color:#065f46">TR</div>
+            <div class="ooo-info"><div class="ooo-name">Tom Reeves</div><div class="ooo-proj">Carmnet</div></div>
+            <div class="ooo-meta"><div class="ooo-date">03/12</div><div class="ooo-dur">1 day</div></div>
+          </div>
+          <div class="ooo-card">
+            <div class="av av-md" style="background:#f5eeff;color:#6d28d9">AK</div>
+            <div class="ooo-info"><div class="ooo-name">Anna K.</div><div class="ooo-proj">TAPP</div></div>
+            <div class="ooo-meta"><div class="ooo-date">03/14</div><div class="ooo-dur">2 days</div></div>
+          </div>
+          <div class="ooo-card">
+            <div class="av av-md" style="background:#fff7ed;color:#9a3412">MV</div>
+            <div class="ooo-info"><div class="ooo-name">Marco V.</div><div class="ooo-proj">Pulse</div></div>
+            <div class="ooo-meta"><div class="ooo-date">03/19</div><div class="ooo-dur">7 days</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pa-act-grid">
+      <!-- ── Pending Actions ── -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <!-- Header -->
+        <div class="card-hdr" style="padding:16px 20px;border-bottom:1px solid var(--border)">
+          <div class="card-hdr-title" style="gap:8px">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 5H9M13 8H9M13 11H9M6 5H3M6 8H3M6 11H3"/><rect x="1" y="2" width="14" height="12" rx="2"/></svg>
+            Pending Actions
+            <span class="pa-total-badge">9</span>
+          </div>
+          <div class="pa-view-tabs">
+            <button class="pa-vtab pa-vtab-active" data-patab="type">By type</button>
+            <button class="pa-vtab" data-patab="project">By project</button>
+          </div>
+        </div>
+
+        <!-- By type view (default) -->
+        <div class="pa-view" data-paview="type" style="padding:0 20px 8px">
+
+          <!-- Group: Developer Assignment -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-gdot" style="background:#dbeafe;color:#1d4ed8"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2a2 2 0 100 4 2 2 0 000-4zM3 12c0-2.2 1.8-4 4-4s4 1.8 4 4"/></svg></span>
+              <span class="pa-glabel">Developer Assignment</span>
+              <span class="pa-gcount">2</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#3b5bdb">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Stripe billing portal refactor</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">TAPP · PLT-018</span>
+                  <span class="pa-role-chip rc-dev">Developer</span>
+                  <span class="pa-status-txt">· Unassigned</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-over">Overdue</span>
+                <button class="pa-btn">Assign Dev</button>
+              </div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#3b5bdb">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Push notification service</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">EventSquid · ES-029</span>
+                  <span class="pa-role-chip rc-dev">Developer</span>
+                  <span class="pa-status-txt">· Unassigned</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-soon">Due in 2d</span>
+                <button class="pa-btn">Assign Dev</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group: QA Assignment -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-gdot" style="background:#d1fae5;color:#065f46"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7l3 3 5-5"/><circle cx="7" cy="7" r="5.5"/></svg></span>
+              <span class="pa-glabel">QA Assignment</span>
+              <span class="pa-gcount">2</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#059669">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">User profile page v2</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">TAPP · PLT-022</span>
+                  <span class="pa-role-chip rc-qa">QA Engineer</span>
+                  <span class="pa-status-txt">· Dev complete, awaiting QA</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-soon">Ready</span>
+                <button class="pa-btn">Assign QA</button>
+              </div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#059669">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Venue search filter — geolocation</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">EventSquid · ES-041</span>
+                  <span class="pa-role-chip rc-qa">QA Engineer</span>
+                  <span class="pa-status-txt">· Dev complete, awaiting QA</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-soon">Ready</span>
+                <button class="pa-btn">Assign QA</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group: Awaiting Estimate -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-gdot" style="background:#ede9fe;color:#6d28d9"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7l1.5 1"/></svg></span>
+              <span class="pa-glabel">Awaiting Dev Estimate</span>
+              <span class="pa-gcount">2</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#7c3aed">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Permissions matrix redesign</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">TAPP · PLT-035</span>
+                  <span class="pa-role-chip rc-pm">Waiting on Dev</span>
+                  <span class="pa-status-txt">· No estimate yet</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-idle">Waiting</span>
+                <button class="pa-btn">Follow up</button>
+              </div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#7c3aed">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Event calendar export feature</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">Carmnet · CN-012</span>
+                  <span class="pa-role-chip rc-pm">Waiting on Dev</span>
+                  <span class="pa-status-txt">· No estimate yet</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-idle">Waiting</span>
+                <button class="pa-btn">Follow up</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group: Reviews -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-gdot" style="background:#fef3c7;color:#92400e"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3.5l2 1"/></svg></span>
+              <span class="pa-glabel">Pending Reviews</span>
+              <span class="pa-gcount pa-gcount-warn">2</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#d97706">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Stripe webhook billing portal</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">TAPP · PLT-018</span>
+                  <span class="pa-role-chip rc-pm">PM</span>
+                  <span class="pa-status-txt">· Awaiting approval</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-over">3d overdue</span>
+                <button class="pa-btn pa-btn-warn">Review</button>
+              </div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#d97706">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Sidebar navigation refactor</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">TAPP · PLT-024</span>
+                  <span class="pa-role-chip rc-pm">PM</span>
+                  <span class="pa-status-txt">· Awaiting approval</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-over">2d overdue</span>
+                <button class="pa-btn pa-btn-warn">Review</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group: Setup -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-gdot" style="background:#f3f4f6;color:#374151"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7l1.5 1"/></svg></span>
+              <span class="pa-glabel">Setup Items</span>
+              <span class="pa-gcount">1</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#6b7280">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Sprint goal not defined</div>
+                <div class="pa-meta-row">
+                  <span class="pa-proj-chip">Chantmasters</span>
+                  <span class="pa-role-chip rc-pm">PM</span>
+                  <span class="pa-status-txt">· Missing for current sprint</span>
+                </div>
+              </div>
+              <div class="pa-row-right">
+                <span class="pa-urgency pa-urg-idle">Missing</span>
+                <button class="pa-btn">Set Goal</button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end by-type -->
+
+        <!-- By project view (hidden by default) -->
+        <div class="pa-view" data-paview="project" style="display:none;padding:0 20px 8px">
+
+          <!-- TAPP -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-proj-icon">TA</span>
+              <span class="pa-glabel">TAPP</span>
+              <span class="pa-gcount pa-gcount-warn">5</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#3b5bdb">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Stripe billing portal refactor</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">PLT-018</span><span class="pa-role-chip rc-dev">Dev Assignment</span><span class="pa-status-txt">· Unassigned</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-over">Overdue</span><button class="pa-btn">Assign Dev</button></div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#059669">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">User profile page v2</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">PLT-022</span><span class="pa-role-chip rc-qa">QA Assignment</span><span class="pa-status-txt">· Dev complete</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-soon">Ready</span><button class="pa-btn">Assign QA</button></div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#7c3aed">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Permissions matrix redesign</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">PLT-035</span><span class="pa-role-chip rc-pm">Waiting on Dev</span><span class="pa-status-txt">· No estimate yet</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-idle">Waiting</span><button class="pa-btn">Follow up</button></div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#d97706">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Stripe webhook billing portal</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">PLT-018</span><span class="pa-role-chip rc-pm">Review</span><span class="pa-status-txt">· Awaiting approval</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-over">3d overdue</span><button class="pa-btn pa-btn-warn">Review</button></div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#d97706">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Sidebar navigation refactor</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">PLT-024</span><span class="pa-role-chip rc-pm">Review</span><span class="pa-status-txt">· Awaiting approval</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-over">2d overdue</span><button class="pa-btn pa-btn-warn">Review</button></div>
+            </div>
+          </div>
+
+          <!-- EventSquid -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-proj-icon" style="background:#ecfdf5;color:#065f46">ES</span>
+              <span class="pa-glabel">EventSquid</span>
+              <span class="pa-gcount">2</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#3b5bdb">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Push notification service</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">ES-029</span><span class="pa-role-chip rc-dev">Dev Assignment</span><span class="pa-status-txt">· Unassigned</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-soon">Due in 2d</span><button class="pa-btn">Assign Dev</button></div>
+            </div>
+            <div class="pa-row" style="--pa-accent:#059669">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Venue search filter — geolocation</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">ES-041</span><span class="pa-role-chip rc-qa">QA Assignment</span><span class="pa-status-txt">· Dev complete</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-soon">Ready</span><button class="pa-btn">Assign QA</button></div>
+            </div>
+          </div>
+
+          <!-- Carmnet -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-proj-icon" style="background:#fff7ed;color:#9a3412">CN</span>
+              <span class="pa-glabel">Carmnet</span>
+              <span class="pa-gcount">1</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#7c3aed">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Event calendar export feature</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">CN-012</span><span class="pa-role-chip rc-pm">Waiting on Dev</span><span class="pa-status-txt">· No estimate yet</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-idle">Waiting</span><button class="pa-btn">Follow up</button></div>
+            </div>
+          </div>
+
+          <!-- Chantmasters -->
+          <div class="pa-group">
+            <div class="pa-group-hdr">
+              <span class="pa-proj-icon" style="background:#fde8d8;color:#b45309">CM</span>
+              <span class="pa-glabel">Chantmasters</span>
+              <span class="pa-gcount">1</span>
+              <span class="pa-gsep"></span>
+            </div>
+            <div class="pa-row" style="--pa-accent:#6b7280">
+              <div class="pa-accent-bar"></div>
+              <div class="pa-info">
+                <div class="pa-task-name">Sprint goal not defined</div>
+                <div class="pa-meta-row"><span class="pa-proj-chip">Chantmasters</span><span class="pa-role-chip rc-pm">Setup</span><span class="pa-status-txt">· Missing for current sprint</span></div>
+              </div>
+              <div class="pa-row-right"><span class="pa-urgency pa-urg-idle">Missing</span><button class="pa-btn">Set Goal</button></div>
+            </div>
+          </div>
+
+        </div><!-- end by-project -->
+      </div><!-- end Pending Actions card -->
+
+      <!-- Recent activity -->
+        <div class="card">
+          <div class="card-hdr"><div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Recent activity</div><span class="card-hdr-action">View all</span></div>
+          <div class="act-list" style="flex:1">
+            <div class="act-item"><div class="av av-sm" style="background:#e8f4fd;color:#1d5fa6;margin-top:1px">SK</div><div class="act-body"><div class="act-line"><span class="act-name">Sarah Kim</span> <span class="act-verb">submitted for review</span> <span class="act-task">Onboarding stepper</span></div><div class="act-meta">2 min ago<span class="act-meta-dot"></span><span class="act-proj">EventSquid</span></div></div><div class="act-time">2m</div></div>
+            <div class="act-item"><div class="av av-sm" style="background:#ecfdf5;color:#065f46;margin-top:1px">TR</div><div class="act-body"><div class="act-line"><span class="act-name">Tom Reeves</span> <span class="act-verb">marked as blocked</span> <span class="act-task">Websocket sync</span></div><div class="act-meta">18 min<span class="act-meta-dot"></span><span class="act-proj">EventSquid</span></div></div><div class="act-time">18m</div></div>
+            <div class="act-item"><div class="av av-sm" style="background:#fde8d8;color:#b45309;margin-top:1px">LM</div><div class="act-body"><div class="act-line"><span class="act-name">Lucas Mora</span> <span class="act-verb">completed</span> <span class="act-task">User profile page v2</span></div><div class="act-meta">1h<span class="act-meta-dot"></span><span class="act-proj">TAPP</span></div></div><div class="act-time">1h</div></div>
+            <div class="act-item"><div class="av av-sm" style="background:#f5eeff;color:#6d28d9;margin-top:1px">AK</div><div class="act-body"><div class="act-line"><span class="act-name">Anna K.</span> <span class="act-verb">commented on</span> <span class="act-task">Permissions matrix UI</span></div><div class="act-meta">3h<span class="act-meta-dot"></span><span class="act-proj">TAPP</span></div></div><div class="act-time">3h</div></div>
+            <div class="act-item"><div class="av av-sm" style="background:#fdf2f8;color:#9d174d;margin-top:1px">CH</div><div class="act-body"><div class="act-line"><span class="act-name">Clara H.</span> <span class="act-verb">moved to progress</span> <span class="act-task">Mobile responsive audit</span></div><div class="act-meta">5h<span class="act-meta-dot"></span><span class="act-proj">TAPP</span></div></div><div class="act-time">5h</div></div>
+          </div>
+        </div>
+      </div><!-- end pa-act-grid -->
+
+    </div><!-- end rp-pm -->
+
+    <!-- ═══ DEVELOPER PANEL ═══ -->
+    <div class="role-panel" id="rp-dev" style="padding:0;gap:0;background:transparent">
+      <div class="dev-panel">
+        <div class="dev-tabs">
+          <div class="dev-tab active" onclick="switchDevTab(this,'dtc-all')">All Projects</div>
+          <div class="dev-tab" onclick="switchDevTab(this,'dtc-es')">EventSquid</div>
+          <div class="dev-tab" onclick="switchDevTab(this,'dtc-tapp')">TAPP</div>
+          <div class="dev-tab" onclick="switchDevTab(this,'dtc-cn')">Carmnet</div>
+        </div>
+        <!-- All Projects view -->
+        <div class="dev-tab-content active" id="dtc-all">
+          <div class="kpi-strip">
+            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.2"/></svg></div><div class="kpi-body"><div class="kpi-hours"><span class="kh-actual">43h</span><span class="kh-sep">/</span><span class="kh-exp">44h</span></div><div class="kpi-label">Logged · Budgeted</div><div class="kpi-delta up">1h under budget</div></div></div>
+            <div class="kpi-card kpi-green" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="10" height="10" rx="2"/><path d="M6 8h4M8 6v4"/></svg></div><div class="kpi-body"><div class="kpi-num">30</div><div class="kpi-label">Open efforts</div><div class="kpi-delta">across 3 projects</div></div></div>
+            <div class="kpi-card kpi-red" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">4</div><div class="kpi-label">Blocked</div><div class="kpi-delta down" style="color:var(--error)">needs attention</div></div></div>
+            <div class="kpi-card kpi-purple" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">9</div><div class="kpi-label">In review</div></div></div>
+             <div class="cta-col"><a href="projects.html" class="cta-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>View Projects</a><span class="cta-sub">View full board</span></div>
+          </div>
+          <div class="toolbar">
+            <div class="view-sw"><button class="view-sw-btn active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg>List</button><button class="view-sw-btn">By Status</button><button class="view-sw-btn">Kanban</button></div>
+            <div class="toolbar-right"><span class="toolbar-count">30 efforts · 3 projects</span><button class="btn btn-primary" onclick="location.href='new-project.html'"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>New Effort</button></div>
+          </div>
+          <div class="all-list">
+            <div class="al-grp-hdr"><span class="al-grp-label" style="color:var(--error)">Blocked</span><span class="al-grp-count">· 2 efforts</span></div>
+            <div class="al-row"><span class="task-id">ES-037</span><span class="task-title">Real-time seat map — websocket sync</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-block" style="margin-left:4px">Blocked</span><div class="due-chip due-late" style="margin-left:auto">Overdue</div></div>
+            <div class="al-row"><span class="task-id">PLT-018</span><span class="task-title">Stripe billing portal — webhook integration</span><span class="al-proj-badge">TAPP</span><span class="task-chip chip-block" style="margin-left:4px">Blocked</span><div class="due-chip due-late" style="margin-left:auto">3d overdue</div></div>
+            <div class="al-grp-hdr"><span class="al-grp-label" style="color:#3b82f6">Working</span><span class="al-grp-count">· 5 efforts</span></div>
+            <div class="al-row"><span class="task-id">ES-031</span><span class="task-title">Event creation wizard — step 3</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip due-soon" style="margin-left:auto">Apr 5</div></div>
+            <div class="al-row"><span class="task-id">ES-033</span><span class="task-title">Payment gateway — Stripe 3DS</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip" style="margin-left:auto">Apr 8</div></div>
+            <div class="al-row"><span class="task-id">PLT-031</span><span class="task-title">Onboarding stepper component</span><span class="al-proj-badge">TAPP</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip due-soon" style="margin-left:auto">Apr 4</div></div>
+            <div class="al-row"><span class="task-id">PLT-024</span><span class="task-title">Sidebar navigation refactor</span><span class="al-proj-badge">TAPP</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip" style="margin-left:auto">Apr 6</div></div>
+            <div class="al-row"><span class="task-id">CN-008</span><span class="task-title">Vehicle dashboard UI — data layer</span><span class="al-proj-badge">Carmnet</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip" style="margin-left:auto">Apr 10</div></div>
+            <div class="al-grp-hdr"><span class="al-grp-label" style="color:#8b5cf6">Review</span><span class="al-grp-count">· 4 efforts</span></div>
+            <div class="al-row"><span class="task-id">ES-024</span><span class="task-title">Homepage hero — mobile breakpoint</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip due-late" style="margin-left:auto">1d overdue</div></div>
+            <div class="al-row"><span class="task-id">ES-026</span><span class="task-title">Email notifications — booking confirms</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip" style="margin-left:auto">Apr 5</div></div>
+            <div class="al-row"><span class="task-id">PLT-022</span><span class="task-title">User profile page v2</span><span class="al-proj-badge">TAPP</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip due-soon" style="margin-left:auto">Today</div></div>
+            <div class="al-row"><span class="task-id">CN-011</span><span class="task-title">Route planner — map integration</span><span class="al-proj-badge">Carmnet</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip" style="margin-left:auto">Apr 7</div></div>
+            <div class="al-grp-hdr"><span class="al-grp-label" style="color:var(--text-secondary)">Icebox</span><span class="al-grp-count">· 4 efforts</span></div>
+            <div class="al-row"><span class="task-id">ES-041</span><span class="task-title">Venue search filter — geolocation</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 12</div></div>
+            <div class="al-row"><span class="task-id">ES-044</span><span class="task-title">Ticket PDF export with QR codes</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 15</div></div>
+            <div class="al-row"><span class="task-id">PLT-035</span><span class="task-title">Permissions matrix redesign</span><span class="al-proj-badge">TAPP</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 20</div></div>
+            <div class="al-row"><span class="task-id">CN-012</span><span class="task-title">Event calendar export feature</span><span class="al-proj-badge">Carmnet</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 22</div></div>
+          </div>
+        </div>
+        <!-- EventSquid content -->
+        <div class="dev-tab-content" id="dtc-es">
+          <div class="kpi-strip">
+            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.2"/></svg></div><div class="kpi-body"><div class="kpi-hours"><span class="kh-actual">24h</span><span class="kh-sep">/</span><span class="kh-exp">20h</span></div><div class="kpi-label">Logged · Budgeted</div><div class="kpi-delta down" style="color:var(--error)">+4h over budget</div></div></div>
+            <div class="kpi-card kpi-green" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="10" height="10" rx="2"/><path d="M6 8h4M8 6v4"/></svg></div><div class="kpi-body"><div class="kpi-num">11</div><div class="kpi-label">Open efforts</div><div class="kpi-delta warn">2 due today</div></div></div>
+            <div class="kpi-card kpi-purple" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">4</div><div class="kpi-label">Pending reviews</div></div></div>
+            <div class="kpi-card kpi-red" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">1</div><div class="kpi-label">Blocked task</div><div class="kpi-delta down" style="color:var(--error)">needs action</div></div></div>
+  
+            <div class="cta-col"><a href="project-detail.html" class="cta-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>View Project</a><span class="cta-sub">View milestones</span></div>
+          </div>
+          <!-- Toolbar + Kanban -->
+          <div class="toolbar">
+            <div class="view-sw"><button class="view-sw-btn active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="4" height="10" rx="1"/><rect x="6" y="3" width="4" height="10" rx="1"/><rect x="11" y="3" width="4" height="10" rx="1"/></svg>Kanban</button><button class="view-sw-btn">List</button><button class="view-sw-btn">Sprint</button></div>
+            <div class="toolbar-right"><span class="toolbar-count">19 efforts</span><button class="btn btn-primary" onclick="location.href='new-project.html'"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>New Effort</button></div>
+          </div>
+          <div class="kb-board" style="flex:1">
+            <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:#9da8b8"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/></svg>Icebox<span class="kb-cnt">2</span></div><button class="kb-plus">+</button></div></div>
+              <div class="kb-cards">
+                <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-041</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Venue search filter — geolocation</div><div class="kbc-tags"><span class="kbt t-md">Medium</span><span class="kbt r-dev">DEV</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#e8f4fd;color:#1d5fa6">SK</div><div style="flex:1"></div><div class="kbc-comment"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h12a1 1 0 0 1 1 1v7H5l-3 3V3a1 1 0 0 1 1-1z"/></svg>2</div></div></div>
+                <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-044</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Ticket PDF export with QR codes</div><div class="kbc-tags"><span class="kbt t-hi">High</span><span class="kbt r-dev">DEV</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fde8d8;color:#b45309">LM</div><div style="flex:1"></div></div></div>
+              </div><div class="kb-add-row">+ Add task</div></div>
+            <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:#3b82f6"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="#3b82f6" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.2"/></svg>Working<span class="kb-cnt">2</span></div><button class="kb-plus">+</button></div></div>
+              <div class="kb-cards">
+                <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-031</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Event creation wizard — step 3</div><div class="kbc-tags"><span class="kbt t-hi">High</span><span class="kbt r-design">DESIGN</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fdf2f8;color:#9d174d">CH</div><div style="flex:1"></div><div class="kbc-comment"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h12a1 1 0 0 1 1 1v7H5l-3 3V3a1 1 0 0 1 1-1z"/></svg>5</div></div></div>
+                <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-033</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Payment gateway — Stripe 3DS</div><div class="kbc-tags"><span class="kbt t-hi">High</span><span class="kbt r-be">BE</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fff7ed;color:#9a3412">MV</div><div style="flex:1"></div><div class="kbc-comment"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h12a1 1 0 0 1 1 1v7H5l-3 3V3a1 1 0 0 1 1-1z"/></svg>3</div></div></div>
+              </div><div class="kb-add-row">+ Add task</div></div>
+            <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:var(--error)"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="var(--error)" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg>Blocked<span class="kb-cnt">2</span></div><button class="kb-plus">+</button></div></div>
+              <div class="kb-cards">
+                <div class="kb-card blocked" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-037</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Real-time seat map — websocket</div><div class="kbc-tags"><span class="kbt t-hi">High</span><span class="kbt r-be">BE</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fff7ed;color:#9a3412">MV</div><div class="blocked-label">⚑ Blocked</div><div style="flex:1"></div></div></div>
+                <div class="kb-card blocked" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-018</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Cross-browser QA — Safari iOS</div><div class="kbc-tags"><span class="kbt t-md">Medium</span><span class="kbt r-qa">QA</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#ecfdf5;color:#065f46">TR</div><div class="blocked-label">⚑ Stalled</div><div style="flex:1"></div></div></div>
+              </div><div class="kb-add-row">+ Add task</div></div>
+            <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:#8b5cf6"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="#8b5cf6" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg>Review<span class="kb-cnt">2</span></div><button class="kb-plus">+</button></div></div>
+              <div class="kb-cards">
+                <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-024</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Homepage hero — mobile breakpoint</div><div class="kbc-tags"><span class="kbt t-md">Medium</span><span class="kbt r-design">DESIGN</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fdf2f8;color:#9d174d">CH</div><div style="flex:1"></div><div class="kbc-comment"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h12a1 1 0 0 1 1 1v7H5l-3 3V3a1 1 0 0 1 1-1z"/></svg>4</div></div></div>
+                <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-026</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Email notifications — booking confirms</div><div class="kbc-tags"><span class="kbt t-hi">High</span><span class="kbt r-be">BE</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fff7ed;color:#9a3412">MV</div><div style="flex:1"></div></div></div>
+              </div><div class="kb-add-row">+ Add task</div></div>
+            <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:#10b981"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M5.5 8.5l2 2 3-4"/></svg>Done<span class="kb-cnt">4</span></div><button class="kb-plus">+</button></div></div>
+              <div class="kb-cards">
+                <div class="kb-card done" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-010</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Landing page redesign — hero</div><div class="kbc-tags"><span class="kbt r-design">DESIGN</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fdf2f8;color:#9d174d">CH</div><div class="kb-done-mark"><svg viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 8l3.5 3.5L13 4.5"/></svg>Done</div></div></div>
+                <div class="kb-card done" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-012</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">User auth — OAuth Google</div><div class="kbc-tags"><span class="kbt r-dev">DEV</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="kb-done-mark"><svg viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 8l3.5 3.5L13 4.5"/></svg>Done</div></div></div>
+              </div><div class="kb-add-row">+ Add task</div></div>
+          </div>
+        </div>
+        <!-- TAPP content (simple placeholder) -->
+        <div class="dev-tab-content" id="dtc-tapp">
+          <div class="kpi-strip">
+            <div class="kpi-card kpi-red" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">3</div><div class="kpi-label">Blocked tasks</div></div></div>
+            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="10" height="10" rx="2"/><path d="M6 8h4M8 6v4"/></svg></div><div class="kpi-body"><div class="kpi-num">19</div><div class="kpi-label">Open efforts</div></div></div>
+            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-hours"><span class="kh-actual">19h</span><span class="kh-sep">/</span><span class="kh-exp">24h</span></div><div class="kpi-label">Logged · Budgeted</div><div class="kpi-delta up">5h remaining</div></div></div>
+            <div class="kpi-card kpi-purple" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">5</div><div class="kpi-label">Pending reviews</div></div></div>
+           
+            <div class="cta-col"><a href="project-detail.html" class="cta-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>View Project</a></div>
+          </div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-page)"><div style="text-align:center;color:var(--text-muted)"><div style="font-size:28px;margin-bottom:10px;opacity:.3">📋</div><div style="font-weight:500;color:var(--text-secondary);margin-bottom:4px">TAPP Kanban board</div><div style="font-size:12px"><a href="project-detail.html" style="color:var(--accent)">Open full project view →</a></div></div></div>
+        </div>
+        <!-- Carmnet placeholder -->
+        <div class="dev-tab-content" id="dtc-cn">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-page)"><div style="text-align:center;color:var(--text-muted)"><div style="font-size:28px;margin-bottom:10px;opacity:.3">🚗</div><div style="font-weight:500;color:var(--text-secondary);margin-bottom:4px">Carmnet board</div><div style="font-size:12px"><a href="project-detail.html" style="color:var(--accent)">Open full project view →</a></div></div></div>
+        </div>
+      </div>
+    </div><!-- end rp-dev -->
+
+    <!-- ═══ DESIGNER PANEL ═══ -->
+    <div class="role-panel" id="rp-design" style="padding:0;gap:0;background:transparent">
+      <div class="dev-panel">
+        <div class="dev-tabs">
+          <div class="dev-tab active" onclick="switchDevTab(this,'dtd-all')">All Projects</div>
+          <div class="dev-tab" onclick="switchDevTab(this,'dtd-es')">EventSquid</div>
+          <div class="dev-tab" onclick="switchDevTab(this,'dtd-cm')">Chantmasters</div>
+          <div class="dev-tab" onclick="switchDevTab(this,'dtd-do')">DesignOps</div>
+        </div>
+        <!-- All Projects -->
+        <div class="dev-tab-content active" id="dtd-all">
+          <div class="kpi-strip">
+            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-hours"><span class="kh-actual">22h</span><span class="kh-sep">/</span><span class="kh-exp">20h</span></div><div class="kpi-label">Logged · Budgeted</div><div class="kpi-delta down" style="color:var(--error)">+2h over budget</div></div></div>
+            <div class="kpi-card kpi-purple" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-num">13</div><div class="kpi-label">Design tasks</div><div class="kpi-delta">across 3 projects</div></div></div>
+            <div class="kpi-card kpi-green" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">5</div><div class="kpi-label">Awaiting feedback</div><div class="kpi-delta warn">2 overdue</div></div></div>
+            <div class="kpi-card kpi-red" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">0</div><div class="kpi-label">Blocked</div><div class="kpi-delta up">all clear</div></div></div>
+            <div class="kpi-vdiv"></div>
+            <div class="proj-pills">
+              <div class="pp-row"><span class="pp-dot" style="background:#059669"></span><span class="pp-name">EventSquid</span><span class="pp-cnt">5 tasks</span></div>
+              <div class="pp-row"><span class="pp-dot" style="background:#d97706"></span><span class="pp-name">Chantmasters</span><span class="pp-cnt">5 tasks</span></div>
+              <div class="pp-row"><span class="pp-dot" style="background:#7c3aed"></span><span class="pp-name">DesignOps</span><span class="pp-cnt">3 tasks</span></div>
+            </div>
+            <div class="kpi-vdiv"></div>
+            <div class="cta-col"><a href="project-detail.html" class="cta-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>View Project</a><span class="cta-sub">Open in Figma</span></div>
+          </div>
+          <div class="toolbar">
+            <div class="view-sw"><button class="view-sw-btn active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg>List</button><button class="view-sw-btn">By Status</button><button class="view-sw-btn">Kanban</button></div>
+            <div class="toolbar-right"><span class="toolbar-count">13 design tasks · 3 projects</span><button class="btn btn-primary" onclick="location.href='new-project.html'"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>New Effort</button></div>
+          </div>
+          <div class="all-list">
+            <div class="al-grp-hdr"><span class="al-grp-label" style="color:#8b5cf6">Review</span><span class="al-grp-count">· 5 efforts awaiting feedback</span></div>
+            <div class="al-row"><span class="task-id">ES-024</span><span class="task-title">Homepage hero — mobile breakpoint</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip due-late" style="margin-left:auto">1d overdue</div></div>
+            <div class="al-row"><span class="task-id">CM-031</span><span class="task-title">Dashboard UI component library</span><span class="al-proj-badge">Chantmasters</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip due-late" style="margin-left:auto">Overdue</div></div>
+            <div class="al-row"><span class="task-id">ES-031</span><span class="task-title">Event creation wizard — step 3</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip due-soon" style="margin-left:auto">Apr 5</div></div>
+            <div class="al-row"><span class="task-id">DO-009</span><span class="task-title">Icon set v2 — expanded symbols</span><span class="al-proj-badge">DesignOps</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip" style="margin-left:auto">Apr 7</div></div>
+            <div class="al-row"><span class="task-id">CM-028</span><span class="task-title">Onboarding flow redesign</span><span class="al-proj-badge">Chantmasters</span><span class="task-chip chip-rev" style="margin-left:4px">Review</span><div class="due-chip" style="margin-left:auto">Apr 8</div></div>
+            <div class="al-grp-hdr"><span class="al-grp-label" style="color:#3b82f6">Working</span><span class="al-grp-count">· 4 efforts</span></div>
+            <div class="al-row"><span class="task-id">ES-036</span><span class="task-title">Seat map UI — venue editor</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip" style="margin-left:auto">Apr 10</div></div>
+            <div class="al-row"><span class="task-id">CM-033</span><span class="task-title">Audio player interface — dark mode</span><span class="al-proj-badge">Chantmasters</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip due-soon" style="margin-left:auto">Apr 4</div></div>
+            <div class="al-row"><span class="task-id">DO-011</span><span class="task-title">Design system tokens — spacing</span><span class="al-proj-badge">DesignOps</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip" style="margin-left:auto">Apr 12</div></div>
+            <div class="al-row"><span class="task-id">ES-040</span><span class="task-title">Notification preferences screen</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-prog" style="margin-left:4px">Working</span><div class="due-chip" style="margin-left:auto">Apr 9</div></div>
+            <div class="al-grp-hdr"><span class="al-grp-label" style="color:var(--text-secondary)">Icebox</span><span class="al-grp-count">· 4 efforts</span></div>
+            <div class="al-row"><span class="task-id">CM-040</span><span class="task-title">Social sharing card templates</span><span class="al-proj-badge">Chantmasters</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 18</div></div>
+            <div class="al-row"><span class="task-id">DO-014</span><span class="task-title">Motion guidelines documentation</span><span class="al-proj-badge">DesignOps</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 20</div></div>
+            <div class="al-row"><span class="task-id">ES-048</span><span class="task-title">Email template — ticket confirmation</span><span class="al-proj-badge">EventSquid</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 22</div></div>
+            <div class="al-row"><span class="task-id">CM-044</span><span class="task-title">Performer profile page redesign</span><span class="al-proj-badge">Chantmasters</span><span class="task-chip chip-todo" style="margin-left:4px">Icebox</span><div class="due-chip" style="margin-left:auto">Apr 25</div></div>
+          </div>
+        </div>
+        <!-- EventSquid -->
+        <div class="dev-tab-content" id="dtd-es">
+          <div class="kpi-strip">
+            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-hours"><span class="kh-actual">12h</span><span class="kh-sep">/</span><span class="kh-exp">10h</span></div><div class="kpi-label">Logged · Budgeted</div><div class="kpi-delta down" style="color:var(--error)">+2h over</div></div></div>
+            <div class="kpi-card kpi-purple" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-num">5</div><div class="kpi-label">Design tasks</div></div></div>
+            <div class="kpi-card kpi-green" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">2</div><div class="kpi-label">Awaiting feedback</div><div class="kpi-delta warn">1 overdue</div></div></div>
+            <div class="kpi-card kpi-red" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">0</div><div class="kpi-label">Blocked</div><div class="kpi-delta up">all clear</div></div></div>
+            <div class="kpi-vdiv"></div>
+            <div class="proj-summ"><div class="ps-top"><div><div class="ps-name">EventSquid</div><div class="ps-client">Squid Events Ltd.</div></div><span class="badge s-ontrack"><div class="badge-dot" style="background:#059669"></div>On Track</span></div><div class="ps-prog"><div class="ps-prog-row"><span>Sprint 3 · Apr 1–Apr 30</span><span class="ps-prog-pct">38%</span></div><div class="prog-track"><div class="prog-fill" style="width:38%"></div></div></div></div>
+            <div class="kpi-vdiv"></div>
+            <div class="cta-col"><a href="project-detail.html" class="cta-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>View Project</a><span class="cta-sub">Open in Figma</span></div>
+          </div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-page)"><div style="text-align:center;color:var(--text-muted)"><div style="font-size:28px;margin-bottom:10px;opacity:.3">🎨</div><div style="font-weight:500;color:var(--text-secondary);margin-bottom:4px">EventSquid Design Board</div><div style="font-size:12px"><a href="project-detail.html" style="color:var(--accent)">Open full board →</a></div></div></div>
+        </div>
+        <!-- Chantmasters -->
+        <div class="dev-tab-content" id="dtd-cm">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-page)"><div style="text-align:center;color:var(--text-muted)"><div style="font-size:28px;margin-bottom:10px;opacity:.3">🎵</div><div style="font-weight:500;color:var(--text-secondary);margin-bottom:4px">Chantmasters Design Board</div><div style="font-size:12px"><a href="project-detail.html" style="color:var(--accent)">Open full board →</a></div></div></div>
+        </div>
+        <!-- DesignOps -->
+        <div class="dev-tab-content" id="dtd-do">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--bg-page)"><div style="text-align:center;color:var(--text-muted)"><div style="font-size:28px;margin-bottom:10px;opacity:.3">⚙️</div><div style="font-weight:500;color:var(--text-secondary);margin-bottom:4px">DesignOps Board</div><div style="font-size:12px"><a href="project-detail.html" style="color:var(--accent)">Open full board →</a></div></div></div>
+        </div>
+      </div>
+    </div><!-- end rp-design -->
+
+    <!-- ═══ QA PANEL ═══ -->
+    <div class="role-panel" id="rp-qa">
+      <div class="alert-bar">
+        <div class="alert-item"><div class="alert-ico ai-red"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div><div class="alert-lbl">Failed test cases</div><div class="alert-cnt red">3</div></div><div class="alert-cta">View<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></div></div>
+        <div class="alert-item"><div class="alert-ico ai-amber"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div><div class="alert-lbl">Ready for QA</div><div class="alert-cnt amber">6</div></div><div class="alert-cta">Start QA<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></div></div>
+        <div class="alert-item"><div class="alert-ico ai-blue"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5.5 8.5l2 2 3-4"/></svg></div><div><div class="alert-lbl">Passed this sprint</div><div class="alert-cnt">14</div></div><div class="alert-cta">Report<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></div></div>
+        <div class="alert-item"><div class="alert-ico ai-purple"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg></div><div><div class="alert-lbl">Regression pending</div><div class="alert-cnt">2</div></div><div class="alert-cta">Run<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg></div></div>
+      </div>
+      <div class="qa-stats">
+        <div class="qa-stat"><div class="qa-num" style="color:var(--success)">14</div><div class="qa-lbl">Tests passed</div><div class="qa-delta" style="color:#059669">↑ +2 vs last sprint</div></div>
+        <div class="qa-stat"><div class="qa-num" style="color:var(--error)">3</div><div class="qa-lbl">Failed cases</div><div class="qa-delta" style="color:var(--error)">Needs re-test</div></div>
+        <div class="qa-stat"><div class="qa-num">6</div><div class="qa-lbl">Awaiting sign-off</div><div class="qa-delta" style="color:#d97706">2 high priority</div></div>
+      </div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+        <div class="card-hdr"><div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5.5 8.5l2 2 3-4"/></svg>QA task queue</div><span class="card-hdr-action">Open board</span></div>
+        <div class="task-list" style="flex:1">
+          <div class="task-row"><span class="task-id">PLT-018</span><span class="task-title">Billing portal — Stripe webhook integration</span><span class="badge r-qa">QA</span><span class="task-chip chip-block" style="margin-left:6px">Blocked</span><div class="due-chip due-late" style="margin-left:auto"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>Overdue</div></div>
+          <div class="task-row"><span class="task-id">ES-018</span><span class="task-title">Cross-browser QA — Safari iOS edge cases</span><span class="badge r-qa">QA</span><span class="task-chip chip-prog" style="margin-left:6px">In QA</span><div class="due-chip due-soon" style="margin-left:auto"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>Apr 4</div></div>
+          <div class="task-row"><span class="task-id">PLT-021</span><span class="task-title">E2E tests for onboarding flow (Cypress)</span><span class="badge r-qa">QA</span><span class="task-chip chip-prog" style="margin-left:6px">In QA</span><div class="due-chip due-soon" style="margin-left:auto"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>Apr 4</div></div>
+          <div class="task-row"><span class="task-id">ES-020</span><span class="task-title">Load testing — 10k concurrent users</span><span class="badge r-qa">QA</span><span class="task-chip chip-todo" style="margin-left:6px">Queued</span><div class="due-chip" style="margin-left:auto"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>Apr 5</div></div>
+          <div class="task-row"><span class="task-id">CM-018</span><span class="task-title">Audio sync regression — iOS 17.4</span><span class="badge r-qa">QA</span><span class="task-chip chip-block" style="margin-left:6px">Failed</span><div class="due-chip due-late" style="margin-left:auto"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>Overdue</div></div>
+        </div>
+      </div>
+    </div><!-- end rp-qa -->
+
+  </div><!-- end dash-body -->
+</div><!-- end main -->
+</div><!-- end app -->
+
+<div id="toast" class="toast"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5"><path d="M3 8l3.5 3.5L13 4.5"/></svg><span class="toast-msg"></span></div>
+
+<script src="js/pulse.js"></script>
+<script>
+// Dev tabs
+function switchDevTab(tabEl, contentId) {
+  var panel = tabEl.closest('.dev-panel');
+  panel.querySelectorAll('.dev-tab').forEach(function(t){ t.classList.remove('active'); });
+  panel.querySelectorAll('.dev-tab-content').forEach(function(c){ c.classList.remove('active'); });
+  tabEl.classList.add('active');
+  var content = document.getElementById(contentId);
+  if (content) content.classList.add('active');
+}
+// Sidebar toggle
+document.getElementById('sbProjects').addEventListener('click', function() {
+  var sub = document.getElementById('sbSub');
+  sub.style.display = sub.style.display === 'none' ? '' : 'none';
+});
+// Set active nav
+document.querySelector('[data-nav="index.html"]').classList.add('active');
+</script>
+
+<!-- ── New Time Log Modal ── -->
+<div class="ntl-overlay" id="ntlOverlay" onclick="if(event.target===this)closeLogTimeModal()">
+  <div class="ntl-modal">
+    <div class="ntl-hdr">
+      <div class="ntl-hdr-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2.5 1.5"/></svg></div>
+      <div class="ntl-hdr-text"><div class="ntl-hdr-title">Log Time</div><div class="ntl-hdr-sub">Record your work hours</div></div>
+      <button class="ntl-close" onclick="closeLogTimeModal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+    </div>
+    <div class="ntl-body">
+
+      <!-- Row 1: Team Member (PM only) + Date -->
+      <div class="ntl-grid2" id="ntlMemberRow">
+        <div class="ntl-field" id="ntlMemberField">
+          <div class="ntl-label">Team Member</div>
+          <select id="ntlMember">
+            <option value="jd">John Doe (you)</option>
+            <option value="sk">Sarah Kim</option>
+            <option value="lm">Lucas Mora</option>
+            <option value="tr">Tom Reeves</option>
+            <option value="ch">Clara H.</option>
+          </select>
+        </div>
+        <div class="ntl-field" id="ntlDateField">
+          <div class="ntl-label">Log Date</div>
+          <input type="date" id="ntlDate" onchange="ntlDateChanged()">
+        </div>
+      </div>
+
+      <!-- Suggested efforts -->
+      <div class="ntl-suggest" id="ntlSuggestSection">
+        <div class="ntl-suggest-hdr">
+          <div class="ntl-suggest-label">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2l1.5 3.5L13 6l-2.5 2.5.5 3.5L8 10.5 5 12l.5-3.5L3 6l3.5-.5z"/></svg>
+            Suggested for <span id="ntlSuggestDateLabel" style="color:var(--accent);font-weight:600;text-transform:none;letter-spacing:0"></span>
+          </div>
+          <button class="ntl-suggest-viewall" id="ntlViewAllBtn" style="display:none" onclick="ntlToggleAll()">View all</button>
+        </div>
+        <div id="ntlSuggestCards"></div>
+      </div>
+
+      <!-- Duration + Category (below suggestions) -->
+      <div class="ntl-grid2">
+        <div class="ntl-field">
+          <div class="ntl-label">Duration</div>
+          <input type="text" id="ntlDuration" placeholder="e.g. 2h, 1h 30m, 90m" oninput="ntlUpdateDurSummary()" autocomplete="off">
+        </div>
+        <div class="ntl-field">
+          <div class="ntl-label">Category</div>
+          <select id="ntlCategory"><!-- populated by ntlUpdateCategoryOptions() --></select>
+        </div>
+      </div>
+
+      <div class="ntl-divider"></div>
+
+      <!-- Project + Effort -->
+      <div class="ntl-grid2">
+        <div class="ntl-field">
+          <div class="ntl-label">Project</div>
+          <select id="ntlProject">
+            <option value="">Select a project…</option>
+            <option value="tapp">TAPP — Mobile App</option>
+            <option value="eventsquid">EventSquid — Platform</option>
+            <option value="healthflow">HealthFlow — Dashboard</option>
+            <option value="pulse">Pulse — Internal</option>
+          </select>
+        </div>
+        <div class="ntl-field">
+          <div class="ntl-label">Effort</div>
+          <div id="ntlEffortSelectedWrap" style="display:none">
+            <div class="ntl-effort-selected" onclick="ntlClearEffort()">
+              <div class="ntl-effort-selected-text">
+                <div class="ntl-effort-selected-title" id="ntlEffortSelTitle"></div>
+                <div class="ntl-effort-selected-meta" id="ntlEffortSelMeta"></div>
+              </div>
+              <button class="ntl-effort-clear" title="Clear selection">✕</button>
+            </div>
+          </div>
+          <div class="ntl-effort-search" id="ntlEffortSearchWrap">
+            <svg class="ntl-effort-search-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4"/><path d="M11 11l3 3"/></svg>
+            <input type="text" id="ntlEffortSearch" placeholder="Search efforts…">
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar Event -->
+      <div class="ntl-field">
+        <div class="ntl-label">Calendar Event <span class="ntl-opt">— optional</span></div>
+        <div class="ntl-cal-wrap">
+          <div id="ntlCalChip" style="display:none" class="ntl-cal-chip">
+            <div class="ntl-cal-chip-ico">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="2"/><path d="M5 2v2M11 2v2M2 7h12"/></svg>
+            </div>
+            <div class="ntl-cal-chip-text">
+              <div class="ntl-cal-chip-title" id="ntlCalChipTitle"></div>
+              <div class="ntl-cal-chip-meta" id="ntlCalChipMeta"></div>
+            </div>
+            <button class="ntl-cal-chip-clear" onclick="ntlCalClear()" title="Remove">✕</button>
+          </div>
+          <div class="ntl-cal-search-wrap" id="ntlCalSearchWrap">
+            <svg class="ntl-cal-search-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="2"/><path d="M5 2v2M11 2v2M2 7h12"/></svg>
+            <input type="text" id="ntlCalSearch" placeholder="Link a calendar event…" oninput="ntlCalInput(this.value)" onfocus="ntlCalInput(this.value)" onblur="setTimeout(function(){ntlCalCloseDd()},150)" onkeydown="ntlCalKeydown(event)" autocomplete="off">
+            <div class="ntl-cal-dd" id="ntlCalDd"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Notes -->
+      <div class="ntl-field">
+        <div class="ntl-label">Notes <span class="ntl-opt">— optional</span></div>
+        <textarea id="ntlNotes" rows="2" placeholder="Any additional context about this time entry…"></textarea>
+      </div>
+
+    </div><!-- /ntl-body -->
+    <div class="ntl-footer">
+      <div class="ntl-footer-left" id="ntlDurSummary"></div>
+      <div class="ntl-footer-actions">
+        <button class="ntl-cancel" onclick="closeLogTimeModal()">Cancel</button>
+        <button class="ntl-submit" onclick="submitLogTime()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 4.5"/></svg>Log Time</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Log Time Modal ─────────────────────────────────────────────────
+var NTL_TODAY     = new Date().toISOString().split('T')[0];
+var NTL_YESTERDAY = (function(){ var d=new Date(); d.setDate(d.getDate()-1); return d.toISOString().split('T')[0]; })();
+
+var NTL_CURRENT_ROLE = 'pm';
+
+var NTL_CATEGORIES = {
+  pm: [
+    {value:'',label:'Select…'},{value:'meeting',label:'Meeting'},{value:'planning',label:'Planning'},
+    {value:'review',label:'Review'},{value:'coordination',label:'Coordination'},
+    {value:'docs',label:'Documentation'},{value:'strategy',label:'Strategy'},{value:'other',label:'Other'}
+  ],
+  developer: [
+    {value:'',label:'Select…'},{value:'programming',label:'Programming'},{value:'review',label:'Code Review'},
+    {value:'qa',label:'QA / Testing'},{value:'debugging',label:'Debugging'},
+    {value:'docs',label:'Documentation'},{value:'meeting',label:'Meeting'},{value:'other',label:'Other'}
+  ],
+  designer: [
+    {value:'',label:'Select…'},{value:'design',label:'Design'},{value:'research',label:'Research'},
+    {value:'prototyping',label:'Prototyping'},{value:'review',label:'Review'},
+    {value:'docs',label:'Documentation'},{value:'meeting',label:'Meeting'},{value:'other',label:'Other'}
+  ]
+};
+
+var NTL_DEFAULT_CATEGORY = { developer:'programming', designer:'design', pm:'' };
+
+var NTL_SUGGESTIONS = {};
+NTL_SUGGESTIONS[NTL_TODAY] = [
+  { id:'EFF-248', title:'Update project details form',   project:'Pulse',      projectKey:'pulse',       status:'worked'    },
+  { id:'EFF-231', title:'Implement team member search',  project:'Pulse',      projectKey:'pulse',       status:'worked'    },
+  { id:'EFF-199', title:'Fix pagination on History tab', project:'TAPP',       projectKey:'tapp',        status:'review'    },
+  { id:'EFF-187', title:'Design system token audit',     project:'TAPP',       projectKey:'tapp',        status:'done'      },
+  { id:'EFF-175', title:'Sprint 4 planning session',     project:'EventSquid', projectKey:'eventsquid',  status:'done'      }
+];
+NTL_SUGGESTIONS[NTL_YESTERDAY] = [
+  { id:'EFF-231', title:'Implement team member search',  project:'Pulse', projectKey:'pulse', status:'worked' },
+  { id:'EFF-199', title:'Fix pagination on History tab', project:'TAPP',  projectKey:'tapp',  status:'review' },
+  { id:'EFF-187', title:'Design system token audit',     project:'TAPP',  projectKey:'tapp',  status:'done'   }
+];
+
+var _ntlSuggestAll    = false;
+var _ntlSelectedIdx   = null;
+var _ntlSelectedEffort= null;
+
+var NTL_STATUS_MAP = {
+  unstarted: { label:'Unstarted', cls:'ntl-badge-unstarted' },
+  worked:    { label:'Worked',    cls:'ntl-badge-worked'    },
+  review:    { label:'Review',    cls:'ntl-badge-review'    },
+  done:      { label:'Done',      cls:'ntl-badge-done'      }
+};
+
+var NTL_CAL_EVENTS = [
+  { id:'cal-1', title:'Engineering standup',  time:'9:15 – 9:30 AM',     duration:'15m', durationMin:15 },
+  { id:'cal-2', title:'Sprint planning',      time:'10:00 – 11:00 AM',   duration:'1h',  durationMin:60 },
+  { id:'cal-3', title:'Design review',        time:'11:30 AM – 12:00 PM',duration:'30m', durationMin:30 },
+  { id:'cal-4', title:'1:1 with Sarah',       time:'2:00 – 2:30 PM',     duration:'30m', durationMin:30 },
+  { id:'cal-5', title:'Product sync',         time:'3:00 – 4:00 PM',     duration:'1h',  durationMin:60 },
+  { id:'cal-6', title:'Stakeholder demo',     time:'4:30 – 5:30 PM',     duration:'1h',  durationMin:60 }
+];
+var _ntlCalSelected  = null;
+var _ntlCalFocusIdx  = -1;
+
+function ntlDateLabel(dateStr) {
+  if (dateStr === NTL_TODAY)     return 'Today';
+  if (dateStr === NTL_YESTERDAY) return 'Yesterday';
+  var d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+}
+
+function ntlRenderCard(s, i, dateStr) {
+  var st  = NTL_STATUS_MAP[s.status] || NTL_STATUS_MAP['unstarted'];
+  var sel = (_ntlSelectedIdx === i) ? ' sel' : '';
+  return '<div class="ntl-scard'+sel+'" onclick="ntlSelectSuggestion('+i+',\''+dateStr+'\')">'
+    + '<div class="ntl-scard-check"></div>'
+    + '<div class="ntl-scard-body">'
+    +   '<div class="ntl-scard-title">'+s.title+'</div>'
+    +   '<div class="ntl-scard-meta"><span>'+s.id+'</span><span class="ntl-scard-dot"></span><span>'+s.project+'</span></div>'
+    + '</div>'
+    + '<div class="ntl-scard-badges"><span class="ntl-badge '+st.cls+'">'+st.label+'</span></div>'
+    + '</div>';
+}
+
+function renderNtlSuggestions(dateStr) {
+  var cards   = document.getElementById('ntlSuggestCards');
+  var viewBtn = document.getElementById('ntlViewAllBtn');
+  var dlabel  = document.getElementById('ntlSuggestDateLabel');
+  dlabel.textContent = ntlDateLabel(dateStr);
+  var list = NTL_SUGGESTIONS[dateStr] || [];
+  _ntlSuggestAll = false;
+  if (!list.length) {
+    viewBtn.style.display = 'none';
+    cards.innerHTML = '<div class="ntl-suggest-empty">No suggested efforts found for this date.<br>You can search manually below.</div>';
+    return;
+  }
+  var limit = _ntlSuggestAll ? list.length : Math.min(3, list.length);
+  viewBtn.style.display = list.length > 3 ? '' : 'none';
+  viewBtn.textContent   = 'View all (' + list.length + ')';
+  cards.innerHTML = list.slice(0, limit).map(function(s,i){ return ntlRenderCard(s,i,dateStr); }).join('');
+}
+
+function ntlToggleAll() {
+  var dateStr = document.getElementById('ntlDate').value;
+  var list    = NTL_SUGGESTIONS[dateStr] || [];
+  var btn     = document.getElementById('ntlViewAllBtn');
+  _ntlSuggestAll = !_ntlSuggestAll;
+  btn.textContent = _ntlSuggestAll ? 'Show less' : 'View all (' + list.length + ')';
+  var limit = _ntlSuggestAll ? list.length : 3;
+  document.getElementById('ntlSuggestCards').innerHTML =
+    list.slice(0, limit).map(function(s,i){ return ntlRenderCard(s,i,dateStr); }).join('');
+}
+
+function ntlSelectSuggestion(idx, dateStr) {
+  _ntlSelectedIdx    = idx;
+  var s = (NTL_SUGGESTIONS[dateStr] || [])[idx];
+  if (!s) return;
+  _ntlSelectedEffort = s;
+  var proj = document.getElementById('ntlProject');
+  if (s.projectKey) proj.value = s.projectKey;
+  document.getElementById('ntlEffortSelTitle').textContent = s.title;
+  document.getElementById('ntlEffortSelMeta').textContent  = s.id + ' · ' + s.project;
+  document.getElementById('ntlEffortSelectedWrap').style.display = '';
+  document.getElementById('ntlEffortSearchWrap').style.display   = 'none';
+  var defCat = NTL_DEFAULT_CATEGORY[NTL_CURRENT_ROLE] || '';
+  if (defCat) document.getElementById('ntlCategory').value = defCat;
+  renderNtlSuggestions(dateStr);
+}
+
+function ntlClearEffort() {
+  _ntlSelectedIdx    = null;
+  _ntlSelectedEffort = null;
+  document.getElementById('ntlEffortSelectedWrap').style.display = 'none';
+  document.getElementById('ntlEffortSearchWrap').style.display   = '';
+  document.getElementById('ntlEffortSearch').value = '';
+  renderNtlSuggestions(document.getElementById('ntlDate').value);
+}
+
+function ntlDateChanged() {
+  var dateStr = document.getElementById('ntlDate').value;
+  if (_ntlSelectedEffort) {
+    var list = NTL_SUGGESTIONS[dateStr] || [];
+    if (!list.some(function(s){ return s.id === _ntlSelectedEffort.id; })) ntlClearEffort();
+  }
+  _ntlSelectedIdx = null;
+  renderNtlSuggestions(dateStr);
+  ntlUpdateDurSummary();
+}
+
+function ntlParseDuration(str) {
+  str = (str || '').trim().toLowerCase();
+  if (!str) return { h:0, m:0, total:0 };
+  var h = 0, m = 0;
+  var hM = str.match(/(\d+(?:\.\d+)?)\s*h/);
+  var mM = str.match(/(\d+)\s*m/);
+  if (hM) { var hv = parseFloat(hM[1]); h = Math.floor(hv); m += Math.round((hv-h)*60); }
+  if (mM) m += parseInt(mM[1]);
+  if (!hM && !mM) { var n = parseInt(str); if (!isNaN(n)) m = n; }
+  h += Math.floor(m/60); m = m%60;
+  return { h:h, m:m, total:h*60+m };
+}
+
+function ntlUpdateDurSummary() {
+  var dur = ntlParseDuration(document.getElementById('ntlDuration').value);
+  var el  = document.getElementById('ntlDurSummary');
+  if (dur.total === 0) { el.innerHTML = ''; return; }
+  var parts = [];
+  if (dur.h) parts.push(dur.h+'h');
+  if (dur.m) parts.push(dur.m+'m');
+  el.innerHTML = 'Logging <strong>'+parts.join(' ')+'</strong>';
+}
+
+function ntlUpdateCategoryOptions(role) {
+  var sel  = document.getElementById('ntlCategory');
+  var opts = NTL_CATEGORIES[role] || NTL_CATEGORIES.developer;
+  sel.innerHTML = opts.map(function(o){ return '<option value="'+o.value+'">'+o.label+'</option>'; }).join('');
+}
+
+function ntlApplyRole(role) {
+  var mf = document.getElementById('ntlMemberField');
+  var df = document.getElementById('ntlDateField');
+  if (role === 'pm') {
+    mf.style.display = '';
+    df.classList.remove('ntl-full-col');
+  } else {
+    mf.style.display = 'none';
+    df.classList.add('ntl-full-col');
+  }
+  ntlUpdateCategoryOptions(role);
+}
+
+function ntlCalSvg() {
+  return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="2"/><path d="M5 2v2M11 2v2M2 7h12"/></svg>';
+}
+
+function ntlCalInput(val) {
+  var dd   = document.getElementById('ntlCalDd');
+  var q    = val.trim().toLowerCase();
+  var list = NTL_CAL_EVENTS.filter(function(e){ return !q || e.title.toLowerCase().includes(q); });
+  _ntlCalFocusIdx = -1;
+  if (!list.length) { dd.className = 'ntl-cal-dd'; return; }
+  dd.innerHTML = list.map(function(e) {
+    return '<div class="ntl-cal-item" data-cal-id="'+e.id+'" onmousedown="ntlCalSelect(\''+e.id+'\')">'
+      + '<div class="ntl-cal-item-ico">'+ntlCalSvg()+'</div>'
+      + '<div class="ntl-cal-item-info"><div class="ntl-cal-item-title">'+e.title+'</div><div class="ntl-cal-item-time">'+e.time+'</div></div>'
+      + '<div class="ntl-cal-item-dur">'+e.duration+'</div>'
+      + '</div>';
+  }).join('');
+  dd.className = 'ntl-cal-dd open';
+}
+
+function ntlCalSelect(id) {
+  var ev = NTL_CAL_EVENTS.find(function(e){ return e.id===id; });
+  if (!ev) return;
+  _ntlCalSelected = ev;
+  document.getElementById('ntlCalChipTitle').textContent = ev.title;
+  document.getElementById('ntlCalChipMeta').textContent  = ev.time + ' · ' + ev.duration;
+  document.getElementById('ntlCalChip').style.display       = '';
+  document.getElementById('ntlCalSearchWrap').style.display = 'none';
+  document.getElementById('ntlDuration').value = ev.duration;
+  document.getElementById('ntlCategory').value = 'meeting';
+  ntlUpdateDurSummary();
+}
+
+function ntlCalClear() {
+  _ntlCalSelected = null;
+  document.getElementById('ntlCalChip').style.display       = 'none';
+  document.getElementById('ntlCalSearchWrap').style.display = '';
+  document.getElementById('ntlCalSearch').value = '';
+  document.getElementById('ntlCalDd').className = 'ntl-cal-dd';
+}
+
+function ntlCalCloseDd() {
+  document.getElementById('ntlCalDd').className = 'ntl-cal-dd';
+}
+
+function ntlCalKeydown(e) {
+  var dd    = document.getElementById('ntlCalDd');
+  var items = dd.querySelectorAll('.ntl-cal-item');
+  if (!items.length) return;
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    _ntlCalFocusIdx = Math.min(_ntlCalFocusIdx+1, items.length-1);
+    items.forEach(function(el,i){ el.classList.toggle('foc', i===_ntlCalFocusIdx); });
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    _ntlCalFocusIdx = Math.max(_ntlCalFocusIdx-1, 0);
+    items.forEach(function(el,i){ el.classList.toggle('foc', i===_ntlCalFocusIdx); });
+  } else if (e.key === 'Enter' && _ntlCalFocusIdx >= 0) {
+    e.preventDefault();
+    var id = items[_ntlCalFocusIdx].getAttribute('data-cal-id');
+    if (id) ntlCalSelect(id);
+  } else if (e.key === 'Escape') {
+    ntlCalCloseDd();
+  }
+}
+
+var _ntlTags = [];
+function ntlTagKeydown(e) {
+  var inp = document.getElementById('ntlTagInput');
+  if ((e.key === 'Enter' || e.key === ',') && inp.value.trim()) {
+    e.preventDefault();
+    var tag = inp.value.trim().replace(/,/g,'');
+    if (tag && !_ntlTags.includes(tag)) { _ntlTags.push(tag); ntlRenderTags(); }
+    inp.value = '';
+  } else if (e.key === 'Backspace' && !inp.value && _ntlTags.length) {
+    _ntlTags.pop(); ntlRenderTags();
+  }
+}
+function ntlRemoveTag(i) { _ntlTags.splice(i,1); ntlRenderTags(); }
+function ntlRenderTags() {
+  var wrap = document.getElementById('ntlTagsWrap');
+  if (!wrap) return;
+  var inp  = document.getElementById('ntlTagInput');
+  wrap.querySelectorAll('.ntl-tag-chip').forEach(function(c){c.remove();});
+  _ntlTags.forEach(function(tag,i) {
+    var chip = document.createElement('span');
+    chip.className = 'ntl-tag-chip';
+    chip.innerHTML = tag+'<button type="button" onclick="ntlRemoveTag('+i+')">✕</button>';
+    wrap.insertBefore(chip, inp);
+  });
+}
+
+function openLogTimeModal() {
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById('ntlDate').value      = today;
+  document.getElementById('ntlDuration').value  = '';
+  document.getElementById('ntlNotes').value     = '';
+  document.getElementById('ntlEffortSearch').value = '';
+  document.getElementById('ntlEffortSelectedWrap').style.display = 'none';
+  document.getElementById('ntlEffortSearchWrap').style.display   = '';
+  ntlCalClear();
+  _ntlTags = []; ntlRenderTags();
+  _ntlSelectedIdx = null; _ntlSelectedEffort = null;
+  ntlApplyRole(NTL_CURRENT_ROLE);
+  renderNtlSuggestions(today);
+  ntlUpdateDurSummary();
+  document.getElementById('ntlOverlay').classList.add('open');
+}
+
+function closeLogTimeModal() {
+  document.getElementById('ntlOverlay').classList.remove('open');
+}
+
+function submitLogTime() {
+  var dur = ntlParseDuration(document.getElementById('ntlDuration').value);
+  if (dur.total === 0) { document.getElementById('ntlDuration').focus(); return; }
+  closeLogTimeModal();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key==='Escape' && document.getElementById('ntlOverlay').classList.contains('open')) closeLogTimeModal();
+});
+</script>
+<script>
+function sbToggle(){
+  var t=document.getElementById('projToggle');
+  var s=document.getElementById('projSub');
+  t.classList.toggle('open');
+  s.classList.toggle('open');
+}
+(function(){
+  if(document.querySelector('#projSub .sb-item.active')){
+    document.getElementById('projToggle').classList.add('open');
+    document.getElementById('projSub').classList.add('open');
+  }
+})();
+</script>
+</body>
+</html>

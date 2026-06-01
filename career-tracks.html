@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Career Tracks · Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --font:'DM Sans',system-ui,sans-serif;
+    --font-mono:'DM Mono',monospace;
+    --bg-page:#eef0f4;
+    --bg-white:#ffffff;
+    --bg-surface:#f5f6f8;
+    --sidebar-bg:#0d0f18;
+    --sidebar-text:#8b90a8;
+    --sidebar-active-bg:#1a1f35;
+    --sidebar-active-text:#e8eaf2;
+    --sidebar-hover-bg:#161b2e;
+    --sidebar-section:#3a3f55;
+    --sidebar-divider:#1c2035;
+    --text-primary:#111827;
+    --text-secondary:#374151;
+    --text-muted:#9ca3af;
+    --border:#e5e7eb;
+    --border-strong:#d1d5db;
+    --accent:#3b5bdb;
+    --accent-hover:#2f4ac4;
+    --accent-light:#eef2ff;
+    --accent-border:#c5cffa;
+    --radius-sm:6px;
+    --radius-md:8px;
+    --radius-lg:10px;
+  }
+  html,body{height:100%;-webkit-font-smoothing:antialiased}
+  body{font-family:var(--font);font-size:13px;color:var(--text-primary);background:var(--bg-page);overflow:hidden}
+  .app{display:flex;height:100%;overflow:hidden}
+
+  /* ─── Sidebar ─── */
+  .sidebar{width:232px;min-width:232px;height:100%;background:var(--sidebar-bg);display:flex;flex-direction:column;overflow:hidden;border-right:1px solid #0a0c14}
+  .sb-top{padding:18px 16px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--sidebar-divider)}
+  .sb-logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#3b5bdb,#6b35b5);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sb-logo svg{width:17px;height:17px}
+  .sb-brand{font-size:15px;font-weight:600;color:#e8eaf2;letter-spacing:-.2px}
+  .sb-scroll{flex:1;overflow-y:auto;padding:10px 0}
+  .sb-scroll::-webkit-scrollbar{width:0}
+  .sb-section{padding:12px 16px 4px;font-size:10px;color:var(--sidebar-section);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
+  .sb-item{display:flex;align-items:center;gap:9px;padding:7px 14px;font-size:13px;color:var(--sidebar-text);cursor:pointer;border-radius:var(--radius-md);margin:1px 8px;transition:all .12s;position:relative;text-decoration:none}
+  .sb-item:hover{background:var(--sidebar-hover-bg);color:#c8cce0}
+  .sb-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-text)}
+  .sb-item svg{width:15px;height:15px;flex-shrink:0;opacity:.65}
+  .sb-item.active svg{opacity:1}
+  .sb-item .badge{margin-left:auto;font-size:10px;background:#1e2440;color:#5a6280;padding:1px 6px;border-radius:99px;font-weight:500}
+  .sb-item .chevron{margin-left:auto;width:12px;height:12px;opacity:.4;transition:transform .2s}
+  .sb-item.open .chevron{transform:rotate(180deg)}
+  .sb-sub{padding-left:16px;display:none}
+  .sb-sub.open{display:block}
+  .sb-sub .sb-item{font-size:12.5px;padding:6px 12px;color:#545870}
+  .sb-sub .sb-item:hover{color:#9ca0b8}
+  .sb-sub .sb-item::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.4}
+  .sb-divider{height:1px;background:var(--sidebar-divider);margin:8px 14px}
+  .sb-bottom{padding:10px 8px 14px;border-top:1px solid var(--sidebar-divider)}
+  .sb-user{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--radius-md);cursor:pointer;transition:background .12s}
+  .sb-user:hover{background:var(--sidebar-hover-bg)}
+  .sb-avatar{width:30px;height:30px;border-radius:50%;background:#1e2a50;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#6b82c4;flex-shrink:0}
+  .sb-user-info{flex:1;min-width:0}
+  .sb-user-name{font-size:12.5px;font-weight:600;color:#c8cce0}
+  .sb-user-role{font-size:11px;color:var(--sidebar-text);margin-top:1px}
+  .sb-more{width:14px;height:14px;color:var(--sidebar-text);flex-shrink:0}
+
+  /* ─── Main ─── */
+  .main{flex:1;height:100%;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+  /* ─── Page Header ─── */
+  .ct-hdr{display:flex;align-items:center;justify-content:space-between;padding:15px 36px;background:var(--bg-white);border-bottom:1px solid var(--border);flex-shrink:0}
+  .ct-title{font-size:17px;font-weight:700;color:var(--text-primary);letter-spacing:-.3px}
+  .ct-subtitle{font-size:12px;color:var(--text-muted);margin-top:2px;white-space:nowrap}
+  .ct-hdr-right{display:flex;align-items:center;gap:8px}
+  .ct-cycle-pick{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius-md);overflow:visible;margin-right:4px;background:var(--bg-white);position:relative}
+  .ct-cycle-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);padding:0 10px;border-right:1px solid var(--border);line-height:32px;background:var(--bg-surface);white-space:nowrap;flex-shrink:0;border-radius:var(--radius-md) 0 0 var(--radius-md)}
+  .ct-cycle-val{font-size:12.5px;font-weight:600;color:var(--text-primary);padding:0 12px 0 10px;line-height:34px;display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none;border-radius:0 var(--radius-md) var(--radius-md) 0;transition:background .1s}
+  .ct-cycle-val:hover{background:var(--bg-surface)}
+  .ct-cycle-val svg{width:11px;height:11px;color:var(--text-muted);transition:transform .15s}
+  .ct-cycle-pick.open .ct-cycle-val svg{transform:rotate(180deg)}
+  .ct-cycle-drop{position:absolute;top:calc(100% + 4px);right:0;min-width:160px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:0 4px 16px rgba(0,0,0,.08);z-index:100;overflow:hidden;display:none}
+  .ct-cycle-pick.open .ct-cycle-drop{display:block}
+  .ct-cycle-opt{display:flex;align-items:center;justify-content:space-between;padding:8px 13px;font-size:12.5px;font-weight:500;color:var(--text-secondary);cursor:pointer;transition:background .1s;gap:12px}
+  .ct-cycle-opt:hover{background:var(--bg-surface)}
+  .ct-cycle-opt.active{color:var(--accent);font-weight:600;background:var(--accent-light)}
+  .ct-cycle-opt-badge{font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;white-space:nowrap}
+  .ct-cycle-sep{height:1px;background:var(--border);margin:3px 0}
+  .ct-btn-ghost{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:6px 13px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .12s;white-space:nowrap}
+  .ct-btn-ghost:hover{border-color:var(--border-strong);color:var(--text-primary)}
+  .ct-btn-ghost svg{width:13px;height:13px;opacity:.7}
+  .ct-btn-primary{display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;padding:7px 16px;border:none;border-radius:var(--radius-md);background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);transition:background .12s;white-space:nowrap}
+  .ct-btn-primary:hover{background:var(--accent-hover)}
+  .ct-btn-primary svg{width:13px;height:13px}
+
+  /* ─── Mode Bar ─── */
+  .ct-mode-bar{display:flex;align-items:center;background:var(--bg-white);border-bottom:1px solid var(--border);padding:0 36px;flex-shrink:0}
+  .ct-mode-tab{font-size:13px;font-weight:500;color:var(--text-muted);padding:11px 14px;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font);transition:color .12s;white-space:nowrap}
+  .ct-mode-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+  .ct-mode-tab:hover:not(.active){color:var(--text-secondary)}
+  .ct-mode-sep{height:16px;width:1px;background:var(--border);margin:0 6px;align-self:center}
+
+  /* ─── Views ─── */
+  #ctHubView{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  #ctConfigView{flex:1;overflow-y:auto;padding:24px 36px;background:var(--bg-surface);display:none}
+
+  /* ─── Status Strip ─── */
+  .hub-ss{display:flex;align-items:center;gap:4px;padding:11px 36px;background:var(--bg-white);border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0}
+  .hub-ss::-webkit-scrollbar{height:0}
+  .ss-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg-white);cursor:pointer;font-size:12px;font-weight:500;color:var(--text-secondary);transition:all .12s;font-family:var(--font);white-space:nowrap;flex-shrink:0}
+  .ss-chip:hover{border-color:var(--border-strong);color:var(--text-primary)}
+  .ss-chip.active{background:var(--accent-light);border-color:var(--accent-border);color:var(--accent)}
+  .ss-cnt{font-size:11px;font-weight:700;font-family:var(--font-mono)}
+  .ss-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .ss-div{width:1px;height:16px;background:var(--border);margin:0 5px;flex-shrink:0}
+  .ss-chip.ss-ov{color:#b91c1c}
+  .ss-chip.ss-ov.active{background:#fef2f2;border-color:#fca5a5;color:#b91c1c}
+  .ss-chip.ss-ov:not(.active):hover{border-color:#fca5a5;color:#b91c1c}
+
+  /* ─── Filter Row ─── */
+  .hub-filter{display:flex;align-items:center;gap:8px;padding:9px 36px;background:var(--bg-white);border-bottom:1px solid var(--border);flex-shrink:0}
+  .hub-srch{display:flex;align-items:center;gap:6px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:6px 10px;width:230px;transition:border-color .12s}
+  .hub-srch:focus-within{border-color:var(--accent-border)}
+  .hub-srch svg{width:12px;height:12px;color:var(--text-muted);flex-shrink:0}
+  .hub-srch input{border:none;background:none;font-size:12.5px;color:var(--text-primary);font-family:var(--font);flex:1;outline:none;width:100%}
+  .hub-srch input::placeholder{color:var(--text-muted)}
+  .hub-flt{display:flex;align-items:center;gap:4px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);font-size:12px;font-weight:500;color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .12s;white-space:nowrap}
+  .hub-flt:hover{border-color:var(--border-strong);color:var(--text-primary)}
+  .hub-flt svg{width:10px;height:10px;opacity:.5}
+  .hub-cnt{font-size:11.5px;color:var(--text-muted);margin-left:auto}
+  .hub-cnt strong{color:var(--text-secondary);font-weight:600}
+
+  /* ─── Table Wrap ─── */
+  .hub-tbl-wrap{flex:1;overflow-y:auto;padding:20px 36px;background:var(--bg-surface)}
+  .hub-tbl{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .hub-grid{display:grid;grid-template-columns:minmax(180px,1fr) 72px 168px 108px 82px 140px 78px;align-items:center}
+  .hub-tbl-head{padding:0 20px;border-bottom:1.5px solid var(--border);background:var(--bg-surface)}
+  .hub-th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);padding:9px 8px}
+
+  /* Section headers */
+  .hub-sec{display:flex;align-items:center;gap:8px;padding:8px 28px;border-bottom:1px solid var(--border);font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;user-select:none;transition:background .1s}
+  .hub-sec:hover{background:rgba(0,0,0,.01)}
+  .hub-sec-ov{background:#fef9f9;color:#dc2626;border-bottom-color:#fde8e8}
+  .hub-sec-active{background:#f8faff;color:var(--accent)}
+  .hub-sec-cal{background:#f8f7ff;color:#4338ca}
+  .hub-sec-done{background:#f0fdf4;color:#15803d}
+  .hub-sec-up{color:var(--text-muted)}
+  .hub-sec-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .hub-sec-cnt{font-size:10px;font-weight:700;font-family:var(--font-mono);opacity:.7;margin-left:2px}
+  .hub-sec-arr{width:11px;height:11px;transition:transform .15s;flex-shrink:0;opacity:.5;margin-right:2px}
+  .hub-sec-arr.open{transform:rotate(90deg)}
+  .hub-sec-hint{font-size:10.5px;font-weight:400;letter-spacing:0;text-transform:none;margin-left:auto;opacity:.6}
+
+  /* Rows */
+  .hub-tr{padding:0 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+  .hub-tr:hover{background:#fafbfd}
+  .hub-tr:last-child{border-bottom:none}
+  .hub-tr.ov{border-left:3px solid #ef4444}
+  .hub-tr.ov:hover{background:#fff9f9}
+  .hub-td{padding:10px 8px;display:flex;align-items:center}
+  .hub-col-emp{gap:10px;min-width:0}
+  .hub-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;letter-spacing:-.3px}
+  .hub-nm{font-size:13px;font-weight:600;color:var(--text-primary)}
+  .hub-role{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .hub-dept{font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
+  .hub-chip{font-size:11px;font-weight:500;padding:3px 9px;border-radius:6px;border:1px solid;white-space:nowrap}
+  .hub-prog{display:flex;align-items:center;gap:6px;width:100%}
+  .hub-prog-track{flex:1;height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden;min-width:40px}
+  .hub-prog-fill{height:100%;border-radius:99px}
+  .hub-prog-pct{font-size:10.5px;font-weight:600;color:var(--text-secondary);white-space:nowrap;min-width:26px;text-align:right;font-family:var(--font-mono)}
+  .hub-revs{display:flex;align-items:center}
+  .hub-rev{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;border:2px solid #fff;margin-left:-5px;flex-shrink:0}
+  .hub-rev:first-child{margin-left:0}
+  .hub-unassigned{font-size:11px;color:var(--text-muted);font-style:italic}
+  .hub-due-d{font-size:12.5px;font-weight:500;color:var(--text-primary)}
+  .hub-due-r{font-size:10.5px;margin-top:2px}
+  .hub-act{font-size:11.5px;font-weight:500;padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .12s;white-space:nowrap}
+  .hub-act:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-light)}
+  /* Contextual "who acts" note under status chip */
+  .hub-chip-note{font-size:10px;color:var(--text-muted);margin-top:3px;line-height:1.35;max-width:158px}
+  .hub-chip-note.err{color:#dc2626;font-weight:500}
+  /* Progress — sections count below bar */
+  .hub-prog-wrap{display:flex;flex-direction:column;gap:3px;width:100%}
+  .hub-prog-secs{font-size:10px;color:var(--text-muted)}
+  /* Reviewer cell — unassigned warning */
+  .hub-rev-alert{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:2px 7px;white-space:nowrap;cursor:pointer}
+  .hub-rev-alert svg{width:9px;height:9px;flex-shrink:0}
+  /* Due date — reminder indicator */
+  .hub-due-reminder{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--text-muted);margin-top:3px}
+  .hub-due-reminder svg{width:9px;height:9px;flex-shrink:0;opacity:.55}
+  /* Amber left border for blocked/waiting rows */
+  .hub-tr.waiting{border-left:3px solid #f59e0b}
+  .hub-tr.waiting:hover{background:#fffdf7}
+
+  /* ─── Tier Config styles (preserved) ─── */
+  .ct-back{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-muted);text-decoration:none;margin-bottom:10px;transition:color .1s;cursor:pointer}
+  .ct-back:hover{color:var(--text-secondary)}
+  .ct-back svg{width:12px;height:12px}
+  .ct-page-title{font-size:20px;font-weight:700;color:var(--text-primary);letter-spacing:-.4px;margin-bottom:5px}
+  .ct-page-sub{font-size:12.5px;color:var(--text-muted);line-height:1.6;white-space:nowrap}
+  .ct-cfg-hdr{display:flex;align-items:flex-start;justify-content:space-between;padding:20px 0 16px}
+  .ct-modified-badge{font-size:11px;font-weight:500;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:99px;padding:3px 10px;margin-right:2px}
+  .ct-btn-discard{font-size:12.5px;font-weight:500;padding:7px 16px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .12s}
+  .ct-btn-discard:hover{border-color:var(--border-strong);color:var(--text-primary)}
+  .ct-btn-save{font-size:12.5px;font-weight:600;padding:7px 18px;border:none;border-radius:var(--radius-md);background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);transition:background .12s}
+  .ct-btn-save:hover{background:var(--accent-hover)}
+  .ct-disc-nav{display:flex;gap:2px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:2px;margin-bottom:20px;width:fit-content}
+  .ct-disc-btn{font-size:12px;font-family:var(--font);font-weight:500;color:var(--text-muted);background:transparent;border:none;cursor:pointer;padding:6px 18px;border-radius:6px;white-space:nowrap;transition:all .12s;display:flex;align-items:center;gap:6px}
+  .ct-disc-btn:hover:not(.active){color:var(--text-secondary)}
+  .ct-disc-btn.active{background:var(--bg-white);color:var(--text-primary);box-shadow:0 1px 3px rgba(0,0,0,.08);font-weight:600}
+  .ct-disc-changed{width:6px;height:6px;border-radius:50%;background:#f59e0b;display:none}
+  .ct-disc-btn.modified .ct-disc-changed{display:block}
+  .ct-layout{display:grid;grid-template-columns:1fr 284px;gap:16px;align-items:start}
+  .ct-card{background:var(--bg-white);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .ct-card-hdr{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between}
+  .ct-card-title{font-size:15px;font-weight:700;color:var(--text-primary);letter-spacing:-.2px;margin-bottom:4px}
+  .ct-card-meta{font-size:11.5px;color:var(--text-muted)}
+  .ct-unsaved-badge{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:5px;background:#fef9c3;color:#854d0e;border:1px solid #fde68a;display:none}
+  .ct-bar-section{padding:20px 22px 18px}
+  .ct-bar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:10px}
+  .ct-bar{display:flex;height:56px;border-radius:8px;overflow:hidden;gap:2px}
+  .ct-seg{display:flex;flex-direction:column;justify-content:center;padding:0 14px;overflow:hidden;min-width:16px;transition:flex .3s ease}
+  .ct-seg-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ct-seg-range{font-size:9.5px;margin-top:3px;white-space:nowrap;overflow:hidden;opacity:.75}
+  .ct-thresh-section{border-top:1px solid var(--border);padding:0 22px 4px}
+  .ct-thresh-hdr{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);padding:14px 0 8px;display:flex;align-items:center;justify-content:space-between}
+  .ct-thresh-hdr-hint{font-size:10.5px;color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0}
+  .ct-thresh-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--border)}
+  .ct-tier-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .ct-tier-name-lbl{font-size:12.5px;font-weight:500;color:var(--text-primary);width:60px;flex-shrink:0}
+  .ct-range-from{font-size:12px;color:var(--text-muted);white-space:nowrap}
+  .ct-thresh-input{width:46px;height:28px;font-size:13px;font-weight:600;font-family:var(--font-mono);text-align:center;border:1.5px solid var(--border-strong);border-radius:6px;background:var(--bg-white);color:var(--text-primary);-moz-appearance:textfield;cursor:pointer;transition:border-color .1s,box-shadow .1s}
+  .ct-thresh-input::-webkit-outer-spin-button,.ct-thresh-input::-webkit-inner-spin-button{-webkit-appearance:none}
+  .ct-thresh-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+  .ct-thresh-fixed{font-size:13px;font-weight:600;font-family:var(--font-mono);color:var(--text-muted);padding:0 8px}
+  .ct-tier-count{font-size:11px;color:var(--text-muted);margin-left:4px;white-space:nowrap}
+  .ct-xp-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:var(--accent-light);color:var(--accent);margin-left:auto;white-space:nowrap}
+  .ct-preview-section{border-top:1px solid var(--border);padding:18px 22px 22px}
+  .ct-preview-hdr{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:14px}
+  .ct-prev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .ct-prev-col-hdr{display:flex;align-items:center;gap:5px;margin-bottom:8px;padding-bottom:7px;border-bottom:2px solid}
+  .ct-prev-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+  .ct-prev-tier-name{font-size:11px;font-weight:600;color:var(--text-secondary)}
+  .ct-prev-tier-count{font-size:10.5px;color:var(--text-muted);margin-left:auto;background:var(--bg-surface);border-radius:99px;padding:0 5px;line-height:18px}
+  .ct-prev-member{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #f3f4f6}
+  .ct-prev-member:last-child{border-bottom:none}
+  .ct-prev-av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0;letter-spacing:-.3px}
+  .ct-prev-name{font-size:11.5px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ct-prev-level{font-size:10px;color:var(--text-muted)}
+  .ct-prev-empty{font-size:11px;color:var(--text-muted);padding:6px 0;font-style:italic}
+  .ct-impact-card{background:var(--bg-white);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:sticky;top:0}
+  .ct-impact-hdr{padding:14px 16px;border-bottom:1px solid var(--border)}
+  .ct-impact-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-secondary)}
+  .ct-impact-sub{font-size:11px;color:var(--text-muted);margin-top:3px;line-height:1.4}
+  .ct-xp-section{padding:14px 16px;border-bottom:1px solid var(--border)}
+  .ct-xp-sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:10px}
+  .ct-xp-row{display:flex;align-items:center;gap:8px;padding:5px 0}
+  .ct-xp-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+  .ct-xp-tier{font-size:12px;font-weight:500;color:var(--text-primary);flex:1}
+  .ct-xp-num{font-size:13px;font-weight:700;font-family:var(--font-mono);color:var(--text-primary)}
+  .ct-xp-unit{font-size:10px;color:var(--text-muted)}
+  .ct-effects-section{padding:14px 16px}
+  .ct-effects-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:12px}
+  .ct-effect-item{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
+  .ct-effect-item:first-child{border-top:none;padding-top:0}
+  .ct-effect-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .ct-effect-icon svg{width:14px;height:14px}
+  .ct-effect-title{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:3px}
+  .ct-effect-desc{font-size:11px;color:var(--text-muted);line-height:1.5}
+  .ct-info-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:var(--radius-md);margin-bottom:16px;font-size:11.5px;color:#0369a1}
+  .ct-info-bar svg{width:14px;height:14px;flex-shrink:0;color:#0284c7}
+  .mobile-menu-btn{display:none;width:32px;height:32px;border-radius:var(--radius-md);border:1px solid var(--border);background:transparent;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);flex-shrink:0}
+  .mobile-menu-btn svg{width:16px;height:16px}
+  .sb-backdrop{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:199}
+  .sb-backdrop.show{display:block}
+  @media(max-width:1024px){
+    html{height:auto}
+    body{height:auto;min-height:100dvh;overflow:auto}
+    .app{height:auto;min-height:100dvh;overflow:visible;flex-direction:column}
+    .sidebar{position:fixed;top:0;left:0;bottom:0;z-index:200;transform:translateX(-100%);transition:transform .25s ease}
+    .sidebar.sb-open{transform:translateX(0)}
+    .main{height:auto;overflow:visible}
+    .ct-hdr{position:sticky;top:0;z-index:100}
+    .mobile-menu-btn{display:flex}
+  }
+  @media(max-width:768px){
+    .ct-hdr{padding:10px 14px;flex-wrap:wrap;gap:8px}
+    .ct-hub-grid{grid-template-columns:1fr!important}
+  }
+</style>
+</head>
+<body>
+<div class="sb-backdrop" id="sbBackdrop" onclick="toggleSidebar()"></div>
+<div class="app">
+
+  <!-- ─── Sidebar ─── -->
+  <div class="sidebar">
+    <div class="sb-top">
+      <div class="sb-logo">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M10 3L16 7V13L10 17L4 13V7L10 3Z" stroke="white" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" fill="white"/></svg>
+      </div>
+      <div><div class="sb-brand">Pulse</div></div>
+    </div>
+    <div class="sb-scroll">
+      <div class="sb-section">Menu</div>
+      <a class="sb-item" href="index.html" style="text-decoration:none">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+        Dashboard
+      </a>
+      <div class="sb-item" id="projToggle" onclick="sbToggle()" style="cursor:pointer">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
+        Projects
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="sb-sub" id="projSub">
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Current Projects</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Internal</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">DesignOps</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Fulfilment</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Maintenance</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Inactive</a>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="3"/><path d="M1 14c0-2.8 2.2-5 5-5"/><circle cx="12" cy="9" r="2.5"/><path d="M9.5 14c0-1.4.9-2.5 2.5-2.5s2.5 1.1 2.5 2.5"/></svg>
+        Team <span class="badge">12</span>
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
+        Time Logs
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l4-3 4 3 4-3v7l-4 3-4-3-4 3z"/></svg>
+        Reports
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <a class="sb-item active" href="career-tracks.html" style="text-decoration:none">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3.5L13 6l-2.5 2.5.5 3.5L8 10.5 5 12l.5-3.5L3 6l3.5-.5L8 2z"/></svg>
+        Career Tracks
+      </a>
+      <div class="sb-divider"></div>
+      <div class="sb-section">Admin</div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>
+        Users
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+        Organizations
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4"/></svg>
+        Settings
+      </div>
+    </div>
+    <div class="sb-bottom">
+      <div class="sb-user">
+        <div class="sb-avatar">JD</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name">John Doe</div>
+          <div class="sb-user-role">Product Manager</div>
+        </div>
+        <svg class="sb-more" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="1.5"/><circle cx="3" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Main ─── -->
+  <div class="main">
+
+    <!-- Header -->
+    <div class="ct-hdr">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+      </button>
+      <div>
+        <div class="ct-title">Career Tracks</div>
+        <div class="ct-subtitle">Review cycles, growth tracking, and team calibration</div>
+      </div>
+      <div class="ct-hdr-right">
+        <div class="ct-cycle-pick" id="cyclePick">
+          <span class="ct-cycle-lbl">Cycle</span>
+          <span class="ct-cycle-val" onclick="toggleCycleDrop(event)">
+            <span id="cycleValTxt">Q1 2026</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4" stroke-linecap="round"/></svg>
+          </span>
+          <div class="ct-cycle-drop">
+            <div class="ct-cycle-opt active" onclick="selectCycle(this,'Q1 2026')">
+              Q1 2026
+              <span class="ct-cycle-opt-badge" style="background:#eff6ff;color:#2563eb">Current</span>
+            </div>
+            <div class="ct-cycle-opt" onclick="selectCycle(this,'Q3 2025')">Q3 2025</div>
+            <div class="ct-cycle-opt" onclick="selectCycle(this,'Q1 2025')">Q1 2025</div>
+            <div class="ct-cycle-sep"></div>
+            <div class="ct-cycle-opt" onclick="selectCycle(this,'Q3 2024')">Q3 2024</div>
+            <div class="ct-cycle-opt" onclick="selectCycle(this,'Q1 2024')">Q1 2024</div>
+          </div>
+        </div>
+        <button class="ct-btn-ghost" onclick="setMode('config')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4"/></svg>
+          Tier Config
+        </button>
+        <button class="ct-btn-primary">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10" stroke-linecap="round"/></svg>
+          New Cycle
+        </button>
+      </div>
+    </div>
+
+    <!-- Mode Tabs -->
+    <div class="ct-mode-bar">
+      <button id="ctModeHub" class="ct-mode-tab active" onclick="setMode('hub')">Reviews</button>
+      <div class="ct-mode-sep"></div>
+      <button id="ctModeConf" class="ct-mode-tab" onclick="setMode('config')">Tier Configuration</button>
+    </div>
+
+    <!-- ── Hub View ── -->
+    <div id="ctHubView">
+
+      <!-- Status strip -->
+      <div class="hub-ss" id="hubSS"></div>
+
+      <!-- Filter row -->
+      <div class="hub-filter">
+        <div class="hub-srch">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M11 11l3 3" stroke-linecap="round"/></svg>
+          <input id="hubSearchInput" placeholder="Search by name or role…" oninput="applyFilters()">
+        </div>
+        <button class="hub-flt">
+          All Departments
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6l4 4 4-4" stroke-linecap="round"/></svg>
+        </button>
+        <button class="hub-flt">
+          All Batches
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6l4 4 4-4" stroke-linecap="round"/></svg>
+        </button>
+        <button class="hub-flt">
+          All Reviewers
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6l4 4 4-4" stroke-linecap="round"/></svg>
+        </button>
+        <span class="hub-cnt" id="hubCnt"><strong>12</strong> reviews</span>
+      </div>
+
+      <!-- Table -->
+      <div class="hub-tbl-wrap">
+        <div class="hub-tbl">
+          <div class="hub-tbl-head hub-grid">
+            <div class="hub-th" style="padding-left:0">Employee</div>
+            <div class="hub-th">Dept</div>
+            <div class="hub-th">Status</div>
+            <div class="hub-th">Progress</div>
+            <div class="hub-th">Reviewers</div>
+            <div class="hub-th">Due Date</div>
+            <div class="hub-th"></div>
+          </div>
+          <div id="hubBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Config View ── -->
+    <div id="ctConfigView">
+
+      <!-- Config sub-header -->
+      <div class="ct-cfg-hdr">
+        <div>
+          <div class="ct-page-title">Tier Configuration</div>
+          <div class="ct-page-sub">Set level boundaries per discipline — drives XP scores, risk signals, and staffing benchmarks.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="ct-modified-badge" id="ctModifiedBadge" style="display:none">1 discipline modified</span>
+          <button class="ct-btn-discard" onclick="discardChanges()">Discard</button>
+          <button class="ct-btn-save" onclick="saveChanges()">Save Changes</button>
+        </div>
+      </div>
+
+      <div class="ct-info-bar">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v5M8 5.5v.5" stroke-linecap="round"/></svg>
+        Tier boundaries determine which XP score each team member contributes. Changes apply to all active projects after saving.
+      </div>
+
+      <div class="ct-disc-nav">
+        <button class="ct-disc-btn active" data-disc="dev" onclick="setDisc('dev')">Development <span class="ct-disc-changed"></span></button>
+        <button class="ct-disc-btn" data-disc="design" onclick="setDisc('design')">Design <span class="ct-disc-changed"></span></button>
+        <button class="ct-disc-btn" data-disc="qa" onclick="setDisc('qa')">Quality Assurance <span class="ct-disc-changed"></span></button>
+        <button class="ct-disc-btn" data-disc="pm" onclick="setDisc('pm')">Project Management <span class="ct-disc-changed"></span></button>
+      </div>
+
+      <div class="ct-layout">
+        <div>
+          <div class="ct-card">
+            <div class="ct-card-hdr">
+              <div>
+                <div class="ct-card-title" id="ctCardTitle">Development</div>
+                <div class="ct-card-meta" id="ctCardMeta">25 levels · 4 tiers · 6 members in active projects</div>
+              </div>
+              <span class="ct-unsaved-badge" id="ctUnsavedBadge">Unsaved</span>
+            </div>
+            <div class="ct-bar-section">
+              <div class="ct-bar-lbl">Level Structure</div>
+              <div class="ct-bar" id="ctBar"></div>
+            </div>
+            <div class="ct-thresh-section">
+              <div class="ct-thresh-hdr">
+                Tier Thresholds
+                <span class="ct-thresh-hdr-hint">Edit the upper boundary of each tier</span>
+              </div>
+              <div id="ctThresholds"></div>
+            </div>
+            <div class="ct-preview-section">
+              <div class="ct-preview-hdr">Member Preview — Current active members categorized by level</div>
+              <div class="ct-prev-grid" id="ctPreview"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="ct-impact-card">
+            <div class="ct-impact-hdr">
+              <div class="ct-impact-title">Configuration Impact</div>
+              <div class="ct-impact-sub">How these settings affect the platform</div>
+            </div>
+            <div class="ct-xp-section">
+              <div class="ct-xp-sec-title">Experience Score per Tier</div>
+              <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#f1f5f9;border:1.5px solid #e2e8f0"></div><span class="ct-xp-tier">Junior</span><span class="ct-xp-num">30</span><span class="ct-xp-unit">/ 100</span></div>
+              <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#dbeafe;border:1.5px solid #bfdbfe"></div><span class="ct-xp-tier">Mid-level</span><span class="ct-xp-num">55</span><span class="ct-xp-unit">/ 100</span></div>
+              <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#3b82f6"></div><span class="ct-xp-tier">Senior</span><span class="ct-xp-num">80</span><span class="ct-xp-unit">/ 100</span></div>
+              <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#1e3a8a"></div><span class="ct-xp-tier">Lead</span><span class="ct-xp-num">95</span><span class="ct-xp-unit">/ 100</span></div>
+              <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.5">Scores are averaged across all discipline members in a project to produce the Team Experience index.</div>
+            </div>
+            <div class="ct-effects-section">
+              <div class="ct-effects-title">Downstream Effects</div>
+              <div class="ct-effect-item">
+                <div class="ct-effect-icon" style="background:#eff6ff"><svg viewBox="0 0 16 16" fill="none" stroke="#3b82f6" stroke-width="1.6"><path d="M2 13h2V8H2zM6 13V5H4M10 13V3M14 13V6h-2" stroke-linecap="round"/></svg></div>
+                <div><div class="ct-effect-title">Team Experience Score</div><div class="ct-effect-desc">Adjusting thresholds changes each member's XP contribution and shifts the overall project score.</div></div>
+              </div>
+              <div class="ct-effect-item">
+                <div class="ct-effect-icon" style="background:#fffbeb"><svg viewBox="0 0 16 16" fill="none" stroke="#f59e0b" stroke-width="1.6"><path d="M8 2L1.5 13.5h13L8 2z" stroke-linejoin="round"/><path d="M8 6.5v3.5" stroke-linecap="round"/><circle cx="8" cy="11.5" r=".75" fill="#f59e0b" stroke="none"/></svg></div>
+                <div><div class="ct-effect-title">Risk Signals</div><div class="ct-effect-desc">Staffing risk flags activate when a discipline lacks sufficient senior or lead coverage.</div></div>
+              </div>
+              <div class="ct-effect-item">
+                <div class="ct-effect-icon" style="background:#f0fdf4"><svg viewBox="0 0 16 16" fill="none" stroke="#16a34a" stroke-width="1.6"><path d="M3 8h10M8 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div><div class="ct-effect-title">Allocation Benchmarks</div><div class="ct-effect-desc">Expected experience targets for new project scopes are auto-calculated from active tier distributions.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+/* ───────────────────────────────────────────────
+   REVIEW HUB DATA
+─────────────────────────────────────────────── */
+var REVIEWS = [
+  /* ── Overdue ── */
+  { id:1, name:'Sarah Kim',    ini:'SK', color:'#3b82f6', role:'Mid Developer',     dept:'Dev',    tier:'Mid',    status:'waiting-pm',  progress:55,  secsDone:3, secsTotal:5, reviewers:[{i:'AK',c:'#f59e0b',n:'Anna K.'}],                                dueDate:'May 15', daysLeft:-4, batch:'Batch A', reminder:'sent' },
+  { id:2, name:'Lucas M.',     ini:'LM', color:'#a855f7', role:'Mid Designer',      dept:'Design', tier:'Mid',    status:'waiting-eng', progress:30,  secsDone:2, secsTotal:5, reviewers:[{i:'AK',c:'#f59e0b',n:'Anna K.'}],                                dueDate:'May 18', daysLeft:-1, batch:'Batch A', reminder:'sent' },
+  { id:3, name:'Priya D.',     ini:'PD', color:'#f59e0b', role:'Senior PM',         dept:'PM',     tier:'Senior', status:'waiting-eng', progress:40,  secsDone:2, secsTotal:5, reviewers:[],                                                               dueDate:'May 12', daysLeft:-7, batch:'Batch A', reminder:'pending' },
+  /* ── Active ── */
+  { id:4, name:'Clara H.',     ini:'CH', color:'#3b82f6', role:'Senior Developer',  dept:'Dev',    tier:'Senior', status:'in-progress', progress:60,  secsDone:3, secsTotal:5, reviewers:[{i:'AK',c:'#f59e0b',n:'Anna K.'},{i:'MV',c:'#3b82f6',n:'Marco V.'}], dueDate:'May 30', daysLeft:8,  batch:'Batch A' },
+  { id:5, name:'Jake R.',      ini:'JR', color:'#3b82f6', role:'Junior Developer',  dept:'Dev',    tier:'Junior', status:'in-progress', progress:45,  secsDone:2, secsTotal:5, reviewers:[{i:'MV',c:'#3b82f6',n:'Marco V.'}],                               dueDate:'Jun 10', daysLeft:19, batch:'Batch B' },
+  { id:6, name:'Sarah J.',     ini:'SJ', color:'#f59e0b', role:'Project Manager',   dept:'PM',     tier:'Mid',    status:'waiting-pm',  progress:35,  secsDone:2, secsTotal:5, reviewers:[{i:'HR',c:'#6366f1',n:'HR Admin'}],                               dueDate:'Jun 8',  daysLeft:17, batch:'Batch B' },
+  /* ── Calibration ── */
+  { id:7, name:'Marco V.',     ini:'MV', color:'#3b82f6', role:'Senior Developer',  dept:'Dev',    tier:'Senior', status:'calibration', progress:85,  secsDone:5, secsTotal:5, reviewers:[{i:'AK',c:'#f59e0b',n:'Anna K.'},{i:'HR',c:'#6366f1',n:'HR Admin'}],  dueDate:'Jun 5',  daysLeft:14, batch:'Batch A' },
+  { id:8, name:'Michael Chen', ini:'MC', color:'#64748b', role:'Lead Architect',    dept:'Dev',    tier:'Lead',   status:'calibration', progress:88,  secsDone:5, secsTotal:5, reviewers:[{i:'HR',c:'#6366f1',n:'HR Admin'},{i:'JD',c:'#8b5cf6',n:'John D.'}],  dueDate:'Jun 3',  daysLeft:12, batch:'Batch A' },
+  /* ── Finalized ── */
+  { id:9, name:'Anna K.',      ini:'AK', color:'#f59e0b', role:'Senior PM',         dept:'PM',     tier:'Senior', status:'visible',     progress:100, secsDone:5, secsTotal:5, reviewers:[{i:'HR',c:'#6366f1',n:'HR Admin'},{i:'JD',c:'#8b5cf6',n:'John D.'}],  dueDate:'May 10', daysLeft:0,  batch:'Batch A' },
+  { id:10,name:'Tom Reeves',   ini:'TR', color:'#10b981', role:'Junior QA Analyst', dept:'QA',     tier:'Junior', status:'finalized',   progress:100, secsDone:5, secsTotal:5, reviewers:[{i:'AK',c:'#f59e0b',n:'Anna K.'}],                                dueDate:'May 8',  daysLeft:0,  batch:'Batch A' },
+  /* ── Upcoming ── */
+  { id:11,name:'Felipe T.',    ini:'FT', color:'#3b82f6', role:'Mid Developer',     dept:'Dev',    tier:'Mid',    status:'draft',       progress:10,  secsDone:0, secsTotal:5, reviewers:[],                                                               dueDate:'Jun 15', daysLeft:24, batch:'Batch C' },
+  { id:12,name:'Rebeca A.',    ini:'RA', color:'#a855f7', role:'Mid Designer',      dept:'Design', tier:'Mid',    status:'draft',       progress:0,   secsDone:0, secsTotal:5, reviewers:[],                                                               dueDate:'Jun 20', daysLeft:29, batch:'Batch C' }
+];
+
+var STATUS_CFG = {
+  'draft':       { l:'Draft',              c:'#64748b', bg:'#f8fafc', bdr:'#e2e8f0' },
+  'in-progress': { l:'In Progress',        c:'#2563eb', bg:'#eff6ff', bdr:'#bfdbfe' },
+  'waiting-pm':  { l:'Waiting for PM',      c:'#b45309', bg:'#fffbeb', bdr:'#fde68a' },
+  'waiting-eng': { l:'Waiting Eng. Review', c:'#7c3aed', bg:'#f5f3ff', bdr:'#ddd6fe' },
+  'calibration': { l:'Calibration',        c:'#4338ca', bg:'#eef2ff', bdr:'#c7d2fe' },
+  'finalized':   { l:'Finalized',          c:'#166534', bg:'#f0fdf4', bdr:'#bbf7d0' },
+  'visible':     { l:'Employee Visible',   c:'#0f766e', bg:'#f0fdfa', bdr:'#99f6e4' }
+};
+
+var DEPT_STYLE = {
+  'Dev':    { bg:'#eff6ff', c:'#1d4ed8' },
+  'Design': { bg:'#fdf4ff', c:'#7e22ce' },
+  'PM':     { bg:'#fffbeb', c:'#b45309' },
+  'QA':     { bg:'#f0fdf4', c:'#166534' }
+};
+
+var HUB = { filter:'all', search:'' };
+var SEC_OPEN = { overdue:true, active:true, calibration:true, done:false, upcoming:true };
+
+/* ── Status Strip ── */
+function renderSS() {
+  var total = REVIEWS.length;
+  var overdue = REVIEWS.filter(function(r){ return r.daysLeft < 0; }).length;
+  var draft   = REVIEWS.filter(function(r){ return r.status === 'draft'; }).length;
+  var inprog  = REVIEWS.filter(function(r){ return r.status === 'in-progress'; }).length;
+  var waitPm  = REVIEWS.filter(function(r){ return r.status === 'waiting-pm'; }).length;
+  var waitEng = REVIEWS.filter(function(r){ return r.status === 'waiting-eng'; }).length;
+  var cal     = REVIEWS.filter(function(r){ return r.status === 'calibration'; }).length;
+  var done    = REVIEWS.filter(function(r){ return r.status === 'finalized' || r.status === 'visible'; }).length;
+
+  var chips = [
+    { key:'all',       label:'All',               cnt:total,   dot:'',        cls:'' },
+    { key:'overdue',   label:'Overdue',            cnt:overdue, dot:'#ef4444', cls:'ss-ov' },
+    { key:'__sep__' },
+    { key:'draft',     label:'Draft',              cnt:draft,   dot:'#9ca3af', cls:'' },
+    { key:'in-progress',label:'In Progress',       cnt:inprog,  dot:'#3b82f6', cls:'' },
+    { key:'waiting-pm',label:'Waiting for PM',     cnt:waitPm,  dot:'#f59e0b', cls:'' },
+    { key:'waiting-eng',label:'Waiting Eng.',      cnt:waitEng, dot:'#a855f7', cls:'' },
+    { key:'calibration',label:'Calibration',       cnt:cal,     dot:'#6366f1', cls:'' },
+    { key:'__sep2__' },
+    { key:'finalized', label:'Finalized',          cnt:done,    dot:'#10b981', cls:'' }
+  ];
+
+  var html = chips.map(function(ch) {
+    if (ch.key === '__sep__' || ch.key === '__sep2__') return '<div class="ss-div"></div>';
+    var isActive = HUB.filter === ch.key;
+    return '<button class="ss-chip ' + ch.cls + (isActive ? ' active' : '') + '" onclick="setFilter(\'' + ch.key + '\')">'
+      + (ch.dot ? '<span class="ss-dot" style="background:' + ch.dot + '"></span>' : '')
+      + ch.label
+      + ' <span class="ss-cnt">' + ch.cnt + '</span>'
+      + '</button>';
+  }).join('');
+  document.getElementById('hubSS').innerHTML = html;
+}
+
+function setFilter(f) {
+  HUB.filter = f;
+  renderSS();
+  renderHub();
+}
+
+function applyFilters() {
+  HUB.search = document.getElementById('hubSearchInput').value.toLowerCase();
+  renderHub();
+}
+
+/* ── Table Rendering ── */
+function getFiltered() {
+  return REVIEWS.filter(function(r) {
+    var matchFilter = HUB.filter === 'all' ? true
+      : HUB.filter === 'overdue'   ? r.daysLeft < 0
+      : HUB.filter === 'finalized' ? (r.status === 'finalized' || r.status === 'visible')
+      : r.status === HUB.filter;
+    var matchSearch = HUB.search === '' ? true
+      : r.name.toLowerCase().indexOf(HUB.search) !== -1
+      || r.role.toLowerCase().indexOf(HUB.search) !== -1
+      || r.dept.toLowerCase().indexOf(HUB.search) !== -1;
+    return matchFilter && matchSearch;
+  });
+}
+
+function renderRow(r) {
+  var s = STATUS_CFG[r.status] || STATUS_CFG['draft'];
+  var ds = DEPT_STYLE[r.dept] || { bg:'#f5f6f8', c:'#6b7280' };
+  var isOv = r.daysLeft < 0;
+  var isWaiting = r.status === 'waiting-pm' || r.status === 'waiting-eng';
+
+  /* Due date line */
+  var dueRel = isOv
+    ? 'Overdue · ' + Math.abs(r.daysLeft) + 'd ago'
+    : r.daysLeft === 0 ? 'Completed'
+    : r.daysLeft <= 7  ? 'Due in ' + r.daysLeft + 'd'
+    : 'In ' + r.daysLeft + 'd';
+  var dueRelColor = isOv ? '#dc2626' : r.daysLeft <= 7 ? '#d97706' : '#9ca3af';
+
+  /* Contextual "who needs to act" note under status chip */
+  var rv0 = r.reviewers.length > 0 ? r.reviewers[0].n.split(' ')[0] : null;
+  var actNote = '', actNoteCls = '';
+  if      (r.status === 'draft')       { actNote = 'Employee has not started'; }
+  else if (r.status === 'in-progress') { actNote = 'Employee completing self-review'; }
+  else if (r.status === 'waiting-pm')  { actNote = rv0 ? rv0 + ' · PM review pending' : 'No PM reviewer assigned'; actNoteCls = rv0 ? '' : 'err'; }
+  else if (r.status === 'waiting-eng') { actNote = rv0 ? rv0 + ' · Eng. review pending' : 'No reviewer assigned';  actNoteCls = rv0 ? '' : 'err'; }
+  else if (r.status === 'calibration') { actNote = 'Calibration session pending'; }
+  else if (r.status === 'finalized')   { actNote = 'Ready to share with employee'; }
+  else if (r.status === 'visible')     { actNote = 'Report shared with employee'; }
+
+  /* Reviewer cell — alert if unassigned */
+  var revHtml;
+  if (r.reviewers.length === 0) {
+    revHtml = '<div class="hub-rev-alert">'
+      + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2L1.5 13.5h13L8 2z" stroke-linejoin="round"/><path d="M8 7v3" stroke-linecap="round"/><circle cx="8" cy="11.5" r=".8" fill="currentColor" stroke="none"/></svg>'
+      + 'Assign reviewer'
+      + '</div>';
+  } else {
+    revHtml = '<div class="hub-revs">'
+      + r.reviewers.map(function(rv) {
+          return '<div class="hub-rev" style="background:' + rv.c + '" title="' + rv.n + '">' + rv.i + '</div>';
+        }).join('')
+      + '</div>';
+  }
+
+  /* Sections count under progress bar */
+  var secsHtml = (r.secsDone !== undefined)
+    ? '<div class="hub-prog-secs">' + r.secsDone + ' / ' + r.secsTotal + ' sections</div>'
+    : '';
+
+  /* Reminder indicator */
+  var reminderHtml = '';
+  var bellSvg = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2a5 5 0 015 5v2.5l1 1.5H2l1-1.5V7a5 5 0 015-5z"/><path d="M6.5 14a1.5 1.5 0 003 0"/></svg>';
+  if (isOv && r.reminder === 'pending') {
+    reminderHtml = '<div class="hub-due-reminder">' + bellSvg + 'Reminder pending</div>';
+  } else if (isOv && r.reminder === 'sent') {
+    reminderHtml = '<div class="hub-due-reminder">' + bellSvg + 'Auto-reminder sent</div>';
+  }
+
+  var rowCls = isOv ? ' ov' : isWaiting ? ' waiting' : '';
+
+  return '<div class="hub-tr hub-grid' + rowCls + '" onclick="openReview(' + r.id + ')">'
+    + '<div class="hub-td hub-col-emp">'
+    +   '<div class="hub-av" style="background:' + r.color + '">' + r.ini + '</div>'
+    +   '<div><div class="hub-nm">' + r.name + '</div><div class="hub-role">' + r.role + '</div></div>'
+    + '</div>'
+    + '<div class="hub-td"><span class="hub-dept" style="background:' + ds.bg + ';color:' + ds.c + '">' + r.dept + '</span></div>'
+    + '<div class="hub-td"><div>'
+    +   '<span class="hub-chip" style="color:' + s.c + ';background:' + s.bg + ';border-color:' + s.bdr + '">' + s.l + '</span>'
+    +   (actNote ? '<div class="hub-chip-note' + (actNoteCls ? ' ' + actNoteCls : '') + '">' + actNote + '</div>' : '')
+    + '</div></div>'
+    + '<div class="hub-td"><div class="hub-prog-wrap">'
+    +   '<div class="hub-prog"><div class="hub-prog-track"><div class="hub-prog-fill" style="width:' + r.progress + '%;background:' + s.c + '"></div></div><span class="hub-prog-pct">' + r.progress + '%</span></div>'
+    +   secsHtml
+    + '</div></div>'
+    + '<div class="hub-td">' + revHtml + '</div>'
+    + '<div class="hub-td"><div>'
+    +   '<div class="hub-due-d">' + r.dueDate + '</div>'
+    +   '<div class="hub-due-r" style="color:' + dueRelColor + '">' + dueRel + '</div>'
+    +   reminderHtml
+    + '</div></div>'
+    + '<div class="hub-td"><button class="hub-act" onclick="event.stopPropagation();openReview(' + r.id + ')">View</button></div>'
+    + '</div>';
+}
+
+function renderSectionHdr(label, cls, dotColor, count, key, hint) {
+  var isOpen = SEC_OPEN[key];
+  return '<div class="hub-sec ' + cls + '" onclick="toggleSec(\'' + key + '\')">'
+    + '<svg class="hub-sec-arr ' + (isOpen ? 'open' : '') + '" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    + (dotColor ? '<span class="hub-sec-dot" style="background:' + dotColor + '"></span>' : '')
+    + label
+    + ' <span class="hub-sec-cnt">' + count + '</span>'
+    + (hint ? '<span class="hub-sec-hint">' + hint + '</span>' : '')
+    + '</div>';
+}
+
+function toggleSec(key) {
+  SEC_OPEN[key] = !SEC_OPEN[key];
+  renderHub();
+}
+
+function renderHub() {
+  var filtered = getFiltered();
+  var cnt = document.getElementById('hubCnt');
+  if (cnt) cnt.innerHTML = '<strong>' + filtered.length + '</strong> review' + (filtered.length !== 1 ? 's' : '');
+
+  var html = '';
+
+  if (HUB.filter === 'all' && HUB.search === '') {
+    /* Grouped view */
+    var overdue = filtered.filter(function(r){ return r.daysLeft < 0; });
+    var active  = filtered.filter(function(r){ return r.daysLeft >= 0 && (r.status==='in-progress'||r.status==='waiting-pm'||r.status==='waiting-eng'); });
+    var cal     = filtered.filter(function(r){ return r.status==='calibration'; });
+    var done    = filtered.filter(function(r){ return r.status==='finalized'||r.status==='visible'; });
+    var upcoming= filtered.filter(function(r){ return r.status==='draft'; });
+
+    if (overdue.length) {
+      html += renderSectionHdr('Needs Attention', 'hub-sec-ov', '#ef4444', overdue.length, 'overdue', 'Blocked or past due date');
+      if (SEC_OPEN.overdue) html += overdue.map(renderRow).join('');
+    }
+    if (active.length) {
+      html += renderSectionHdr('Active Reviews', 'hub-sec-active', '#3b82f6', active.length, 'active', 'In review · Waiting for input');
+      if (SEC_OPEN.active) html += active.map(renderRow).join('');
+    }
+    if (cal.length) {
+      html += renderSectionHdr('Calibration', 'hub-sec-cal', '#6366f1', cal.length, 'calibration', 'Awaiting calibration session');
+      if (SEC_OPEN.calibration) html += cal.map(renderRow).join('');
+    }
+    if (done.length) {
+      html += renderSectionHdr('Completed', 'hub-sec-done', '#10b981', done.length, 'done', 'Finalized · Employee visible');
+      if (SEC_OPEN.done) html += done.map(renderRow).join('');
+    }
+    if (upcoming.length) {
+      html += renderSectionHdr('Upcoming', 'hub-sec-up', '#9ca3af', upcoming.length, 'upcoming', 'Not yet started');
+      if (SEC_OPEN.upcoming) html += upcoming.map(renderRow).join('');
+    }
+  } else {
+    /* Flat filtered view */
+    if (filtered.length === 0) {
+      html = '<div style="padding:48px;text-align:center"><div style="font-size:14px;font-weight:600;color:var(--text-secondary);margin-bottom:6px">No reviews found</div><div style="font-size:12.5px;color:var(--text-muted)">Try adjusting your filters or search query.</div></div>';
+    } else {
+      html = filtered.map(renderRow).join('');
+    }
+  }
+
+  document.getElementById('hubBody').innerHTML = html;
+}
+
+function openReview(id) {
+  window.location.href = 'career-review.html';
+}
+
+/* ── Mode switching ── */
+function setMode(m) {
+  var isHub = m === 'hub';
+  document.getElementById('ctHubView').style.display  = isHub ? 'flex' : 'none';
+  document.getElementById('ctConfigView').style.display = isHub ? 'none' : 'block';
+  document.getElementById('ctModeHub').classList.toggle('active', isHub);
+  document.getElementById('ctModeConf').classList.toggle('active', !isHub);
+  if (!isHub) renderAll();
+}
+
+/* ───────────────────────────────────────────────
+   TIER CONFIG JS (preserved)
+─────────────────────────────────────────────── */
+var CT = {
+  currentDisc: 'dev',
+  hasChanges: { dev:false, design:false, qa:false, pm:false },
+  data: {
+    dev:    { name:'Development',        totalLevels:25, memberCount:6, thresholds:[8,15,20], members:[{name:'Clara H.',avatar:'CH',color:'#3b82f6',level:18},{name:'Sarah Kim',avatar:'SK',color:'#3b82f6',level:17},{name:'Marco V.',avatar:'MV',color:'#3b82f6',level:22},{name:'Jake R.',avatar:'JR',color:'#3b82f6',level:5},{name:'Felipe T.',avatar:'FT',color:'#3b82f6',level:12},{name:'Michael C.',avatar:'MC',color:'#64748b',level:23}] },
+    design: { name:'Design',             totalLevels:15, memberCount:2, thresholds:[4,9,13],  members:[{name:'Lucas Mora',avatar:'LM',color:'#a855f7',level:8},{name:'Rebeca A.',avatar:'RA',color:'#a855f7',level:11}] },
+    qa:     { name:'Quality Assurance',  totalLevels:12, memberCount:1, thresholds:[3,7,10],  members:[{name:'Tom Reeves',avatar:'TR',color:'#10b981',level:6}] },
+    pm:     { name:'Project Management', totalLevels:20, memberCount:2, thresholds:[5,11,16], members:[{name:'Anna K.',avatar:'AK',color:'#f59e0b',level:14},{name:'Sarah Johnson',avatar:'SJ',color:'#f59e0b',level:13}] }
+  }
+};
+var TIER_COLORS = [{bg:'#f1f5f9',text:'#475569',border:'#e2e8f0'},{bg:'#dbeafe',text:'#1d4ed8',border:'#bfdbfe'},{bg:'#3b82f6',text:'#ffffff',border:'#2563eb'},{bg:'#1e3a8a',text:'#ffffff',border:'#1e40af'}];
+var TIER_NAMES  = ['Junior','Mid','Senior','Lead'];
+var TIER_XP     = [30,55,80,95];
+
+function getRanges(disc) {
+  var d = CT.data[disc], t = d.thresholds;
+  return [{min:1,max:t[0],count:t[0]},{min:t[0]+1,max:t[1],count:t[1]-t[0]},{min:t[1]+1,max:t[2],count:t[2]-t[1]},{min:t[2]+1,max:d.totalLevels,count:d.totalLevels-t[2]}];
+}
+function getTierIdx(level, disc) {
+  var t = CT.data[disc].thresholds;
+  if (level <= t[0]) return 0; if (level <= t[1]) return 1; if (level <= t[2]) return 2; return 3;
+}
+function setDisc(disc) {
+  CT.currentDisc = disc;
+  document.querySelectorAll('.ct-disc-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.disc === disc); });
+  renderAll();
+}
+function onThresholdChange(idx, el) {
+  var disc = CT.currentDisc, d = CT.data[disc];
+  var val = parseInt(el.value, 10); if (isNaN(val)) return;
+  var min = (idx===0)?1:d.thresholds[idx-1]+1, max = (idx===2)?d.totalLevels-1:d.thresholds[idx+1]-1;
+  val = Math.max(min, Math.min(max, val)); el.value = val; d.thresholds[idx] = val; CT.hasChanges[disc] = true;
+  document.querySelectorAll('.ct-disc-btn').forEach(function(b){ if (b.dataset.disc===disc) b.classList.add('modified'); });
+  renderBar(); renderThresholds(); renderPreview(); updateBadges();
+}
+function renderAll() {
+  var d = CT.data[CT.currentDisc];
+  var t = document.getElementById('ctCardTitle'); if (t) t.textContent = d.name;
+  var m = document.getElementById('ctCardMeta');  if (m) m.textContent = d.totalLevels+' levels · 4 tiers · '+d.memberCount+' members in active projects';
+  renderBar(); renderThresholds(); renderPreview(); updateBadges();
+}
+function renderBar() {
+  var el = document.getElementById('ctBar'); if (!el) return;
+  el.innerHTML = getRanges(CT.currentDisc).map(function(r,i){ var c=TIER_COLORS[i]; return '<div class="ct-seg" style="flex:'+r.count+';background:'+c.bg+';color:'+c.text+'"><div class="ct-seg-name">'+TIER_NAMES[i]+'</div><div class="ct-seg-range">Lvl '+r.min+'–'+r.max+'</div></div>'; }).join('');
+}
+function renderThresholds() {
+  var disc=CT.currentDisc, d=CT.data[disc], el=document.getElementById('ctThresholds'); if (!el) return;
+  el.innerHTML = getRanges(disc).map(function(r,i){ var c=TIER_COLORS[i], isLast=(i===3); return '<div class="ct-thresh-row"><div class="ct-tier-dot" style="background:'+c.bg+';border:1.5px solid '+c.border+'"></div><span class="ct-tier-name-lbl">'+TIER_NAMES[i]+'</span><span class="ct-range-from">Level '+r.min+' &nbsp;to</span>'+(isLast?'<span class="ct-thresh-fixed">'+d.totalLevels+'</span>':'<input class="ct-thresh-input" type="number" value="'+r.max+'" oninput="onThresholdChange('+i+',this)" onblur="onThresholdChange('+i+',this)">')+'<span class="ct-tier-count">'+r.count+' level'+(r.count!==1?'s':'')+'</span><span class="ct-xp-pill">'+TIER_XP[i]+' XP</span></div>'; }).join('');
+}
+function renderPreview() {
+  var disc=CT.currentDisc, d=CT.data[disc], el=document.getElementById('ctPreview'); if (!el) return;
+  var grouped=[[],[],[],[]]; d.members.forEach(function(m){ grouped[getTierIdx(m.level,disc)].push(m); });
+  el.innerHTML = getRanges(disc).map(function(r,i){ var c=TIER_COLORS[i], ms=grouped[i]; return '<div><div class="ct-prev-col-hdr" style="border-color:'+c.bg+'"><div class="ct-prev-dot" style="background:'+c.bg+';border:1.5px solid '+c.border+'"></div><span class="ct-prev-tier-name">'+TIER_NAMES[i]+'</span><span class="ct-prev-tier-count">'+ms.length+'</span></div>'+(ms.length===0?'<div class="ct-prev-empty">No members</div>':ms.map(function(m){ return '<div class="ct-prev-member"><div class="ct-prev-av" style="background:'+m.color+'">'+m.avatar+'</div><div><div class="ct-prev-name">'+m.name+'</div><div class="ct-prev-level">Lvl '+m.level+'</div></div></div>'; }).join(''))+'</div>'; }).join('');
+}
+function updateBadges() {
+  var disc=CT.currentDisc, un=document.getElementById('ctUnsavedBadge'); if (un) un.style.display=CT.hasChanges[disc]?'':'none';
+  var mc=Object.values(CT.hasChanges).filter(Boolean).length, badge=document.getElementById('ctModifiedBadge'); if (badge){ badge.style.display=mc>0?'':'none'; badge.textContent=mc+' discipline'+(mc!==1?'s':'')+' modified'; }
+}
+function discardChanges() {
+  var disc=CT.currentDisc, orig={dev:[8,15,20],design:[4,9,13],qa:[3,7,10],pm:[5,11,16]};
+  CT.data[disc].thresholds=orig[disc].slice(); CT.hasChanges[disc]=false;
+  document.querySelectorAll('.ct-disc-btn').forEach(function(b){ if(b.dataset.disc===disc)b.classList.remove('modified'); }); renderAll();
+}
+function saveChanges() {
+  CT.hasChanges={dev:false,design:false,qa:false,pm:false};
+  document.querySelectorAll('.ct-disc-btn').forEach(function(b){ b.classList.remove('modified'); }); updateBadges();
+  var s=document.querySelector('.ct-btn-save'); if(s){s.textContent='Saved ✓';setTimeout(function(){s.textContent='Save Changes';},2000);}
+}
+
+/* ── Cycle picker ── */
+function toggleCycleDrop(e) {
+  e.stopPropagation();
+  document.getElementById('cyclePick').classList.toggle('open');
+}
+function selectCycle(el, label) {
+  document.getElementById('cycleValTxt').textContent = label;
+  document.querySelectorAll('.ct-cycle-opt').forEach(function(o){ o.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('cyclePick').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  var pick = document.getElementById('cyclePick');
+  if (pick && !pick.contains(e.target)) pick.classList.remove('open');
+});
+
+/* ── Init ── */
+renderSS();
+renderHub();
+
+function sbToggle(){
+  var t=document.getElementById('projToggle');
+  var s=document.getElementById('projSub');
+  t.classList.toggle('open');
+  s.classList.toggle('open');
+}
+(function(){
+  if(document.querySelector('#projSub .sb-item.active')){
+    document.getElementById('projToggle').classList.add('open');
+    document.getElementById('projSub').classList.add('open');
+  }
+})();
+function toggleSidebar(){
+  var sb=document.querySelector('.sidebar');
+  var bd=document.getElementById('sbBackdrop');
+  if(!sb)return;
+  var open=sb.classList.toggle('sb-open');
+  if(bd)bd.classList.toggle('show',open);
+}
+
+</script>
+</body>
+</html>

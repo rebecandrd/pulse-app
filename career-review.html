@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clara H. — Q1 2026 Review · Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --font:'DM Sans',system-ui,sans-serif;
+    --font-mono:'DM Mono',monospace;
+    --bg-page:#eef0f4;
+    --bg-white:#ffffff;
+    --bg-surface:#f5f6f8;
+    --sidebar-bg:#0d0f18;
+    --sidebar-text:#8b90a8;
+    --sidebar-active-bg:#1a1f35;
+    --sidebar-active-text:#e8eaf2;
+    --sidebar-hover-bg:#161b2e;
+    --sidebar-section:#3a3f55;
+    --sidebar-divider:#1c2035;
+    --text-primary:#111827;
+    --text-secondary:#374151;
+    --text-muted:#9ca3af;
+    --border:#e5e7eb;
+    --border-strong:#d1d5db;
+    --accent:#3b5bdb;
+    --accent-hover:#2f4ac4;
+    --accent-light:#eef2ff;
+    --accent-border:#c5cffa;
+    --radius-sm:6px;
+    --radius-md:8px;
+    --radius-lg:10px;
+  }
+  html,body{height:100%;-webkit-font-smoothing:antialiased}
+  body{font-family:var(--font);font-size:13px;color:var(--text-primary);background:var(--bg-page);overflow:hidden}
+  .app{display:flex;height:100%;overflow:hidden}
+
+  /* ─── Sidebar ─── */
+  .sidebar{width:232px;min-width:232px;height:100%;background:var(--sidebar-bg);display:flex;flex-direction:column;overflow:hidden;border-right:1px solid #0a0c14}
+  .sb-top{padding:18px 16px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--sidebar-divider)}
+  .sb-logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#3b5bdb,#6b35b5);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sb-logo svg{width:17px;height:17px}
+  .sb-brand{font-size:15px;font-weight:600;color:#e8eaf2;letter-spacing:-.2px}
+  .sb-scroll{flex:1;overflow-y:auto;padding:10px 0}
+  .sb-scroll::-webkit-scrollbar{width:0}
+  .sb-section{padding:12px 16px 4px;font-size:10px;color:var(--sidebar-section);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
+  .sb-item{display:flex;align-items:center;gap:9px;padding:7px 14px;font-size:13px;color:var(--sidebar-text);cursor:pointer;border-radius:var(--radius-md);margin:1px 8px;transition:all .12s;position:relative;text-decoration:none}
+  .sb-item:hover{background:var(--sidebar-hover-bg);color:#c8cce0}
+  .sb-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-text)}
+  .sb-item svg{width:15px;height:15px;flex-shrink:0;opacity:.65}
+  .sb-item.active svg{opacity:1}
+  .sb-item .badge{margin-left:auto;font-size:10px;background:#1e2440;color:#5a6280;padding:1px 6px;border-radius:99px;font-weight:500}
+  .sb-item .chevron{margin-left:auto;width:12px;height:12px;opacity:.4;transition:transform .2s}
+  .sb-item.open .chevron{transform:rotate(180deg)}
+  .sb-sub{padding-left:16px;display:none}
+  .sb-sub.open{display:block}
+  .sb-sub .sb-item{font-size:12.5px;padding:6px 12px;color:#545870}
+  .sb-sub .sb-item:hover{color:#9ca0b8}
+  .sb-sub .sb-item.active{color:#d0d4e8;background:#151a2e}
+  .sb-sub .sb-item::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.4}
+  .sb-sub .sb-item.active::before{opacity:1;background:var(--accent)}
+  .sb-divider{height:1px;background:var(--sidebar-divider);margin:8px 14px}
+  .sb-bottom{padding:10px 8px 14px;border-top:1px solid var(--sidebar-divider)}
+  .sb-user{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--radius-md);cursor:pointer;transition:background .12s}
+  .sb-user:hover{background:var(--sidebar-hover-bg)}
+  .sb-avatar{width:30px;height:30px;border-radius:50%;background:#1e2a50;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#6b82c4;flex-shrink:0}
+  .sb-user-info{flex:1;min-width:0}
+  .sb-user-name{font-size:12.5px;font-weight:600;color:#c8cce0}
+  .sb-user-role{font-size:11px;color:var(--sidebar-text);margin-top:1px}
+  .sb-more{width:14px;height:14px;color:var(--sidebar-text);flex-shrink:0}
+
+  /* ─── Main ─── */
+  .main{flex:1;height:100%;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+  /* ─── Page Header ─── */
+  .cr-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 28px;background:var(--bg-white);border-bottom:1px solid var(--border);flex-shrink:0;gap:16px}
+  .cr-hdr-left{display:flex;align-items:center;gap:8px;min-width:0}
+  .cr-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);text-decoration:none;transition:color .1s;flex-shrink:0;white-space:nowrap}
+  .cr-back:hover{color:var(--text-secondary)}
+  .cr-back svg{width:12px;height:12px}
+  .cr-bread-sep{font-size:13px;color:var(--border-strong);flex-shrink:0;margin:0 2px}
+  .cr-hdr-name{font-size:13.5px;font-weight:600;color:var(--text-primary);white-space:nowrap}
+  .cr-hdr-cycle{display:inline-flex;align-items:center;font-size:11px;font-weight:500;color:#4338ca;background:#eef2ff;border:1px solid #c7d2fe;border-radius:5px;padding:2px 7px}
+  .cr-status-pip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:3px 9px;border-radius:6px;border:1px solid #bfdbfe;background:#eff6ff;color:#2563eb;flex-shrink:0}
+  .cr-status-pip-dot{width:6px;height:6px;border-radius:50%;background:#2563eb;flex-shrink:0}
+  .cr-hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+  /* View As selector */
+  .cr-va{display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-right:4px}
+  .cr-va-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);padding:0 9px;border-right:1px solid var(--border);line-height:30px;background:var(--bg-surface);white-space:nowrap}
+  .cr-va-btn{font-size:11.5px;font-weight:500;padding:0 10px;border:none;border-right:1px solid var(--border);background:var(--bg-white);color:var(--text-muted);cursor:pointer;font-family:var(--font);line-height:30px;transition:all .1s}
+  .cr-va-btn:last-child{border-right:none}
+  .cr-va-btn:hover{background:var(--bg-surface);color:var(--text-secondary)}
+  .cr-va-btn.active{background:var(--accent-light);color:var(--accent);font-weight:600}
+  .cr-btn-ghost{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .12s}
+  .cr-btn-ghost:hover{border-color:var(--border-strong);color:var(--text-primary)}
+  .cr-btn-ghost svg{width:12px;height:12px;opacity:.7}
+  .cr-btn-primary{font-size:12.5px;font-weight:600;padding:6px 14px;border:none;border-radius:var(--radius-md);background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);transition:background .12s}
+  .cr-btn-primary:hover{background:var(--accent-hover)}
+
+  /* ─── Body ─── */
+  .cr-body{flex:1;display:flex;overflow:hidden}
+
+  /* ─── Left Panel ─── */
+  .cr-left{width:248px;min-width:248px;background:var(--bg-white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+  .cr-emp-card{padding:20px 18px 16px;border-bottom:1px solid var(--border);text-align:center}
+  .cr-emp-av{width:52px;height:52px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#fff;margin:0 auto 10px}
+  .cr-emp-name{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:3px}
+  .cr-emp-role{font-size:12px;color:var(--text-muted);margin-bottom:10px}
+  .cr-emp-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:10px}
+  .cr-emp-tag{font-size:10.5px;font-weight:500;padding:2px 8px;border-radius:5px;background:var(--bg-surface);color:var(--text-secondary);border:1px solid var(--border)}
+  .cr-emp-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .cr-emp-stat{background:var(--bg-surface);border-radius:8px;padding:8px;text-align:center}
+  .cr-emp-stat-val{font-size:14px;font-weight:700;color:var(--text-primary);font-family:var(--font-mono)}
+  .cr-emp-stat-lbl{font-size:10px;color:var(--text-muted);margin-top:2px}
+
+  /* Timeline */
+  .cr-tl{padding:16px 18px}
+  .cr-tl-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:14px}
+  .cr-tl-item{display:flex;gap:12px;padding-bottom:18px;position:relative}
+  .cr-tl-item:last-child{padding-bottom:4px}
+  .cr-tl-item:not(:last-child)::before{content:'';position:absolute;left:8px;top:18px;bottom:0;width:1.5px;background:var(--border)}
+  .cr-tl-marker{width:17px;height:17px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:8px;border:2px solid}
+  .cr-tl-item.done .cr-tl-marker{background:#10b981;border-color:#10b981;color:#fff}
+  .cr-tl-item.promo .cr-tl-marker{background:var(--accent);border-color:var(--accent);color:#fff}
+  .cr-tl-item.current .cr-tl-marker{background:var(--bg-white);border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+  .cr-tl-period{font-size:10.5px;color:var(--text-muted);margin-bottom:2px}
+  .cr-tl-tier{font-size:12.5px;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:6px}
+  .cr-tl-score{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .cr-promo-badge{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:4px;background:#dbeafe;color:#1d4ed8;letter-spacing:.2px}
+  .cr-current-badge{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:4px;background:#fffbeb;color:#b45309}
+
+  /* ─── Right Panel ─── */
+  .cr-right{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg-surface)}
+
+  /* Tabs */
+  .cr-tabs{display:flex;align-items:center;background:var(--bg-white);border-bottom:1px solid var(--border);padding:0 24px;flex-shrink:0}
+  .cr-tab{font-size:13px;font-weight:500;color:var(--text-muted);padding:11px 14px;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font);transition:color .12s;white-space:nowrap}
+  .cr-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+  .cr-tab:hover:not(.active){color:var(--text-secondary)}
+  .cr-tab-cnt{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:700;background:var(--accent-light);color:var(--accent);margin-left:5px;vertical-align:middle}
+
+  /* Panel */
+  .cr-panel{flex:1;overflow-y:auto;padding:24px;display:none}
+  .cr-panel.active{display:block}
+
+  /* ─── Section cards ─── */
+  .cr-card{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden}
+  .cr-card-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+  .cr-card-title{font-size:12.5px;font-weight:700;color:var(--text-primary)}
+  .cr-card-sub{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .cr-card-body{padding:18px}
+
+  /* ─── Workflow Pipeline ─── */
+  .cr-pipeline{display:flex;align-items:center;gap:0;padding:20px 24px}
+  .cr-pipe-step{display:flex;align-items:center;gap:0;flex-shrink:0}
+  .cr-pipe-node{display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 4px}
+  .cr-pipe-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--border);background:var(--bg-white);transition:all .2s;position:relative}
+  .cr-pipe-circle.done{background:#10b981;border-color:#10b981}
+  .cr-pipe-circle.done svg{color:#fff}
+  .cr-pipe-circle.current{background:var(--bg-white);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
+  .cr-pipe-circle.current::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--accent);position:absolute}
+  .cr-pipe-circle.pending{background:var(--bg-surface);border-color:var(--border)}
+  .cr-pipe-circle svg{width:12px;height:12px;color:var(--text-muted);position:relative}
+  .cr-pipe-lbl{font-size:10px;font-weight:500;color:var(--text-muted);text-align:center;white-space:nowrap;max-width:72px}
+  .cr-pipe-lbl.done{color:#10b981;font-weight:600}
+  .cr-pipe-lbl.current{color:var(--accent);font-weight:600}
+  .cr-pipe-line{flex:1;min-width:24px;height:2px;background:var(--border);margin-bottom:20px}
+  .cr-pipe-line.done{background:#10b981}
+
+  /* ─── Review Sections ─── */
+  .cr-rev-sections{display:flex;flex-direction:column;gap:0}
+  .cr-rev-sec{display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border);gap:14px}
+  .cr-rev-sec:last-child{border-bottom:none}
+  .cr-rev-sec-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .cr-rev-sec-icon svg{width:14px;height:14px}
+  .cr-rev-sec-body{flex:1;min-width:0}
+  .cr-rev-sec-title{font-size:12.5px;font-weight:600;color:var(--text-primary)}
+  .cr-rev-sec-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .cr-rev-sec-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .cr-rev-sec-prog{display:flex;align-items:center;gap:6px}
+  .cr-rev-sec-track{width:80px;height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden}
+  .cr-rev-sec-fill{height:100%;border-radius:99px}
+  .cr-rev-sec-pct{font-size:10.5px;font-weight:600;color:var(--text-secondary);font-family:var(--font-mono);min-width:26px}
+  .cr-badge-done{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+  .cr-badge-pending{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#fffbeb;color:#b45309;border:1px solid #fde68a}
+  .cr-badge-draft{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#f8fafc;color:#64748b;border:1px solid #e2e8f0}
+  .cr-badge-na{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#f5f6f8;color:#9ca3af;border:1px solid #e5e7eb}
+  .cr-sec-btn{font-size:11.5px;font-weight:500;padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .12s}
+  .cr-sec-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-light)}
+
+  /* ─── Automation notices ─── */
+  .cr-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:12px;line-height:1.5}
+  .cr-notice-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+  .cr-notice-info{background:#f0f9ff;border:1px solid #bae6fd;color:#0369a1}
+  .cr-notice-err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+  .cr-notice svg{width:14px;height:14px;flex-shrink:0;margin-top:1px}
+  .cr-notice strong{font-weight:600}
+
+  /* ─── History Tab ─── */
+  .cr-hist-tbl{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .cr-hist-head{display:grid;grid-template-columns:110px 120px 90px 80px 1fr 100px;padding:0 18px;border-bottom:1.5px solid var(--border);background:var(--bg-surface)}
+  .cr-hist-th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);padding:9px 8px}
+  .cr-hist-row{display:grid;grid-template-columns:110px 120px 90px 80px 1fr 100px;padding:0 18px;border-bottom:1px solid var(--border);align-items:center}
+  .cr-hist-row:last-child{border-bottom:none}
+  .cr-hist-td{padding:12px 8px;font-size:12.5px;color:var(--text-primary)}
+  .cr-hist-period{font-weight:600}
+  .cr-hist-tier{display:flex;align-items:center;gap:6px}
+  .cr-hist-tier-dot{width:7px;height:7px;border-radius:50%}
+  .cr-hist-score{font-family:var(--font-mono);font-weight:600}
+  .cr-delta-up{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:#16a34a;background:#dcfce7;border-radius:4px;padding:1px 6px}
+  .cr-delta-same{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:500;color:#9ca3af;background:#f5f6f8;border-radius:4px;padding:1px 6px}
+
+  /* ─── Rubric Tab ─── */
+  .cr-rub-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+  .cr-rub-sum-card{background:var(--bg-white);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+  .cr-rub-sum-val{font-size:20px;font-weight:700;color:var(--text-primary);font-family:var(--font-mono);letter-spacing:-.5px}
+  .cr-rub-sum-max{font-size:12px;color:var(--text-muted);font-family:var(--font-mono)}
+  .cr-rub-sum-lbl{font-size:10.5px;color:var(--text-muted);margin-top:3px}
+  .cr-rub-sum-bar{height:3px;border-radius:99px;margin-top:8px;background:#e5e7eb;overflow:hidden}
+  .cr-rub-sum-fill{height:100%;border-radius:99px}
+  .cr-rub-benchmark{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;background:#eef2ff;border:1px solid var(--accent-border);border-radius:8px;font-size:12px;color:var(--accent);margin-bottom:16px}
+  .cr-rub-benchmark svg{width:14px;height:14px;flex-shrink:0}
+  .cr-rub-bench-left{display:flex;align-items:center;gap:8px}
+  .cr-rub-legend{display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .cr-rub-leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted)}
+  .cr-rub-leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+  /* Competency group */
+  .cr-rub-group{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px}
+  .cr-rub-group-hdr{display:flex;align-items:center;gap:10px;padding:13px 18px;cursor:pointer;user-select:none;transition:background .1s}
+  .cr-rub-group-hdr:hover{background:#fafbfd}
+  .cr-rub-group-arr{width:14px;height:14px;transition:transform .15s;flex-shrink:0;color:var(--text-muted)}
+  .cr-rub-group-arr.open{transform:rotate(90deg)}
+  .cr-rub-group-name{font-size:13px;font-weight:600;color:var(--text-primary);flex:1}
+  .cr-rub-group-score{font-size:12px;font-weight:600;font-family:var(--font-mono);color:var(--text-secondary)}
+  .cr-rub-group-bar{width:80px;height:5px;border-radius:99px;background:#e5e7eb;overflow:hidden}
+  .cr-rub-group-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .3s}
+  .cr-rub-comps{border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0}
+
+  /* Competency card */
+  .cr-rub-comp{border-bottom:1px solid var(--border);padding:14px 18px}
+  .cr-rub-comp:last-child{border-bottom:none}
+  .cr-rub-comp-top{display:flex;align-items:flex-start;gap:16px}
+  .cr-rub-comp-info{flex:1;min-width:0;padding-top:1px}
+  .cr-rub-comp-name{font-size:12.5px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+  .cr-rub-comp-exp-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .cr-rub-exp-badge{font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-border)}
+  .cr-rub-comp-gap{font-size:10.5px;color:#dc2626;font-weight:500}
+  .cr-rub-comp-gap.ok{color:#16a34a}
+  .cr-rub-comp-gap.neutral{color:var(--text-muted)}
+  .cr-rub-scoring{display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+  .cr-rub-score-row{display:flex;align-items:center;gap:8px}
+  .cr-rub-score-who{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);min-width:50px;text-align:right}
+  .cr-rub-dots{display:flex;gap:4px}
+  .cr-rub-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg-surface);cursor:pointer;transition:all .15s;position:relative;flex-shrink:0}
+  .cr-rub-dot:hover{border-color:var(--accent);transform:scale(1.1)}
+  .cr-rub-dot.mgr-filled{background:var(--accent);border-color:var(--accent)}
+  .cr-rub-dot.self-filled{background:#7c3aed;border-color:#7c3aed}
+  .cr-rub-dot.exp-mark{border-color:#f59e0b;background:transparent}
+  .cr-rub-dot.exp-mark::after{content:'';width:5px;height:5px;border-radius:50%;background:#f59e0b;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .cr-rub-score-num{font-size:11.5px;font-weight:700;color:var(--text-secondary);font-family:var(--font-mono);min-width:24px}
+  .cr-rub-score-num.mgr{color:var(--accent)}
+  .cr-rub-score-num.self{color:#7c3aed}
+
+  /* Level descriptions (expandable) */
+  .cr-rub-lvl-toggle{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:500;color:var(--text-muted);cursor:pointer;margin-top:9px;padding:0;border:none;background:none;font-family:var(--font);transition:color .1s;user-select:none}
+  .cr-rub-lvl-toggle:hover{color:var(--text-secondary)}
+  .cr-rub-lvl-toggle svg{width:10px;height:10px;transition:transform .15s;flex-shrink:0}
+  .cr-rub-lvl-toggle.open svg{transform:rotate(180deg)}
+  .cr-rub-lvl-panel{display:none;margin-top:10px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+  .cr-rub-lvl-panel.open{display:block}
+  .cr-rub-lvl-row{display:grid;grid-template-columns:36px 1fr;border-bottom:1px solid var(--border)}
+  .cr-rub-lvl-row:last-child{border-bottom:none}
+  .cr-rub-lvl-row.current-lvl{background:#eef2ff}
+  .cr-rub-lvl-num{display:flex;align-items:flex-start;justify-content:center;padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);font-family:var(--font-mono);border-right:1px solid var(--border)}
+  .cr-rub-lvl-row.current-lvl .cr-rub-lvl-num{color:var(--accent)}
+  .cr-rub-lvl-desc{padding:10px 12px;font-size:11.5px;color:var(--text-secondary);line-height:1.55}
+  .cr-rub-lvl-row.current-lvl .cr-rub-lvl-desc{font-weight:500;color:var(--text-primary)}
+  .cr-rub-lvl-tag{display:inline-block;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:1px 5px;border-radius:3px;margin-right:4px;vertical-align:middle}
+  .cr-rub-lvl-tag.mgr{background:var(--accent-light);color:var(--accent)}
+  .cr-rub-lvl-tag.self{background:#f5f3ff;color:#7c3aed}
+  .cr-rub-lvl-tag.exp{background:#fffbeb;color:#b45309}
+
+  /* Reviewer note */
+  .cr-rub-note-area{margin-top:10px}
+  .cr-rub-note-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:5px}
+  .cr-rub-note-field{width:100%;font-size:11.5px;font-family:var(--font);color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);border-radius:6px;padding:8px 10px;resize:none;line-height:1.5;min-height:48px;transition:border-color .12s;box-sizing:border-box}
+  .cr-rub-note-field:focus{outline:none;border-color:var(--accent-border);background:#fff}
+  .cr-rub-note-field::placeholder{color:var(--text-muted);font-style:italic}
+  .cr-rub-note-saved{font-size:11px;color:var(--text-secondary);font-style:italic;line-height:1.5;background:var(--bg-surface);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+
+  /* ─── Feedback Tab ─── */
+  .cr-fb-section{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+  .cr-fb-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+  .cr-fb-who{display:flex;align-items:center;gap:8px}
+  .cr-fb-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;color:#fff;flex-shrink:0}
+  .cr-fb-name{font-size:12.5px;font-weight:600;color:var(--text-primary)}
+  .cr-fb-role{font-size:11px;color:var(--text-muted);margin-top:1px}
+  .cr-fb-locked-notice{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted);background:var(--bg-surface);border:1px solid var(--border);padding:3px 8px;border-radius:5px}
+  .cr-fb-locked-notice svg{width:11px;height:11px}
+  .cr-fb-body{padding:16px 18px}
+  .cr-fb-field{margin-bottom:14px}
+  .cr-fb-field:last-child{margin-bottom:0}
+  .cr-fb-field-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:6px}
+  .cr-fb-field-val{font-size:12.5px;color:var(--text-secondary);line-height:1.6;background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+  .cr-fb-field-empty{font-size:12px;color:var(--text-muted);font-style:italic;padding:10px 0}
+  .cr-promo-row{display:flex;gap:8px;flex-wrap:wrap}
+  .cr-promo-opt{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--text-muted);cursor:default}
+  .cr-promo-opt.selected{border-color:var(--accent-border);background:var(--accent-light);color:var(--accent)}
+  .cr-promo-opt svg{width:12px;height:12px}
+  .cr-fb-pending{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;border-top:1px solid var(--border)}
+  .cr-fb-pending-icon{width:40px;height:40px;border-radius:10px;background:#fffbeb;border:1px solid #fde68a;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+  .cr-fb-pending-icon svg{width:18px;height:18px;color:#d97706}
+  .cr-fb-pending-title{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:4px}
+  .cr-fb-pending-sub{font-size:12px;color:var(--text-muted);line-height:1.5;max-width:280px}
+
+  /* ─── Report Tab ─── */
+  .cr-report-pending{display:flex;flex-direction:column;align-items:center;padding:32px 24px 20px;text-align:center;border-bottom:1px solid var(--border)}
+  .cr-report-pending-icon{width:44px;height:44px;border-radius:12px;background:#f5f3ff;border:1px solid #ddd6fe;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+  .cr-report-card{background:var(--bg-white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+  .cr-report-preview{padding:22px 24px;background:linear-gradient(135deg,#f8faff 0%,#fff 100%)}
+  .cr-report-name{font-size:16px;font-weight:700;color:var(--text-primary);letter-spacing:-.3px;margin-bottom:4px}
+  .cr-report-detail{font-size:12px;color:var(--text-muted);margin-bottom:14px}
+  .cr-report-outcome{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg-surface);border-radius:8px;margin-bottom:14px;border:1px solid var(--border)}
+  .cr-report-outcome-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px}
+  .cr-report-outcome-val{font-size:15px;font-weight:700;color:var(--text-primary)}
+  .cr-report-sections{display:flex;flex-direction:column;gap:0}
+  .cr-report-sec{padding:12px 0;border-bottom:1px solid var(--border)}
+  .cr-report-sec:last-child{border-bottom:none}
+  .cr-report-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:6px}
+  .cr-report-sec-val{font-size:12.5px;color:var(--text-secondary);line-height:1.6}
+  .cr-report-actions{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--border)}
+  .cr-report-act-btn{font-size:12px;font-weight:500;padding:7px 14px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all .12s;display:flex;align-items:center;gap:5px}
+  .cr-report-act-btn:hover{border-color:var(--border-strong);color:var(--text-primary)}
+  .cr-report-act-btn svg{width:12px;height:12px;opacity:.7}
+  .mobile-menu-btn{display:none;width:32px;height:32px;border-radius:var(--radius-md);border:1px solid var(--border);background:transparent;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);flex-shrink:0}
+  .mobile-menu-btn svg{width:16px;height:16px}
+  .sb-backdrop{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:199}
+  .sb-backdrop.show{display:block}
+  @media(max-width:1024px){
+    html{height:auto}
+    body{height:auto;min-height:100dvh;overflow:auto}
+    .app{height:auto;min-height:100dvh;overflow:visible;flex-direction:column}
+    .sidebar{position:fixed;top:0;left:0;bottom:0;z-index:200;transform:translateX(-100%);transition:transform .25s ease}
+    .sidebar.sb-open{transform:translateX(0)}
+    .main{height:auto;overflow:visible}
+    .cr-hdr{position:sticky;top:0;z-index:100}
+    .cr-body{flex-direction:column!important}
+    .cr-left{width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid var(--border)}
+    .mobile-menu-btn{display:flex}
+  }
+  @media(max-width:768px){
+    .cr-hdr{padding:10px 14px;flex-wrap:wrap;gap:8px}
+    .cr-hdr-right{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+<div class="sb-backdrop" id="sbBackdrop" onclick="toggleSidebar()"></div>
+<div class="app">
+
+  <!-- ─── Sidebar ─── -->
+  <div class="sidebar">
+    <div class="sb-top">
+      <div class="sb-logo">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M10 3L16 7V13L10 17L4 13V7L10 3Z" stroke="white" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" fill="white"/></svg>
+      </div>
+      <div><div class="sb-brand">Pulse</div></div>
+    </div>
+    <div class="sb-scroll">
+      <div class="sb-section">Menu</div>
+      <a class="sb-item" href="index.html" style="text-decoration:none">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+        Dashboard
+      </a>
+      <div class="sb-item" id="projToggle" onclick="sbToggle()" style="cursor:pointer">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
+        Projects
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="sb-sub" id="projSub">
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Current Projects</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Internal</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">DesignOps</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Fulfilment</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Maintenance</a>
+        <a class="sb-item" href="projects.html" style="text-decoration:none">Inactive</a>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="3"/><path d="M1 14c0-2.8 2.2-5 5-5"/><circle cx="12" cy="9" r="2.5"/><path d="M9.5 14c0-1.4.9-2.5 2.5-2.5s2.5 1.1 2.5 2.5"/></svg>
+        Team <span class="badge">12</span>
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
+        Time Logs
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l4-3 4 3 4-3v7l-4 3-4-3-4 3z"/></svg>
+        Reports
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <a class="sb-item active" href="career-tracks.html" style="text-decoration:none">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3.5L13 6l-2.5 2.5.5 3.5L8 10.5 5 12l.5-3.5L3 6l3.5-.5L8 2z"/></svg>
+        Career Tracks
+      </a>
+      <div class="sb-divider"></div>
+      <div class="sb-section">Admin</div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>
+        Users
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+        Organizations
+      </div>
+      <div class="sb-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4"/></svg>
+        Settings
+      </div>
+    </div>
+    <div class="sb-bottom">
+      <div class="sb-user">
+        <div class="sb-avatar">JD</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name">John Doe</div>
+          <div class="sb-user-role">Product Manager</div>
+        </div>
+        <svg class="sb-more" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="1.5"/><circle cx="3" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Main ─── -->
+  <div class="main">
+
+    <!-- Page Header -->
+    <div class="cr-hdr">
+      <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Menu" style="margin-right:4px">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+      </button>
+      <div class="cr-hdr-left">
+        <a class="cr-back" href="career-tracks.html">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 4l-4 4 4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Career Tracks
+        </a>
+        <span class="cr-bread-sep">/</span>
+        <span class="cr-hdr-name">Clara H.</span>
+        <span class="cr-hdr-cycle">Q1 2026 Review</span>
+        <div class="cr-status-pip">
+          <div class="cr-status-pip-dot"></div>
+          In Progress
+        </div>
+      </div>
+      <div class="cr-hdr-right">
+        <div class="cr-va">
+          <span class="cr-va-lbl">View as</span>
+          <button class="cr-va-btn active" onclick="setViewAs(this)">Admin</button>
+          <button class="cr-va-btn" onclick="setViewAs(this)">PM</button>
+          <button class="cr-va-btn" onclick="setViewAs(this)">Engineer</button>
+          <button class="cr-va-btn" onclick="setViewAs(this)">Employee</button>
+        </div>
+        <button class="cr-btn-ghost">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke-linecap="round"/></svg>
+          Export
+        </button>
+        <button class="cr-btn-primary">Mark as Final</button>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="cr-body">
+
+      <!-- Left: Employee card + timeline -->
+      <div class="cr-left">
+        <div class="cr-emp-card">
+          <div class="cr-emp-av">CH</div>
+          <div class="cr-emp-name">Clara H.</div>
+          <div class="cr-emp-role">Senior Developer</div>
+          <div class="cr-emp-tags">
+            <span class="cr-emp-tag">Development</span>
+            <span class="cr-emp-tag">Level 17</span>
+            <span class="cr-emp-tag">Batch A</span>
+          </div>
+          <div class="cr-emp-stats">
+            <div class="cr-emp-stat">
+              <div class="cr-emp-stat-val">3.2</div>
+              <div class="cr-emp-stat-lbl">Yrs at company</div>
+            </div>
+            <div class="cr-emp-stat">
+              <div class="cr-emp-stat-val">4</div>
+              <div class="cr-emp-stat-lbl">Reviews done</div>
+            </div>
+            <div class="cr-emp-stat">
+              <div class="cr-emp-stat-val">84</div>
+              <div class="cr-emp-stat-lbl">Last score</div>
+            </div>
+            <div class="cr-emp-stat">
+              <div class="cr-emp-stat-val">↑ 2</div>
+              <div class="cr-emp-stat-lbl">Tiers climbed</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cr-tl">
+          <div class="cr-tl-title">Growth History</div>
+
+          <div class="cr-tl-item done">
+            <div class="cr-tl-marker">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="cr-tl-period">Q1 2024</div>
+              <div class="cr-tl-tier">Junior II</div>
+              <div class="cr-tl-score">Score: 68 / 100</div>
+            </div>
+          </div>
+
+          <div class="cr-tl-item done promo">
+            <div class="cr-tl-marker">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7V3M3 5l2-2 2 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="cr-tl-period">Q3 2024</div>
+              <div class="cr-tl-tier">
+                Mid I
+                <span class="cr-promo-badge">↑ Promoted</span>
+              </div>
+              <div class="cr-tl-score">Score: 79 / 100</div>
+            </div>
+          </div>
+
+          <div class="cr-tl-item done">
+            <div class="cr-tl-marker">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="cr-tl-period">Q1 2025</div>
+              <div class="cr-tl-tier">Mid II</div>
+              <div class="cr-tl-score">Score: 84 / 100</div>
+            </div>
+          </div>
+
+          <div class="cr-tl-item current">
+            <div class="cr-tl-marker"></div>
+            <div>
+              <div class="cr-tl-period">Q1 2026</div>
+              <div class="cr-tl-tier">
+                Senior I?
+                <span class="cr-current-badge">Now</span>
+              </div>
+              <div class="cr-tl-score">In Progress · 60%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Tabs + panels -->
+      <div class="cr-right">
+
+        <!-- Tab bar -->
+        <div class="cr-tabs">
+          <button class="cr-tab active" onclick="setTab('cycle')">Current Cycle</button>
+          <button class="cr-tab" onclick="setTab('history')">History</button>
+          <button class="cr-tab" onclick="setTab('rubric')">
+            Rubric
+            <span class="cr-tab-cnt">4</span>
+          </button>
+          <button class="cr-tab" onclick="setTab('feedback')">Feedback</button>
+          <button class="cr-tab" onclick="setTab('report')">Report</button>
+        </div>
+
+        <!-- ── Current Cycle ── -->
+        <div id="panelCycle" class="cr-panel active">
+
+          <div class="cr-notice cr-notice-warn">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2L1.5 13.5h13L8 2z" stroke-linejoin="round"/><path d="M8 6.5v3.5" stroke-linecap="round"/><circle cx="8" cy="11.5" r=".75" fill="#92400e" stroke="none"/></svg>
+            <div><strong>PM notes pending.</strong> Anna K. has been assigned but hasn't started this review. Auto-reminder will be sent on May 24 if not completed.</div>
+          </div>
+
+          <!-- Pipeline -->
+          <div class="cr-card">
+            <div class="cr-card-hdr">
+              <div>
+                <div class="cr-card-title">Review Workflow</div>
+                <div class="cr-card-sub">Q1 2026 · Batch A · Due May 30</div>
+              </div>
+            </div>
+            <div class="cr-pipeline">
+              <div class="cr-pipe-step">
+                <div class="cr-pipe-node">
+                  <div class="cr-pipe-circle done">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="cr-pipe-lbl done">Draft</div>
+                </div>
+              </div>
+              <div class="cr-pipe-line done"></div>
+              <div class="cr-pipe-step">
+                <div class="cr-pipe-node">
+                  <div class="cr-pipe-circle done">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="cr-pipe-lbl done">In Progress</div>
+                </div>
+              </div>
+              <div class="cr-pipe-line"></div>
+              <div class="cr-pipe-step">
+                <div class="cr-pipe-node">
+                  <div class="cr-pipe-circle current"></div>
+                  <div class="cr-pipe-lbl current">Waiting PM</div>
+                </div>
+              </div>
+              <div class="cr-pipe-line"></div>
+              <div class="cr-pipe-step">
+                <div class="cr-pipe-node">
+                  <div class="cr-pipe-circle pending"></div>
+                  <div class="cr-pipe-lbl">Calibration</div>
+                </div>
+              </div>
+              <div class="cr-pipe-line"></div>
+              <div class="cr-pipe-step">
+                <div class="cr-pipe-node">
+                  <div class="cr-pipe-circle pending"></div>
+                  <div class="cr-pipe-lbl">Finalized</div>
+                </div>
+              </div>
+              <div class="cr-pipe-line"></div>
+              <div class="cr-pipe-step">
+                <div class="cr-pipe-node">
+                  <div class="cr-pipe-circle pending"></div>
+                  <div class="cr-pipe-lbl">Visible</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review sections -->
+          <div class="cr-card">
+            <div class="cr-card-hdr">
+              <div class="cr-card-title">Review Sections</div>
+            </div>
+            <div class="cr-rev-sections">
+
+              <div class="cr-rev-sec">
+                <div class="cr-rev-sec-icon" style="background:#eff6ff">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="#3b82f6" stroke-width="1.6"><rect x="3" y="2" width="10" height="12" rx="1.5"/><path d="M6 6h4M6 9h4M6 12h2" stroke-linecap="round"/></svg>
+                </div>
+                <div class="cr-rev-sec-body">
+                  <div class="cr-rev-sec-title">Engineering Rubric</div>
+                  <div class="cr-rev-sec-meta">Completed by Marco V. · Last updated May 18</div>
+                </div>
+                <div class="cr-rev-sec-right">
+                  <div class="cr-rev-sec-prog">
+                    <div class="cr-rev-sec-track"><div class="cr-rev-sec-fill" style="width:80%;background:#3b82f6"></div></div>
+                    <span class="cr-rev-sec-pct">80%</span>
+                  </div>
+                  <span class="cr-badge-done">Completed</span>
+                  <button class="cr-sec-btn" onclick="setTab('rubric')">View</button>
+                </div>
+              </div>
+
+              <div class="cr-rev-sec">
+                <div class="cr-rev-sec-icon" style="background:#fffbeb">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="#f59e0b" stroke-width="1.6"><circle cx="8" cy="6" r="3"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg>
+                </div>
+                <div class="cr-rev-sec-body">
+                  <div class="cr-rev-sec-title">PM Notes</div>
+                  <div class="cr-rev-sec-meta">Assigned to Anna K. · Not started · Reminder scheduled May 24</div>
+                </div>
+                <div class="cr-rev-sec-right">
+                  <div class="cr-rev-sec-prog">
+                    <div class="cr-rev-sec-track"><div class="cr-rev-sec-fill" style="width:0%;background:#f59e0b"></div></div>
+                    <span class="cr-rev-sec-pct">0%</span>
+                  </div>
+                  <span class="cr-badge-pending">Pending</span>
+                  <button class="cr-sec-btn">Nudge</button>
+                </div>
+              </div>
+
+              <div class="cr-rev-sec">
+                <div class="cr-rev-sec-icon" style="background:#f5f3ff">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.6"><path d="M8 2l1.5 3.5L13 6l-2.5 2.5.5 3.5L8 10.5 5 12l.5-3.5L3 6l3.5-.5L8 2z"/></svg>
+                </div>
+                <div class="cr-rev-sec-body">
+                  <div class="cr-rev-sec-title">Self Assessment</div>
+                  <div class="cr-rev-sec-meta">Employee in draft · Updated May 15</div>
+                </div>
+                <div class="cr-rev-sec-right">
+                  <div class="cr-rev-sec-prog">
+                    <div class="cr-rev-sec-track"><div class="cr-rev-sec-fill" style="width:40%;background:#7c3aed"></div></div>
+                    <span class="cr-rev-sec-pct">40%</span>
+                  </div>
+                  <span class="cr-badge-draft">In Draft</span>
+                  <button class="cr-sec-btn">View</button>
+                </div>
+              </div>
+
+              <div class="cr-rev-sec">
+                <div class="cr-rev-sec-icon" style="background:#f8fafc">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="#94a3b8" stroke-width="1.6"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5M8 5.5v5" stroke-linecap="round"/></svg>
+                </div>
+                <div class="cr-rev-sec-body">
+                  <div class="cr-rev-sec-title">Calibration Session</div>
+                  <div class="cr-rev-sec-meta">Not yet scheduled · Will unlock after PM notes are complete</div>
+                </div>
+                <div class="cr-rev-sec-right">
+                  <span class="cr-badge-na">Not Started</span>
+                  <button class="cr-sec-btn" style="opacity:.5;cursor:not-allowed">Schedule</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Automation -->
+          <div class="cr-card">
+            <div class="cr-card-hdr">
+              <div>
+                <div class="cr-card-title">Automation &amp; Reminders</div>
+                <div class="cr-card-sub">Scheduled notifications for this review</div>
+              </div>
+            </div>
+            <div class="cr-card-body" style="padding:0">
+              <div style="display:flex;flex-direction:column">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border)">
+                  <div style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div>
+                  <div style="flex:1">
+                    <div style="font-size:12.5px;font-weight:500;color:var(--text-primary)">PM reminder — Anna K.</div>
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Scheduled for May 24, 2026 · If PM notes still incomplete</div>
+                  </div>
+                  <span style="font-size:10.5px;font-weight:600;color:#b45309;background:#fffbeb;border:1px solid #fde68a;padding:2px 8px;border-radius:5px">Pending</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border)">
+                  <div style="width:8px;height:8px;border-radius:50%;background:#e5e7eb;flex-shrink:0"></div>
+                  <div style="flex:1">
+                    <div style="font-size:12.5px;font-weight:500;color:var(--text-primary)">Calibration invite — All reviewers</div>
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Triggers when all sections are complete</div>
+                  </div>
+                  <span style="font-size:10.5px;font-weight:600;color:#9ca3af;background:#f5f6f8;border:1px solid #e5e7eb;padding:2px 8px;border-radius:5px">Waiting</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 18px">
+                  <div style="width:8px;height:8px;border-radius:50%;background:#e5e7eb;flex-shrink:0"></div>
+                  <div style="flex:1">
+                    <div style="font-size:12.5px;font-weight:500;color:var(--text-primary)">Report delivery — Clara H.</div>
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Sends when status is set to Employee Visible</div>
+                  </div>
+                  <span style="font-size:10.5px;font-weight:600;color:#9ca3af;background:#f5f6f8;border:1px solid #e5e7eb;padding:2px 8px;border-radius:5px">Waiting</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── History ── -->
+        <div id="panelHistory" class="cr-panel">
+
+          <div class="cr-card">
+            <div class="cr-card-hdr">
+              <div>
+                <div class="cr-card-title">Review History</div>
+                <div class="cr-card-sub">4 completed cycles · Joined January 2022</div>
+              </div>
+            </div>
+            <div class="cr-hist-tbl">
+              <div class="cr-hist-head">
+                <div class="cr-hist-th">Cycle</div>
+                <div class="cr-hist-th">Outcome</div>
+                <div class="cr-hist-th">Score</div>
+                <div class="cr-hist-th">Change</div>
+                <div class="cr-hist-th">Reviewers</div>
+                <div class="cr-hist-th">Status</div>
+              </div>
+              <div class="cr-hist-row">
+                <div class="cr-hist-td cr-hist-period">Q1 2026</div>
+                <div class="cr-hist-td"><div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:#3b82f6"></div>Senior I?</div></div>
+                <div class="cr-hist-td cr-hist-score" style="color:var(--text-muted)">TBD</div>
+                <div class="cr-hist-td">—</div>
+                <div class="cr-hist-td" style="font-size:11.5px;color:var(--text-muted)">Marco V., Anna K.</div>
+                <div class="cr-hist-td"><span style="font-size:11px;font-weight:500;color:#2563eb;background:#eff6ff;border:1px solid #bfdbfe;padding:2px 8px;border-radius:5px">In Progress</span></div>
+              </div>
+              <div class="cr-hist-row">
+                <div class="cr-hist-td cr-hist-period">Q1 2025</div>
+                <div class="cr-hist-td"><div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:#6366f1"></div>Mid II</div></div>
+                <div class="cr-hist-td cr-hist-score">84</div>
+                <div class="cr-hist-td"><span class="cr-delta-same">+5 pts</span></div>
+                <div class="cr-hist-td" style="font-size:11.5px;color:var(--text-muted)">Marco V., HR Admin</div>
+                <div class="cr-hist-td"><span style="font-size:11px;font-weight:500;color:#0f766e;background:#f0fdfa;border:1px solid #99f6e4;padding:2px 8px;border-radius:5px">Visible</span></div>
+              </div>
+              <div class="cr-hist-row">
+                <div class="cr-hist-td cr-hist-period">Q3 2024</div>
+                <div class="cr-hist-td">
+                  <div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:#6366f1"></div>Mid I <span class="cr-promo-badge" style="margin-left:4px">↑ Promoted</span></div>
+                </div>
+                <div class="cr-hist-td cr-hist-score">79</div>
+                <div class="cr-hist-td"><span class="cr-delta-up">↑ +11</span></div>
+                <div class="cr-hist-td" style="font-size:11.5px;color:var(--text-muted)">Marco V., HR Admin</div>
+                <div class="cr-hist-td"><span style="font-size:11px;font-weight:500;color:#0f766e;background:#f0fdfa;border:1px solid #99f6e4;padding:2px 8px;border-radius:5px">Visible</span></div>
+              </div>
+              <div class="cr-hist-row">
+                <div class="cr-hist-td cr-hist-period">Q1 2024</div>
+                <div class="cr-hist-td"><div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:#94a3b8"></div>Junior II</div></div>
+                <div class="cr-hist-td cr-hist-score">68</div>
+                <div class="cr-hist-td">—</div>
+                <div class="cr-hist-td" style="font-size:11.5px;color:var(--text-muted)">Marco V.</div>
+                <div class="cr-hist-td"><span style="font-size:11px;font-weight:500;color:#0f766e;background:#f0fdfa;border:1px solid #99f6e4;padding:2px 8px;border-radius:5px">Visible</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cr-card">
+            <div class="cr-card-hdr">
+              <div class="cr-card-title">Score Progression</div>
+            </div>
+            <div class="cr-card-body">
+              <div style="display:flex;align-items:flex-end;gap:14px;padding:8px 0;height:100px">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
+                  <div style="font-size:11px;font-weight:600;color:var(--text-muted);font-family:var(--font-mono)">68</div>
+                  <div style="width:100%;border-radius:5px 5px 0 0;background:#e5e7eb" style="height:68%">
+                    <div style="width:100%;height:60px;background:linear-gradient(to top,#94a3b8,#cbd5e1);border-radius:5px 5px 0 0"></div>
+                  </div>
+                  <div style="font-size:10.5px;color:var(--text-muted)">Q1 '24</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
+                  <div style="font-size:11px;font-weight:600;color:var(--accent);font-family:var(--font-mono)">79</div>
+                  <div style="width:100%;height:70px;background:linear-gradient(to top,var(--accent),#818cf8);border-radius:5px 5px 0 0"></div>
+                  <div style="font-size:10.5px;color:var(--text-muted)">Q3 '24</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
+                  <div style="font-size:11px;font-weight:600;color:var(--accent);font-family:var(--font-mono)">84</div>
+                  <div style="width:100%;height:75px;background:linear-gradient(to top,var(--accent),#818cf8);border-radius:5px 5px 0 0"></div>
+                  <div style="font-size:10.5px;color:var(--text-muted)">Q1 '25</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
+                  <div style="font-size:11px;font-weight:600;color:var(--text-muted);font-family:var(--font-mono)">—</div>
+                  <div style="width:100%;height:40px;background:repeating-linear-gradient(45deg,#f0f2f7,#f0f2f7 3px,#e5e7eb 3px,#e5e7eb 6px);border-radius:5px 5px 0 0;border:1px dashed var(--border-strong)"></div>
+                  <div style="font-size:10.5px;color:var(--text-muted)">Q1 '26</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:var(--text-muted)">
+                <div style="width:12px;height:2px;border:1px dashed var(--border-strong)"></div>
+                Senior I target: 80 / 100
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Rubric ── -->
+        <div id="panelRubric" class="cr-panel">
+
+          <div class="cr-rub-benchmark">
+            <div class="cr-rub-bench-left">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v5M8 5.5v.5" stroke-linecap="round"/></svg>
+              Senior I target: 80 / 100 overall score · Current: 76 / 100
+            </div>
+            <div class="cr-rub-legend">
+              <div class="cr-rub-leg-item"><div class="cr-rub-leg-dot" style="background:var(--accent)"></div>Manager</div>
+              <div class="cr-rub-leg-item"><div class="cr-rub-leg-dot" style="background:#7c3aed"></div>Self</div>
+              <div class="cr-rub-leg-item"><div class="cr-rub-leg-dot" style="background:#f59e0b"></div>Expected</div>
+            </div>
+          </div>
+
+          <div class="cr-rub-summary">
+            <div class="cr-rub-sum-card">
+              <div><span class="cr-rub-sum-val">76</span><span class="cr-rub-sum-max"> /100</span></div>
+              <div class="cr-rub-sum-lbl">Overall</div>
+              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:76%;background:var(--accent)"></div></div>
+            </div>
+            <div class="cr-rub-sum-card">
+              <div><span class="cr-rub-sum-val">4.0</span><span class="cr-rub-sum-max"> /5</span></div>
+              <div class="cr-rub-sum-lbl">Technical</div>
+              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:80%;background:#3b82f6"></div></div>
+            </div>
+            <div class="cr-rub-sum-card">
+              <div><span class="cr-rub-sum-val">3.25</span><span class="cr-rub-sum-max"> /5</span></div>
+              <div class="cr-rub-sum-lbl">Delivery</div>
+              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:65%;background:#f59e0b"></div></div>
+            </div>
+            <div class="cr-rub-sum-card">
+              <div><span class="cr-rub-sum-val">4.5</span><span class="cr-rub-sum-max"> /5</span></div>
+              <div class="cr-rub-sum-lbl">Collaboration</div>
+              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:90%;background:#10b981"></div></div>
+            </div>
+            <div class="cr-rub-sum-card">
+              <div><span class="cr-rub-sum-val">3.5</span><span class="cr-rub-sum-max"> /5</span></div>
+              <div class="cr-rub-sum-lbl">Leadership</div>
+              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:70%;background:#a855f7"></div></div>
+            </div>
+          </div>
+
+          <!-- Competency groups -->
+          <div id="rubricGroups"></div>
+
+        </div>
+
+        <!-- ── Feedback ── -->
+        <div id="panelFeedback" class="cr-panel">
+
+          <!-- Engineering feedback (completed) -->
+          <div class="cr-fb-section">
+            <div class="cr-fb-hdr">
+              <div class="cr-fb-who">
+                <div class="cr-fb-av" style="background:#3b82f6">MV</div>
+                <div>
+                  <div class="cr-fb-name">Marco V. <span style="font-size:10.5px;font-weight:500;color:#166534;background:#dcfce7;border:1px solid #bbf7d0;border-radius:4px;padding:1px 6px;margin-left:4px">Engineering</span></div>
+                  <div class="cr-fb-role">Submitted May 18, 2026 · Visible to Admin</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="cr-fb-locked-notice">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="7" width="8" height="7" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>
+                  Internal only
+                </div>
+                <span class="cr-badge-done">Completed</span>
+              </div>
+            </div>
+            <div class="cr-fb-body">
+              <div class="cr-fb-field">
+                <div class="cr-fb-field-lbl">Strengths</div>
+                <div class="cr-fb-field-val">Clara demonstrates exceptional backend proficiency and code quality. Her architecture decisions on the payments module were well-reasoned and significantly reduced latency. Code reviews are thorough and educational for junior members.</div>
+              </div>
+              <div class="cr-fb-field">
+                <div class="cr-fb-field-lbl">Growth Areas</div>
+                <div class="cr-fb-field-val">Front-end skills could be stronger — Clara tends to avoid UI-heavy tasks. Documentation is inconsistent; some modules lack proper inline comments and README updates. Estimation accuracy has room to improve, especially for complex integrations.</div>
+              </div>
+              <div class="cr-fb-field">
+                <div class="cr-fb-field-lbl">Leadership Signals</div>
+                <div class="cr-fb-field-val">Actively mentors Jake R. and Felipe T. Has begun participating in architecture discussions without being asked. Ready to take ownership of a sub-team.</div>
+              </div>
+              <div class="cr-fb-field">
+                <div class="cr-fb-field-lbl">Promotion Readiness</div>
+                <div class="cr-promo-row">
+                  <div class="cr-promo-opt">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/></svg>
+                    Not Ready
+                  </div>
+                  <div class="cr-promo-opt selected">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5.5"/><circle cx="7" cy="7" r="2.5" fill="currentColor" stroke="none"/></svg>
+                    On Track
+                  </div>
+                  <div class="cr-promo-opt">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/></svg>
+                    Ready
+                  </div>
+                  <div class="cr-promo-opt">
+                    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/></svg>
+                    Strong Yes
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PM feedback (pending) -->
+          <div class="cr-fb-section">
+            <div class="cr-fb-hdr">
+              <div class="cr-fb-who">
+                <div class="cr-fb-av" style="background:#f59e0b">AK</div>
+                <div>
+                  <div class="cr-fb-name">Anna K. <span style="font-size:10.5px;font-weight:500;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:4px;padding:1px 6px;margin-left:4px">PM</span></div>
+                  <div class="cr-fb-role">Assigned · Not started · Reminder on May 24</div>
+                </div>
+              </div>
+              <span class="cr-badge-pending">Pending</span>
+            </div>
+            <div class="cr-fb-pending">
+              <div class="cr-fb-pending-icon">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 3" stroke-linecap="round"/></svg>
+              </div>
+              <div class="cr-fb-pending-title">Waiting for PM feedback</div>
+              <div class="cr-fb-pending-sub">Anna K. hasn't started this section yet. An automated reminder is scheduled for May 24 if not completed.</div>
+            </div>
+          </div>
+
+          <!-- Calibration -->
+          <div class="cr-fb-section">
+            <div class="cr-fb-hdr">
+              <div>
+                <div class="cr-fb-name">Calibration Session</div>
+                <div class="cr-fb-role" style="margin-top:3px">Will become available once all review sections are complete</div>
+              </div>
+              <span class="cr-badge-na">Not Started</span>
+            </div>
+            <div class="cr-fb-pending">
+              <div class="cr-fb-pending-icon" style="background:#f5f3ff;border-color:#ddd6fe">
+                <svg viewBox="0 0 20 20" fill="none" stroke="#7c3aed" stroke-width="1.6"><path d="M10 4v12M4 10h12" stroke-linecap="round"/></svg>
+              </div>
+              <div class="cr-fb-pending-title">Calibration pending</div>
+              <div class="cr-fb-pending-sub">Awaiting completion of all sections before scheduling a calibration session with HR and the engineering lead.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Report ── -->
+        <div id="panelReport" class="cr-panel">
+
+          <div class="cr-notice cr-notice-info">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v5M8 5.5v.5" stroke-linecap="round"/></svg>
+            <div>This report is not yet finalized. The preview below reflects current data. <strong>Sections highlighted in amber are incomplete.</strong></div>
+          </div>
+
+          <div class="cr-report-card">
+            <div class="cr-report-preview">
+              <div class="cr-report-name">Clara H. — Q1 2026 Performance Review</div>
+              <div class="cr-report-detail">Development · Senior Developer · Level 17 · Batch A</div>
+
+              <div class="cr-report-outcome">
+                <div>
+                  <div class="cr-report-outcome-lbl">Current Tier</div>
+                  <div class="cr-report-outcome-val">Mid II (Level 17)</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="cr-report-outcome-lbl">Proposed Outcome</div>
+                  <div class="cr-report-outcome-val" style="color:var(--text-muted)">TBD — Pending Calibration</div>
+                </div>
+              </div>
+
+              <div class="cr-report-sections">
+                <div class="cr-report-sec">
+                  <div class="cr-report-sec-lbl">Engineering Rubric Summary</div>
+                  <div class="cr-report-sec-val">Overall score: <strong>76 / 100</strong> · Technical Skills: 4.0 · Delivery: 3.25 · Collaboration: 4.5 · Leadership: 3.5</div>
+                </div>
+                <div class="cr-report-sec">
+                  <div class="cr-report-sec-lbl">Engineering Feedback</div>
+                  <div class="cr-report-sec-val">Strong backend proficiency and code quality. Growth needed in front-end skills and documentation consistency. Shows early leadership signals and readiness for sub-team ownership.</div>
+                </div>
+                <div class="cr-report-sec" style="opacity:.45">
+                  <div class="cr-report-sec-lbl" style="color:#d97706">PM Feedback <span style="font-size:10px;background:#fffbeb;border:1px solid #fde68a;color:#b45309;padding:1px 6px;border-radius:4px;font-weight:600;letter-spacing:.2px;margin-left:4px">PENDING</span></div>
+                  <div class="cr-report-sec-val" style="font-style:italic;color:var(--text-muted)">Awaiting Anna K. to complete PM notes section.</div>
+                </div>
+                <div class="cr-report-sec" style="opacity:.45">
+                  <div class="cr-report-sec-lbl" style="color:#9ca3af">Calibration Summary <span style="font-size:10px;background:#f5f6f8;border:1px solid #e5e7eb;color:#9ca3af;padding:1px 6px;border-radius:4px;font-weight:600;letter-spacing:.2px;margin-left:4px">NOT STARTED</span></div>
+                  <div class="cr-report-sec-val" style="font-style:italic;color:var(--text-muted)">Will be completed during calibration session.</div>
+                </div>
+                <div class="cr-report-sec">
+                  <div class="cr-report-sec-lbl">Growth Recommendations</div>
+                  <div class="cr-report-sec-val">Focus on front-end fundamentals and documentation practices. Continue mentorship activities. Explore system design ownership on upcoming projects.</div>
+                </div>
+              </div>
+            </div>
+            <div class="cr-report-actions">
+              <button class="cr-report-act-btn">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke-linecap="round"/></svg>
+                Export PDF
+              </button>
+              <button class="cr-report-act-btn">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 9l3-3-3-3M14 6H6a3 3 0 0 0 0 6h1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Share with Employee
+              </button>
+              <button class="cr-report-act-btn" style="margin-left:auto;border-color:var(--accent-border);color:var(--accent);background:var(--accent-light)">
+                Mark as Finalized
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /cr-right -->
+    </div><!-- /cr-body -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+/* ── Tab switching ── */
+function setTab(t) {
+  document.querySelectorAll('.cr-tab').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.cr-panel').forEach(function(p){ p.classList.remove('active'); });
+  var btnMap = { cycle:'panelCycle', history:'panelHistory', rubric:'panelRubric', feedback:'panelFeedback', report:'panelReport' };
+  var panel = document.getElementById(btnMap[t]);
+  if (panel) panel.classList.add('active');
+  var tabs = document.querySelectorAll('.cr-tab');
+  var tabIdx = { cycle:0, history:1, rubric:2, feedback:3, report:4 };
+  if (tabs[tabIdx[t]]) tabs[tabIdx[t]].classList.add('active');
+}
+
+/* ── View As ── */
+function setViewAs(btn) {
+  document.querySelectorAll('.cr-va-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+/* ── Rubric Data ── */
+var RUBRIC_GROUPS = [
+  {
+    name: 'Technical Skills', score: 4.0, maxScore: 5, pct: 80, open: true,
+    comps: [
+      {
+        name: 'Backend Development', mgrScore: 4, selfScore: 4, exp: 4,
+        reviewerNote: 'Strong. Payments module refactor was well-reasoned.',
+        levels: [
+          'Works on assigned backend tasks with close guidance. Limited understanding of system interactions.',
+          'Independently completes backend features. Understands data flow and basic architecture patterns.',
+          'Owns backend modules end-to-end. Designs APIs with reliability and performance in mind.',
+          'Leads backend architecture decisions. Mentors others. Defines patterns used across the team.',
+          'Recognized authority. Sets long-term backend direction. Drives org-wide engineering standards.'
+        ]
+      },
+      {
+        name: 'Frontend Knowledge', mgrScore: 3, selfScore: 2, exp: 4,
+        reviewerNote: 'Below target for Senior I. Tends to avoid UI-heavy tasks.',
+        levels: [
+          'Basic HTML/CSS/JS knowledge. Needs guidance on component structure and state management.',
+          'Builds simple UI features independently. Understands component lifecycles and basic reactivity.',
+          'Delivers polished, accessible UI. Understands performance trade-offs and cross-browser issues.',
+          'Architects frontend solutions. Owns design-system integration. Mentors on frontend best practices.',
+          'Full frontend leadership. Drives architecture, tooling choices, and frontend engineering culture.'
+        ]
+      },
+      {
+        name: 'System Architecture', mgrScore: 4, selfScore: 3, exp: 4,
+        reviewerNote: 'Meeting expectations. Good instincts on service boundaries.',
+        levels: [
+          'Understands existing architecture with guidance. Limited involvement in design decisions.',
+          'Contributes to architectural discussions. Can evaluate trade-offs with support.',
+          'Designs robust system components. Identifies scalability and reliability concerns proactively.',
+          'Leads architectural decisions for major features. Balances short-term needs with long-term health.',
+          'Shapes system architecture across the org. Anticipates future needs and sets engineering strategy.'
+        ]
+      },
+      {
+        name: 'Code Quality', mgrScore: 5, selfScore: 5, exp: 4,
+        reviewerNote: 'Exceeds — highest score in group. Code reviews are educational.',
+        levels: [
+          'Code works but may lack clarity or consistency. Requires significant review effort.',
+          'Writes readable, reasonably structured code. Responds well to feedback.',
+          'Consistently writes clean, well-tested, maintainable code. PRs require minimal changes.',
+          'Sets the quality bar for the team. Reviews are thorough and raise the overall standard.',
+          'Defines code quality standards for the org. Builds tooling or processes that scale quality.'
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Delivery & Execution', score: 3.25, maxScore: 5, pct: 65, open: false,
+    comps: [
+      {
+        name: 'Sprint Velocity', mgrScore: 3, selfScore: 3, exp: 4,
+        reviewerNote: '',
+        levels: [
+          'Frequently misses sprint commitments. Needs support to break down and scope work.',
+          'Generally completes assigned work within sprints with occasional carry-overs.',
+          'Consistently delivers committed scope. Proactively flags blockers early.',
+          'Delivers at high velocity while maintaining quality. Helps unblock others.',
+          'Sets pace for the team. Drives process improvements that increase collective velocity.'
+        ]
+      },
+      {
+        name: 'Documentation', mgrScore: 3, selfScore: 2, exp: 4,
+        reviewerNote: 'Consistently below expectations. Inline comments and READMEs often missing.',
+        levels: [
+          'Rarely documents work. Teammates struggle to understand or maintain their code.',
+          'Documents when reminded. Basic README and inline comments present but incomplete.',
+          'Consistently produces clear documentation. New members can onboard using their docs.',
+          'Documentation is thorough, structured, and kept up to date. Sets a strong example.',
+          'Drives documentation culture. Owns standards and tooling for team-wide knowledge management.'
+        ]
+      },
+      {
+        name: 'Estimation Accuracy', mgrScore: 3, selfScore: 3, exp: 4,
+        reviewerNote: 'Estimation accuracy has room to improve for complex integrations.',
+        levels: [
+          'Estimates are frequently off. Struggles to account for unknowns or dependencies.',
+          'Estimates are reasonable for familiar work. Complex tasks still cause surprises.',
+          'Consistently accurate on most tasks. Breaks down complex work into estimable units.',
+          'Highly reliable estimator. Catches hidden complexity early and adjusts plans accordingly.',
+          'Estimation expertise used org-wide. Improves planning processes and team predictability.'
+        ]
+      },
+      {
+        name: 'Release Quality', mgrScore: 4, selfScore: 4, exp: 4,
+        reviewerNote: 'On target. No regressions in last 3 releases.',
+        levels: [
+          'Releases often require hotfixes. Testing coverage is minimal.',
+          'Releases are mostly stable. Occasional issues caught in QA or staging.',
+          'Releases consistently meet quality bar. Edge cases identified and handled before deploy.',
+          'Releases are reliable and well-tested. Champions QA processes within the team.',
+          'Drives release excellence org-wide. Defines quality gates, automation, and release standards.'
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Collaboration', score: 4.5, maxScore: 5, pct: 90, open: false,
+    comps: [
+      {
+        name: 'Team Communication', mgrScore: 5, selfScore: 4, exp: 4,
+        reviewerNote: 'Exceptional. Clear async updates, keeps everyone aligned.',
+        levels: [
+          'Communication is reactive. Updates are infrequent and require prompting.',
+          'Communicates progress and blockers regularly. Participates actively in team discussions.',
+          'Proactively shares context and decisions. Written communication is clear and well-structured.',
+          'Sets communication norms for the team. Keeps stakeholders informed without over-communicating.',
+          'Shapes communication culture across teams. Their updates become the model others follow.'
+        ]
+      },
+      {
+        name: 'Code Review Quality', mgrScore: 4, selfScore: 4, exp: 4,
+        reviewerNote: 'Thorough and educational. Junior devs learn from their comments.',
+        levels: [
+          'Reviews are surface-level. Misses logic errors or broader architectural concerns.',
+          'Provides useful feedback on correctness and clarity. Reviews complete within a reasonable time.',
+          'Reviews are thorough, constructive, and educational. Catches both bugs and design issues.',
+          'Reviews elevate team quality. Feedback is prioritized, actionable, and kind. Sets the standard.',
+          'Defines code review culture. Builds processes (checklists, automation) that scale quality.'
+        ]
+      },
+      {
+        name: 'Cross-team Collab.', mgrScore: 4, selfScore: 3, exp: 3,
+        reviewerNote: '',
+        levels: [
+          'Works in isolation. Limited engagement with other teams or functions.',
+          'Participates in cross-team meetings. Completes hand-offs with adequate communication.',
+          'Builds productive relationships across teams. Navigates dependencies smoothly.',
+          'Drives cross-team alignment. Resolves inter-team blockers and facilitates shared decisions.',
+          'Recognized cross-functional partner. Shapes how teams collaborate at an organizational level.'
+        ]
+      },
+      {
+        name: 'Conflict Resolution', mgrScore: 5, selfScore: 4, exp: 3,
+        reviewerNote: 'Exceeds — strong signal for Senior I. Navigates disagreements with maturity.',
+        levels: [
+          'Avoids conflict or escalates prematurely. Struggles to navigate interpersonal friction.',
+          'Handles minor disagreements respectfully. Seeks support for more complex situations.',
+          'Addresses conflicts directly and constructively. Finds common ground without escalation.',
+          'Resolves complex or multi-party conflicts. Leaves relationships stronger after friction.',
+          'Models conflict resolution for the org. Coaches others and shapes a culture of healthy debate.'
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Leadership', score: 3.5, maxScore: 5, pct: 70, open: false,
+    comps: [
+      {
+        name: 'Mentorship', mgrScore: 4, selfScore: 3, exp: 3,
+        reviewerNote: 'Actively mentors Jake R. and Felipe T. without being asked.',
+        levels: [
+          'Limited mentorship activity. Focuses primarily on individual output.',
+          'Answers questions and helps when asked. Provides useful context to newer colleagues.',
+          'Proactively invests in others\' growth. Gives feedback that improves performance.',
+          'Structured mentor. Designs growth plans, tracks progress, advocates for mentees.',
+          'Builds mentorship culture. Scales impact by coaching other mentors.'
+        ]
+      },
+      {
+        name: 'Technical Leadership', mgrScore: 3, selfScore: 3, exp: 4,
+        reviewerNote: 'Room for growth. Participates in arch discussions but rarely leads.',
+        levels: [
+          'Follows direction. Not yet participating in technical decision-making.',
+          'Contributes opinions in discussions. Starting to influence technical decisions.',
+          'Leads technical decisions within their scope. Defines approach for medium-sized problems.',
+          'Drives technical direction for major features or systems. Others seek their input.',
+          'Sets technical direction for the team or org. Recognized as a technical authority.'
+        ]
+      },
+      {
+        name: 'Initiative', mgrScore: 3, selfScore: 3, exp: 4,
+        reviewerNote: '',
+        levels: [
+          'Waits for direction. Rarely identifies or acts on opportunities without prompting.',
+          'Takes action on well-defined problems. Starting to identify gaps without being asked.',
+          'Proactively improves processes, code, or team practices without waiting for direction.',
+          'Drives significant initiatives. Identifies and champions high-impact work independently.',
+          'Creates new opportunities for the team or org. Builds momentum that outlasts their involvement.'
+        ]
+      },
+      {
+        name: 'Knowledge Sharing', mgrScore: 4, selfScore: 3, exp: 3,
+        reviewerNote: 'Good. Runs occasional tech talks and keeps the wiki updated.',
+        levels: [
+          'Knowledge is siloed. Rarely shares learnings or context with the broader team.',
+          'Shares when asked. Participates in team knowledge sessions.',
+          'Regularly documents and shares learnings. Runs occasional talks or write-ups.',
+          'Actively grows team knowledge. Builds resources (wikis, playbooks) that outlast them.',
+          'Shapes knowledge culture. Creates systems and habits that make the whole org smarter.'
+        ]
+      }
+    ]
+  }
+];
+
+/* ── Rubric rendering ── */
+function toggleRubricGroup(idx) {
+  RUBRIC_GROUPS[idx].open = !RUBRIC_GROUPS[idx].open;
+  renderRubric();
+}
+
+function toggleLvlPanel(gIdx, cIdx) {
+  var id = 'lvl-' + gIdx + '-' + cIdx;
+  var panel = document.getElementById(id);
+  var toggle = document.getElementById('lvl-tog-' + gIdx + '-' + cIdx);
+  if (!panel) return;
+  var isOpen = panel.classList.toggle('open');
+  if (toggle) toggle.classList.toggle('open', isOpen);
+  var span = toggle ? toggle.querySelector('span') : null;
+  if (span) span.textContent = isOpen ? 'Hide level guide' : 'View level descriptions';
+}
+
+function renderMgrDots(mgrScore, exp, max) {
+  var html = '';
+  for (var i = 1; i <= max; i++) {
+    var cls = '';
+    if (i <= mgrScore) cls = 'mgr-filled';
+    else if (i === exp && mgrScore < exp) cls = 'exp-mark';
+    html += '<div class="cr-rub-dot ' + cls + '" title="Level ' + i + '"></div>';
+  }
+  return html;
+}
+
+function renderSelfDots(selfScore, max) {
+  var html = '';
+  for (var i = 1; i <= max; i++) {
+    var cls = i <= selfScore ? 'self-filled' : '';
+    html += '<div class="cr-rub-dot ' + cls + '" title="Level ' + i + '"></div>';
+  }
+  return html;
+}
+
+function gapLabel(mgrScore, selfScore, exp) {
+  var diff = mgrScore - selfScore;
+  var aboveExp = mgrScore >= exp;
+  if (mgrScore === selfScore) return '<span class="cr-rub-comp-gap neutral">Self and manager aligned</span>';
+  if (diff > 0) return '<span class="cr-rub-comp-gap neutral">Manager rated ' + diff + ' pt' + (diff > 1 ? 's' : '') + ' higher</span>';
+  return '<span class="cr-rub-comp-gap">Self rated ' + Math.abs(diff) + ' pt' + (Math.abs(diff) > 1 ? 's' : '') + ' higher — calibration item</span>';
+}
+
+function renderRubric() {
+  var html = RUBRIC_GROUPS.map(function(g, gIdx) {
+    var compsHtml = '';
+    if (g.open) {
+      compsHtml = '<div class="cr-rub-comps">'
+        + g.comps.map(function(c, cIdx) {
+            var diff = c.mgrScore - c.exp;
+            var expLabel = diff > 0 ? '+' + diff + ' above target' : (diff < 0 ? diff + ' below target' : 'meets target');
+            var expCls   = diff > 0 ? 'ok' : (diff < 0 ? '' : 'neutral');
+
+            /* level descriptions panel */
+            var lvlHtml = c.levels.map(function(desc, li) {
+              var lvlNum = li + 1;
+              var isMgr  = lvlNum === c.mgrScore;
+              var isSelf = lvlNum === c.selfScore;
+              var isExp  = lvlNum === c.exp;
+              var isCurrentLvl = isMgr;
+              var tags = '';
+              if (isMgr)  tags += '<span class="cr-rub-lvl-tag mgr">Mgr</span>';
+              if (isSelf) tags += '<span class="cr-rub-lvl-tag self">Self</span>';
+              if (isExp && !isMgr) tags += '<span class="cr-rub-lvl-tag exp">Target</span>';
+              return '<div class="cr-rub-lvl-row' + (isCurrentLvl ? ' current-lvl' : '') + '">'
+                + '<div class="cr-rub-lvl-num">' + lvlNum + '</div>'
+                + '<div class="cr-rub-lvl-desc">' + (tags ? tags + ' ' : '') + desc + '</div>'
+                + '</div>';
+            }).join('');
+
+            /* note field */
+            var noteHtml = c.reviewerNote
+              ? '<div class="cr-rub-note-area"><div class="cr-rub-note-lbl">Reviewer note</div><div class="cr-rub-note-saved">' + c.reviewerNote + '</div></div>'
+              : '<div class="cr-rub-note-area"><div class="cr-rub-note-lbl">Reviewer note</div><textarea class="cr-rub-note-field" rows="2" placeholder="Add a note for calibration or the final report…"></textarea></div>';
+
+            return '<div class="cr-rub-comp">'
+              + '<div class="cr-rub-comp-top">'
+              +   '<div class="cr-rub-comp-info">'
+              +     '<div class="cr-rub-comp-name">' + c.name + '</div>'
+              +     '<div class="cr-rub-comp-exp-row">'
+              +       '<span class="cr-rub-exp-badge">Target ' + c.exp + '/5</span>'
+              +       '<span class="cr-rub-comp-gap ' + expCls + '">' + expLabel + '</span>'
+              +     '</div>'
+              +     gapLabel(c.mgrScore, c.selfScore, c.exp)
+              +   '</div>'
+              +   '<div class="cr-rub-scoring">'
+              +     '<div class="cr-rub-score-row"><span class="cr-rub-score-who">Manager</span><div class="cr-rub-dots">' + renderMgrDots(c.mgrScore, c.exp, 5) + '</div><span class="cr-rub-score-num mgr">' + c.mgrScore + '/5</span></div>'
+              +     '<div class="cr-rub-score-row"><span class="cr-rub-score-who">Self</span><div class="cr-rub-dots">' + renderSelfDots(c.selfScore, 5) + '</div><span class="cr-rub-score-num self">' + c.selfScore + '/5</span></div>'
+              +   '</div>'
+              + '</div>'
+              + '<button class="cr-rub-lvl-toggle" id="lvl-tog-' + gIdx + '-' + cIdx + '" onclick="toggleLvlPanel(' + gIdx + ',' + cIdx + ')">'
+              +   '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+              +   '<span>View level descriptions</span>'
+              + '</button>'
+              + '<div class="cr-rub-lvl-panel" id="lvl-' + gIdx + '-' + cIdx + '">' + lvlHtml + '</div>'
+              + noteHtml
+              + '</div>';
+          }).join('')
+        + '</div>';
+    }
+
+    var groupColor = ['#3b82f6','#f59e0b','#10b981','#a855f7'][gIdx] || 'var(--accent)';
+    return '<div class="cr-rub-group">'
+      + '<div class="cr-rub-group-hdr" onclick="toggleRubricGroup(' + gIdx + ')">'
+      +   '<svg class="cr-rub-group-arr ' + (g.open ? 'open' : '') + '" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      +   '<span class="cr-rub-group-name">' + g.name + '</span>'
+      +   '<span class="cr-rub-group-score">' + g.score + ' / ' + g.maxScore + '</span>'
+      +   '<div style="width:12px"></div>'
+      +   '<div class="cr-rub-group-bar"><div class="cr-rub-group-fill" style="width:' + g.pct + '%;background:' + groupColor + '"></div></div>'
+      + '</div>'
+      + compsHtml
+      + '</div>';
+  }).join('');
+  document.getElementById('rubricGroups').innerHTML = html;
+}
+
+renderRubric();
+
+function sbToggle(){
+  var t=document.getElementById('projToggle');
+  var s=document.getElementById('projSub');
+  t.classList.toggle('open');
+  s.classList.toggle('open');
+}
+(function(){
+  if(document.querySelector('#projSub .sb-item.active')){
+    document.getElementById('projToggle').classList.add('open');
+    document.getElementById('projSub').classList.add('open');
+  }
+})();
+function toggleSidebar(){
+  var sb=document.querySelector('.sidebar');
+  var bd=document.getElementById('sbBackdrop');
+  if(!sb)return;
+  var open=sb.classList.toggle('sb-open');
+  if(bd)bd.classList.toggle('show',open);
+}
+
+</script>
+</body>
+</html>
