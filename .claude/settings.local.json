@@ -50,7 +50,11 @@
       "Bash(rsync -a --delete \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude history-tab-react/node_modules --exclude .claude)",
       "Bash(cp \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/pulse_serve.py\" /tmp/pulse_serve.py && echo \"copied\")",
       "Bash(rsync -a \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude history-tab-react/node_modules --exclude .claude)",
-      "Bash(rsync -a --delete \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude='.git' --exclude='node_modules')"
+      "Bash(rsync -a --delete \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude='.git' --exclude='node_modules')",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)",
+      "Bash(git checkout *)",
+      "Bash(git add *)"
     ]
   }
 }

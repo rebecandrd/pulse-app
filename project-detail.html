@@ -6079,7 +6079,8 @@
                 </svg>
               </div>
               <div class="kpi-body">
-                <div class="kpi-label" style="display:flex;align-items:center;gap:4px">
+                <div class="kpi-num" id="tmKpiExpNum" style="letter-spacing:-.5px"></div>
+                <div class="kpi-label" style="display:flex;align-items:center;gap:4px;margin-bottom:2px">
                   Experience Match
                   <button class="kpi-exp-info-btn" id="tmKpiExpInfoBtn" onclick="toggleExpPopover(event)" aria-label="How this is calculated">
                     <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
@@ -6089,8 +6090,7 @@
                     </svg>
                   </button>
                 </div>
-                <div class="kpi-exp-summary" id="tmKpiExpSummary"></div>
-                <div class="kpi-delta warn" id="tmKpiExpDelta" style="margin-top:4px">QA below benchmark</div>
+                <div class="kpi-delta warn" id="tmKpiExpDelta" style="margin-top:2px">QA below benchmark</div>
               </div>
             </div>
 
@@ -12426,14 +12426,9 @@
     var atRiskRows  = rowData.filter(function(r){ return r.d.status === 'at-risk' || r.d.status === 'caution'; });
     var goodRows    = rowData.filter(function(r){ return r.d.status === 'strong' || r.d.status === 'aligned'; });
 
-    /* Summary line on the card face */
-    var summaryEl = document.getElementById('tmKpiExpSummary');
-    if (summaryEl) {
-      var parts = [];
-      if (goodRows.length)   parts.push(goodRows.length   + (goodRows.length   === 1 ? ' aligned'  : ' aligned'));
-      if (atRiskRows.length) parts.push(atRiskRows.length + (atRiskRows.length === 1 ? ' at risk'  : ' at risk'));
-      summaryEl.textContent = parts.join(' \xb7 ') + ' \xb7 ' + rowData.length + ' disciplines';
-    }
+    /* Big number: aligned / total */
+    var expNumEl = document.getElementById('tmKpiExpNum');
+    if (expNumEl) expNumEl.textContent = goodRows.length + ' / ' + rowData.length;
 
     if (expDelta) {
       if (!atRiskRows.length) {
