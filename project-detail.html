@@ -465,9 +465,10 @@
     border: 1px solid #a7f3d0;
     font-weight: 500;
   }
-  .status-badge.st-fulfillment { background:#eef2ff;color:#3730a3;border-color:#c7d2fe }
+  .status-badge.st-fulfillment { background:#ecfdf5;color:#065f46;border-color:#a7f3d0 }
   .status-badge.st-designops   { background:#f5f3ff;color:#5b21b6;border-color:#ddd6fe }
-  .status-badge.st-maintenance { background:#fffbeb;color:#92400e;border-color:#fde68a }
+  .status-badge.st-maintenance { background:#faf5ff;color:#5b21b6;border-color:#ddd6fe }
+  .status-badge.st-expert      { background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe }
   .status-badge.st-proposal    { background:#ecfeff;color:#155e75;border-color:#a5f3fc }
   .status-badge.st-inactive    { background:#f1f5f9;color:#475569;border-color:#e2e8f0 }
   .status-badge.st-archived    { background:#f8fafc;color:#64748b;border-color:#e2e8f0 }
@@ -3892,6 +3893,7 @@
   .det-tag.green{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
   .det-tag.orange{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
   .det-tag.purple{background:#faf5ff;color:#6d28d9;border-color:#ddd6fe}
+  .det-tag.blue{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
 
   .det-link-list{display:flex;flex-direction:column;gap:0}
   .det-link-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);text-decoration:none;cursor:pointer;transition:background .1s;margin:0 -18px;padding-left:18px;padding-right:18px}
@@ -7625,12 +7627,12 @@
                   <div class="det-field-value" style="font-weight:600">TAPP Corp</div>
                 </div>
                 <div class="det-field">
-                  <div class="det-field-label">Project type</div>
-                  <div class="det-field-value"><span class="det-tag accent det-tag-btn" id="detProjTypeTag" data-val="fulfillment" onclick="openProjTypeMenu(this)">Fulfillment</span></div>
+                  <div class="det-field-label">Project Status</div>
+                  <div class="det-field-value"><span class="det-tag green det-tag-btn" id="detProjTypeTag" data-val="fulfillment" onclick="openProjTypeMenu(this)">Fulfillment</span></div>
                 </div>
                 <div class="det-field">
-                  <div class="det-field-label">Experience Needed</div>
-                  <div class="det-field-value"><span class="det-tag orange det-tag-btn" id="detEngageTag" data-val="high" onclick="openEngageMenu(this)">High</span></div>
+                  <div class="det-field-label">Experience Required</div>
+                  <div class="det-field-value"><span class="det-tag orange det-tag-btn" id="detEngageTag" data-val="senior" onclick="openEngageMenu(this)">Senior</span></div>
                 </div>
                 <div class="det-field">
                   <div class="det-field-label">Platform</div>
@@ -8365,7 +8367,7 @@
           <div class="epm-section-label"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l4-3 4 3 4-3v7l-4 3-4-3-4 3z"/></svg>Project type</div>
           <div class="epm-pt-grid">
             <div class="epm-pt-card sel" data-pt="fulfillment" onclick="setEpmProjType('fulfillment')">
-              <div class="epm-pt-ico" style="background:#eef2ff"><svg viewBox="0 0 16 16" fill="none" stroke="#3b5bdb" stroke-width="1.5"><path d="M2 6l6-4 6 4v7H2V6z"/><path d="M6 13V9h4v4"/></svg></div>
+              <div class="epm-pt-ico" style="background:#ecfdf5"><svg viewBox="0 0 16 16" fill="none" stroke="#15803d" stroke-width="1.5"><path d="M2 6l6-4 6 4v7H2V6z"/><path d="M6 13V9h4v4"/></svg></div>
               <div class="epm-pt-name">Fulfillment</div>
               <div class="epm-pt-sub">Full delivery — PM, Dev, QA &amp; Design end-to-end.</div>
               <div class="epm-pt-roles">
@@ -8376,7 +8378,7 @@
               </div>
             </div>
             <div class="epm-pt-card" data-pt="maintenance" onclick="setEpmProjType('maintenance')">
-              <div class="epm-pt-ico" style="background:#f0fdf4"><svg viewBox="0 0 16 16" fill="none" stroke="#15803d" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg></div>
+              <div class="epm-pt-ico" style="background:#faf5ff"><svg viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg></div>
               <div class="epm-pt-name">Maintenance</div>
               <div class="epm-pt-sub">Ongoing support &amp; bug fixes. Smaller team.</div>
               <div class="epm-pt-roles">
@@ -8386,7 +8388,7 @@
               </div>
             </div>
             <div class="epm-pt-card" data-pt="expert" onclick="setEpmProjType('expert')">
-              <div class="epm-pt-ico" style="background:#faf5ff"><svg viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.5"><circle cx="8" cy="7" r="4.5"/><path d="M8 11.5V14M6 14h4"/></svg></div>
+              <div class="epm-pt-ico" style="background:#eff6ff"><svg viewBox="0 0 16 16" fill="none" stroke="#1d4ed8" stroke-width="1.5"><circle cx="8" cy="7" r="4.5"/><path d="M8 11.5V14M6 14h4"/></svg></div>
               <div class="epm-pt-name">Expert Service</div>
               <div class="epm-pt-sub">Consulting, architecture, advisory engagements.</div>
               <div class="epm-pt-roles">
@@ -8570,7 +8572,7 @@
             Assign team
           </div>
           <div class="epm-team-hdr">
-            <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-border)" id="epmTeamPtLabel">Fulfillment</span>
+            <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0" id="epmTeamPtLabel">Fulfillment</span>
             <div class="epm-team-status"><span class="cnt-a" id="epmCntAssigned">5</span> assigned · <span class="cnt-p" id="epmCntPending">0</span> pending · <span class="cnt-x" id="epmCntExcluded">0</span> not included</div>
           </div>
           <div class="epm-team-note">
@@ -9889,6 +9891,16 @@
     document.querySelectorAll('.epm-pt-card').forEach(function(c) {
       c.classList.toggle('sel', c.dataset.pt === type);
     });
+    /* Sync the Team tab type pill color */
+    var ptLabel = document.getElementById('epmTeamPtLabel');
+    if (ptLabel) {
+      var PT_COLORS = {
+        fulfillment: 'background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0',
+        maintenance: 'background:#faf5ff;color:#5b21b6;border:1px solid #ddd6fe',
+        expert:      'background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe'
+      };
+      ptLabel.style.cssText = 'font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;' + (PT_COLORS[type] || PT_COLORS.fulfillment);
+    }
   }
   var epmArch = 'brownfield';
   function setEpmArch(val) {
@@ -11662,11 +11674,11 @@
 
   function openProjTypeMenu(tag) {
     openDetTagMenu(tag, [
-      {value:'fulfillment', label:'Fulfillment',    sub:'Full delivery — PM, Dev, QA & Design', dot:'#3b5bdb'},
-      {value:'maintenance', label:'Maintenance',    sub:'Ongoing support & bug fixes',          dot:'#15803d'},
-      {value:'expert',      label:'Expert Service', sub:'Consulting & advisory',                dot:'#7c3aed'}
+      {value:'fulfillment', label:'Fulfillment',    sub:'Full delivery — PM, Dev, QA & Design', dot:'#15803d'},
+      {value:'maintenance', label:'Maintenance',    sub:'Ongoing support & bug fixes',          dot:'#7c3aed'},
+      {value:'expert',      label:'Expert Service', sub:'Consulting & advisory',                dot:'#1d4ed8'}
     ], function(val) {
-      var map = { fulfillment:{lbl:'Fulfillment',cls:'accent'}, maintenance:{lbl:'Maintenance',cls:'green'}, expert:{lbl:'Expert Service',cls:'purple'} };
+      var map = { fulfillment:{lbl:'Fulfillment',cls:'green'}, maintenance:{lbl:'Maintenance',cls:'purple'}, expert:{lbl:'Expert Service',cls:'blue'} };
       var o = map[val] || map.fulfillment;
       var t = document.getElementById('detProjTypeTag');
       t.textContent = o.lbl; t.className = 'det-tag det-tag-btn ' + o.cls; t.dataset.val = val;
@@ -11676,16 +11688,16 @@
 
   function openEngageMenu(tag) {
     openDetTagMenu(tag, [
-      {value:'high',   label:'High',   sub:'Senior-level contributors required', dot:'#ef4444'},
-      {value:'medium', label:'Medium', sub:'Mid-level experience sufficient',    dot:'#f59e0b'},
-      {value:'low',    label:'Low',    sub:'Junior-friendly, guided work',       dot:'#94a3b8'}
+      {value:'senior', label:'Senior',    sub:'Senior contributors — complex delivery',    dot:'#ef4444'},
+      {value:'mid',    label:'Mid-Level', sub:'Mid-level contributors sufficient',         dot:'#f59e0b'},
+      {value:'junior', label:'Junior',    sub:'Junior-friendly, guided work',              dot:'#94a3b8'}
     ], function(val) {
       var map = {
-        high:   {lbl:'High',   cls:'orange'},
-        medium: {lbl:'Medium', cls:''},
-        low:    {lbl:'Low',    cls:''}
+        senior: {lbl:'Senior',    cls:'orange'},
+        mid:    {lbl:'Mid-Level', cls:''},
+        junior: {lbl:'Junior',    cls:''}
       };
-      var o = map[val] || map.high;
+      var o = map[val] || map.senior;
       var t = document.getElementById('detEngageTag');
       t.textContent = o.lbl; t.className = 'det-tag det-tag-btn ' + o.cls; t.dataset.val = val;
     });
