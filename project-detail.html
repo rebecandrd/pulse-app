@@ -7632,7 +7632,7 @@
                 </div>
                 <div class="det-field">
                   <div class="det-field-label">Experience Required</div>
-                  <div class="det-field-value"><span class="det-tag orange det-tag-btn" id="detEngageTag" data-val="senior" onclick="openEngageMenu(this)">Senior</span></div>
+                  <div class="det-field-value"><span class="det-tag orange det-tag-btn" id="detEngageTag" data-val="high" onclick="openEngageMenu(this)">High Exp.</span></div>
                 </div>
                 <div class="det-field">
                   <div class="det-field-label">Platform</div>
@@ -11228,7 +11228,7 @@
     var banner    = document.getElementById('tmGapBanner');
     var bannerRow = document.getElementById('tmGapBannerRow');
     if (banner && bannerRow) {
-      var EXP_LABELS = { junior:'Junior', mid:'Mid-level', senior:'Senior', lead:'Lead' };
+      var EXP_LABELS = { high:'High Experience', medium:'Medium Experience', low:'Low Experience' };
       var COMMIT_LBL = { full:'Full Time', part:'Part Time', hourly:'Hourly', helping:'Helping', learning:'Learning', bench:'Bench', mixed:'Mixed' };
       var needed = Math.max(1, req.qty - req.assigned);
       var html = '<span class="tm-gap-banner-role">' + req.role + '</span>';
@@ -11236,7 +11236,7 @@
         html += '<span class="tm-gap-banner-badge commit">' + COMMIT_LBL[req.commitment] + '</span>';
       }
       if (req.expLevel && EXP_LABELS[req.expLevel]) {
-        html += '<span class="tm-gap-banner-badge exp">' + EXP_LABELS[req.expLevel] + ' exp.</span>';
+        html += '<span class="tm-gap-banner-badge exp">' + EXP_LABELS[req.expLevel] + '</span>';
       }
       html += '<span class="tm-gap-banner-seats">· ' + needed + ' seat' + (needed !== 1 ? 's' : '') + ' needed</span>';
       bannerRow.innerHTML = html;
@@ -11333,7 +11333,7 @@
       id: 'tm-' + Date.now(),
       initials: initials, bg: bg, fg: fg,
       name: name,
-      pos: pos, posLabel: p.label, level: 'mid',
+      pos: pos, posLabel: p.label, ctLevel: 1,
       tags: [], commit: commit,
       startDate: startLabel, endDate: endLabel,
       planned: commit === 'full' ? 100 : commit === 'part' ? 50 : commit === 'helping' ? 20 : 30,
@@ -11688,16 +11688,16 @@
 
   function openEngageMenu(tag) {
     openDetTagMenu(tag, [
-      {value:'senior', label:'Senior',    sub:'Senior contributors — complex delivery',    dot:'#ef4444'},
-      {value:'mid',    label:'Mid-Level', sub:'Mid-level contributors sufficient',         dot:'#f59e0b'},
-      {value:'junior', label:'Junior',    sub:'Junior-friendly, guided work',              dot:'#94a3b8'}
+      {value:'high',   label:'High Experience',   sub:'Top third of Career Track levels — complex delivery',    dot:'#ef4444'},
+      {value:'medium', label:'Medium Experience', sub:'Middle third — solid working experience required',       dot:'#f59e0b'},
+      {value:'low',    label:'Low Experience',    sub:'Bottom third — entry-level, guided work welcome',        dot:'#94a3b8'}
     ], function(val) {
       var map = {
-        senior: {lbl:'Senior',    cls:'orange'},
-        mid:    {lbl:'Mid-Level', cls:''},
-        junior: {lbl:'Junior',    cls:''}
+        high:   {lbl:'High Exp.',   cls:'orange'},
+        medium: {lbl:'Medium Exp.', cls:''},
+        low:    {lbl:'Low Exp.',    cls:''}
       };
-      var o = map[val] || map.senior;
+      var o = map[val] || map.high;
       var t = document.getElementById('detEngageTag');
       t.textContent = o.lbl; t.className = 'det-tag det-tag-btn ' + o.cls; t.dataset.val = val;
     });
@@ -11758,60 +11758,61 @@
   /* ── Team Member data ── */
   var tmMembers = [
     /* ── Fetch internal team ── */
+    /* ctLevel = numeric Career Track level for this role's track */
     { id:'tm-1', initials:'AK', bg:'#f5eeff', fg:'#6d28d9', photo:'https://i.pravatar.cc/80?img=47',
-      name:'Anna K.', pos:'pm', posLabel:'Project Manager', level:'senior',
+      name:'Anna K.', pos:'pm', posLabel:'Project Manager', ctLevel:13,
       tags:['Agile','Stakeholders','Jira'], commit:'full',
       startDate:'Jan 14, 2026', endDate:null, planned:80, logged:90, status:'active', source:'fetch' },
     { id:'tm-2', initials:'SK', bg:'#e8f4fd', fg:'#1d5fa6', photo:'https://i.pravatar.cc/80?img=44',
-      name:'Sarah Kim', pos:'dev', posLabel:'Developer', level:'senior',
+      name:'Sarah Kim', pos:'dev', posLabel:'Developer', ctLevel:10,
       tags:['React','TypeScript','Next.js'], commit:'full',
       startDate:'Jan 14, 2026', endDate:null, planned:100, logged:85, status:'active', source:'fetch' },
     { id:'tm-3', initials:'LM', bg:'#fde8d8', fg:'#b45309', photo:'https://i.pravatar.cc/80?img=12',
-      name:'Lucas Mora', pos:'design', posLabel:'Designer', level:'mid',
+      name:'Lucas Mora', pos:'design', posLabel:'Designer', ctLevel:6,
       tags:['Figma','UI/UX','Prototyping'], commit:'part',
       startDate:'Feb 03, 2026', endDate:null, planned:50, logged:45, status:'active', source:'fetch' },
     { id:'tm-4', initials:'TR', bg:'#fef2f2', fg:'#dc2626', photo:'https://i.pravatar.cc/80?img=15',
-      name:'Tom Reeves', pos:'qa', posLabel:'QA Analyst', level:'mid',
+      name:'Tom Reeves', pos:'qa', posLabel:'QA Analyst', ctLevel:5,
       tags:['Cypress','Manual QA','Test Plans'], commit:'hourly',
       startDate:'Jan 20, 2026', endDate:null, planned:30, logged:25, status:'active', source:'fetch' },
     { id:'tm-5', initials:'CH', bg:'#fdf2f8', fg:'#9d174d', photo:'https://i.pravatar.cc/80?img=49',
-      name:'Clara H.', pos:'dev', posLabel:'Developer', level:'senior',
+      name:'Clara H.', pos:'dev', posLabel:'Developer', ctLevel:11,
       tags:['Node.js','PostgreSQL','REST APIs'], commit:'full',
       startDate:'Feb 10, 2026', endDate:null, planned:100, logged:115, status:'active', source:'fetch' },
     { id:'tm-6', initials:'MV', bg:'#fff7ed', fg:'#c2410c', photo:'https://i.pravatar.cc/80?img=7',
-      name:'Marco V.', pos:'be', posLabel:'Backend Engineer', level:'lead',
+      name:'Marco V.', pos:'be', posLabel:'Backend Engineer', ctLevel:12,
       tags:['Python','AWS','Microservices'], commit:'full',
       startDate:'Jan 14, 2026', endDate:null, planned:100, logged:90, status:'active', source:'fetch' },
     { id:'tm-7', initials:'JR', bg:'#eef2ff', fg:'#3b5bdb', photo:'https://i.pravatar.cc/80?img=33',
-      name:'Jake R.', pos:'dev', posLabel:'Developer', level:'junior',
+      name:'Jake R.', pos:'dev', posLabel:'Developer', ctLevel:2,
       tags:['React','CSS','Git'], commit:'helping',
       startDate:'Mar 18, 2026', endDate:null, planned:20, logged:15, status:'active', source:'fetch' },
     { id:'tm-8', initials:'RA', bg:'#ecfeff', fg:'#155e75', photo:'https://i.pravatar.cc/80?img=45',
-      name:'Rebeca Andrade', pos:'design', posLabel:'Designer', level:'senior',
+      name:'Rebeca Andrade', pos:'design', posLabel:'Designer', ctLevel:9,
       tags:['Figma','Brand','Design Systems'], commit:'part',
       startDate:'Mar 05, 2026', endDate:null, planned:50, logged:30, status:'active', source:'fetch' },
     { id:'tm-9', initials:'FT', bg:'#f0fdf4', fg:'#065f46', photo:'https://i.pravatar.cc/80?img=22',
-      name:'Felipe Tomazelli', pos:'dev', posLabel:'Developer', level:'mid',
+      name:'Felipe Tomazelli', pos:'dev', posLabel:'Developer', ctLevel:5,
       tags:['Vue.js','Laravel','MySQL'], commit:'full',
       startDate:'Mar 24, 2026', endDate:null, planned:100, logged:95, status:'active', source:'fetch' },
     /* ── Past assignments ── */
     { id:'tm-12', initials:'SN', bg:'#f8fafc', fg:'#475569', photo:'https://i.pravatar.cc/80?img=48',
-      name:'Sophie Ng', pos:'design', posLabel:'Designer', level:'senior',
+      name:'Sophie Ng', pos:'design', posLabel:'Designer', ctLevel:10,
       tags:['UX Research','Wireframing','Figma'], commit:'part',
       startDate:'Nov 01, 2025', endDate:'Feb 28, 2026', planned:60, logged:58, status:'active', source:'fetch' },
     /* ── Future assignments ── */
     { id:'tm-13', initials:'CR', bg:'#f0f9ff', fg:'#0369a1', photo:'https://i.pravatar.cc/80?img=19',
-      name:'Carlos Reyes', pos:'dev', posLabel:'Developer', level:'mid',
+      name:'Carlos Reyes', pos:'dev', posLabel:'Developer', ctLevel:6,
       tags:['React','GraphQL','Jest'], commit:'full',
       startDate:'Jun 02, 2026', endDate:null, planned:100, logged:0, status:'active', source:'fetch' },
     /* ── Client collaborators — actively participate in the project ── */
     { id:'tm-10', initials:'MC', bg:'#dbeafe', fg:'#1d4ed8', photo:'https://i.pravatar.cc/80?img=11',
-      name:'Michael Chen', pos:'arch', posLabel:'Architect', level:'lead',
+      name:'Michael Chen', pos:'arch', posLabel:'Architect', ctLevel:10,
       tags:['Strategy','Architecture','API Design'], commit:'part',
       startDate:'Jan 14, 2026', endDate:null, planned:20, logged:10, status:'active',
       source:'client', company:'Tapp.io' },
     { id:'tm-11', initials:'SJ', bg:'#f3e8ff', fg:'#6d28d9', photo:'https://i.pravatar.cc/80?img=46',
-      name:'Sarah Johnson', pos:'pm', posLabel:'Project Manager', level:'senior',
+      name:'Sarah Johnson', pos:'pm', posLabel:'Project Manager', ctLevel:11,
       tags:['Product','Roadmap','User Stories'], commit:'part',
       startDate:'Jan 14, 2026', endDate:null, planned:30, logged:25, status:'active',
       source:'client', company:'Tapp.io' }
@@ -12225,7 +12226,7 @@
     },
     {
       id: 'req-2', role: 'QA Analyst', qty: 2, commitment: 'hourly', assigned: 1,
-      expLevel: 'mid',
+      expLevel: 'medium',
       assignees: [
         { initials:'TR', bg:'#fef2f2', fg:'#dc2626', name:'Tom Reeves' }
       ],
@@ -12404,26 +12405,30 @@
       return m.status === 'active' && (!s || s <= today) && (!e || e > today);
     });
 
-    /* Discipline definitions — status from Team Experience section */
+    /* Discipline definitions — totalLevels drives Low/Medium/High thirds */
     var DISC_DEFS = [
-      { label:'PM',     pos:['pm'],       status:'strong',  reqRoles:['Project Manager']              },
-      { label:'Dev',    pos:['dev','be'], status:'aligned', reqRoles:['Developer','Backend Engineer'] },
-      { label:'QA',     pos:['qa'],       status:'at-risk', reqRoles:['QA Analyst']                   },
-      { label:'Design', pos:['design'],   status:'aligned', reqRoles:['Designer']                     }
+      { label:'PM',     pos:['pm'],       totalLevels:15, status:'strong',  reqRoles:['Project Manager']              },
+      { label:'Dev',    pos:['dev','be'], totalLevels:12, status:'aligned', reqRoles:['Developer','Backend Engineer'] },
+      { label:'QA',     pos:['qa'],       totalLevels:9,  status:'at-risk', reqRoles:['QA Analyst']                   },
+      { label:'Design', pos:['design'],   totalLevels:12, status:'aligned', reqRoles:['Designer']                     }
     ];
-    var LV_ORDER  = ['lead','senior','mid','junior'];
-    var LV_SHORT  = { lead:'Lead', senior:'Senior', mid:'Mid', junior:'Jr' };
-    var TAG_LBL   = { strong:'Strong', aligned:'Aligned', 'at-risk':'At Risk', caution:'Caution' };
+    var TAG_LBL = { strong:'Strong', aligned:'Aligned', 'at-risk':'At Risk', caution:'Caution' };
+
+    /* Divide a track's levels into thirds and return the category */
+    function expCategory(ctLevel, totalLevels) {
+      var third = Math.ceil(totalLevels / 3);
+      if (ctLevel <= third)         return 'low';
+      if (ctLevel <= third * 2)     return 'medium';
+      return 'high';
+    }
 
     var rowData = DISC_DEFS.map(function(d) {
       var ms = activeNow.filter(function(m){ return d.pos.indexOf(m.pos) !== -1; });
       if (!ms.length) return null;
-      var lc = {};
-      ms.forEach(function(m){ var l = m.level||'mid'; lc[l] = (lc[l]||0)+1; });
-      var lvStr = LV_ORDER.filter(function(l){ return lc[l]; }).map(function(l){
-        return LV_SHORT[l] + (lc[l] > 1 ? ' \xd7' + lc[l] : '');
-      }).join(' \xb7 ');
-      return { d:d, lvStr:lvStr };
+      /* Sort by ctLevel descending so highest appears first */
+      var sorted = ms.slice().sort(function(a, b){ return (b.ctLevel||0) - (a.ctLevel||0); });
+      var lvlStr = sorted.map(function(m){ return 'L' + (m.ctLevel||'?'); }).join(' \xb7 ');
+      return { d:d, lvStr:lvlStr, members:sorted };
     }).filter(Boolean);
 
     /* Store rendered HTML globally — injected into popover lazily on first open */
@@ -16617,11 +16622,11 @@ function toggleSidebar(){
 <!-- Experience Match popover — lives at body level to escape card overflow:hidden -->
 <div class="kpi-exp-popover" id="tmKpiExpPopover" style="display:none" role="tooltip" aria-live="polite">
   <div class="kpi-exp-pop-hd">How this is calculated</div>
-  <p class="kpi-exp-pop-body">Actual experience reflects current team members' Career Track levels. Expected experience is based on the project's required seniority level, defined during project setup.</p>
+  <p class="kpi-exp-pop-body">Experience Match is calculated using Career Track levels. Each role's levels are divided into Low, Medium, and High experience ranges based on the total levels available for that role.</p>
   <div class="kpi-exp-pop-divider"></div>
-  <div class="kpi-exp-pop-rows-lbl">Discipline breakdown</div>
+  <div class="kpi-exp-pop-rows-lbl">Discipline breakdown · Career Track levels</div>
   <div class="kpi-exp-rows" id="tmKpiExpRows"></div>
-  <div class="kpi-exp-pop-footer">Status is manually curated — calculation method to be finalized.</div>
+  <div class="kpi-exp-pop-footer">Levels shown are each member's current Career Track position. Status reflects benchmark alignment.</div>
 </div>
 
 </body>
