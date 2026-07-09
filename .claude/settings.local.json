@@ -50,7 +50,20 @@
       "Bash(rsync -a --delete \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude history-tab-react/node_modules --exclude .claude)",
       "Bash(cp \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/pulse_serve.py\" /tmp/pulse_serve.py && echo \"copied\")",
       "Bash(rsync -a \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude history-tab-react/node_modules --exclude .claude)",
-      "Bash(rsync -a --delete \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude='.git' --exclude='node_modules')"
+      "Bash(rsync -a --delete \"/Users/rebecandrd/Desktop/Personal Files/trabalho-claude/pulse-app/\" /tmp/pulse-app-preview/ --exclude='.git' --exclude='node_modules')",
+      "Bash(mkdir -p /tmp/pulse-app-preview)",
+      "Bash(rsync -a --exclude='.git' --exclude='node_modules' --exclude='history-tab-react' /Users/gabrielakimura/Downloads/pulse-app/ /tmp/pulse-app-preview/)",
+      "Bash(xxd \"/Users/gabrielakimura/Downloads/pulse-fetchly-2026_netlify_app_project-detail_1440w_390w_default.h2d\")",
+      "Bash(awk -F: '$1 < 16500 && $1 > 16000')",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr create --base main --head feature/reviews-reports-notes-enhancements --title 'Add Gauging reviews, trackable reports, and redesigned Notes tab' --body ' *)",
+      "Bash(gh pr *)",
+      "Bash(git fetch *)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git commit *)"
     ]
   }
 }
