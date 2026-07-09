@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "pulse-app",
-      "runtimeExecutable": "/Library/Developer/CommandLineTools/usr/bin/python3",
-      "runtimeArgs": ["/tmp/pulse_serve.py"],
+      "runtimeExecutable": "/usr/bin/python3",
+      "runtimeArgs": ["-I", "-c", "import http.server,functools,os; os.makedirs('/tmp/pulse-app-preview',exist_ok=True); H=type('H',(http.server.SimpleHTTPRequestHandler,),{'end_headers':lambda s:(s.send_header('Cache-Control','no-store'),super(type(s),s).end_headers())}); http.server.HTTPServer(('',3000),functools.partial(H,directory='/tmp/pulse-app-preview')).serve_forever()"],
       "port": 3000
     },
     {

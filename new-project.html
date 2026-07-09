@@ -305,6 +305,45 @@ body{height:100%;overflow:hidden;font-family:var(--font);font-size:13px;color:va
 .mixed-breakdown svg{flex-shrink:0}
 .mixed-breakdown strong{color:var(--accent);font-weight:600}
 
+/* ── EXPERT ASSIGNMENT ── */
+.ea-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:7px}
+.ea-select-wrap{position:relative}
+.ea-select-wrap::after{content:'';position:absolute;right:11px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--text-muted);pointer-events:none}
+.ea-select{width:100%;padding:9px 32px 9px 11px;font-size:13px;font-family:var(--font);border:1.5px solid var(--border);border-radius:var(--radius-md);outline:none;color:var(--text-primary);background:var(--bg-white);transition:border-color .12s;appearance:none;-webkit-appearance:none}
+.ea-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ea-hint{font-size:11px;color:var(--text-muted);margin-top:5px;line-height:1.45}
+
+/* Commitment cards — reuses engage-btn shape with tweaks */
+.ea-commit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.ea-commit-card{display:flex;flex-direction:column;gap:2px;padding:13px 14px;border:1.5px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-white);cursor:pointer;transition:all .15s;font-family:var(--font);text-align:left}
+.ea-commit-card:hover{border-color:var(--accent);background:var(--accent-light)}
+.ea-commit-card.active{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 1px var(--accent)}
+.ea-commit-title{font-size:12.5px;font-weight:600;color:var(--text-primary);line-height:1.2}
+.ea-commit-card.active .ea-commit-title{color:var(--accent)}
+.ea-commit-hrs{font-size:20px;font-weight:700;color:var(--text-primary);font-family:var(--font-mono);line-height:1;letter-spacing:-.5px;margin-top:4px}
+.ea-commit-card.active .ea-commit-hrs{color:var(--accent)}
+.ea-commit-sub{font-size:10.5px;color:var(--text-muted)}
+
+/* Custom hours field */
+.ea-custom-field{margin-top:6px;padding:12px 14px;background:var(--bg-surface);border:1.5px solid var(--accent-border);border-radius:var(--radius-md);display:none;align-items:center;gap:10px}
+.ea-custom-field.visible{display:flex}
+.ea-custom-input{width:72px;padding:7px 10px;font-size:15px;font-weight:600;font-family:var(--font-mono);border:1.5px solid var(--accent);border-radius:var(--radius-md);outline:none;text-align:center;color:var(--accent);background:var(--bg-white);transition:border-color .12s}
+.ea-custom-input:focus{border-color:var(--accent-hover);box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ea-custom-lbl{font-size:12.5px;color:var(--text-secondary)}
+.ea-custom-hint{font-size:11px;color:var(--text-muted);margin-top:2px}
+
+/* Dynamic summary card */
+.ea-summary{background:linear-gradient(135deg,#f5f3ff 0%,#eef2ff 100%);border:1.5px solid var(--accent-border);border-radius:var(--radius-xl);padding:18px 20px;display:grid;grid-template-columns:1fr auto;gap:0;align-items:start;position:relative;overflow:hidden}
+.ea-summary::before{content:'';position:absolute;top:-24px;right:-24px;width:90px;height:90px;border-radius:50%;background:var(--accent);opacity:.07;pointer-events:none}
+.ea-sum-left{display:flex;flex-direction:column;gap:2px}
+.ea-sum-badge{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.65px;color:var(--accent);margin-bottom:6px}
+.ea-sum-role{font-size:18px;font-weight:700;color:var(--text-primary);letter-spacing:-.3px;line-height:1.2}
+.ea-sum-role.empty{color:var(--text-muted);font-weight:400;font-style:italic}
+.ea-sum-commit-lbl{font-size:12px;color:var(--text-secondary);margin-top:3px}
+.ea-sum-right{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.ea-sum-hrs{font-size:32px;font-weight:700;color:var(--accent);font-family:var(--font-mono);line-height:1;letter-spacing:-1px}
+.ea-sum-hrs-unit{font-size:11px;color:var(--text-muted);text-align:right}
+
 /* ── REQUIREMENT PHASES ── */
 .phase-trigger{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--accent);font-weight:500;background:none;border:none;cursor:pointer;padding:0;font-family:var(--font)}
 .phase-trigger:hover{color:var(--accent-hover);text-decoration:underline}
@@ -799,7 +838,7 @@ body{height:100%;overflow:hidden;font-family:var(--font);font-size:13px;color:va
 
             <!-- Fulfillment -->
             <div class="ptcard" data-pt="fulfillment">
-              <div class="ptcard-ico" style="background:#eef2ff"><svg viewBox="0 0 16 16" fill="none" stroke="#3b5bdb" stroke-width="1.5"><path d="M2 6l6-4 6 4v7H2V6z"/><path d="M6 13V9h4v4"/></svg></div>
+              <div class="ptcard-ico" style="background:#ecfdf5"><svg viewBox="0 0 16 16" fill="none" stroke="#15803d" stroke-width="1.5"><path d="M2 6l6-4 6 4v7H2V6z"/><path d="M6 13V9h4v4"/></svg></div>
               <div class="ptcard-name">Fulfillment</div>
               <div class="ptcard-sub">Full delivery — PM, Dev(s), QA &amp; Design work together end-to-end.</div>
               <div class="ptcard-roles">
@@ -812,7 +851,7 @@ body{height:100%;overflow:hidden;font-family:var(--font);font-size:13px;color:va
 
             <!-- Maintenance -->
             <div class="ptcard" data-pt="maintenance">
-              <div class="ptcard-ico" style="background:#f0fdf4"><svg viewBox="0 0 16 16" fill="none" stroke="#15803d" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.5 3.5l1.4 1.4M11.1 11.1l1.4 1.4"/></svg></div>
+              <div class="ptcard-ico" style="background:#faf5ff"><svg viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.5 3.5l1.4 1.4M11.1 11.1l1.4 1.4"/></svg></div>
               <div class="ptcard-name">Maintenance</div>
               <div class="ptcard-sub">Ongoing support &amp; bug fixes. Smaller team, lower commitment.</div>
               <div class="ptcard-roles">
@@ -824,7 +863,7 @@ body{height:100%;overflow:hidden;font-family:var(--font);font-size:13px;color:va
 
             <!-- Expert Service -->
             <div class="ptcard" data-pt="expert">
-              <div class="ptcard-ico" style="background:#faf5ff"><svg viewBox="0 0 16 16" fill="none" stroke="#7c3aed" stroke-width="1.5"><circle cx="8" cy="7" r="4.5"/><path d="M8 11.5V14M6 14h4"/></svg></div>
+              <div class="ptcard-ico" style="background:#eff6ff"><svg viewBox="0 0 16 16" fill="none" stroke="#1d4ed8" stroke-width="1.5"><circle cx="8" cy="7" r="4.5"/><path d="M8 11.5V14M6 14h4"/></svg></div>
               <div class="ptcard-name">Expert Service</div>
               <div class="ptcard-sub">Specialized engagement — consulting, architecture, or advisory with a flexible team shape.</div>
               <div class="ptcard-roles">
@@ -969,16 +1008,90 @@ body{height:100%;overflow:hidden;font-family:var(--font);font-size:13px;color:va
 
           </div>
 
-          <!-- Project type rationale notice -->
+          <!-- Project type rationale notice (Maintenance / non-Expert) -->
           <div id="discoveryNotice" style="display:none;margin-bottom:16px;padding:12px 14px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md)"></div>
 
-          <!-- Hours strip -->
-          <div class="fcard-title" style="margin-bottom:10px">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.2"/></svg>
-            Estimated commitment — hours per week
+          <!-- Expert Assignment (Expert Service only) -->
+          <div id="expertAssignWrap" style="display:none;margin-bottom:18px">
+            <div style="display:flex;flex-direction:column;gap:18px">
+
+              <!-- Expert Role -->
+              <div>
+                <div class="ea-section-title">Expert Role</div>
+                <div class="ea-select-wrap">
+                  <select class="ea-select" id="expertRoleSelect" onchange="updateExpertSummary()">
+                    <option value="">Select a role…</option>
+                    <option value="Architect">Architect</option>
+                    <option value="Project Manager">Project Manager</option>
+                    <option value="QA">QA</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Product Manager">Product Manager</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="ea-hint">Select the specialist being allocated to this engagement.</div>
+              </div>
+
+              <!-- Commitment Type -->
+              <div>
+                <div class="ea-section-title">Commitment Type</div>
+                <div class="ea-commit-row">
+                  <button class="ea-commit-card active" id="ea-full" onclick="setExpertCommit('full')">
+                    <div class="ea-commit-title">Full Time</div>
+                    <div class="ea-commit-hrs">40</div>
+                    <div class="ea-commit-sub">hrs / week</div>
+                  </button>
+                  <button class="ea-commit-card" id="ea-half" onclick="setExpertCommit('half')">
+                    <div class="ea-commit-title">Half Time</div>
+                    <div class="ea-commit-hrs">20</div>
+                    <div class="ea-commit-sub">hrs / week</div>
+                  </button>
+                  <button class="ea-commit-card" id="ea-custom" onclick="setExpertCommit('custom')">
+                    <div class="ea-commit-title">Custom</div>
+                    <div class="ea-commit-hrs" id="eaCustomPreview">—</div>
+                    <div class="ea-commit-sub">hrs / week</div>
+                  </button>
+                </div>
+                <!-- Custom hours input — visible only when Custom is selected -->
+                <div class="ea-custom-field" id="expertCustomField">
+                  <div>
+                    <input type="number" class="ea-custom-input" id="expertCustomHrs"
+                      min="1" max="40" value="20" placeholder="20"
+                      oninput="updateExpertCustomHrs(this.value)">
+                  </div>
+                  <div>
+                    <div class="ea-custom-lbl">Hours per week</div>
+                    <div class="ea-custom-hint">Between 1 and 40 hrs</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dynamic summary card -->
+              <div class="ea-summary">
+                <div class="ea-sum-left">
+                  <div class="ea-sum-badge">Expert Assignment</div>
+                  <div class="ea-sum-role empty" id="eaSumRole">No role selected</div>
+                  <div class="ea-sum-commit-lbl" id="eaSumCommit">Full Time</div>
+                </div>
+                <div class="ea-sum-right">
+                  <div class="ea-sum-hrs" id="eaSumHrs">40</div>
+                  <div class="ea-sum-hrs-unit">hrs / week</div>
+                </div>
+              </div>
+
+            </div>
           </div>
-          <div class="hours-strip" id="hoursStrip">
-            <!-- Rendered by JS -->
+
+          <!-- Hours strip (hidden for Expert Service) -->
+          <div id="hoursStripSection">
+            <div class="fcard-title" style="margin-bottom:10px">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.2"/></svg>
+              Estimated commitment — hours per week
+            </div>
+            <div class="hours-strip" id="hoursStrip">
+              <!-- Rendered by JS -->
+            </div>
           </div>
 
           <!-- Requirement phases -->
@@ -1260,9 +1373,9 @@ function goTo(n) {
     var p4badge = document.getElementById('p4TypeBadge');
     p4badge.textContent = PTYPES[selPtype].label;
     p4badge.style.display = 'flex';
-    p4badge.style.background = 'var(--accent-light)';
-    p4badge.style.color = 'var(--accent)';
-    p4badge.style.borderColor = 'var(--accent-border)';
+    var P4_COLORS = { fulfillment:['#ecfdf5','#065f46','#a7f3d0'], maintenance:['#faf5ff','#5b21b6','#ddd6fe'], expert:['#eff6ff','#1d4ed8','#bfdbfe'] };
+    var pc = P4_COLORS[selPtype] || P4_COLORS.fulfillment;
+    p4badge.style.background = pc[0]; p4badge.style.color = pc[1]; p4badge.style.borderColor = pc[2];
   }
 }
 
@@ -1382,6 +1495,49 @@ function showTypeConfirm(newPt) {
   });
 }
 
+// ── Expert Assignment state ───────────────────────────────────────────────────
+
+var expertCommit    = 'full'; // 'full' | 'half' | 'custom'
+var expertCustomVal = 20;
+
+function setExpertCommit(type) {
+  expertCommit = type;
+  ['full','half','custom'].forEach(function(t) {
+    var el = document.getElementById('ea-' + t);
+    if (el) el.classList.toggle('active', t === type);
+  });
+  var cf = document.getElementById('expertCustomField');
+  if (cf) cf.classList.toggle('visible', type === 'custom');
+  updateExpertSummary();
+}
+
+function updateExpertCustomHrs(val) {
+  var v = parseInt(val, 10);
+  if (isNaN(v) || v < 1) v = 1;
+  if (v > 40) v = 40;
+  expertCustomVal = v;
+  var prev = document.getElementById('eaCustomPreview');
+  if (prev) prev.textContent = v;
+  updateExpertSummary();
+}
+
+function updateExpertSummary() {
+  var roleEl   = document.getElementById('expertRoleSelect');
+  var sumRole  = document.getElementById('eaSumRole');
+  var sumCom   = document.getElementById('eaSumCommit');
+  var sumHrs   = document.getElementById('eaSumHrs');
+  if (!roleEl || !sumRole || !sumCom || !sumHrs) return;
+
+  var role = roleEl.value;
+  var hrs  = expertCommit === 'full' ? 40 : expertCommit === 'half' ? 20 : expertCustomVal;
+  var lbl  = expertCommit === 'full' ? 'Full Time' : expertCommit === 'half' ? 'Half Time' : 'Custom Hours';
+
+  sumRole.textContent = role || 'No role selected';
+  sumRole.className   = 'ea-sum-role' + (role ? '' : ' empty');
+  sumCom.textContent  = lbl;
+  sumHrs.textContent  = hrs;
+}
+
 // ── Team step sync ────────────────────────────────────────────────────────────
 
 function syncTeamStep() {
@@ -1395,12 +1551,29 @@ function syncTeamStep() {
   badge.textContent = PTYPES[selPtype].label;
   badge.style.display = 'flex';
   if (isExpert) {
-    badge.style.background = '#faf5ff'; badge.style.color = '#5b21b6'; badge.style.borderColor = '#ddd6fe';
+    badge.style.background = '#eff6ff'; badge.style.color = '#1d4ed8'; badge.style.borderColor = '#bfdbfe';
   } else if (isMaintenance) {
-    badge.style.background = '#ecfdf5'; badge.style.color = '#065f46'; badge.style.borderColor = '#a7f3d0';
+    badge.style.background = '#faf5ff'; badge.style.color = '#5b21b6'; badge.style.borderColor = '#ddd6fe';
   } else {
-    badge.style.background = 'var(--accent-light)'; badge.style.color = 'var(--accent)'; badge.style.borderColor = 'var(--accent-border)';
+    /* Fulfillment → green */
+    badge.style.background = '#ecfdf5'; badge.style.color = '#065f46'; badge.style.borderColor = '#a7f3d0';
   }
+
+  // Step subtitle — contextual per type
+  var stepDesc = document.querySelector('#p3 .step-head-desc');
+  if (stepDesc) {
+    if (isExpert) {
+      stepDesc.textContent = 'Define the expert being allocated and their weekly commitment. Assign them in the slot below.';
+    } else {
+      stepDesc.textContent = 'Suggested roles are pre-populated — adjust, add, or remove as needed. Unassigned slots stay as "Pending".';
+    }
+  }
+
+  // Expert Assignment section — Expert Service only
+  var expertWrap      = document.getElementById('expertAssignWrap');
+  var hoursStripSect  = document.getElementById('hoursStripSection');
+  if (expertWrap)     expertWrap.style.display     = isExpert ? 'block' : 'none';
+  if (hoursStripSect) hoursStripSect.style.display = isExpert ? 'none'  : 'block';
 
   // Dev stepper — only Fulfillment uses developer count and engagement
   document.getElementById('devStepperWrap').style.display = isFulfillment ? 'block' : 'none';
@@ -1445,20 +1618,7 @@ function syncTeamStep() {
       + '<div style="' + footStyle + '">All values are starting defaults — adjust freely or remove roles that don\'t apply to this engagement.</div>';
     noticeEl.style.display = 'block';
   } else if (isExpert) {
-    noticeEl.innerHTML = ''
-      + '<div style="' + hdrStyle + '">Expert Service model — specialized advisory</div>'
-      + '<div style="' + rowStyle + '">'
-      +   '<span style="' + roleStyle + '">Project Manager</span>'
-      +   '<span style="' + hrsStyle + '">4 hrs/wk</span>'
-      +   '<span style="' + ratStyle + '">Client coordination, deliverable tracking, stakeholder updates</span>'
-      + '</div>'
-      + '<div style="' + lastRowStyle + '">'
-      +   '<span style="' + roleStyle + '">Technical Expert</span>'
-      +   '<span style="' + hrsStyle + '">12 hrs/wk</span>'
-      +   '<span style="' + ratStyle + '">Advisory sessions, architecture reviews, specialized output</span>'
-      + '</div>'
-      + '<div style="' + footStyle + '">Add developer or QA roles below if this engagement includes hands-on delivery work.</div>';
-    noticeEl.style.display = 'block';
+    noticeEl.style.display = 'none'; // replaced by expertAssignWrap
   } else {
     noticeEl.style.display = 'none';
   }
