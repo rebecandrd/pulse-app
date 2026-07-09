@@ -751,6 +751,190 @@
   .ov-util-fill { height: 100%; border-radius: 99px; }
   .ov-util-pct { font-size: 12px; color: var(--text-muted); font-weight: 500; width: 28px; text-align: right; }
 
+  /* Latest reviews (Overview) */
+  .ov-card-hdr-actions { display: flex; align-items: center; gap: 8px; }
+  .ov-period-wrap { position: relative; }
+  .ov-period-btn {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500;
+    color: var(--text-secondary); background: var(--bg-white); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 6px 10px; cursor: pointer; transition: all .12s;
+    font-family: var(--font);
+  }
+  .ov-period-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .ov-period-btn svg { width: 10px; height: 10px; flex-shrink: 0; }
+  .ov-period-drop {
+    display: none; position: absolute; top: calc(100% + 5px); right: 0; z-index: 100;
+    background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0,0,0,.1); min-width: 160px; overflow: hidden;
+  }
+  .ov-period-drop.open { display: block; }
+  .ov-period-opt { font-size: 12.5px; color: var(--text-primary); padding: 8px 12px; cursor: pointer; transition: background .1s; }
+  .ov-period-opt:hover { background: var(--bg-surface); }
+  .ov-period-opt.active { color: var(--accent); font-weight: 600; background: var(--accent-light); }
+  .ov-period-sep { height: 1px; background: var(--border); margin: 4px 0; }
+  .ov-card-btn {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600;
+    color: var(--text-secondary); background: var(--bg-white); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 6px 12px; cursor: pointer; transition: all .12s;
+    font-family: var(--font); white-space: nowrap;
+  }
+  .ov-card-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .ov-card-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .ov-card-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .ov-card-btn.primary:hover { background: var(--accent-hover); }
+  .ov-period-custom {
+    display: none; align-items: center; gap: 8px; padding: 12px 18px;
+    border-bottom: 1px solid var(--border); background: var(--bg-surface);
+  }
+  .ov-period-custom.open { display: flex; }
+  .ov-period-custom input[type="date"] {
+    font-size: 12px; font-family: var(--font); padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary);
+  }
+  .ov-period-custom span { font-size: 12px; color: var(--text-muted); }
+  .ov-rev-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+  .ov-rev-item:last-child { border-bottom: none; }
+  .ov-rev-note { flex: 1; min-width: 0; font-size: 12.5px; color: var(--text-secondary); line-height: 1.4; }
+  .ov-rev-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .ov-rev-date { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+  /* Gaugings block (Reviews tab) */
+  .rev-gauging-block { margin-bottom: 22px; }
+  .rev-gauging-hdr { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .rev-gauging-title { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .rev-gauging-title svg { width: 14px; height: 14px; color: #be185d; }
+  .rev-gauging-count { font-size: 11px; font-weight: 700; color: #be185d; background: #fdf2f8; padding: 1px 7px; border-radius: 99px; }
+  .rev-gauging-sub { font-size: 11.5px; color: var(--text-muted); }
+  .rev-gauging-hdr-spacer { flex: 1; }
+  .rev-gauging-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .rev-gauge-card {
+    border: 1.5px solid #f6d3e6; background: #fffafd; border-radius: var(--radius-lg);
+    padding: 12px 14px; transition: all .12s;
+  }
+  .rev-gauge-card:hover { border-color: #f0aed3; box-shadow: 0 3px 10px rgba(190,24,93,.08); }
+  .rev-gauge-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .rev-gauge-mood { font-size: 10.5px; font-weight: 700; padding: 2.5px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .3px; }
+  .rev-gauge-mood.good { background: #f0fdf4; color: #15803d; }
+  .rev-gauge-mood.warn { background: #fffbeb; color: #b45309; }
+  .rev-gauge-mood.bad  { background: #fef2f2; color: #b91c1c; }
+  .rev-gauge-date { font-size: 10.5px; color: var(--text-muted); }
+  .rev-gauge-note { font-size: 12px; color: var(--text-secondary); line-height: 1.45; margin-bottom: 10px; }
+  .rev-gauge-author { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+
+  /* Reviews Type filter dropdown */
+  .rev-tb-wrap { position: relative; }
+  .rev-filter-drop {
+    display: none; position: absolute; top: calc(100% + 5px); left: 0; z-index: 100;
+    background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0,0,0,.1); min-width: 170px; overflow: hidden;
+  }
+  .rev-filter-drop.open { display: block; }
+  .rev-filter-item { font-size: 12.5px; color: var(--text-primary); padding: 8px 12px; cursor: pointer; transition: background .1s; display: flex; align-items: center; gap: 8px; }
+  .rev-filter-item:hover { background: var(--bg-surface); }
+  .rev-filter-item.active { color: var(--accent); font-weight: 600; background: var(--accent-light); }
+  .rev-filter-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .rev-tb-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .rev-active-chips { display: flex; align-items: center; gap: 6px; }
+
+  /* ─── NOTES TAB ─── */
+  .note-wrap { padding: 24px 28px; overflow-y: auto; flex: 1; min-height: 0; }
+
+  .note-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .note-toolbar .rev-search { flex: 1; max-width: 320px; }
+
+  .note-view-toggle { display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+  .note-view-btn {
+    display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; font-family: var(--font);
+    padding: 7px 12px; border: none; background: var(--bg-white); color: var(--text-muted); cursor: pointer; transition: all .12s;
+  }
+  .note-view-btn:first-child { border-right: 1px solid var(--border); }
+  .note-view-btn svg { width: 13px; height: 13px; }
+  .note-view-btn.active { color: var(--accent); background: var(--accent-light); }
+
+  .note-filter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+  .note-filter-pill {
+    font-size: 12.5px; font-weight: 500; font-family: var(--font); padding: 6px 14px;
+    border: 1px solid var(--border); border-radius: 99px; background: var(--bg-white);
+    color: var(--text-secondary); cursor: pointer; transition: all .12s;
+  }
+  .note-filter-pill:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .note-filter-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
+  .note-list { display: flex; flex-direction: column; gap: 14px; }
+  .note-list.list-view .note-card { padding: 12px 16px; }
+  .note-list.list-view .note-title,
+  .note-list.list-view .note-body,
+  .note-list.list-view .note-tags,
+  .note-list.list-view .note-footer,
+  .note-list.list-view .note-replies,
+  .note-list.list-view .note-reply-compose { display: none; }
+  .note-list.list-view .note-card-hdr { margin-bottom: 0; }
+
+  .note-card {
+    background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-xl);
+    padding: 16px 20px; transition: border-color .1s;
+  }
+  .note-card:hover { border-color: var(--border-strong); }
+  .note-card-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .note-av { width: 34px; height: 34px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .note-author { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .note-time { font-size: 12px; color: var(--text-muted); }
+  .note-visibility { font-size: 10.5px; font-weight: 600; padding: 3px 10px; border-radius: 99px; flex-shrink: 0; }
+  .note-vis-internal { background: #f1f5f9; color: #475569; }
+  .note-vis-client { background: #eff6ff; color: #1d4ed8; }
+  .note-hdr-spacer { flex: 1; }
+  .note-more { width: 26px; height: 26px; border-radius: var(--radius-sm); border: none; background: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .1s; }
+  .note-more:hover { background: var(--bg-surface); color: var(--text-primary); }
+  .note-more svg { width: 15px; height: 15px; }
+
+  .note-title { font-size: 14.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+
+  /* Only shown on Meeting Notes — plain notes show just the Author in the header */
+  .note-participants { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .note-participants-label { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); margin-right: 2px; }
+  .note-participant-chip {
+    display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-secondary);
+    background: var(--bg-surface); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px 3px 3px;
+  }
+  .note-participant-chip .note-p-av { width: 18px; height: 18px; font-size: 8.5px; }
+  .note-list.list-view .note-participants { display: none; }
+
+  .note-body { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+
+  .note-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .note-tag { font-size: 11px; font-weight: 500; color: var(--text-secondary); background: var(--bg-surface); border-radius: 99px; padding: 3px 10px; }
+
+  .note-footer { display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .note-reply-btn {
+    display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; font-family: var(--font);
+    padding: 5px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-white);
+    color: var(--text-secondary); cursor: pointer; transition: all .12s;
+  }
+  .note-reply-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .note-reply-btn svg { width: 13px; height: 13px; }
+  .note-reply-count { font-size: 12px; color: var(--text-muted); cursor: pointer; }
+  .note-reply-count:hover { color: var(--text-secondary); text-decoration: underline; }
+
+  .note-replies { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); flex-direction: column; gap: 10px; }
+  .note-replies.open { display: flex; }
+  .note-reply-item { display: flex; gap: 8px; }
+  .note-reply-av { width: 24px; height: 24px; border-radius: 50%; font-size: 9.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .note-reply-body { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .note-reply-body strong { color: var(--text-primary); font-size: 12.5px; }
+
+  .note-reply-compose { display: none; margin-top: 12px; gap: 8px; }
+  .note-reply-compose.open { display: flex; }
+  .note-reply-compose textarea {
+    flex: 1; font-size: 12.5px; font-family: var(--font); padding: 8px 10px; border: 1px solid var(--border);
+    border-radius: var(--radius-md); resize: vertical; min-height: 36px; color: var(--text-primary);
+  }
+  .note-reply-compose textarea:focus { outline: none; border-color: var(--accent); }
+  .note-reply-send {
+    font-size: 12px; font-weight: 600; font-family: var(--font); padding: 0 14px; border: none;
+    border-radius: var(--radius-md); background: var(--accent); color: #fff; cursor: pointer; flex-shrink: 0;
+  }
+  .note-reply-send:hover { background: var(--accent-hover); }
+
   /* ─── HISTORY TAB ─── */
   .hist-wrap { padding: 24px; overflow-y: auto; flex: 1; min-height: 0; }
 
@@ -849,6 +1033,30 @@
   .hist-old { font-size: 12px; font-weight: 500; color: #991b1b; background: #fef2f2; padding: 1px 7px; border-radius: 3px 0 0 3px; border: 1px solid #fecaca; text-decoration: line-through; }
   .hist-arrow { font-size: 10px; color: var(--text-muted); padding: 1px 4px; background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); line-height: 1; display: flex; align-items: center; }
   .hist-new { font-size: 12px; font-weight: 500; color: #065f46; background: #ecfdf5; padding: 1px 7px; border-radius: 0 3px 3px 0; border: 1px solid #a7f3d0; }
+
+  /* ─── REPORTS TAB (extends hist-* patterns) ─── */
+  .hist-vis { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0; }
+  .hist-vis-internal { background: #f1f5f9; color: #475569; }
+  .hist-vis-client { background: #f0fdf4; color: #15803d; }
+  .hist-actions { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+  .hist-act-btn {
+    font-size: 11.5px; font-weight: 600; font-family: var(--font); padding: 5px 12px;
+    border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--bg-white);
+    color: var(--text-secondary); cursor: pointer; transition: all .12s; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .hist-act-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .hist-act-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .hist-act-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .hist-act-btn.primary:hover { background: var(--accent-hover); }
+  .hist-report-preview {
+    display: none; margin-top: 10px; padding: 12px 14px; background: var(--bg-surface);
+    border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 12px; color: var(--text-secondary); line-height: 1.55;
+  }
+  .hist-report-preview.open { display: block; }
+  .hist-report-preview-row { display: flex; gap: 8px; margin-bottom: 6px; }
+  .hist-report-preview-row:last-child { margin-bottom: 0; }
+  .hist-report-preview-label { font-weight: 600; color: var(--text-primary); min-width: 90px; flex-shrink: 0; }
+
 /* ─── MILESTONES TAB ─── */
 .ms-wrap {
   width: 100%;
@@ -1847,6 +2055,7 @@
 .rev-type-velocity { background: #f5f3ff; color: #5b21b6; }
 .rev-type-sprint { background: #fef3c7; color: #92400e; }
 .rev-type-health { background: #f0fdf4; color: #065f46; }
+.rev-type-gauging { background: #fdf2f8; color: #be185d; }
 
 .rev-status {
   font-size: 10px;
@@ -2247,6 +2456,12 @@
   .nms-effort-opt:hover { background: var(--bg-surface); }
   .nms-effort-opt .eo-id { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); flex-shrink: 0; }
 
+  /* Meeting note: participant avatar chip + visibility picker */
+  .note-p-av {
+    width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; font-size: 8px; font-weight: 700; flex-shrink: 0;
+  }
+
   /* Footer */
   .nms-footer {
     display: flex; align-items: center; justify-content: flex-end; gap: 8px;
@@ -2393,7 +2608,7 @@
   .nrv-struct-hint { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
 
   /* Type selector cards */
-  .nrv-type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .nrv-type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .nrv-type-card {
     border: 1.5px solid var(--border); border-radius: var(--radius-md);
     padding: 12px 14px; cursor: pointer; transition: all .12s; text-align: center;
@@ -2530,18 +2745,26 @@
   }
   .nrv-qa-stable-note svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-  /* Concern chips */
+  /* QA yes/no questions */
   .nrv-qa-concern-section { margin-top: 20px; animation: nrpFadeIn .18s ease; }
-  .nrv-qa-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .nrv-qa-chip {
-    display: inline-flex; align-items: center; padding: 4px 12px;
-    font-size: 12px; font-weight: 500; color: var(--text-secondary);
-    background: var(--bg-white); border: 1.5px solid var(--border);
-    border-radius: 99px; cursor: pointer; transition: all .12s; white-space: nowrap;
-    user-select: none;
+  .nrv-qa-q-list { display: flex; flex-direction: column; gap: 12px; }
+  .nrv-qa-q-block {
+    border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 12px 14px;
   }
-  .nrv-qa-chip:hover { border-color: var(--border-strong); color: var(--text-primary); background: var(--bg-surface); }
-  .nrv-qa-chip.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent); font-weight: 600; }
+  .nrv-qa-q-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  .nrv-qa-q-text { flex: 1; }
+  .nrv-qa-q-label { font-size: 12.5px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+  .nrv-qa-q-hint { font-size: 10.5px; color: var(--text-muted); line-height: 1.35; }
+  .nrv-qa-yn { display: flex; gap: 6px; flex-shrink: 0; }
+  .nrv-yn-btn {
+    padding: 5px 14px; font-size: 11.5px; font-weight: 600; font-family: var(--font);
+    color: var(--text-secondary); background: var(--bg-white); border: 1.5px solid var(--border);
+    border-radius: 99px; cursor: pointer; transition: all .12s;
+  }
+  .nrv-yn-btn:hover { border-color: var(--border-strong); color: var(--text-primary); background: var(--bg-surface); }
+  .nrv-yn-btn.active[data-v="yes"] { border-color: #f97316; background: #fff7ed; color: #c2410c; }
+  .nrv-yn-btn.active[data-v="no"] { border-color: #22c55e; background: #f0fdf4; color: #15803d; }
+  .nrv-qa-q-detail { margin-top: 10px; }
 
   /* Conditional inputs */
   .nrv-qa-cond-block {
@@ -2648,13 +2871,11 @@
   .nrv-qa-concern-section .nrp-sec-title { margin-bottom:12px; padding-bottom:0; border-bottom:none; }
   .nrv-qa-concern-section .nrp-sec-title::after { content:''; flex:1; height:1px; background:#eaecf2; margin-left:10px; display:inline-block; vertical-align:middle; }
 
-  /* Concern chips */
-  .nrv-qa-chip { border:1.5px solid #e3e7ef; transition:all .12s; }
-  .nrv-qa-chip.active {
-    border-color:var(--accent); background:var(--accent-light); color:var(--accent); font-weight:600;
-    box-shadow:0 0 0 2px rgba(59,91,219,.08);
-  }
-  .nrv-qa-chip.active::before { content:none; }
+  /* QA yes/no questions */
+  .nrv-qa-q-block { border:1.5px solid #e3e7ef; transition:border-color .12s; }
+  .nrv-yn-btn { border:1.5px solid #e3e7ef; transition:all .12s; }
+  .nrv-yn-btn.active[data-v="yes"] { box-shadow:0 0 0 2px rgba(249,115,22,.12); }
+  .nrv-yn-btn.active[data-v="no"] { box-shadow:0 0 0 2px rgba(34,197,94,.12); }
 
   /* Conditional blocks */
   .nrv-qa-cond-block {
@@ -5672,6 +5893,59 @@
           <div class="kpi-card kpi-amber"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 13h12L8 3z"/><path d="M8 7v2.5M8 11.5h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">3</div><div class="kpi-label">Upcoming Milestones</div><div class="kpi-delta">next: Apr 30</div></div></div>
         </div>
 
+        <!-- Latest reviews highlights -->
+        <div class="ov-card" style="margin-bottom:16px;">
+          <div class="ov-card-hdr">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>
+            <div class="ov-card-title">Latest reviews</div>
+            <div class="ov-card-hdr-actions">
+              <div class="ov-period-wrap">
+                <button class="ov-period-btn" onclick="toggleOvPeriodDrop(event)">
+                  <span id="ovPeriodLabel">This week</span>
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                </button>
+                <div class="ov-period-drop" id="ovPeriodDrop">
+                  <div class="ov-period-opt active" onclick="setOvPeriod('week', this)">This week</div>
+                  <div class="ov-period-opt" onclick="setOvPeriod('lastweek', this)">Last week</div>
+                  <div class="ov-period-opt" onclick="setOvPeriod('lastmonth', this)">Last month</div>
+                  <div class="ov-period-sep"></div>
+                  <div class="ov-period-opt" onclick="setOvPeriod('custom', this)">Custom period…</div>
+                </div>
+              </div>
+              <button class="ov-card-btn primary" onclick="openNrvModal()">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+                New Review
+              </button>
+            </div>
+          </div>
+          <div class="ov-period-custom" id="ovPeriodCustom">
+            <input type="date" id="ovCustomFrom">
+            <span>to</span>
+            <input type="date" id="ovCustomTo">
+            <button class="ov-card-btn" onclick="applyOvCustomPeriod()">Apply</button>
+          </div>
+          <div class="ov-card-body" style="padding-top:4px;padding-bottom:4px;" id="ovReviewsHighlights">
+            <div class="ov-rev-item">
+              <span class="rev-type rev-type-temp">Temperature</span>
+              <span class="rev-status rev-s-stable">Stable</span>
+              <div class="ov-rev-note">SSO blocker resolved, sprint velocity recovered to 92%.</div>
+              <div class="ov-rev-meta"><span class="ov-rev-date">Mar 28</span><div class="rev-author-av" style="width:22px;height:22px;font-size:9.5px;background:#f5eeff;color:#6d28d9;">AK</div></div>
+            </div>
+            <div class="ov-rev-item">
+              <span class="rev-type rev-type-temp">Temperature</span>
+              <span class="rev-status rev-s-risk">Risk</span>
+              <div class="ov-rev-note">Client concerned about velocity dip; two blockers still open.</div>
+              <div class="ov-rev-meta"><span class="ov-rev-date">Mar 21</span><div class="rev-author-av" style="width:22px;height:22px;font-size:9.5px;background:#f5eeff;color:#6d28d9;">AK</div></div>
+            </div>
+            <div class="ov-rev-item">
+              <span class="rev-type rev-type-velocity">Velocity</span>
+              <span class="rev-status rev-s-risk">Risk</span>
+              <div class="ov-rev-note">Sprint 3 velocity dipped to 60%, 4 efforts carried over.</div>
+              <div class="ov-rev-meta"><span class="ov-rev-date">Mar 7</span><div class="rev-author-av" style="width:22px;height:22px;font-size:9.5px;background:#e8f4fd;color:#1d5fa6;">SK</div></div>
+            </div>
+          </div>
+        </div>
+
         <!-- 2-col dashboard grid -->
         <div class="ov-grid">
 
@@ -6815,6 +7089,178 @@
 
       </div><!-- /tm-wrap -->
     </div><!-- /tab-team -->
+
+    <!-- TAB: NOTES -->
+    <div id="tab-notes" class="tab-panel">
+      <div class="note-wrap">
+
+        <!-- Toolbar -->
+        <div class="note-toolbar">
+          <div class="rev-search">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+            <input type="text" placeholder="Search notes...">
+          </div>
+          <div class="ov-period-wrap">
+            <button class="ov-period-btn" onclick="toggleNotePeriodDrop(event)">
+              <span id="notePeriodLabel">This week</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+            </button>
+            <div class="ov-period-drop" id="notePeriodDrop">
+              <div class="ov-period-opt active" onclick="setNotePeriod('week', this)">This week</div>
+              <div class="ov-period-opt" onclick="setNotePeriod('lastweek', this)">Last week</div>
+              <div class="ov-period-opt" onclick="setNotePeriod('lastmonth', this)">Last month</div>
+              <div class="ov-period-sep"></div>
+              <div class="ov-period-opt" onclick="setNotePeriod('custom', this)">Custom period…</div>
+            </div>
+          </div>
+          <div class="note-view-toggle">
+            <button class="note-view-btn active" id="noteViewCards" onclick="setNoteView('cards')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Cards</button>
+            <button class="note-view-btn" id="noteViewList" onclick="setNoteView('list')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg>List</button>
+          </div>
+          <button class="rev-tb-btn primary" onclick="openNntModal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> New Note</button>
+        </div>
+
+        <!-- Visibility filter pills -->
+        <div class="note-filter-row" id="noteFilterRow">
+          <button class="note-filter-pill active" onclick="setNoteFilter('all', this)">All</button>
+          <button class="note-filter-pill" onclick="setNoteFilter('internal', this)">Internal</button>
+          <button class="note-filter-pill" onclick="setNoteFilter('client', this)">Client-visible</button>
+          <button class="note-filter-pill" onclick="setNoteFilter('mine', this)">My notes</button>
+        </div>
+
+        <!-- Notes list -->
+        <div class="note-list" id="noteList">
+
+          <div class="note-card" data-vis="client" data-mine="true">
+            <div class="note-card-hdr">
+              <div class="note-av" style="background:#fef3c7;color:#92400e;">AK</div>
+              <span class="note-author">Anna K.</span>
+              <span class="note-time">Yesterday · 3:20 PM</span>
+              <span class="note-visibility note-vis-client">Client-visible</span>
+              <div class="note-hdr-spacer"></div>
+              <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
+            </div>
+            <div class="note-title">Client check-in — Apr 13</div>
+            <div class="note-participants">
+              <span class="note-participants-label">With</span>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">MC</div>Michael Chen</div>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#fde8d8;color:#b45309;">JP</div>Jennifer Parker</div>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>Sarah Kim</div>
+            </div>
+            <div class="note-body">Shared sprint progress with Michael and Rachel. They're satisfied with the velocity on the Payments module. Raised concern about the onboarding stepper timeline — committed to a revised delivery date by Friday. Next sync scheduled for Apr 22.</div>
+            <div class="note-tags">
+              <span class="note-tag">#client-sync</span>
+              <span class="note-tag">#delivery</span>
+            </div>
+            <div class="note-footer">
+              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+              <span class="note-reply-count" onclick="toggleNoteReplies(this)">1 reply</span>
+            </div>
+            <div class="note-replies open">
+              <div class="note-reply-item">
+                <div class="note-reply-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>
+                <div class="note-reply-body"><strong>Sarah Kim</strong> — Confirmed with the team, revised stepper date is doable without affecting Sprint 4 scope.</div>
+              </div>
+            </div>
+            <div class="note-reply-compose">
+              <textarea placeholder="Write a reply…"></textarea>
+              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            </div>
+          </div>
+
+          <div class="note-card" data-vis="client" data-mine="true">
+            <div class="note-card-hdr">
+              <div class="note-av" style="background:#fef3c7;color:#92400e;">AK</div>
+              <span class="note-author">Anna K.</span>
+              <span class="note-time">Jan 15, 2026</span>
+              <span class="note-visibility note-vis-client">Client-visible</span>
+              <div class="note-hdr-spacer"></div>
+              <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
+            </div>
+            <div class="note-title">Project kickoff notes</div>
+            <div class="note-participants">
+              <span class="note-participants-label">With</span>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">MC</div>Michael Chen</div>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#fde8d8;color:#b45309;">JP</div>Jennifer Parker</div>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>Sarah Kim</div>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#fde8d8;color:#b45309;">LM</div>Lucas Mora</div>
+            </div>
+            <div class="note-body">Kickoff meeting completed with TAPP stakeholders. Key decisions: (1) Greenfield build on existing Node/React stack, (2) Stripe as primary payment processor, (3) Phase 1 delivery targeting Jun 15. Team intro done — Michael and Rachel confirmed as primary client contacts. Next step: finalize sprint 1 scope by Jan 20.</div>
+            <div class="note-tags">
+              <span class="note-tag">#kickoff</span>
+              <span class="note-tag">#client-sync</span>
+            </div>
+            <div class="note-footer">
+              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+              <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
+            </div>
+            <div class="note-replies"></div>
+            <div class="note-reply-compose">
+              <textarea placeholder="Write a reply…"></textarea>
+              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            </div>
+          </div>
+
+          <div class="note-card" data-vis="internal" data-mine="false">
+            <div class="note-card-hdr">
+              <div class="note-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>
+              <span class="note-author">Sarah Kim</span>
+              <span class="note-time">Mar 19, 2026 · 4:45 PM</span>
+              <span class="note-visibility note-vis-internal">Internal</span>
+              <div class="note-hdr-spacer"></div>
+              <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
+            </div>
+            <div class="note-title">Internal retro — Sprint 3 carryover</div>
+            <div class="note-participants">
+              <span class="note-participants-label">With</span>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#f0fdf4;color:#15803d;">TR</div>Tom Reeves</div>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#fff7ed;color:#c2410c;">MV</div>Marco V.</div>
+              <div class="note-participant-chip"><div class="note-p-av" style="background:#fdf2f8;color:#9d174d;">CH</div>Clara H.</div>
+            </div>
+            <div class="note-body">Root cause of the velocity dip: QA test environment was down for 2 days mid-sprint. Action: add monitoring/alerting before Sprint 5. Permissions matrix UI to be split into smaller deliverables going forward.</div>
+            <div class="note-tags">
+              <span class="note-tag">#retro</span>
+              <span class="note-tag">#qa</span>
+            </div>
+            <div class="note-footer">
+              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+              <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
+            </div>
+            <div class="note-replies"></div>
+            <div class="note-reply-compose">
+              <textarea placeholder="Write a reply…"></textarea>
+              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            </div>
+          </div>
+
+          <div class="note-card" data-vis="internal" data-mine="true">
+            <div class="note-card-hdr">
+              <div class="note-av" style="background:#fef3c7;color:#92400e;">AK</div>
+              <span class="note-author">Anna K.</span>
+              <span class="note-time">Mar 9, 2026 · 11:05 AM</span>
+              <span class="note-visibility note-vis-internal">Internal</span>
+              <div class="note-hdr-spacer"></div>
+              <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
+            </div>
+            <div class="note-title">Reminder — renew Figma seats before Apr 30</div>
+            <div class="note-body">Our Figma team plan renews end of April. Confirmed with finance we're keeping the same seat count — no action needed from the team, just flagging so it's not a surprise on the invoice.</div>
+            <div class="note-tags">
+              <span class="note-tag">#admin</span>
+            </div>
+            <div class="note-footer">
+              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+              <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
+            </div>
+            <div class="note-replies"></div>
+            <div class="note-reply-compose">
+              <textarea placeholder="Write a reply…"></textarea>
+              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /tab-notes -->
 
     <!-- ADD TEAM MEMBER MODAL -->
     <div class="alr-overlay" id="addTeamMemberOverlay">
@@ -8104,7 +8550,7 @@
         <button class="rpt-tb-btn primary" onclick="openNrpModal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> New Report</button>
       </div>
 
-      <div class="hist-wrap">
+      <div class="hist-wrap" id="reportsHistWrap">
 
         <!-- ══════ THIS WEEK ══════ -->
         <div class="hist-time-group">
@@ -8117,10 +8563,20 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-project-update">Status</span>
+                <span class="hist-vis hist-vis-client">Client-facing</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Weekly · Recurring</span>
                 <span class="hist-time">Mar 24</span>
               </div>
               <div class="hist-line"><span class="hist-obj">Weekly Status Update</span> — auto-generated and sent to stakeholders <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Progress Report · Status</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>All active milestones — weekly rollup</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>michael.chen@client.com, jennifer.parker@client.com</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Sprint 4 tracking on schedule, 21% of scope complete, no new blockers this week.</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -8136,10 +8592,20 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-scope-change">Sprint</span>
+                <span class="hist-vis hist-vis-internal">Internal</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>One-time</span>
                 <span class="hist-time">Mar 21</span>
               </div>
               <div class="hist-line"><span class="hist-actor">Anna K.</span> created <span class="hist-obj">Sprint 4 Retrospective</span> — velocity, blockers, and action items <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Sprint Retrospective</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Sprint 4 — all linked milestones</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Velocity recovered to 92%, 1 open blocker, action items assigned for Sprint 5 planning.</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -8155,10 +8621,20 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-milestone-update">Status</span>
+                <span class="hist-vis hist-vis-client">Client-facing</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>One-time</span>
                 <span class="hist-time">Mar 15</span>
               </div>
               <div class="hist-line"><span class="hist-actor">Sarah Kim</span> generated <span class="hist-obj">Q1 Delivery Summary</span> — milestones delivered, hours logged, team utilization <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Milestone Summary</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Q1 2026 — 6 milestones</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>michael.chen@client.com, jennifer.parker@client.com</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>4 of 6 milestones delivered on schedule, 312 hours logged, team utilization averaged 78%.</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -8174,10 +8650,20 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-effort-review">Retro</span>
+                <span class="hist-vis hist-vis-internal">Internal</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>One-time</span>
                 <span class="hist-time">Mar 7</span>
               </div>
               <div class="hist-line"><span class="hist-actor">Anna K.</span> completed <span class="hist-obj">Sprint 3 Retrospective</span> — shared with team <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Sprint Retrospective</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Sprint 3 — all linked milestones</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Velocity dipped to 60% — root cause: QA environment downtime. Action items assigned.</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -8193,10 +8679,20 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-project-update">Hours</span>
+                <span class="hist-vis hist-vis-internal">Internal</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Monthly · Recurring</span>
                 <span class="hist-time">Mar 1</span>
               </div>
               <div class="hist-line"><span class="hist-obj">Monthly Hours Summary</span> — auto-generated, includes all team members <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Time Tracking Report</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>February 2026 — all team members</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>412 hours logged across 7 team members, 3.2% variance from planned capacity.</span></div>
+              </div>
             </div>
           </div>
 
@@ -8207,10 +8703,20 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-budget-update">Budget</span>
+                <span class="hist-vis hist-vis-client">Client-facing</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Monthly · Recurring</span>
                 <span class="hist-time">Mar 1</span>
               </div>
               <div class="hist-line"><span class="hist-obj">Budget Burn Rate</span> — tracks spend vs. allocation, shared with finance <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Budget Overview</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>February 2026 spend vs. allocation</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>michael.chen@client.com (finance)</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>68% of Q1 budget consumed, on pace with 3.1% favorable variance.</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -8226,10 +8732,21 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-project-update">Hours</span>
+                <span class="hist-vis hist-vis-internal">Internal</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Monthly · Recurring</span>
                 <span class="hist-time">Apr 1</span>
               </div>
               <div class="hist-line"><span class="hist-obj">Team Utilization Report</span> — hours logged vs. capacity <span class="hist-diff"><span style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Scheduled</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Time Tracking Report</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>March 2026 — all team members</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Will be generated automatically when sent on Apr 1.</span></div>
+              </div>
             </div>
           </div>
 
@@ -8240,10 +8757,21 @@
             <div class="hist-body">
               <div class="hist-top-row">
                 <span class="hist-cat hc-note">Custom</span>
+                <span class="hist-vis hist-vis-client">Client-facing</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>One-time</span>
                 <span class="hist-time">—</span>
               </div>
               <div class="hist-line"><span class="hist-obj">Custom Stakeholder Brief</span> — not yet configured or sent <span class="hist-diff"><span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Draft</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Custom Report</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Not yet configured</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>—</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Draft only — finish setup before sending.</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -8262,18 +8790,68 @@
             <input type="text" placeholder="Search reviews...">
           </div>
           <div class="rev-tb-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/><path d="M5 1v4M11 1v4"/></svg> Date range</div>
-          <div class="rev-tb-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M4 8h8M6 12h4"/></svg> Type</div>
+          <div class="rev-tb-wrap">
+            <div class="rev-tb-btn" id="revTypeFilterBtn" onclick="toggleRevFilterDrop(event)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M4 8h8M6 12h4"/></svg> <span id="revTypeFilterLabel">Type</span></div>
+            <div class="rev-filter-drop" id="revTypeFilterDrop">
+              <div class="rev-filter-item active" onclick="setRevTypeFilter('all', this)">All types</div>
+              <div class="rev-filter-item" onclick="setRevTypeFilter('temperature', this)"><span class="rev-filter-dot" style="background:#1d4ed8"></span>Temperature</div>
+              <div class="rev-filter-item" onclick="setRevTypeFilter('velocity', this)"><span class="rev-filter-dot" style="background:#5b21b6"></span>Velocity</div>
+              <div class="rev-filter-item" onclick="setRevTypeFilter('design', this)"><span class="rev-filter-dot" style="background:#92400e"></span>Design</div>
+              <div class="rev-filter-item" onclick="setRevTypeFilter('gauging', this)"><span class="rev-filter-dot" style="background:#be185d"></span>Gauging</div>
+            </div>
+          </div>
           <div class="rev-tb-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg> Status</div>
+          <div id="revActiveChips" class="rev-active-chips"></div>
           <div class="rev-tb-spacer"></div>
           <div class="rev-tb-btn primary" onclick="openNrvModal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> Add Review</div>
         </div>
 
+        <!-- Gaugings — quick pulse checks, pinned above the full timeline -->
+        <div class="rev-gauging-block" id="revGaugingBlock" data-rev-section="gauging">
+          <div class="rev-gauging-hdr">
+            <div class="rev-gauging-title">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 12a5.5 5.5 0 0 1 11 0"/><path d="M8 12l2.8-4.5"/><circle cx="8" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+              Gaugings
+              <span class="rev-gauging-count">3</span>
+            </div>
+            <div class="rev-gauging-sub">Quick pulse checks on team sentiment and confidence</div>
+            <div class="rev-gauging-hdr-spacer"></div>
+            <div class="ov-card-btn" onclick="openNrvModalAs('gauging')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> Add Gauging</div>
+          </div>
+          <div class="rev-gauging-row">
+            <div class="rev-gauge-card">
+              <div class="rev-gauge-card-top">
+                <span class="rev-gauge-mood good">Confident</span>
+                <span class="rev-gauge-date">Mar 24, 2026</span>
+              </div>
+              <div class="rev-gauge-note">Team feels good about Sprint 4 pace — no blockers expected before Friday's client check-in.</div>
+              <div class="rev-gauge-author"><div class="rev-author-av" style="width:20px;height:20px;font-size:9px;background:#f5eeff;color:#6d28d9;">AK</div>Anna K.</div>
+            </div>
+            <div class="rev-gauge-card">
+              <div class="rev-gauge-card-top">
+                <span class="rev-gauge-mood warn">Cautious</span>
+                <span class="rev-gauge-date">Mar 17, 2026</span>
+              </div>
+              <div class="rev-gauge-note">Design handoff running a day behind — watching whether it slips into Sprint 4 QA window.</div>
+              <div class="rev-gauge-author"><div class="rev-author-av" style="width:20px;height:20px;font-size:9px;background:#fde8d8;color:#b45309;">LM</div>Lucas Mora</div>
+            </div>
+            <div class="rev-gauge-card">
+              <div class="rev-gauge-card-top">
+                <span class="rev-gauge-mood good">Confident</span>
+                <span class="rev-gauge-date">Mar 10, 2026</span>
+              </div>
+              <div class="rev-gauge-note">QA regression pass finished early; team has bandwidth to pick up carryover from Sprint 3.</div>
+              <div class="rev-gauge-author"><div class="rev-author-av" style="width:20px;height:20px;font-size:9px;background:#f0fdf4;color:#15803d;">TR</div>Tom Reeves</div>
+            </div>
+          </div>
+        </div>
+
         <!-- Reviews list -->
-        <div class="rev-month-group">
+        <div class="rev-month-group" data-rev-section="timeline">
           <div class="rev-month-label">March 2026</div>
 
           <!-- Review 1 — Most recent (expanded) -->
-          <div class="rev-card stable">
+          <div class="rev-card stable" data-rev-type="temperature">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-temp">Temperature</span>
@@ -8332,7 +8910,7 @@
           </div>
 
           <!-- Review 2 (collapsed) -->
-          <div class="rev-card risk collapsed">
+          <div class="rev-card risk collapsed" data-rev-type="temperature">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-temp">Temperature</span>
@@ -8391,7 +8969,7 @@
           </div>
 
           <!-- Review 3 (collapsed) -->
-          <div class="rev-card stable collapsed">
+          <div class="rev-card stable collapsed" data-rev-type="temperature">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-temp">Temperature</span>
@@ -8448,7 +9026,7 @@
           </div>
 
           <!-- Review 4 — Velocity type (collapsed) -->
-          <div class="rev-card risk collapsed">
+          <div class="rev-card risk collapsed" data-rev-type="velocity">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-velocity">Velocity</span>
@@ -8499,10 +9077,10 @@
         </div><!-- /March 2026 -->
 
         <!-- February group -->
-        <div class="rev-month-group">
+        <div class="rev-month-group" data-rev-section="timeline">
           <div class="rev-month-label">February 2026</div>
 
-          <div class="rev-card stable collapsed">
+          <div class="rev-card stable collapsed" data-rev-type="temperature">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-temp">Temperature</span>
@@ -8537,7 +9115,7 @@
             </div>
           </div>
 
-          <div class="rev-card stable collapsed">
+          <div class="rev-card stable collapsed" data-rev-type="health">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-health">Health Check</span>
@@ -10662,7 +11240,7 @@
     'Milestones': 'tab-milestones',
     'Reviews': 'tab-reviews',
     'Team': 'tab-team',
-    'Notes': 'tab-efforts',
+    'Notes': 'tab-notes',
     'Reports': 'tab-reports',
     'Details': 'tab-details',
     'History': 'tab-history'
@@ -12247,6 +12825,100 @@
   function toggleRevCard(hdr) {
     var card = hdr.closest('.rev-card');
     if (card) card.classList.toggle('collapsed');
+  }
+
+  // ── Reviews: Type filter ──
+  var revTypeLabels = { all: 'Type', temperature: 'Temperature', velocity: 'Velocity', design: 'Design', gauging: 'Gauging' };
+
+  function toggleRevFilterDrop(e) {
+    e.stopPropagation();
+    document.getElementById('revTypeFilterDrop').classList.toggle('open');
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.rev-tb-wrap')) {
+      var d = document.getElementById('revTypeFilterDrop');
+      if (d) d.classList.remove('open');
+    }
+  });
+
+  function setRevTypeFilter(type, el) {
+    document.querySelectorAll('#revTypeFilterDrop .rev-filter-item').forEach(function(i) { i.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('revTypeFilterLabel').textContent = revTypeLabels[type];
+    document.getElementById('revTypeFilterBtn').classList.toggle('active', type !== 'all');
+    document.getElementById('revTypeFilterDrop').classList.remove('open');
+
+    var chips = document.getElementById('revActiveChips');
+    if (chips) {
+      chips.innerHTML = type === 'all'
+        ? ''
+        : '<div class="filter-chip">' + revTypeLabels[type] + ' <span class="chip-x" onclick="clearRevTypeFilter()">×</span></div>';
+    }
+
+    // Gaugings block only makes sense for 'all' or 'gauging'
+    var gaugingBlock = document.getElementById('revGaugingBlock');
+    if (gaugingBlock) gaugingBlock.style.display = (type === 'all' || type === 'gauging') ? '' : 'none';
+
+    // Filter the chronological timeline; hide month groups left empty
+    document.querySelectorAll('.rev-month-group').forEach(function(group) {
+      var anyVisible = false;
+      group.querySelectorAll('.rev-card').forEach(function(card) {
+        var match = type === 'all' || card.getAttribute('data-rev-type') === type;
+        card.style.display = match ? '' : 'none';
+        if (match) anyVisible = true;
+      });
+      group.style.display = anyVisible ? '' : 'none';
+    });
+  }
+
+  function clearRevTypeFilter() {
+    var allItem = document.querySelector('#revTypeFilterDrop .rev-filter-item');
+    setRevTypeFilter('all', allItem);
+  }
+
+  function openNrvModalAs(type) {
+    openNrvModal();
+    var card = document.querySelector('.nrv-type-card[onclick*="\'' + type + '\'"]');
+    if (card) pickNrvType(card, type);
+  }
+
+  // ── Overview: Latest reviews period selector ──
+  var ovPeriodLabels = { week: 'This week', lastweek: 'Last week', lastmonth: 'Last month', custom: 'Custom period' };
+
+  function toggleOvPeriodDrop(e) {
+    e.stopPropagation();
+    document.getElementById('ovPeriodDrop').classList.toggle('open');
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.ov-period-wrap')) {
+      var d = document.getElementById('ovPeriodDrop');
+      if (d) d.classList.remove('open');
+    }
+  });
+
+  function setOvPeriod(period, el) {
+    document.querySelectorAll('#ovPeriodDrop .ov-period-opt').forEach(function(o) { o.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('ovPeriodDrop').classList.remove('open');
+
+    var customBar = document.getElementById('ovPeriodCustom');
+    if (period === 'custom') {
+      customBar.classList.add('open');
+      // Label updates once a range is applied — see applyOvCustomPeriod()
+    } else {
+      customBar.classList.remove('open');
+      document.getElementById('ovPeriodLabel').textContent = ovPeriodLabels[period];
+    }
+  }
+
+  function applyOvCustomPeriod() {
+    var from = document.getElementById('ovCustomFrom').value;
+    var to = document.getElementById('ovCustomTo').value;
+    if (!from || !to) return;
+    document.getElementById('ovPeriodLabel').textContent = from + ' – ' + to;
+    document.getElementById('ovPeriodCustom').classList.remove('open');
   }
 
   function setView(el) {
@@ -20287,6 +20959,20 @@
           </div>
         </div>
 
+        <div class="nrp-field">
+          <div class="nrp-label">Visibility <span class="nrp-req">*</span></div>
+          <div class="nrp-freq-opts">
+            <div class="nrp-freq-opt active" id="nrpVisInternal" onclick="setNrpVisibility('internal',this)">
+              <div class="nrp-freq-radio"></div>
+              Internal
+            </div>
+            <div class="nrp-freq-opt" id="nrpVisClient" onclick="setNrpVisibility('client',this)">
+              <div class="nrp-freq-radio"></div>
+              Client-facing
+            </div>
+          </div>
+        </div>
+
         <div class="nrp-sec-gap"></div>
         <div class="nrp-sec-title">Scope</div>
         <div class="nrp-field">
@@ -20476,6 +21162,13 @@
               <div class="nrv-type-name">Design</div>
               <div class="nrv-type-desc">Design progress, feedback, and system quality</div>
             </div>
+            <div class="nrv-type-card" onclick="pickNrvType(this,'gauging')">
+              <div class="nrv-type-icon" style="background:#fdf2f8;color:#be185d;">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 12a5.5 5.5 0 0 1 11 0"/><path d="M8 12l2.8-4.5"/><circle cx="8" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="nrv-type-name">Gauging</div>
+              <div class="nrv-type-desc">Quick pulse check on team sentiment and confidence</div>
+            </div>
           </div>
         </div>
 
@@ -20607,25 +21300,94 @@
         </div>
 
         <div class="nrv-qa-concern-section" id="nrvQaConcernSection" style="display:none">
-          <div class="nrv-card-title">Current QA Concerns<span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px;color:var(--text-muted)">select all that apply</span></div>
-          <div class="nrv-qa-chips">
-            <div class="nrv-qa-chip" data-c="coverage"     onclick="toggleNrvQaConcern(this,'coverage')">Limited testing coverage</div>
-            <div class="nrv-qa-chip" data-c="requirements" onclick="toggleNrvQaConcern(this,'requirements')">Unclear requirements</div>
-            <div class="nrv-qa-chip" data-c="unvalidated"  onclick="toggleNrvQaConcern(this,'unvalidated')">Features not fully validated</div>
-            <div class="nrv-qa-chip" data-c="rushed"       onclick="toggleNrvQaConcern(this,'rushed')">Rushed validation</div>
-            <div class="nrv-qa-chip" data-c="regression"   onclick="toggleNrvQaConcern(this,'regression')">Regression coverage skipped</div>
-            <div class="nrv-qa-chip" data-c="instability"  onclick="toggleNrvQaConcern(this,'instability')">Release instability</div>
-            <div class="nrv-qa-chip" data-c="hotfixes"     onclick="toggleNrvQaConcern(this,'hotfixes')">Frequent hotfixes</div>
-            <div class="nrv-qa-chip" data-c="rollback"     onclick="toggleNrvQaConcern(this,'rollback')">Rollback concerns</div>
-            <div class="nrv-qa-chip" data-c="envs"         onclick="toggleNrvQaConcern(this,'envs')">Unstable environments</div>
-            <div class="nrv-qa-chip" data-c="escaped"      onclick="toggleNrvQaConcern(this,'escaped')">Escaped defects</div>
-            <div class="nrv-qa-chip" data-c="client-issues" onclick="toggleNrvQaConcern(this,'client-issues')">Client-reported issues</div>
-            <div class="nrv-qa-chip" data-c="recurring"    onclick="toggleNrvQaConcern(this,'recurring')">Recurring production bugs</div>
-            <div class="nrv-qa-chip" data-c="upcoming"     onclick="toggleNrvQaConcern(this,'upcoming')">Upcoming high-priority QA work</div>
+          <div class="nrv-card-title">QA Team Input<span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px;color:var(--text-muted)">answer what applies to this project</span></div>
+          <div class="nrv-qa-q-list">
+
+            <div class="nrv-qa-q-block">
+              <div class="nrv-qa-q-row">
+                <div class="nrv-qa-q-text">
+                  <div class="nrv-qa-q-label">Is there any QA/testing risk?</div>
+                  <div class="nrv-qa-q-hint">e.g. limited testing coverage, unclear requirements, major features not fully validated</div>
+                </div>
+                <div class="nrv-qa-yn">
+                  <button class="nrv-yn-btn" data-v="yes" onclick="pickNrvQaYn('risk','yes',this)">Yes</button>
+                  <button class="nrv-yn-btn" data-v="no" onclick="pickNrvQaYn('risk','no',this)">No</button>
+                </div>
+              </div>
+              <div class="nrv-qa-q-detail nrv-qa-cond-block" id="nrvQaDetail-risk" style="display:none">
+                <textarea class="nrv-struct-textarea" placeholder="Describe the testing risk..." style="min-height:52px"></textarea>
+              </div>
+            </div>
+
+            <div class="nrv-qa-q-block">
+              <div class="nrv-qa-q-row">
+                <div class="nrv-qa-q-text">
+                  <div class="nrv-qa-q-label">Is there any rushed validation?</div>
+                  <div class="nrv-qa-q-hint">e.g. compressed timelines, same-day testing before release, skipped regression coverage</div>
+                </div>
+                <div class="nrv-qa-yn">
+                  <button class="nrv-yn-btn" data-v="yes" onclick="pickNrvQaYn('rushed','yes',this)">Yes</button>
+                  <button class="nrv-yn-btn" data-v="no" onclick="pickNrvQaYn('rushed','no',this)">No</button>
+                </div>
+              </div>
+              <div class="nrv-qa-q-detail nrv-qa-cond-block" id="nrvQaDetail-rushed" style="display:none">
+                <textarea class="nrv-struct-textarea" placeholder="What caused the rushed validation?" style="min-height:52px"></textarea>
+              </div>
+            </div>
+
+            <div class="nrv-qa-q-block">
+              <div class="nrv-qa-q-row">
+                <div class="nrv-qa-q-text">
+                  <div class="nrv-qa-q-label">Is there any release instabilities?</div>
+                  <div class="nrv-qa-q-hint">e.g. frequent hotfixes, rollback concerns, unstable builds/environments</div>
+                </div>
+                <div class="nrv-qa-yn">
+                  <button class="nrv-yn-btn" data-v="yes" onclick="pickNrvQaYn('instability','yes',this)">Yes</button>
+                  <button class="nrv-yn-btn" data-v="no" onclick="pickNrvQaYn('instability','no',this)">No</button>
+                </div>
+              </div>
+              <div class="nrv-qa-q-detail nrv-qa-cond-block" id="nrvQaDetail-instability" style="display:none">
+                <textarea class="nrv-struct-textarea" placeholder="What instability is occurring?" style="min-height:52px"></textarea>
+              </div>
+            </div>
+
+            <div class="nrv-qa-q-block">
+              <div class="nrv-qa-q-row">
+                <div class="nrv-qa-q-text">
+                  <div class="nrv-qa-q-label">Has there been any escaped defects/client-impact concerns?</div>
+                  <div class="nrv-qa-q-hint">e.g. bugs found post-release, recurring production issues, client-reported defects</div>
+                </div>
+                <div class="nrv-qa-yn">
+                  <button class="nrv-yn-btn" data-v="yes" onclick="pickNrvQaYn('escaped','yes',this)">Yes</button>
+                  <button class="nrv-yn-btn" data-v="no" onclick="pickNrvQaYn('escaped','no',this)">No</button>
+                </div>
+              </div>
+              <div class="nrv-qa-q-detail nrv-qa-cond-block" id="nrvQaDetail-escaped" style="display:none">
+                <textarea class="nrv-struct-textarea" placeholder="Describe the defect, affected users, severity..." style="min-height:52px"></textarea>
+              </div>
+            </div>
+
+            <div class="nrv-qa-q-block">
+              <div class="nrv-qa-q-row">
+                <div class="nrv-qa-q-text">
+                  <div class="nrv-qa-q-label">Any upcoming high priorities for the QA team on this project?</div>
+                  <div class="nrv-qa-q-hint">i.e. anything the QA lead can help plan for so the project has enough QA support when needed in the next 3 business days — e.g. a production update scheduled for next Monday, so a full regression test will be needed on staging and production post-update</div>
+                </div>
+                <div class="nrv-qa-yn">
+                  <button class="nrv-yn-btn" data-v="yes" onclick="pickNrvQaYn('upcoming','yes',this)">Yes</button>
+                  <button class="nrv-yn-btn" data-v="no" onclick="pickNrvQaYn('upcoming','no',this)">No</button>
+                </div>
+              </div>
+              <div class="nrv-qa-q-detail nrv-qa-cond-block" id="nrvQaDetail-upcoming" style="display:none">
+                <div class="nrv-qa-cond-row">
+                  <input class="nrp-input" type="date" placeholder="Expected date">
+                  <textarea class="nrv-struct-textarea" placeholder="Planning notes, scope, team involved..." style="min-height:38px"></textarea>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-
-        <div id="nrvQaConditionals"></div>
 
       </div>
 
@@ -21121,6 +21883,116 @@
         <button class="nms-btn" onclick="closeNmsModal()">Cancel</button>
         <button class="nms-btn primary" id="nmsCreateBtn" onclick="nmsCreate()" disabled>Create Milestone</button>
       </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── New Meeting Note Modal ── -->
+<div class="nms-overlay" id="nntOverlay">
+  <div class="nms-modal">
+
+    <!-- Header -->
+    <div class="nms-hdr">
+      <div class="nms-hdr-icon">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="10" height="12" rx="1.5"/><path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3"/></svg>
+      </div>
+      <div class="nms-title">New Meeting Note</div>
+      <button class="nms-close" onclick="closeNntModal()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="nms-body">
+
+      <div class="nms-section">
+        <div class="nms-section-title">Meeting Details</div>
+
+        <div class="nms-field">
+          <label class="nms-label">Title <span class="nms-req">*</span></label>
+          <input class="nms-input" id="nntTitle" type="text" placeholder="e.g. Sprint 4 planning &amp; client sync" oninput="updateNntBtn()">
+        </div>
+
+        <div class="nms-field">
+          <label class="nms-label">Date <span class="nms-req">*</span></label>
+          <input class="nms-input" id="nntDate" type="date" oninput="updateNntBtn()">
+        </div>
+
+        <div class="nms-field">
+          <label class="nms-label">Calendar Event <span class="nms-opt" style="font-weight:400;color:var(--text-muted);">— optional, syncs with Google Calendar</span></label>
+          <div class="ntl-cal-wrap">
+            <div id="nntCalChip" style="display:none" class="ntl-cal-chip">
+              <div class="ntl-cal-chip-ico">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="2"/><path d="M5 2v2M11 2v2M2 7h12"/></svg>
+              </div>
+              <div class="ntl-cal-chip-text">
+                <div class="ntl-cal-chip-title" id="nntCalChipTitle"></div>
+                <div class="ntl-cal-chip-meta" id="nntCalChipMeta"></div>
+              </div>
+              <button class="ntl-cal-chip-clear" onclick="nntCalClear()" title="Remove">✕</button>
+            </div>
+            <div class="ntl-cal-search-wrap" id="nntCalSearchWrap">
+              <svg class="ntl-cal-search-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="2"/><path d="M5 2v2M11 2v2M2 7h12"/></svg>
+              <input type="text" id="nntCalSearch" placeholder="Link a calendar event…" oninput="nntCalInput(this.value)" onfocus="nntCalInput(this.value)" onblur="setTimeout(function(){nntCalCloseDd()},150)" onkeydown="nntCalKeydown(event)" autocomplete="off">
+              <div class="ntl-cal-dd" id="nntCalDd"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nms-section">
+        <div class="nms-section-title">Participants</div>
+
+        <div class="nms-field">
+          <div class="nms-efforts-search" onclick="document.getElementById('nntPSearch').focus()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+            <input type="text" id="nntPSearch" placeholder="Add participant..." onfocus="document.getElementById('nntPDropdown').classList.add('open')" onblur="setTimeout(function(){document.getElementById('nntPDropdown').classList.remove('open')},150)">
+          </div>
+          <div class="nms-effort-chips" id="nntPChips"></div>
+          <div class="nms-efforts-dropdown" id="nntPDropdown">
+            <div class="nms-effort-opt" onclick="addNntParticipant('AK','Anna K.','#f5eeff','#6d28d9')">Anna K. — Product Manager</div>
+            <div class="nms-effort-opt" onclick="addNntParticipant('SK','Sarah Kim','#e8f4fd','#1d5fa6')">Sarah Kim — Lead Developer</div>
+            <div class="nms-effort-opt" onclick="addNntParticipant('LM','Lucas Mora','#fde8d8','#b45309')">Lucas Mora — UI/UX Designer</div>
+            <div class="nms-effort-opt" onclick="addNntParticipant('TR','Tom Reeves','#f0fdf4','#15803d')">Tom Reeves — Quality Assurance</div>
+            <div class="nms-effort-opt" onclick="addNntParticipant('CH','Clara H.','#fdf2f8','#9d174d')">Clara H. — Frontend Engineer</div>
+            <div class="nms-effort-opt" onclick="addNntParticipant('MV','Marco V.','#fff7ed','#c2410c')">Marco V. — Backend Engineer</div>
+            <div class="nms-effort-opt" onclick="addNntParticipant('JR','Jake R.','#eef2ff','#3b5bdb')">Jake R. — Full Stack Developer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nms-section">
+        <div class="nms-section-title">Notes</div>
+        <div class="nms-field">
+          <textarea class="nms-textarea" id="nntNotes" style="min-height:120px" placeholder="What was discussed, decided, and any follow-ups..."></textarea>
+        </div>
+        <div class="nms-field">
+          <label class="nms-label">Tags <span class="nms-opt" style="font-weight:400;color:var(--text-muted);">— optional</span></label>
+          <input class="nms-input" id="nntTags" type="text" placeholder="e.g. client-sync, delivery">
+        </div>
+      </div>
+
+      <div class="nms-section">
+        <div class="nms-section-title">Visibility</div>
+        <div class="nrp-freq-opts">
+          <div class="nrp-freq-opt active" id="nntVisInternal" onclick="pickNntVisibility('internal',this)">
+            <div class="nrp-freq-radio"></div>
+            Internal
+          </div>
+          <div class="nrp-freq-opt" id="nntVisClient" onclick="pickNntVisibility('client',this)">
+            <div class="nrp-freq-radio"></div>
+            Client-visible
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="nms-footer">
+      <button class="nms-btn" onclick="closeNntModal()">Cancel</button>
+      <button class="nms-btn primary" id="nntCreateBtn" disabled onclick="submitNntNote()">Save Note</button>
     </div>
 
   </div>
@@ -22339,6 +23211,242 @@
     if (e.target === this) closeNmsModal();
   });
 
+  // ── New Meeting Note Modal ──
+  var nntParticipants = {};
+  var nntVisibility   = 'internal';
+  var nntCalSelected  = null;
+  var _nntCalFocusIdx = -1;
+
+  function openNntModal() {
+    document.getElementById('nntOverlay').classList.add('open');
+  }
+  function closeNntModal() {
+    document.getElementById('nntOverlay').classList.remove('open');
+    // Reset form
+    document.getElementById('nntTitle').value = '';
+    document.getElementById('nntDate').value = '';
+    document.getElementById('nntNotes').value = '';
+    document.getElementById('nntTags').value = '';
+    document.getElementById('nntPChips').innerHTML = '';
+    nntParticipants = {};
+    nntVisibility = 'internal';
+    document.getElementById('nntVisInternal').classList.add('active');
+    document.getElementById('nntVisClient').classList.remove('active');
+    nntCalClear();
+    updateNntBtn();
+  }
+
+  /* Calendar event picker — mirrors the Time Tracking "Link a calendar event" flow */
+  function nntCalInput(val) {
+    var dd   = document.getElementById('nntCalDd');
+    var q    = val.trim().toLowerCase();
+    var list = NTL_CAL_EVENTS.filter(function(e) { return !q || e.title.toLowerCase().includes(q); });
+    _nntCalFocusIdx = -1;
+    if (!list.length) { dd.className = 'ntl-cal-dd'; return; }
+    dd.innerHTML = list.map(function(e) {
+      return '<div class="ntl-cal-item" data-cal-id="' + e.id + '" onmousedown="nntCalSelect(\'' + e.id + '\')">'
+        + '<div class="ntl-cal-item-ico">' + ntlCalSvg() + '</div>'
+        + '<div class="ntl-cal-item-info"><div class="ntl-cal-item-title">' + e.title + '</div><div class="ntl-cal-item-time">' + e.time + '</div></div>'
+        + '<div class="ntl-cal-item-dur">' + e.duration + '</div>'
+        + '</div>';
+    }).join('');
+    dd.className = 'ntl-cal-dd open';
+  }
+  function nntCalSelect(id) {
+    var ev = NTL_CAL_EVENTS.find(function(e) { return e.id === id; });
+    if (!ev) return;
+    nntCalSelected = ev;
+    document.getElementById('nntCalChipTitle').textContent = ev.title;
+    document.getElementById('nntCalChipMeta').textContent  = ev.time + ' · ' + ev.duration;
+    document.getElementById('nntCalChip').style.display       = '';
+    document.getElementById('nntCalSearchWrap').style.display = 'none';
+    // Meetings default to today unless the user already picked a date
+    if (!document.getElementById('nntDate').value) {
+      document.getElementById('nntDate').value = NTL_TODAY;
+      updateNntBtn();
+    }
+  }
+  function nntCalClear() {
+    nntCalSelected = null;
+    document.getElementById('nntCalChip').style.display       = 'none';
+    document.getElementById('nntCalSearchWrap').style.display = '';
+    document.getElementById('nntCalSearch').value = '';
+    document.getElementById('nntCalDd').className = 'ntl-cal-dd';
+  }
+  function nntCalCloseDd() {
+    document.getElementById('nntCalDd').className = 'ntl-cal-dd';
+  }
+  function nntCalKeydown(e) {
+    var dd    = document.getElementById('nntCalDd');
+    var items = dd.querySelectorAll('.ntl-cal-item');
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      _nntCalFocusIdx = Math.min(_nntCalFocusIdx + 1, items.length - 1);
+      items.forEach(function(el, i) { el.classList.toggle('foc', i === _nntCalFocusIdx); });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      _nntCalFocusIdx = Math.max(_nntCalFocusIdx - 1, 0);
+      items.forEach(function(el, i) { el.classList.toggle('foc', i === _nntCalFocusIdx); });
+    } else if (e.key === 'Enter' && _nntCalFocusIdx >= 0) {
+      e.preventDefault();
+      var id = items[_nntCalFocusIdx].getAttribute('data-cal-id');
+      if (id) nntCalSelect(id);
+    } else if (e.key === 'Escape') {
+      nntCalCloseDd();
+    }
+  }
+  function updateNntBtn() {
+    var titleVal = document.getElementById('nntTitle').value.trim();
+    var dateVal  = document.getElementById('nntDate').value;
+    document.getElementById('nntCreateBtn').disabled = titleVal.length === 0 || dateVal.length === 0;
+  }
+  function addNntParticipant(id, name, bg, color) {
+    if (nntParticipants[id]) return;
+    nntParticipants[id] = { name: name, bg: bg, color: color };
+    var chips = document.getElementById('nntPChips');
+    var chip = document.createElement('div');
+    chip.className = 'nms-effort-chip';
+    chip.id = 'nntChip-' + id;
+    chip.innerHTML = '<span class="note-p-av" style="background:' + bg + ';color:' + color + ';">' + id + '</span>' + name
+      + ' <span class="nms-chip-x" onclick="removeNntParticipant(\'' + id + '\')">×</span>';
+    chips.appendChild(chip);
+  }
+  function removeNntParticipant(id) {
+    delete nntParticipants[id];
+    var chip = document.getElementById('nntChip-' + id);
+    if (chip) chip.remove();
+  }
+  function pickNntVisibility(mode, el) {
+    nntVisibility = mode;
+    document.getElementById('nntVisInternal').classList.toggle('active', mode === 'internal');
+    document.getElementById('nntVisClient').classList.toggle('active', mode === 'client');
+  }
+  // Backdrop click closes
+  document.getElementById('nntOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeNntModal();
+  });
+
+  // ── Notes tab: toolbar + filters ──
+  var notePeriodLabels = { week: 'This week', lastweek: 'Last week', lastmonth: 'Last month', custom: 'Custom period' };
+
+  function toggleNotePeriodDrop(e) {
+    e.stopPropagation();
+    document.getElementById('notePeriodDrop').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.note-toolbar .ov-period-wrap')) {
+      var d = document.getElementById('notePeriodDrop');
+      if (d) d.classList.remove('open');
+    }
+  });
+  function setNotePeriod(period, el) {
+    document.querySelectorAll('#notePeriodDrop .ov-period-opt').forEach(function(o) { o.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('notePeriodDrop').classList.remove('open');
+    document.getElementById('notePeriodLabel').textContent = notePeriodLabels[period];
+  }
+
+  function setNoteView(mode) {
+    document.getElementById('noteViewCards').classList.toggle('active', mode === 'cards');
+    document.getElementById('noteViewList').classList.toggle('active', mode === 'list');
+    document.getElementById('noteList').classList.toggle('list-view', mode === 'list');
+  }
+
+  function setNoteFilter(mode, el) {
+    document.querySelectorAll('#noteFilterRow .note-filter-pill').forEach(function(p) { p.classList.remove('active'); });
+    el.classList.add('active');
+    document.querySelectorAll('#noteList .note-card').forEach(function(card) {
+      var show = true;
+      if (mode === 'internal') show = card.getAttribute('data-vis') === 'internal';
+      else if (mode === 'client') show = card.getAttribute('data-vis') === 'client';
+      else if (mode === 'mine') show = card.getAttribute('data-mine') === 'true';
+      card.style.display = show ? '' : 'none';
+    });
+  }
+
+  function toggleNoteReplyBox(btn) {
+    var box = btn.closest('.note-card').querySelector('.note-reply-compose');
+    box.classList.toggle('open');
+    if (box.classList.contains('open')) box.querySelector('textarea').focus();
+  }
+
+  function toggleNoteReplies(el) {
+    var card = el.closest('.note-card');
+    var block = card.querySelector('.note-replies');
+    if (block.children.length === 0) return;
+    block.classList.toggle('open');
+  }
+
+  function submitNntNote() {
+    var title = document.getElementById('nntTitle').value.trim();
+    var date  = document.getElementById('nntDate').value;
+    if (!title || !date) return;
+    var body = document.getElementById('nntNotes').value.trim() || 'No additional notes.';
+    var tags = document.getElementById('nntTags').value.split(',').map(function(t) { return t.trim(); }).filter(Boolean);
+    var visClient = nntVisibility === 'client';
+
+    var tagsHtml = tags.map(function(t) { return '<span class="note-tag">#' + t + '</span>'; }).join('');
+
+    // Only Meeting Notes (ones with participants added) show a participants row — plain notes show just the Author
+    var participantIds = Object.keys(nntParticipants);
+    var participantsHtml = '';
+    if (participantIds.length) {
+      participantsHtml = '<div class="note-participants"><span class="note-participants-label">With</span>'
+        + participantIds.map(function(id) {
+            var p = nntParticipants[id];
+            return '<div class="note-participant-chip"><div class="note-p-av" style="background:' + p.bg + ';color:' + p.color + ';">' + id + '</div>' + p.name + '</div>';
+          }).join('')
+        + '</div>';
+    }
+
+    var card = document.createElement('div');
+    card.className = 'note-card';
+    card.setAttribute('data-vis', visClient ? 'client' : 'internal');
+    card.setAttribute('data-mine', 'true');
+    card.innerHTML =
+      '<div class="note-card-hdr">'
+      + '<div class="note-av" style="background:#eef2ff;color:#3b5bdb;">JD</div>'
+      + '<span class="note-author">John Doe</span>'
+      + '<span class="note-time">Just now</span>'
+      + '<span class="note-visibility ' + (visClient ? 'note-vis-client' : 'note-vis-internal') + '">' + (visClient ? 'Client-visible' : 'Internal') + '</span>'
+      + '<div class="note-hdr-spacer"></div>'
+      + '<button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>'
+      + '</div>'
+      + '<div class="note-title">' + title.replace(/</g, '&lt;') + '</div>'
+      + participantsHtml
+      + '<div class="note-body">' + body.replace(/</g, '&lt;') + '</div>'
+      + (tagsHtml ? '<div class="note-tags">' + tagsHtml + '</div>' : '')
+      + '<div class="note-footer">'
+      +   '<button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>'
+      +   '<span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>'
+      + '</div>'
+      + '<div class="note-replies"></div>'
+      + '<div class="note-reply-compose"><textarea placeholder="Write a reply…"></textarea><button class="note-reply-send" onclick="submitNoteReply(this)">Send</button></div>';
+
+    document.getElementById('noteList').prepend(card);
+    closeNntModal();
+  }
+
+  function submitNoteReply(btn) {
+    var card = btn.closest('.note-card');
+    var textarea = card.querySelector('.note-reply-compose textarea');
+    var text = textarea.value.trim();
+    if (!text) return;
+    var replies = card.querySelector('.note-replies');
+    var item = document.createElement('div');
+    item.className = 'note-reply-item';
+    item.innerHTML = '<div class="note-reply-av" style="background:#eef2ff;color:#3b5bdb;">JD</div>'
+      + '<div class="note-reply-body"><strong>John Doe</strong> — ' + text.replace(/</g, '&lt;') + '</div>';
+    replies.appendChild(item);
+    replies.classList.add('open');
+    textarea.value = '';
+    card.querySelector('.note-reply-compose').classList.remove('open');
+    var countEl = card.querySelector('.note-reply-count');
+    var n = replies.children.length;
+    countEl.textContent = n + ' repl' + (n === 1 ? 'y' : 'ies');
+  }
+
   // ── New Review Modal (5-step wizard) ──
   var nrvSelectedType = '';
   var nrvSelectedMood = '';
@@ -22346,14 +23454,6 @@
   var _nrvStep        = 1;
   var _nrvQaStatus    = '';
   var _nrvQaConcerns  = {};
-
-  // Concern key → contextual input config
-  var NRV_QA_COND = {
-    rushed:      { label: 'What caused the rushed validation?',          type: 'textarea', ph: 'Timeline pressure, scope changes, late requirements...' },
-    instability: { label: 'What instability is occurring?',             type: 'textarea', ph: 'Failing builds, flaky tests, deployment issues...' },
-    escaped:     { label: 'What production or client impact occurred?', type: 'textarea', ph: 'Describe the defect, affected users, severity...' },
-    upcoming:    { label: 'Upcoming high-priority QA work',             type: 'date+text', ph: 'Planning notes, scope, team involved...' }
-  };
 
   function openNrvModal() {
     _nrvStep = 1;
@@ -22380,13 +23480,17 @@
     _nrvQaStatus = '';
     _nrvQaConcerns = {};
     document.querySelectorAll('.nrv-qa-sc').forEach(function(c) { c.classList.remove('active'); });
-    document.querySelectorAll('.nrv-qa-chip').forEach(function(c) { c.classList.remove('active'); });
+    document.querySelectorAll('.nrv-yn-btn').forEach(function(b) { b.classList.remove('active'); });
+    NRV_QA_QUESTION_KEYS.forEach(function(key) {
+      var detail = document.getElementById('nrvQaDetail-' + key);
+      if (!detail) return;
+      detail.style.display = 'none';
+      detail.querySelectorAll('textarea, input').forEach(function(f) { f.value = ''; });
+    });
     var _sn = document.getElementById('nrvQaStableNote');
     if (_sn) _sn.style.display = 'none';
     var _cs = document.getElementById('nrvQaConcernSection');
     if (_cs) _cs.style.display = 'none';
-    var _cd = document.getElementById('nrvQaConditionals');
-    if (_cd) _cd.innerHTML = '';
     // Reset selects
     nrvHealthVal = '';
     ['nrvHealth', 'nrvRisk'].forEach(function(id) {
@@ -22427,53 +23531,38 @@
 
     var stableNote = document.getElementById('nrvQaStableNote');
     var concernSec = document.getElementById('nrvQaConcernSection');
-    var condSec    = document.getElementById('nrvQaConditionals');
 
     if (status === 'stable') {
       if (stableNote) stableNote.style.display = 'flex';
       if (concernSec) concernSec.style.display = 'none';
-      // Clear concerns
+      // Clear answers
       _nrvQaConcerns = {};
-      document.querySelectorAll('.nrv-qa-chip').forEach(function(c) { c.classList.remove('active'); });
-      if (condSec) condSec.innerHTML = '';
+      document.querySelectorAll('.nrv-yn-btn').forEach(function(b) { b.classList.remove('active'); });
+      NRV_QA_QUESTION_KEYS.forEach(function(key) {
+        var detail = document.getElementById('nrvQaDetail-' + key);
+        if (!detail) return;
+        detail.style.display = 'none';
+        detail.querySelectorAll('textarea, input').forEach(function(f) { f.value = ''; });
+      });
     } else {
       if (stableNote) stableNote.style.display = 'none';
       if (concernSec) concernSec.style.display = '';
     }
   }
 
-  function toggleNrvQaConcern(el, key) {
-    if (el.classList.contains('active')) {
-      el.classList.remove('active');
-      delete _nrvQaConcerns[key];
-    } else {
-      el.classList.add('active');
-      _nrvQaConcerns[key] = true;
-    }
-    renderNrvQaConditionals();
-  }
+  // QA Team Input — yes/no questions (Step 3)
+  var NRV_QA_QUESTION_KEYS = ['risk', 'rushed', 'instability', 'escaped', 'upcoming'];
 
-  function renderNrvQaConditionals() {
-    var container = document.getElementById('nrvQaConditionals');
-    if (!container) return;
-    var html = '';
-    var order = ['rushed', 'instability', 'escaped', 'upcoming'];
-    order.forEach(function(key) {
-      if (!_nrvQaConcerns[key]) return;
-      var cfg = NRV_QA_COND[key];
-      html += '<div class="nrv-qa-cond-block">';
-      html += '<div class="nrv-qa-cond-label">' + cfg.label + '</div>';
-      if (cfg.type === 'textarea') {
-        html += '<textarea class="nrv-struct-textarea" placeholder="' + cfg.ph + '" style="min-height:52px"></textarea>';
-      } else {
-        html += '<div class="nrv-qa-cond-row">'
-          + '<input class="nrp-input" type="date" placeholder="Expected date">'
-          + '<textarea class="nrv-struct-textarea" placeholder="' + cfg.ph + '" style="min-height:38px"></textarea>'
-          + '</div>';
-      }
-      html += '</div>';
-    });
-    container.innerHTML = html;
+  function pickNrvQaYn(key, val, el) {
+    el.closest('.nrv-qa-yn').querySelectorAll('.nrv-yn-btn').forEach(function(b) { b.classList.remove('active'); });
+    el.classList.add('active');
+    if (val === 'yes') {
+      _nrvQaConcerns[key] = true;
+    } else {
+      delete _nrvQaConcerns[key];
+    }
+    var detail = document.getElementById('nrvQaDetail-' + key);
+    if (detail) detail.style.display = (val === 'yes') ? '' : 'none';
   }
 
   function pickNrvMood(el, mood) {
@@ -22514,7 +23603,7 @@
   }
 
   function renderNrvSummary() {
-    var typeLabels   = { temperature: 'Temperature', velocity: 'Velocity', design: 'Design' };
+    var typeLabels   = { temperature: 'Temperature', velocity: 'Velocity', design: 'Design', gauging: 'Gauging' };
     var healthLabels = { green: 'On track', yellow: 'At risk', red: 'Off track' };
     var moodLabels   = { satisfied: 'Satisfied', neutral: 'Neutral', concerned: 'Concerned', frustrated: 'Frustrated' };
     var qaLabels     = { stable: 'Stable', minor: 'Minor issues', attention: 'Needs attention', blockers: 'Has blockers' };
@@ -22583,14 +23672,23 @@
   // ── New Report Modal ──
   var nrpStep = 1;
   var nrpFreq = 'once';
+  var nrpVisibility = 'internal';
 
   function openNrpModal() {
     nrpStep = 1;
+    nrpVisibility = 'internal';
+    document.getElementById('nrpVisInternal').classList.add('active');
+    document.getElementById('nrpVisClient').classList.remove('active');
     renderNrpStep();
     document.getElementById('nrpOverlay').classList.add('open');
   }
   function closeNrpModal() {
     document.getElementById('nrpOverlay').classList.remove('open');
+  }
+  function setNrpVisibility(mode, el) {
+    nrpVisibility = mode;
+    document.getElementById('nrpVisInternal').classList.toggle('active', mode === 'internal');
+    document.getElementById('nrpVisClient').classList.toggle('active', mode === 'client');
   }
 
   function goNrpStep(step) {
@@ -22638,11 +23736,12 @@
         '<button class="nrp-btn primary" ' + (valid ? '' : 'disabled') + ' onclick="goNrpStep(2)">Next <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></button>';
     } else {
       var saveLbl = nrpFreq === 'recurring' ? 'Save &amp; Schedule' : 'Save &amp; Send';
+      var saveStatus = nrpFreq === 'recurring' ? 'scheduled' : 'sent';
       footer.innerHTML =
         '<span class="nrp-footer-left">Step <strong>2</strong> of <strong>2</strong></span>' +
         '<button class="nrp-btn" onclick="goNrpStep(1)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 4l-4 4 4 4"/></svg> Back</button>' +
-        '<button class="nrp-btn" onclick="closeNrpModal()">Save</button>' +
-        '<button class="nrp-btn success" onclick="closeNrpModal()">' + saveLbl + '</button>';
+        '<button class="nrp-btn" onclick="submitNrpReport(\'draft\')">Save</button>' +
+        '<button class="nrp-btn success" onclick="submitNrpReport(\'' + saveStatus + '\')">' + saveLbl + '</button>';
     }
   }
 
@@ -22691,6 +23790,126 @@
   document.getElementById('nrpOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeNrpModal();
   });
+
+  // ── Reports: trackable creation + sending events ──
+  var NRP_TYPE_META = {
+    'Progress Report':      { cat: 'Status', cls: 'hc-project-update',  bg: '#eff6ff', fg: '#1d4ed8', icon: '<path d="M2 4h12M2 8h12M2 12h8"/>' },
+    'Milestone Summary':    { cat: 'Status', cls: 'hc-milestone-update',bg: '#ecfdf5', fg: '#059669', icon: '<path d="M5 8l2 2 4-4"/><circle cx="8" cy="8" r="6"/>' },
+    'Time Tracking Report': { cat: 'Hours',  cls: 'hc-project-update',  bg: '#eff6ff', fg: '#1d4ed8', icon: '<circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/>' },
+    'Budget Overview':      { cat: 'Budget', cls: 'hc-budget-update',   bg: '#fef2f2', fg: '#dc2626', icon: '<path d="M8 4v4M8 10.5v.5"/><circle cx="8" cy="8" r="6"/>' },
+    'Sprint Retrospective': { cat: 'Retro',  cls: 'hc-effort-review',   bg: '#fef3c7', fg: '#92400e', icon: '<path d="M2 12l3-7 3 4 2-2 4 5"/>' }
+  };
+  var NRP_STATUS_BADGE = {
+    draft:     '<span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Draft</span>',
+    scheduled: '<span style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Scheduled</span>',
+    sent:      '<span class="hist-new">Sent</span>'
+  };
+
+  function ensureReportsJustNowGroup() {
+    var existing = document.getElementById('reportsJustNowGroup');
+    if (existing) return existing;
+    var wrap = document.getElementById('reportsHistWrap');
+    var group = document.createElement('div');
+    group.className = 'hist-time-group';
+    group.id = 'reportsJustNowGroup';
+    group.innerHTML = '<div class="hist-time-label"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>Just now</div>';
+    wrap.insertBefore(group, wrap.firstChild);
+    return group;
+  }
+
+  function buildReportHistItem(opts) {
+    var meta = NRP_TYPE_META[opts.type] || NRP_TYPE_META['Progress Report'];
+    var visCls   = opts.visibility === 'client' ? 'hist-vis-client' : 'hist-vis-internal';
+    var visLabel = opts.visibility === 'client' ? 'Client-facing' : 'Internal';
+    var sendBtn  = opts.status !== 'sent'
+      ? '<button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>'
+      : '';
+    var sentTo = opts.visibility === 'client' ? (opts.recipients || 'No recipients added') : 'Internal team only';
+    return '<div class="hist-item">'
+      + '<div class="hist-av" style="background:' + meta.bg + ';color:' + meta.fg + ';"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16">' + meta.icon + '</svg></div>'
+      + '<div class="hist-body">'
+      +   '<div class="hist-top-row">'
+      +     '<span class="hist-cat ' + meta.cls + '">' + meta.cat + '</span>'
+      +     '<span class="hist-vis ' + visCls + '">' + visLabel + '</span>'
+      +     '<span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>' + (opts.freq === 'recurring' ? 'Recurring' : 'One-time') + '</span>'
+      +     '<span class="hist-time">Just now</span>'
+      +   '</div>'
+      +   '<div class="hist-line"><span class="hist-actor">' + opts.author + '</span> created <span class="hist-obj">' + opts.name + '</span> <span class="hist-diff">' + NRP_STATUS_BADGE[opts.status] + '</span></div>'
+      +   '<div class="hist-actions">'
+      +     '<button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>'
+      +     sendBtn
+      +   '</div>'
+      +   '<div class="hist-report-preview">'
+      +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>' + opts.type + '</span></div>'
+      +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>' + opts.scope + '</span></div>'
+      +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>' + sentTo + '</span></div>'
+      +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Newly created — content generates once sent.</span></div>'
+      +   '</div>'
+      + '</div>'
+      + '</div>';
+  }
+
+  function submitNrpReport(status) {
+    var name = document.getElementById('nrpName').value.trim();
+    var type = document.getElementById('nrpType').value;
+    if (!name || !type) return;
+
+    var msCount = document.querySelectorAll('.nrp-ms-item.checked').length;
+    var recipients = Array.from(document.querySelectorAll('.nrp-email-chip'))
+      .map(function(c) { return c.textContent.replace('×', '').trim(); })
+      .join(', ');
+
+    var group = ensureReportsJustNowGroup();
+    group.insertAdjacentHTML('beforeend', buildReportHistItem({
+      name: name,
+      type: type,
+      status: status,
+      visibility: nrpVisibility,
+      freq: nrpFreq,
+      author: 'John Doe',
+      scope: 'TAPP · ' + msCount + ' milestone' + (msCount === 1 ? '' : 's') + ' selected',
+      recipients: recipients
+    }));
+
+    closeNrpModal();
+  }
+
+  // Toggle the inline report preview panel (used by "View Report")
+  function toggleReportPreview(btn) {
+    var block = btn.closest('.hist-body').querySelector('.hist-report-preview');
+    if (!block) return;
+    block.classList.toggle('open');
+  }
+
+  // Manually send a Draft/Scheduled report — records it as its own trackable "sent" event
+  function sendReportNow(btn) {
+    var item = btn.closest('.hist-item');
+    var diff = item.querySelector('.hist-diff');
+    if (diff) diff.innerHTML = '<span class="hist-new">Sent</span>';
+    btn.remove();
+
+    var name    = (item.querySelector('.hist-obj') || {}).textContent || 'Report';
+    var catEl   = item.querySelector('.hist-cat');
+    var catHtml = catEl ? catEl.outerHTML : '<span class="hist-cat">Report</span>';
+    var avEl    = item.querySelector('.hist-av');
+    var avStyle = avEl ? avEl.getAttribute('style') : 'background:#ecfdf5;color:#059669;';
+    var visClient = !!item.querySelector('.hist-vis-client');
+
+    var group = ensureReportsJustNowGroup();
+    group.insertAdjacentHTML('beforeend',
+      '<div class="hist-item">'
+      + '<div class="hist-av" style="' + avStyle + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></div>'
+      + '<div class="hist-body">'
+      +   '<div class="hist-top-row">'
+      +     catHtml
+      +     '<span class="hist-vis ' + (visClient ? 'hist-vis-client' : 'hist-vis-internal') + '">' + (visClient ? 'Client-facing' : 'Internal') + '</span>'
+      +     '<span class="hist-time">Just now</span>'
+      +   '</div>'
+      +   '<div class="hist-line"><span class="hist-actor">John Doe</span> sent <span class="hist-obj">' + name + '</span> <span class="hist-diff"><span class="hist-new">Sent</span></span></div>'
+      +   '</div>'
+      + '</div>'
+    );
+  }
 </script>
 
 <!-- ── New Time Log Modal ── -->
