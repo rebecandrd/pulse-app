@@ -278,6 +278,48 @@
     flex-shrink: 0;
   }
 
+  /* ─── SIDEBAR: collapsible ─── */
+  .sidebar { transition: width .18s ease, min-width .18s ease; }
+  .sb-collapse-btn {
+    margin-left: auto;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--sidebar-divider);
+    background: transparent;
+    color: var(--sidebar-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all .12s;
+  }
+  .sb-collapse-btn:hover { background: var(--sidebar-hover-bg); color: #c8cce0; }
+  .sb-collapse-btn svg { width: 12px; height: 12px; transition: transform .2s; }
+
+  .sidebar.collapsed { width: 64px; min-width: 64px; }
+  .sidebar.collapsed .sb-top { flex-direction: column; gap: 10px; padding: 16px 8px; }
+  .sidebar.collapsed .sb-collapse-btn { margin-left: 0; }
+  .sidebar.collapsed .sb-collapse-btn svg { transform: rotate(180deg); }
+  .sidebar.collapsed .sb-brand-wrap,
+  .sidebar.collapsed .sb-section,
+  .sidebar.collapsed .sb-label,
+  .sidebar.collapsed .sb-item .badge,
+  .sidebar.collapsed .sb-item .chevron,
+  .sidebar.collapsed .sb-sub,
+  .sidebar.collapsed .sb-user-info,
+  .sidebar.collapsed .sb-more {
+    display: none !important;
+  }
+  .sidebar.collapsed .sb-item { justify-content: center; padding: 8px; gap: 0; margin: 1px 6px; }
+  .sidebar.collapsed .sb-user { justify-content: center; padding: 8px; }
+  .sidebar.collapsed .sb-divider { margin: 8px; }
+
+  @media(max-width:1024px) {
+    .sb-collapse-btn { display: none; }
+  }
+
   /* ─── MAIN ─── */
   .main {
     flex: 1;
@@ -1876,6 +1918,154 @@
   min-height: 0;
 }
 
+/* Secondary nav — Overview / Gauging Report */
+.rv-subnav { display: flex; gap: 0; margin: -24px -24px 20px; padding: 0 24px; border-bottom: 2px solid var(--border); }
+.rv-sub-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px 10px; font-size: 12px; font-weight: 500; font-family: var(--font); color: var(--text-muted); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color .12s; white-space: nowrap; }
+.rv-sub-btn:hover { color: var(--text-primary); }
+.rv-sub-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.rv-section-panel { display: none; }
+.rv-section-panel.active { display: block; }
+
+/* ── Gaugings panel ── */
+.gv-hdr { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.gv-hdr-text { flex: 1; }
+.gv-hdr-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+.gv-hdr-sub { font-size: 12px; color: var(--text-muted); }
+.gv-hdr-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.gv-year-sel { padding: 7px 12px; font-size: 13px; font-family: var(--font); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-white); color: var(--text-secondary); outline: none; }
+.gv-new-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; font-size: 13px; font-weight: 500; font-family: var(--font); background: var(--accent); color: #fff; border: none; border-radius: var(--radius-md); cursor: pointer; }
+.gv-new-btn:hover { background: var(--accent-hover); }
+.gv-new-btn svg { width: 12px; height: 12px; }
+.gv-summary-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 16px; display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: start; }
+.gv-stat-col { display: flex; flex-direction: column; gap: 16px; }
+.gv-stat-num { font-size: 28px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+.gv-stat-num.good { color: #10b981; }
+.gv-stat-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; font-weight: 600; color: var(--text-muted); margin-top: 3px; }
+.gv-chart-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin-bottom: 10px; }
+.gv-bars { display: flex; align-items: flex-end; gap: 10px; height: 72px; }
+.gv-bar-col { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+.gv-bar { width: 100%; border-radius: 3px 3px 0 0; }
+.gv-bar-lbl { font-size: 10px; color: var(--text-muted); }
+.gv-bar-val { font-size: 10px; font-weight: 700; color: var(--text-secondary); }
+.gv-meta-col { display: flex; flex-direction: column; gap: 8px; }
+.gv-meta-row { display: flex; align-items: center; gap: 8px; }
+.gv-meta-lbl { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); min-width: 100px; }
+.gv-meta-val { font-size: 12px; color: var(--text-primary); }
+.gv-meta-av { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; }
+.gv-tbl-wrap { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.gv-tbl-hdr { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.gv-tbl-hdr-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.gv-tbl-legend { display: flex; align-items: center; gap: 12px; }
+.gv-tbl-leg-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-muted); }
+.gv-tbl-leg-dot { width: 8px; height: 8px; border-radius: 2px; }
+.gv-scroll { overflow-x: auto; }
+.gv-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 900px; }
+.gv-table thead th { padding: 8px 6px; text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; color: var(--text-muted); border-bottom: 1px solid var(--border); background: var(--bg-surface); white-space: nowrap; }
+.gv-table thead th:first-child { text-align: left; padding-left: 20px; min-width: 90px; position: sticky; left: 0; background: var(--bg-surface); }
+.gv-table thead th:last-child, .gv-table thead th:nth-last-child(2) { text-align: right; }
+.gv-table tbody tr { border-bottom: 1px solid #f3f4f6; transition: background .1s; }
+.gv-table tbody tr:last-child { border-bottom: none; }
+.gv-table tbody tr:hover { background: var(--bg-surface); }
+.gv-table tbody td { padding: 10px 6px; text-align: center; color: var(--text-secondary); }
+.gv-table tbody td:first-child { text-align: left; font-weight: 600; color: var(--text-primary); padding-left: 20px; position: sticky; left: 0; background: var(--bg-white); }
+.gv-table tbody tr:hover td:first-child { background: var(--bg-surface); }
+.gv-score { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 22px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.gv-score.hi { background: #dcfce7; color: #15803d; }
+.gv-score.md { background: #fef3c7; color: #92400e; }
+.gv-score.lo { background: #fef2f2; color: #dc2626; }
+.gv-avg-cell { font-size: 13px; font-weight: 800; }
+.gv-avg-cell.good { color: #10b981; }
+.gv-avg-cell.warn { color: #d97706; }
+.gv-tbl-acts { display: flex; align-items: center; justify-content: flex-end; gap: 4px; padding-right: 16px; }
+.gv-act-btn { display: inline-flex; align-items: center; gap: 3px; padding: 4px 8px; font-size: 11px; font-weight: 500; font-family: var(--font); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-white); color: var(--text-secondary); cursor: pointer; transition: all .12s; }
+.gv-act-btn:hover { border-color: var(--accent-border); color: var(--accent); background: var(--accent-light); }
+.gv-act-btn svg { width: 11px; height: 11px; }
+
+/* ── New / Edit Gauging form ── */
+.ng-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:3100;align-items:center;justify-content:center}
+.ng-overlay.open{display:flex}
+.ng-modal{background:#fff;border-radius:var(--radius-xl);width:780px;max-width:96vw;height:92vh;display:flex;flex-direction:column;box-shadow:0 32px 90px rgba(0,0,0,.22);animation:ngIn .16s ease;overflow:hidden}
+@keyframes ngIn{from{opacity:0;transform:translateY(10px)scale(.98)}to{opacity:1;transform:none}}
+.ng-hdr{padding:20px 24px 18px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.ng-hdr-left{flex:1}
+.ng-hdr-title{font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:3px}
+.ng-hdr-sub{font-size:12px;color:var(--text-muted);line-height:1.5}
+.ng-hdr-close{width:30px;height:30px;border-radius:var(--radius-md);border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .1s;flex-shrink:0}
+.ng-hdr-close:hover{background:var(--bg-surface);color:var(--text-primary)}
+.ng-hdr-close svg{width:12px;height:12px}
+.ng-meta{padding:13px 24px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:20px;background:var(--bg-surface)}
+.ng-meta-field{display:flex;align-items:center;gap:8px}
+.ng-meta-lbl{font-size:12px;font-weight:600;color:var(--text-secondary);white-space:nowrap}
+.ng-meta-input{padding:7px 10px;font-size:13px;font-family:var(--font);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-primary);outline:none;transition:border-color .12s}
+.ng-meta-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ng-progress-wrap{margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ng-progress-text{font-size:12px;font-weight:600;color:var(--text-muted);white-space:nowrap}
+.ng-progress-track{width:100px;height:4px;background:var(--border);border-radius:99px;overflow:hidden}
+.ng-progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .25s;width:0%}
+.ng-body{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.ng-body::-webkit-scrollbar{width:4px}
+.ng-body::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:99px}
+.ng-crit{border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;transition:border-color .15s,background .15s}
+.ng-crit:hover{border-color:var(--border-strong)}
+.ng-crit.is-scored{border-color:var(--accent-border);background:var(--accent-light)}
+.ng-crit-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ng-crit-idx{font-size:10px;font-weight:700;color:var(--text-muted);background:var(--bg-surface2);border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0}
+.ng-crit.is-scored .ng-crit-idx{background:var(--accent);color:#fff}
+.ng-crit-title{font-size:14px;font-weight:700;color:var(--text-primary);flex:1}
+.ng-crit-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.ng-crit.is-scored .ng-crit-check{background:var(--accent);border-color:var(--accent)}
+.ng-crit.is-scored .ng-crit-check::after{content:'✓';color:#fff;font-size:10px;font-weight:700;line-height:1}
+.ng-crit-desc{font-size:12px;color:var(--text-secondary);line-height:1.65;margin-bottom:14px}
+.ng-crit-fields{display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:start}
+.ng-field-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:5px}
+.ng-score-sel{width:100%;padding:8px 10px;font-size:13px;font-family:var(--font);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-primary);outline:none;cursor:pointer;transition:border-color .12s}
+.ng-score-sel:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ng-note-ta{width:100%;padding:8px 10px;font-size:12px;font-family:var(--font);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-primary);outline:none;resize:vertical;min-height:56px;line-height:1.5;transition:border-color .12s}
+.ng-note-ta:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ng-note-ta::placeholder{color:var(--text-muted);font-size:12px}
+.ng-footer{padding:14px 24px;border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff}
+.ng-footer-hint{font-size:12px;color:var(--text-muted)}
+.ng-footer-actions{display:flex;align-items:center;gap:8px}
+.ng-cancel{padding:9px 18px;font-size:13px;font-family:var(--font);border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;transition:all .12s}
+.ng-cancel:hover{border-color:var(--border-strong);color:var(--text-primary)}
+.ng-save{padding:9px 20px;font-size:13px;font-weight:600;font-family:var(--font);background:var(--accent);color:#fff;border:none;border-radius:var(--radius-md);cursor:pointer;transition:background .12s}
+.ng-save:hover{background:var(--accent-hover)}
+
+/* Gauging detail modal */
+.gv-det-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,.45); z-index: 3000; align-items: center; justify-content: center; }
+.gv-det-overlay.open { display: flex; }
+.gv-det-modal { background: #fff; border-radius: var(--radius-xl); width: 860px; max-width: 96vw; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 32px 90px rgba(0,0,0,.2); animation: gvDetIn .16s ease; overflow: hidden; }
+@keyframes gvDetIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+.gv-det-hdr { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.gv-det-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+.gv-det-close { width: 30px; height: 30px; border-radius: var(--radius-md); border: 1px solid var(--border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all .1s; }
+.gv-det-close:hover { background: var(--bg-surface); color: var(--text-primary); }
+.gv-det-close svg { width: 12px; height: 12px; }
+.gv-det-meta { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.gv-det-meta-item { padding: 16px 24px; border-right: 1px solid var(--border); }
+.gv-det-meta-item:last-child { border-right: none; }
+.gv-det-meta-lbl { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin-bottom: 4px; }
+.gv-det-meta-val { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.gv-det-meta-val.good { color: #10b981; }
+.gv-det-body { overflow-y: auto; flex: 1; }
+.gv-det-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.gv-det-table thead th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); border-bottom: 1px solid var(--border); background: var(--bg-surface); white-space: nowrap; position: sticky; top: 0; }
+.gv-det-table thead th:nth-child(3), .gv-det-table thead th:nth-child(4) { text-align: center; }
+.gv-det-table tbody tr { border-bottom: 1px solid #f3f4f6; }
+.gv-det-table tbody tr:last-child { border-bottom: none; }
+.gv-det-table tbody tr:hover { background: var(--bg-surface); }
+.gv-det-table tbody td { padding: 14px 16px; vertical-align: top; color: var(--text-secondary); }
+.gv-det-table tbody td:first-child { font-weight: 600; color: var(--text-muted); font-size: 12px; width: 48px; }
+.gv-det-table tbody td:nth-child(3) { text-align: center; width: 100px; }
+.gv-det-table tbody td:nth-child(4) { width: 160px; font-size: 12px; color: var(--text-muted); }
+.gv-det-item-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.gv-det-item-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+.gv-det-score { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 28px; border-radius: 6px; font-size: 13px; font-weight: 700; }
+.gv-det-score.na { background: #f1f5f9; color: #94a3b8; font-size: 11px; width: 48px; }
+.gv-det-score.hi { background: #dcfce7; color: #15803d; }
+.gv-det-score.md { background: #fef3c7; color: #92400e; }
+.gv-det-score.lo { background: #fef2f2; color: #dc2626; }
+
 /* Toolbar */
 .rev-toolbar {
   display: flex;
@@ -2364,6 +2554,11 @@
     overflow: hidden; padding: 0;
     transition: height .32s cubic-bezier(.32,.72,0,1);
   }
+  /* New Note modal — header has no .nms-hdr-row wrapper, so lay it out directly;
+     and since it has no step-pane wrapper, pad the body directly */
+  #nntOverlay .nms-hdr { display: flex; align-items: center; gap: 12px; padding-bottom: 20px; }
+  #nntOverlay .nms-close { margin-left: auto; }
+  #nntOverlay .nms-body { padding: 32px; }
   .nms-steps-track {
     display: flex; width: 200%;
     transition: transform .28s cubic-bezier(.32,.72,0,1);
@@ -5709,27 +5904,30 @@
 <div class="app">
 
   <!-- ═══ SIDEBAR ═══ -->
-  <div class="sidebar">
+  <div class="sidebar" id="appSidebar">
     <div class="sb-top">
       <div class="sb-logo">
         <svg viewBox="0 0 20 20" fill="none"><path d="M10 3L16 7V13L10 17L4 13V7L10 3Z" stroke="white" stroke-width="1.5" fill="none"/><circle cx="10" cy="10" r="2.5" fill="white"/></svg>
       </div>
-      <div>
+      <div class="sb-brand-wrap">
         <div class="sb-brand">Pulse</div>
       </div>
+      <button class="sb-collapse-btn" onclick="toggleSidebarCollapse()" title="Collapse sidebar" id="sbCollapseBtn">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+      </button>
     </div>
 
     <div class="sb-scroll">
       <div class="sb-section">Menu</div>
 
-      <a class="sb-item" href="index.html" style="text-decoration:none">
+      <a class="sb-item" href="index.html" style="text-decoration:none" title="Dashboard">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
-        Dashboard
+        <span class="sb-label">Dashboard</span>
       </a>
 
-      <div class="sb-item active" id="projToggle" onclick="sbToggle()" style="cursor:pointer">
+      <div class="sb-item active" id="projToggle" onclick="sbToggle()" style="cursor:pointer" title="Projects">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
-        Projects
+        <span class="sb-label">Projects</span>
         <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
       </div>
 
@@ -5744,50 +5942,50 @@
 
       <div class="sb-divider"></div>
 
-      <div class="sb-item">
+      <div class="sb-item" title="Team">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="3"/><path d="M1 14c0-2.8 2.2-5 5-5"/><circle cx="12" cy="9" r="2.5"/><path d="M9.5 14c0-1.4.9-2.5 2.5-2.5s2.5 1.1 2.5 2.5"/></svg>
-        Team <span class="badge">12</span>
+        <span class="sb-label">Team</span> <span class="badge">12</span>
       </div>
 
-      <div class="sb-item">
+      <div class="sb-item" title="Time Logs">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
-        Time Logs
+        <span class="sb-label">Time Logs</span>
         <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
       </div>
 
-      <div class="sb-item">
+      <div class="sb-item" title="Reports">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l4-3 4 3 4-3v7l-4 3-4-3-4 3z"/></svg>
-        Reports
+        <span class="sb-label">Reports</span>
         <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
       </div>
 
-      <a class="sb-item" href="career-tracks.html" style="text-decoration:none">
+      <a class="sb-item" href="career-tracks.html" style="text-decoration:none" title="Career Tracks">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3.5L13 6l-2.5 2.5.5 3.5L8 10.5 5 12l.5-3.5L3 6l3.5-.5L8 2z"/></svg>
-        Career Tracks
+        <span class="sb-label">Career Tracks</span>
       </a>
 
       <div class="sb-divider"></div>
 
       <div class="sb-section">Admin</div>
 
-      <div class="sb-item">
+      <div class="sb-item" title="Users">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5"/></svg>
-        Users
+        <span class="sb-label">Users</span>
       </div>
 
-      <div class="sb-item">
+      <div class="sb-item" title="Organizations">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="2"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
-        Organizations
+        <span class="sb-label">Organizations</span>
       </div>
 
-      <div class="sb-item">
+      <div class="sb-item" title="Settings">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v10H3z M3 7h10 M7 3v10"/></svg>
-        Settings
+        <span class="sb-label">Settings</span>
       </div>
     </div>
 
     <div class="sb-bottom">
-      <div class="sb-user">
+      <div class="sb-user" title="John Doe — Product Manager">
         <div class="sb-avatar">JD</div>
         <div class="sb-user-info">
           <div class="sb-user-name">John Doe</div>
@@ -7126,6 +7324,7 @@
           <button class="note-filter-pill" onclick="setNoteFilter('internal', this)">Internal</button>
           <button class="note-filter-pill" onclick="setNoteFilter('client', this)">Client-visible</button>
           <button class="note-filter-pill" onclick="setNoteFilter('mine', this)">My notes</button>
+          <button class="note-filter-pill" onclick="setNoteFilter('meeting', this)">Meeting Notes</button>
         </div>
 
         <!-- Notes list -->
@@ -8783,6 +8982,14 @@
     <div id="tab-reviews" class="tab-panel">
       <div class="rev-wrap">
 
+        <!-- ── Secondary navigation ── -->
+        <div class="rv-subnav">
+          <button class="rv-sub-btn active" onclick="rvSetSection('Overview', this)">Overview</button>
+          <button class="rv-sub-btn" onclick="rvSetSection('Gaugings', this)">Gauging Report</button>
+        </div>
+
+        <div class="rv-section-panel active" id="rvPanelOverview">
+
         <!-- Toolbar -->
         <div class="rev-toolbar">
           <div class="rev-search">
@@ -9150,6 +9357,277 @@
           </div>
 
         </div><!-- /February 2026 -->
+
+        </div><!-- /rvPanelOverview -->
+
+        <!-- ═══════ GAUGING REPORT ═══════ -->
+        <div class="rv-section-panel" id="rvPanelGaugings">
+
+          <!-- Header -->
+          <div class="gv-hdr">
+            <div class="gv-hdr-text">
+              <div class="gv-hdr-title">Project Gaugings</div>
+              <div class="gv-hdr-sub">Structured performance scoring across 14 criteria, recorded monthly by the PM.</div>
+            </div>
+            <div class="gv-hdr-actions">
+              <select class="gv-year-sel">
+                <option selected>2026</option>
+                <option>2025</option>
+              </select>
+              <button class="gv-new-btn" onclick="openNewGauging()">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10" stroke-linecap="round"/></svg>
+                New Gauging
+              </button>
+            </div>
+          </div>
+
+          <!-- Summary card -->
+          <div class="gv-summary-card">
+            <div class="gv-stat-col">
+              <div class="gv-stat">
+                <div class="gv-stat-num good">8.2</div>
+                <div class="gv-stat-lbl">Avg Score</div>
+              </div>
+              <div class="gv-stat">
+                <div class="gv-stat-num">4</div>
+                <div class="gv-stat-lbl">Records</div>
+              </div>
+            </div>
+            <div class="gv-chart-col">
+              <div class="gv-chart-title">Monthly avg score — 2026</div>
+              <div class="gv-bars">
+                <div class="gv-bar-col">
+                  <div class="gv-bar-val">7.6</div>
+                  <div class="gv-bar" style="height:55%;background:#3b82f6;opacity:.7"></div>
+                  <div class="gv-bar-lbl">Jan</div>
+                </div>
+                <div class="gv-bar-col">
+                  <div class="gv-bar-val">8.1</div>
+                  <div class="gv-bar" style="height:73%;background:#3b82f6;opacity:.8"></div>
+                  <div class="gv-bar-lbl">Feb</div>
+                </div>
+                <div class="gv-bar-col">
+                  <div class="gv-bar-val">8.0</div>
+                  <div class="gv-bar" style="height:71%;background:#3b82f6;opacity:.85"></div>
+                  <div class="gv-bar-lbl">Mar</div>
+                </div>
+                <div class="gv-bar-col">
+                  <div class="gv-bar-val">8.2</div>
+                  <div class="gv-bar" style="height:75%;background:#3b5bdb"></div>
+                  <div class="gv-bar-lbl">Apr</div>
+                </div>
+              </div>
+            </div>
+            <div class="gv-meta-col">
+              <div class="gv-meta-row">
+                <span class="gv-meta-lbl">Last updated</span>
+                <span class="gv-meta-val">Apr 30, 2026</span>
+              </div>
+              <div class="gv-meta-row">
+                <span class="gv-meta-lbl">PM</span>
+                <div class="gv-meta-av" style="background:#f5eeff;color:#6d28d9">AK</div>
+                <span class="gv-meta-val">Anna K.</span>
+              </div>
+              <div class="gv-meta-row">
+                <span class="gv-meta-lbl">Gauged by</span>
+                <span class="gv-meta-val">Anna K., John Doe</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="gv-tbl-wrap">
+            <div class="gv-tbl-hdr">
+              <span class="gv-tbl-hdr-title">Monthly records</span>
+              <div class="gv-tbl-legend">
+                <span class="gv-tbl-leg-item"><span class="gv-tbl-leg-dot" style="background:#dcfce7"></span>High (8–10)</span>
+                <span class="gv-tbl-leg-item"><span class="gv-tbl-leg-dot" style="background:#fef3c7"></span>Mid (5–7)</span>
+                <span class="gv-tbl-leg-item"><span class="gv-tbl-leg-dot" style="background:#fef2f2"></span>Low (1–4)</span>
+              </div>
+            </div>
+            <div class="gv-scroll">
+              <table class="gv-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th title="Planning">#1 Plan</th>
+                    <th title="Execution">#2 Exec</th>
+                    <th title="Quality">#3 Qual</th>
+                    <th title="Communication">#4 Comm</th>
+                    <th title="Risk Management">#5 Risk</th>
+                    <th title="Client Satisfaction">#6 Client</th>
+                    <th title="Delivery">#7 Deliv</th>
+                    <th title="Budget">#8 Bgt</th>
+                    <th title="Team Morale">#9 Moral</th>
+                    <th title="Innovation">#10 Innov</th>
+                    <th title="Process">#11 Proc</th>
+                    <th title="Documentation">#12 Docs</th>
+                    <th title="Velocity">#13 Vel</th>
+                    <th title="Scope Management">#14 Scope</th>
+                    <th>Avg</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Apr 2026</td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td class="gv-avg-cell good">8.2</td>
+                    <td class="gv-tbl-acts">
+                      <button class="gv-act-btn" onclick="openGvDetail(0)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M8 13V3"/></svg>View</button>
+                      <button class="gv-act-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>Edit</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Mar 2026</td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">6</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score md">6</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td class="gv-avg-cell good">8.0</td>
+                    <td class="gv-tbl-acts">
+                      <button class="gv-act-btn" onclick="openGvDetail(1)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M8 13V3"/></svg>View</button>
+                      <button class="gv-act-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>Edit</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Feb 2026</td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td class="gv-avg-cell good">8.1</td>
+                    <td class="gv-tbl-acts">
+                      <button class="gv-act-btn" onclick="openGvDetail(2)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M8 13V3"/></svg>View</button>
+                      <button class="gv-act-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>Edit</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jan 2026</td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score md">8</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score hi">8</span></td>
+                    <td><span class="gv-score md">6</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score md">7</span></td>
+                    <td><span class="gv-score lo">4</span></td>
+                    <td><span class="gv-score hi">9</span></td>
+                    <td class="gv-avg-cell warn">7.6</td>
+                    <td class="gv-tbl-acts">
+                      <button class="gv-act-btn" onclick="openGvDetail(3)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M8 13V3"/></svg>View</button>
+                      <button class="gv-act-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>Edit</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div><!-- /rvPanelGaugings -->
+
+        <!-- New / Edit Gauging Modal -->
+        <div class="ng-overlay" id="ngOverlay" onclick="if(event.target===this)closeNewGauging()">
+          <div class="ng-modal">
+            <div class="ng-hdr">
+              <div class="ng-hdr-left">
+                <div class="ng-hdr-title" id="ngModalTitle">New Gauging</div>
+                <div class="ng-hdr-sub">Score each of the 14 review areas from 1 to 10. Add notes where helpful.</div>
+              </div>
+              <button class="ng-hdr-close" onclick="closeNewGauging()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+            </div>
+            <div class="ng-meta">
+              <div class="ng-meta-field">
+                <span class="ng-meta-lbl">Date</span>
+                <input type="text" class="ng-meta-input" id="ngDate" placeholder="e.g. Jun 26, 2026" style="width:160px">
+              </div>
+              <div class="ng-meta-field">
+                <span class="ng-meta-lbl">Gauged by</span>
+                <input type="text" class="ng-meta-input" id="ngGaugedBy" value="John Doe" style="width:160px">
+              </div>
+              <div class="ng-progress-wrap">
+                <span class="ng-progress-text" id="ngProgressText">0 / 14 scored</span>
+                <div class="ng-progress-track"><div class="ng-progress-fill" id="ngProgressFill"></div></div>
+              </div>
+            </div>
+            <div class="ng-body" id="ngBody">
+              <!-- Filled by JS -->
+            </div>
+            <div class="ng-footer">
+              <span class="ng-footer-hint" id="ngFooterHint">Score all 14 criteria before saving.</span>
+              <div class="ng-footer-actions">
+                <button class="ng-cancel" onclick="closeNewGauging()">Cancel</button>
+                <button class="ng-save" onclick="saveNewGauging()">Save Gauging</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gauging Detail Modal -->
+        <div class="gv-det-overlay" id="gvDetOverlay" onclick="if(event.target===this)closeGvDetail()">
+          <div class="gv-det-modal">
+            <div class="gv-det-hdr">
+              <span class="gv-det-title">Gauging Detail</span>
+              <button class="gv-det-close" onclick="closeGvDetail()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+            </div>
+            <div class="gv-det-meta">
+              <div class="gv-det-meta-item"><div class="gv-det-meta-lbl">Gauged By</div><div class="gv-det-meta-val" id="gvDetGaugedBy">—</div></div>
+              <div class="gv-det-meta-item"><div class="gv-det-meta-lbl">Date</div><div class="gv-det-meta-val" id="gvDetDate">—</div></div>
+              <div class="gv-det-meta-item"><div class="gv-det-meta-lbl">Average Score</div><div class="gv-det-meta-val good" id="gvDetAvg">—</div></div>
+            </div>
+            <div class="gv-det-body">
+              <table class="gv-det-table">
+                <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Gauging Item</th>
+                    <th>Point (1–10)</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="gvDetBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div><!-- /tab-reviews -->
@@ -12825,6 +13303,139 @@
   function toggleRevCard(hdr) {
     var card = hdr.closest('.rev-card');
     if (card) card.classList.toggle('collapsed');
+  }
+
+  // ── Reviews secondary nav (Overview / Gauging Report) ──
+  function rvSetSection(name, btn) {
+    document.querySelectorAll('.rv-sub-btn').forEach(function(b){ b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    document.querySelectorAll('.rv-section-panel').forEach(function(p){ p.classList.remove('active'); });
+    var panel = document.getElementById('rvPanel' + name);
+    if (panel) panel.classList.add('active');
+  }
+
+  // ── Gauging Report ──
+  var GV_CRITERIA = [
+    { title:'Time Logs Synchronization', desc:'All three are in-sync: Efforts, Milestones, Developer Time Logs.\n• All efforts are labeled in a Milestone in Pulse\n• Efforts in Pulse have estimates and actual time taken\n• Time logs in Pulse are tied to individual tickets' },
+    { title:'Daily Dev Accountability', desc:'Developers have:\n• At all times only 1–2 Stories Started (and not finished)\n• Up to date time log entries in Pulse' },
+    { title:'Ticket Quality', desc:'Stories have:\n• The correct amount of information for a 5–90 minute development effort\n• Written in BDD (Behavior Driven Development)\n• Good Titles\n• Are categorized to milestones' },
+    { title:'Velocity Checks', desc:'• Velocity is consistent and is trending upward\n• Upward trend is consistent with the number of developers' },
+    { title:'Roadmap', desc:'All Milestones have all expected Efforts titled and estimated (we expect additional Efforts will be created)\n• All Efforts being worked are categorized to a Milestone' },
+    { title:'Environments Health', desc:'All environments are properly created on client accounts (Dev, Staging, Production)\n• For Launched/Live Projects: Development represents active ticket development, Staging is tested on by QA (prod-like environment), Production\n• For Unlaunched/Non-Live Projects: Development represents active ticket development, Staging is tested on by QA (prod-like environment)' },
+    { title:'Release Process', desc:'• Release Candidates (code versions) are tagged with version number and pushed to Staging\n• Internal QA tests and approves for greenlighting\n• Client greenlights and tagged version of code moves to Production (only on client greenlight)' },
+    { title:'Code Review Culture', desc:'• All pull requests are reviewed by at least one other developer before merging\n• Review comments are addressed and resolved\n• No direct pushes to main/master branch' },
+    { title:'Sprint Planning Quality', desc:'• Sprint scope is realistic and achievable\n• All stories in the sprint have acceptance criteria\n• Dependencies are identified and flagged before the sprint starts' },
+    { title:'Client Communication', desc:'• Client receives weekly updates on project status\n• Blockers are communicated within 24 hours of identification\n• Meeting notes and decisions are documented and shared' },
+    { title:'Technical Debt Management', desc:'• Technical debt items are logged and tracked\n• At least 10% of sprint capacity is allocated to debt reduction\n• New debt introduced is documented with justification' },
+    { title:'QA Coverage', desc:'• All shipped features have acceptance tests\n• Regression test suite is maintained and passes before each release\n• QA sign-off is required before any production deployment' },
+    { title:'Documentation Standards', desc:'• API endpoints are documented in the agreed format\n• Setup and deployment instructions are kept up to date\n• Architectural decisions are recorded (ADRs or equivalent)' },
+    { title:'Delivery Predictability', desc:'• Sprint commitment vs delivery rate is ≥ 80%\n• Estimates improve over time — tracked per-developer and per-effort-type\n• Carryover reasons are documented and reflected upon in retrospective' }
+  ];
+
+  var GV_RECORDS = [
+    { month:'Apr 2026', gaugedBy:'Anna K.', date:'Apr 30, 2026', avg:'8.2', scores:[9,8,9,8,7,9,8,8,9,7,8,7,7,9] },
+    { month:'Mar 2026', gaugedBy:'Anna K.', date:'Mar 31, 2026', avg:'8.0', scores:[8,7,8,8,6,7,7,9,8,7,9,7,6,9] },
+    { month:'Feb 2026', gaugedBy:'Anna K.', date:'Feb 28, 2026', avg:'8.1', scores:[8,8,7,9,7,8,8,8,9,7,8,7,8,9] },
+    { month:'Jan 2026', gaugedBy:'John Doe', date:'Jan 31, 2026', avg:'7.6', scores:[7,7,7,8,7,8,7,8,8,6,7,7,4,9] }
+  ];
+
+  function openGvDetail(rowIdx) {
+    var rec = GV_RECORDS[rowIdx];
+    if (!rec) return;
+    document.getElementById('gvDetGaugedBy').textContent = rec.gaugedBy;
+    document.getElementById('gvDetDate').textContent = rec.date;
+    document.getElementById('gvDetAvg').textContent = rec.avg;
+    var tbody = document.getElementById('gvDetBody');
+    tbody.innerHTML = GV_CRITERIA.map(function(c, i) {
+      var sc = rec.scores[i];
+      var cls = sc >= 8 ? 'hi' : sc >= 5 ? 'md' : 'lo';
+      var descHtml = c.desc.replace(/\n/g, '<br>');
+      return '<tr>'
+        + '<td>#' + (i+1) + '</td>'
+        + '<td><div class="gv-det-item-title">' + c.title + '</div><div class="gv-det-item-desc">' + descHtml + '</div></td>'
+        + '<td><span class="gv-det-score ' + cls + '">' + sc + '</span></td>'
+        + '<td>—</td>'
+        + '</tr>';
+    }).join('');
+    document.getElementById('gvDetOverlay').classList.add('open');
+  }
+  function closeGvDetail() { document.getElementById('gvDetOverlay').classList.remove('open'); }
+
+  function openNewGauging(rowIdx) {
+    var isEdit = rowIdx != null;
+    var rec = isEdit ? GV_RECORDS[rowIdx] : null;
+    document.getElementById('ngModalTitle').textContent = isEdit ? 'Edit Gauging' : 'New Gauging';
+    document.getElementById('ngDate').value = isEdit ? rec.date : _ngTodayStr();
+    document.getElementById('ngGaugedBy').value = isEdit ? rec.gaugedBy : 'John Doe';
+
+    var scores = isEdit ? rec.scores : Array(14).fill('');
+    var body = document.getElementById('ngBody');
+    body.innerHTML = GV_CRITERIA.map(function(c, i) {
+      var sc = isEdit ? scores[i] : '';
+      var descHtml = c.desc.replace(/\n•/g, '<br>•').replace(/\n/g, '<br>');
+      var opts = '<option value="">Select score…</option>';
+      for (var n = 1; n <= 10; n++) opts += '<option value="' + n + '"' + (sc == n ? ' selected' : '') + '>' + n + ' — ' + _ngScoreLbl(n) + '</option>';
+      return '<div class="ng-crit' + (sc ? ' is-scored' : '') + '" id="ngCrit' + i + '">'
+        + '<div class="ng-crit-hdr">'
+        + '<span class="ng-crit-idx">#' + (i+1) + '</span>'
+        + '<span class="ng-crit-title">' + c.title + '</span>'
+        + '<div class="ng-crit-check"></div>'
+        + '</div>'
+        + '<div class="ng-crit-desc">' + descHtml + '</div>'
+        + '<div class="ng-crit-fields">'
+        + '<div><div class="ng-field-lbl">Score (1–10)</div>'
+        + '<select class="ng-score-sel" id="ngScore' + i + '" onchange="ngOnScore(' + i + ', this)">' + opts + '</select></div>'
+        + '<div><div class="ng-field-lbl">Notes <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(optional)</span></div>'
+        + '<textarea class="ng-note-ta" id="ngNote' + i + '" placeholder="Add a note…"></textarea></div>'
+        + '</div></div>';
+    }).join('');
+
+    _ngUpdateProgress();
+    document.getElementById('ngOverlay').classList.add('open');
+    document.getElementById('ngBody').scrollTop = 0;
+  }
+
+  function _ngTodayStr() {
+    var d = new Date();
+    return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+  }
+
+  function _ngScoreLbl(n) {
+    return n >= 9 ? 'Excellent' : n >= 7 ? 'Good' : n >= 5 ? 'Fair' : n >= 3 ? 'Needs work' : 'Critical';
+  }
+
+  function ngOnScore(idx, sel) {
+    var crit = document.getElementById('ngCrit' + idx);
+    var hasVal = sel.value !== '';
+    crit.classList.toggle('is-scored', hasVal);
+    _ngUpdateProgress();
+  }
+
+  function _ngUpdateProgress() {
+    var scored = 0;
+    for (var i = 0; i < 14; i++) {
+      var sel = document.getElementById('ngScore' + i);
+      if (sel && sel.value) scored++;
+    }
+    document.getElementById('ngProgressText').textContent = scored + ' / 14 scored';
+    document.getElementById('ngProgressFill').style.width = (scored / 14 * 100) + '%';
+    document.getElementById('ngFooterHint').textContent = scored === 14 ? 'All criteria scored — ready to save.' : (14 - scored) + ' criteria still need a score.';
+  }
+
+  function closeNewGauging() { document.getElementById('ngOverlay').classList.remove('open'); }
+
+  function saveNewGauging() {
+    var date = document.getElementById('ngDate').value.trim();
+    var gaugedBy = document.getElementById('ngGaugedBy').value.trim();
+    var scores = [];
+    for (var i = 0; i < 14; i++) {
+      var sel = document.getElementById('ngScore' + i);
+      scores.push(sel ? (parseInt(sel.value) || 0) : 0);
+    }
+    var avg = (scores.filter(function(s){ return s > 0; }).reduce(function(a,b){ return a+b; }, 0) / Math.max(1, scores.filter(function(s){ return s > 0; }).length)).toFixed(1);
+    GV_RECORDS.unshift({ month: date, gaugedBy: gaugedBy, date: date, avg: avg, scores: scores });
+    closeNewGauging();
+    alert('Gauging saved — avg score: ' + avg + '\n(In production this would persist to the database.)');
   }
 
   // ── Reviews: Type filter ──
@@ -21897,7 +22508,7 @@
       <div class="nms-hdr-icon">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="10" height="12" rx="1.5"/><path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3"/></svg>
       </div>
-      <div class="nms-title">New Meeting Note</div>
+      <div class="nms-title">New Note</div>
       <button class="nms-close" onclick="closeNntModal()">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
       </button>
@@ -21907,8 +22518,6 @@
     <div class="nms-body">
 
       <div class="nms-section">
-        <div class="nms-section-title">Meeting Details</div>
-
         <div class="nms-field">
           <label class="nms-label">Title <span class="nms-req">*</span></label>
           <input class="nms-input" id="nntTitle" type="text" placeholder="e.g. Sprint 4 planning &amp; client sync" oninput="updateNntBtn()">
@@ -23361,6 +23970,7 @@
       if (mode === 'internal') show = card.getAttribute('data-vis') === 'internal';
       else if (mode === 'client') show = card.getAttribute('data-vis') === 'client';
       else if (mode === 'mine') show = card.getAttribute('data-mine') === 'true';
+      else if (mode === 'meeting') show = !!card.querySelector('.note-participants');
       card.style.display = show ? '' : 'none';
     });
   }
@@ -24535,6 +25145,24 @@ function toggleSidebar(){
   var open=sb.classList.toggle('sb-open');
   if(bd)bd.classList.toggle('show',open);
 }
+function toggleSidebarCollapse(){
+  var sb=document.getElementById('appSidebar');
+  if(!sb)return;
+  var collapsed=sb.classList.toggle('collapsed');
+  var btn=document.getElementById('sbCollapseBtn');
+  if(btn)btn.title=collapsed?'Expand sidebar':'Collapse sidebar';
+  try{localStorage.setItem('pulseSidebarCollapsed',collapsed?'1':'0');}catch(e){}
+}
+(function(){
+  try{
+    if(localStorage.getItem('pulseSidebarCollapsed')==='1'){
+      var sb=document.getElementById('appSidebar');
+      if(sb)sb.classList.add('collapsed');
+      var btn=document.getElementById('sbCollapseBtn');
+      if(btn)btn.title='Expand sidebar';
+    }
+  }catch(e){}
+})();
 
 </script>
 
