@@ -912,7 +912,8 @@
   .note-filter-pill:hover { border-color: var(--border-strong); color: var(--text-primary); }
   .note-filter-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 
-  .note-list { display: flex; flex-direction: column; gap: 14px; }
+  .note-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+  .note-list.list-view { display: flex; flex-direction: column; gap: 14px; }
   .note-list.list-view .note-card { padding: 12px 16px; }
   .note-list.list-view .note-card.expanded { padding: 16px 20px; }
   .note-list.list-view .note-card-hdr { margin-bottom: 0; }
@@ -1039,6 +1040,17 @@
   .hist-search::placeholder{color:var(--text-muted)}
   .hist-filter-select{padding:8px 28px 8px 8px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:12px;font-family:var(--font);color:var(--text-primary);background:var(--bg-white);outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
   .hist-filter-select:focus{border-color:var(--accent)}
+
+  /* Reports: status filter pills (All / Sent / Scheduled) */
+  .rpt-status-filter { display: flex; align-items: center; gap: 8px; }
+  .rpt-status-pill {
+    font-size: 12.5px; font-weight: 500; font-family: var(--font); padding: 6px 14px;
+    border: 1px solid var(--border); border-radius: 99px; background: var(--bg-white);
+    color: var(--text-secondary); cursor: pointer; transition: all .12s;
+  }
+  .rpt-status-pill:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .rpt-status-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
   .hist-active-filters{display:flex;gap:4px;align-items:center;margin-left:auto}
   .hist-clear-btn{font-size:12px;color:var(--text-muted);cursor:pointer;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);font-family:var(--font);transition:all .12s}
   .hist-clear-btn:hover{color:var(--error);border-color:var(--error-border)}
@@ -1093,7 +1105,9 @@
   .hist-new { font-size: 12px; font-weight: 500; color: #065f46; background: #ecfdf5; padding: 1px 7px; border-radius: 0 3px 3px 0; border: 1px solid #a7f3d0; }
 
   /* ─── REPORTS TAB (extends hist-* patterns) ─── */
-  .hist-vis { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0; }
+  /* Visibility tag removed from display — kept in the DOM (hidden) so its
+     hist-vis-client/hist-vis-internal class still drives recipient logic. */
+  .hist-vis { display: none; }
   .hist-vis-internal { background: #f1f5f9; color: #475569; }
   .hist-vis-client { background: #f0fdf4; color: #15803d; }
   .hist-actions { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
@@ -7327,7 +7341,7 @@
             </div>
           </div>
           <div class="note-view-toggle">
-            <button class="note-view-btn active" id="noteViewCards" onclick="setNoteView('cards')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Cards</button>
+            <button class="note-view-btn active" id="noteViewCards" onclick="setNoteView('cards')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
             <button class="note-view-btn" id="noteViewList" onclick="setNoteView('list')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg>List</button>
           </div>
           <button class="rev-tb-btn primary" onclick="openNntModal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> New Note</button>
@@ -8757,12 +8771,11 @@
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
           <input type="text" class="hist-search" placeholder="Search reports…">
         </div>
-        <select class="hist-filter-select">
-          <option value="">All statuses</option>
-          <option>Sent</option>
-          <option>Scheduled</option>
-          <option>Draft</option>
-        </select>
+        <div class="rpt-status-filter" id="rptStatusFilter">
+          <button class="rpt-status-pill active" onclick="setRptStatusFilter('all', this)">All</button>
+          <button class="rpt-status-pill" onclick="setRptStatusFilter('sent', this)">Sent</button>
+          <button class="rpt-status-pill" onclick="setRptStatusFilter('scheduled', this)">Scheduled</button>
+        </div>
         <div style="flex:1"></div>
         <button class="rpt-tb-btn primary" onclick="openNrpModal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> New Report</button>
       </div>
@@ -24497,6 +24510,22 @@
     sent:      '<span class="hist-new">Sent</span>'
   };
 
+  // Status filter pills — All / Sent / Scheduled. Hides non-matching report
+  // items, and collapses any time-group left with nothing visible.
+  function setRptStatusFilter(mode, el) {
+    document.querySelectorAll('#rptStatusFilter .rpt-status-pill').forEach(function(p) { p.classList.remove('active'); });
+    el.classList.add('active');
+    document.querySelectorAll('#reportsHistWrap .hist-item').forEach(function(item) {
+      var diffText = (item.querySelector('.hist-diff') || {}).textContent || '';
+      var status = /sent/i.test(diffText) ? 'sent' : /scheduled/i.test(diffText) ? 'scheduled' : 'draft';
+      item.style.display = (mode === 'all' || status === mode) ? '' : 'none';
+    });
+    document.querySelectorAll('#reportsHistWrap .hist-time-group').forEach(function(group) {
+      var anyVisible = Array.from(group.querySelectorAll('.hist-item')).some(function(it) { return it.style.display !== 'none'; });
+      group.style.display = anyVisible ? '' : 'none';
+    });
+  }
+
   function ensureReportsJustNowGroup() {
     var existing = document.getElementById('reportsJustNowGroup');
     if (existing) return existing;
@@ -24746,9 +24775,6 @@
     var whenMeta = opts.status === 'sent' ? 'Sent ' + esc(opts.whenLabel)
       : opts.status === 'scheduled' ? 'Scheduled for ' + esc(opts.whenLabel)
       : 'Not yet scheduled';
-    var visPill = opts.visibility === 'client'
-      ? '<span style="background:#eff6ff;color:#1d4ed8;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:700;">Client-facing</span>'
-      : '<span style="background:#f1f5f9;color:#475569;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:700;">Internal</span>';
     var sentTo = opts.recipients || (opts.visibility === 'client' ? 'No recipients added' : 'Internal team only');
 
     return '<!doctype html><html><head><meta charset="utf-8"><title>' + esc(opts.title) + '</title><style>'
@@ -24771,7 +24797,7 @@
       +   '<div class="rpt-hdr"><div class="rpt-hdr-period">' + esc(opts.monthLabel) + '</div><div class="rpt-hdr-brand">Pulse</div></div>'
       +   '<div class="rpt-body">'
       +     banner
-      +     '<div class="rpt-meta-bar">' + visPill + '<span>' + whenMeta + '</span><span>&middot;</span><span>Sent to: ' + esc(sentTo) + '</span></div>'
+      +     '<div class="rpt-meta-bar"><span>' + whenMeta + '</span><span>&middot;</span><span>Sent to: ' + esc(sentTo) + '</span></div>'
       +     '<p style="color:#374151;margin:0 0 20px;">Hi team,</p>'
       +     '<p style="color:#4b5563;margin:0 0 28px;">Here&rsquo;s an overview of <strong>' + esc(opts.projectName) + '</strong>&rsquo;s progress' + (opts.scope ? ' — ' + esc(opts.scope) : '') + '.</p>'
       +     groupsHtml
