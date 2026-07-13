@@ -884,6 +884,16 @@
   .note-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
   .note-toolbar .rev-search { flex: 1; max-width: 320px; }
 
+  /* Period filter is hidden by default — this icon reveals it */
+  .note-period-toggle-btn {
+    width: 32px; height: 32px; border-radius: var(--radius-md); background: transparent;
+    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-secondary); transition: all .12s; flex-shrink: 0;
+  }
+  .note-period-toggle-btn svg { width: 14px; height: 14px; }
+  .note-period-toggle-btn:hover { background: var(--bg-surface); color: var(--text-primary); }
+  .note-period-toggle-btn.active { color: var(--accent); background: var(--accent-light); border-color: var(--accent-border); }
+
   .note-view-toggle { display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
   .note-view-btn {
     display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; font-family: var(--font);
@@ -904,13 +914,13 @@
 
   .note-list { display: flex; flex-direction: column; gap: 14px; }
   .note-list.list-view .note-card { padding: 12px 16px; }
-  .note-list.list-view .note-title,
-  .note-list.list-view .note-body,
-  .note-list.list-view .note-tags,
-  .note-list.list-view .note-footer,
-  .note-list.list-view .note-replies,
-  .note-list.list-view .note-reply-compose { display: none; }
+  .note-list.list-view .note-card.expanded { padding: 16px 20px; }
   .note-list.list-view .note-card-hdr { margin-bottom: 0; }
+  .note-list.list-view .note-card.expanded .note-card-hdr { margin-bottom: 12px; }
+  /* Card body content collapses to just the header row in List view — expand
+     per-card with the chevron toggle to see title/body/tags/replies again. */
+  .note-list.list-view .note-card-detail { display: none; }
+  .note-list.list-view .note-card.expanded .note-card-detail { display: block; }
 
   .note-card {
     background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-xl);
@@ -929,6 +939,13 @@
   .note-more:hover { background: var(--bg-surface); color: var(--text-primary); }
   .note-more svg { width: 15px; height: 15px; }
 
+  /* List-view-only expand/collapse chevron, per note card */
+  .note-list-toggle { width: 26px; height: 26px; border-radius: var(--radius-sm); border: none; background: none; color: var(--text-muted); cursor: pointer; display: none; align-items: center; justify-content: center; transition: all .1s; flex-shrink: 0; }
+  .note-list-toggle svg { width: 12px; height: 12px; transition: transform .15s; }
+  .note-list-toggle:hover { background: var(--bg-surface); color: var(--text-primary); }
+  .note-list.list-view .note-list-toggle { display: flex; }
+  .note-card.expanded .note-list-toggle svg { transform: rotate(180deg); }
+
   .note-title { font-size: 14.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
 
   /* Only shown on Meeting Notes — plain notes show just the Author in the header */
@@ -939,7 +956,6 @@
     background: var(--bg-surface); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px 3px 3px;
   }
   .note-participant-chip .note-p-av { width: 18px; height: 18px; font-size: 8.5px; }
-  .note-list.list-view .note-participants { display: none; }
 
   .note-body { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
 
@@ -7294,7 +7310,10 @@
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
             <input type="text" placeholder="Search notes...">
           </div>
-          <div class="ov-period-wrap">
+          <button class="note-period-toggle-btn" id="notePeriodToggleBtn" onclick="toggleNotePeriodVisibility()" title="Filter by period" data-tip="Filter by period">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/><path d="M5 1v4M11 1v4"/></svg>
+          </button>
+          <div class="ov-period-wrap" id="notePeriodWrap" style="display:none">
             <button class="ov-period-btn" onclick="toggleNotePeriodDrop(event)">
               <span id="notePeriodLabel">This week</span>
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
@@ -7333,8 +7352,10 @@
               <span class="note-time">Yesterday · 3:20 PM</span>
               <span class="note-visibility note-vis-client">Client-visible</span>
               <div class="note-hdr-spacer"></div>
+              <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-card-detail">
             <div class="note-title">Client check-in — Apr 13</div>
             <div class="note-participants">
               <span class="note-participants-label">With</span>
@@ -7361,6 +7382,7 @@
               <textarea placeholder="Write a reply…"></textarea>
               <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
             </div>
+            </div>
           </div>
 
           <div class="note-card" data-vis="client" data-mine="true">
@@ -7370,8 +7392,10 @@
               <span class="note-time">Jan 15, 2026</span>
               <span class="note-visibility note-vis-client">Client-visible</span>
               <div class="note-hdr-spacer"></div>
+              <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-card-detail">
             <div class="note-title">Project kickoff notes</div>
             <div class="note-participants">
               <span class="note-participants-label">With</span>
@@ -7394,6 +7418,7 @@
               <textarea placeholder="Write a reply…"></textarea>
               <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
             </div>
+            </div>
           </div>
 
           <div class="note-card" data-vis="internal" data-mine="false">
@@ -7403,8 +7428,10 @@
               <span class="note-time">Mar 19, 2026 · 4:45 PM</span>
               <span class="note-visibility note-vis-internal">Internal</span>
               <div class="note-hdr-spacer"></div>
+              <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-card-detail">
             <div class="note-title">Internal retro — Sprint 3 carryover</div>
             <div class="note-participants">
               <span class="note-participants-label">With</span>
@@ -7426,6 +7453,7 @@
               <textarea placeholder="Write a reply…"></textarea>
               <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
             </div>
+            </div>
           </div>
 
           <div class="note-card" data-vis="internal" data-mine="true">
@@ -7435,8 +7463,10 @@
               <span class="note-time">Mar 9, 2026 · 11:05 AM</span>
               <span class="note-visibility note-vis-internal">Internal</span>
               <div class="note-hdr-spacer"></div>
+              <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-card-detail">
             <div class="note-title">Reminder — renew Figma seats before Apr 30</div>
             <div class="note-body">Our Figma team plan renews end of April. Confirmed with finance we're keeping the same seat count — no action needed from the team, just flagging so it's not a surprise on the invoice.</div>
             <div class="note-tags">
@@ -7450,6 +7480,7 @@
             <div class="note-reply-compose">
               <textarea placeholder="Write a reply…"></textarea>
               <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            </div>
             </div>
           </div>
 
@@ -9349,9 +9380,12 @@
               <div class="gv-hdr-sub">Structured performance scoring across 14 criteria, recorded monthly by the PM.</div>
             </div>
             <div class="gv-hdr-actions">
-              <select class="gv-year-sel">
-                <option selected>2026</option>
-                <option>2025</option>
+              <select class="gv-year-sel" id="gvPeriodSel" onchange="setGvPeriod(this.value)">
+                <option value="all" selected>All months</option>
+                <option value="Apr 2026">April 2026</option>
+                <option value="Mar 2026">March 2026</option>
+                <option value="Feb 2026">February 2026</option>
+                <option value="Jan 2026">January 2026</option>
               </select>
               <button class="gv-new-btn" onclick="openNewGauging()">
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3v10M3 8h10" stroke-linecap="round"/></svg>
@@ -13339,6 +13373,15 @@
     document.getElementById('gvDetOverlay').classList.add('open');
   }
   function closeGvDetail() { document.getElementById('gvDetOverlay').classList.remove('open'); }
+
+  // Gauging Report period filter — monthly, not annual (each Gauging record is a
+  // single month's score, so filtering narrows to one month rather than a whole year).
+  function setGvPeriod(val) {
+    document.querySelectorAll('.gv-table tbody tr').forEach(function(tr) {
+      var month = tr.children[0] ? tr.children[0].textContent.trim() : '';
+      tr.style.display = (val === 'all' || month === val) ? '' : 'none';
+    });
+  }
 
   function openNewGauging(rowIdx) {
     var isEdit = rowIdx != null;
@@ -23826,6 +23869,9 @@
 
   function openNntModal() {
     document.getElementById('nntOverlay').classList.add('open');
+    // Default to today — still a native date picker, so it's easy to change.
+    document.getElementById('nntDate').value = NTL_TODAY;
+    updateNntBtn();
   }
   function closeNntModal() {
     document.getElementById('nntOverlay').classList.remove('open');
@@ -23867,11 +23913,9 @@
     document.getElementById('nntCalChipMeta').textContent  = ev.time + ' · ' + ev.duration;
     document.getElementById('nntCalChip').style.display       = '';
     document.getElementById('nntCalSearchWrap').style.display = 'none';
-    // Meetings default to today unless the user already picked a date
-    if (!document.getElementById('nntDate').value) {
-      document.getElementById('nntDate').value = NTL_TODAY;
-      updateNntBtn();
-    }
+    // Calendar events are today's schedule, so linking one sets the note's date to match.
+    document.getElementById('nntDate').value = NTL_TODAY;
+    updateNntBtn();
   }
   function nntCalClear() {
     nntCalSelected = null;
@@ -23937,6 +23981,17 @@
   // ── Notes tab: toolbar + filters ──
   var notePeriodLabels = { week: 'This week', lastweek: 'Last week', lastmonth: 'Last month', custom: 'Custom period' };
 
+  // Period selection is hidden by default — this reveals/hides it.
+  function toggleNotePeriodVisibility() {
+    var wrap = document.getElementById('notePeriodWrap');
+    var btn = document.getElementById('notePeriodToggleBtn');
+    if (!wrap) return;
+    var show = wrap.style.display === 'none';
+    wrap.style.display = show ? '' : 'none';
+    if (btn) btn.classList.toggle('active', show);
+    if (!show) document.getElementById('notePeriodDrop').classList.remove('open');
+  }
+
   function toggleNotePeriodDrop(e) {
     e.stopPropagation();
     document.getElementById('notePeriodDrop').classList.toggle('open');
@@ -23958,6 +24013,14 @@
     document.getElementById('noteViewCards').classList.toggle('active', mode === 'cards');
     document.getElementById('noteViewList').classList.toggle('active', mode === 'list');
     document.getElementById('noteList').classList.toggle('list-view', mode === 'list');
+  }
+
+  // List view collapses each note to its header row — expand/collapse one at a time.
+  function toggleNoteCardExpand(btn) {
+    var card = btn.closest('.note-card');
+    if (!card) return;
+    var expanded = card.classList.toggle('expanded');
+    btn.title = expanded ? 'Collapse' : 'Expand';
   }
 
   function setNoteFilter(mode, el) {
