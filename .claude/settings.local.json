@@ -150,7 +150,9 @@
       "Bash(pkill -f \"http.server 8743\")",
       "Bash(awk 'NR==8830,NR==8845{print NR\": \"$0}' project-detail.html)",
       "Bash(grep -n \"tab-team\\\\\">$\\\\|<!-- TAB: NOTES -->\\\\|id=\\\\\"tab-notes\\\\\"\" project-detail.html)",
-      "Bash(python3)"
+      "Bash(python3)",
+      "Bash(curl -sL -o /private/tmp/claude-501/-Users-gabrielakimura-Downloads-pulse-app/3925448b-f2d0-4a88-aa6b-44ceb6c53db5/scratchpad/figma_note_card.png \"https://www.figma.com/api/mcp/asset/706deb94-d37d-46c0-81dd-985df0ba540e\")",
+      "mcp__4fc9bcbd-21c1-404d-8d32-f09b50c31997__get_design_context"
     ]
   }
 }

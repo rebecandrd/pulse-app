@@ -918,8 +918,9 @@
   .note-list.list-view .note-card.expanded { padding: 16px 20px; }
   .note-list.list-view .note-card-hdr { margin-bottom: 0; }
   .note-list.list-view .note-card.expanded .note-card-hdr { margin-bottom: 12px; }
-  /* Card body content collapses to just the header row in List view — expand
-     per-card with the chevron toggle to see title/body/tags/replies again. */
+  .note-list.list-view .note-card:not(.expanded) .note-time { margin-bottom: 0; }
+  /* Card body content collapses to just the header row (+ timestamp) in List
+     view — expand per-card with the chevron toggle to see title/body/tags/replies again. */
   .note-list.list-view .note-card-detail { display: none; }
   .note-list.list-view .note-card.expanded .note-card-detail { display: block; }
 
@@ -928,10 +929,11 @@
     padding: 16px 20px; transition: border-color .1s;
   }
   .note-card:hover { border-color: var(--border-strong); }
+  /* Header is two stacked rows — name/badges on top, timestamp on its own line below */
   .note-card-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
   .note-av { width: 34px; height: 34px; border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .note-author { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-  .note-time { font-size: 12px; color: var(--text-muted); }
+  .note-time { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
   .note-visibility { font-size: 10.5px; font-weight: 600; padding: 3px 10px; border-radius: 99px; flex-shrink: 0; }
   .note-vis-internal { background: #f1f5f9; color: #475569; }
   .note-vis-client { background: #eff6ff; color: #1d4ed8; }
@@ -947,41 +949,44 @@
   .note-list.list-view .note-list-toggle { display: flex; }
   .note-card.expanded .note-list-toggle svg { transform: rotate(180deg); }
 
-  .note-title { font-size: 14.5px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .note-title { font-size: 18px; font-weight: 600; color: var(--text-primary); line-height: 1.3; margin-bottom: 16px; }
 
   /* Only shown on Meeting Notes — plain notes show just the Author in the header */
-  .note-participants { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .note-participants { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 16px; }
   .note-participants-label { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); margin-right: 2px; }
   .note-participant-chip {
-    display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-secondary);
-    background: var(--bg-surface); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px 3px 3px;
+    font-size: 11.5px; color: var(--text-secondary);
+    background: var(--bg-surface); border: 1px solid var(--border); border-radius: 99px; padding: 4px 10px;
   }
-  .note-participant-chip .note-p-av { width: 18px; height: 18px; font-size: 8.5px; }
 
-  .note-body { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+  .note-body { font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; }
 
-  .note-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .note-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
   .note-tag { font-size: 11px; font-weight: 500; color: var(--text-secondary); background: var(--bg-surface); border-radius: 99px; padding: 3px 10px; }
 
-  .note-footer { display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  /* Reply thread — everything (reply toggle, existing replies, compose box)
+     sits inside one light-blue rounded container */
+  .note-thread { background: #eff6ff; border-radius: var(--radius-lg); padding: 10px; display: flex; flex-direction: column; gap: 12px; }
+  .note-footer { display: flex; align-items: center; }
   .note-reply-btn {
     display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; font-family: var(--font);
-    padding: 5px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-white);
-    color: var(--text-secondary); cursor: pointer; transition: all .12s;
+    padding: 6px 13px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-white);
+    color: var(--text-primary); cursor: pointer; transition: all .12s;
   }
-  .note-reply-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .note-reply-btn:hover { border-color: var(--border-strong); }
   .note-reply-btn svg { width: 13px; height: 13px; }
-  .note-reply-count { font-size: 12px; color: var(--text-muted); cursor: pointer; }
+  .note-reply-count { font-size: 12px; color: var(--text-muted); cursor: pointer; margin-left: auto; }
   .note-reply-count:hover { color: var(--text-secondary); text-decoration: underline; }
 
-  .note-replies { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); flex-direction: column; gap: 10px; }
+  .note-replies { display: none; flex-direction: column; gap: 14px; background: var(--bg-white); border-radius: var(--radius-md); padding: 12px 16px; }
   .note-replies.open { display: flex; }
-  .note-reply-item { display: flex; gap: 8px; }
-  .note-reply-av { width: 24px; height: 24px; border-radius: 50%; font-size: 9.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .note-reply-item { display: flex; flex-direction: column; gap: 6px; }
   .note-reply-body { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
-  .note-reply-body strong { color: var(--text-primary); font-size: 12.5px; }
+  .note-reply-meta { display: flex; align-items: center; gap: 8px; }
+  .note-reply-av { width: 19px; height: 19px; border-radius: 50%; font-size: 9.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .note-reply-name { font-size: 12.5px; font-weight: 700; color: var(--text-primary); }
 
-  .note-reply-compose { display: none; margin-top: 12px; gap: 8px; }
+  .note-reply-compose { display: none; gap: 8px; background: var(--bg-white); border-radius: var(--radius-md); padding: 10px; }
   .note-reply-compose.open { display: flex; }
   .note-reply-compose textarea {
     flex: 1; font-size: 12.5px; font-family: var(--font); padding: 8px 10px; border: 1px solid var(--border);
@@ -2466,6 +2471,17 @@
 .rev-risk-item.risk-med::before { background: #f59e0b; }
 .rev-risk-item.risk-low::before { background: var(--border-strong); }
 
+/* Call Out — same layout as a risk item, but neutral/accent-colored since a
+   call out isn't necessarily negative (unlike Risks & Red Flags). */
+.rev-callout-item {
+  padding: 2px 0 2px 16px; position: relative; font-size: 12px;
+  color: var(--text-secondary); line-height: 1.5;
+}
+.rev-callout-item::before {
+  content: ''; position: absolute; left: 2px; top: 10px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+
 /* Change indicator */
 .rev-change {
   display: inline-flex;
@@ -2487,6 +2503,15 @@
   width: 8px;
   height: 8px;
 }
+
+/* Small badge on the card header row (visible even collapsed) flagging that
+   this review has a Call Out — lets the Call Outs filter be scanned at a glance. */
+.rev-callout-flag {
+  display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600;
+  color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 99px;
+  flex-shrink: 0;
+}
+.rev-callout-flag svg { width: 9px; height: 9px; }
 
   /* ─── NEW MILESTONE MODAL ─── */
   .nms-overlay {
@@ -3027,6 +3052,7 @@
   }
   .nrv-card-title::after { content:''; flex:1; height:1px; background:#eaecf2; margin-left:10px; }
   .nrv-card-req { color:#ef4444; margin-left:2px; }
+  .nrv-card-sub { font-size: 12px; color: var(--text-muted); margin-top: -8px; margin-bottom: 14px; }
 
   /* Field separator within cards */
   .nrv-field-sep { height:1px; background:#f0f2f6; margin:12px 0; }
@@ -7363,38 +7389,43 @@
             <div class="note-card-hdr">
               <div class="note-av" style="background:#fef3c7;color:#92400e;">AK</div>
               <span class="note-author">Anna K.</span>
-              <span class="note-time">Yesterday · 3:20 PM</span>
-              <span class="note-visibility note-vis-client">Client-visible</span>
               <div class="note-hdr-spacer"></div>
+              <span class="note-visibility note-vis-client">Client-visible</span>
               <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-time">Yesterday · 3:20 PM</div>
             <div class="note-card-detail">
             <div class="note-title">Client check-in — Apr 13</div>
             <div class="note-participants">
               <span class="note-participants-label">With</span>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">MC</div>Michael Chen</div>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#fde8d8;color:#b45309;">JP</div>Jennifer Parker</div>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>Sarah Kim</div>
+              <div class="note-participant-chip">Michael Chen</div>
+              <div class="note-participant-chip">Jennifer Parker</div>
+              <div class="note-participant-chip">Sarah Kim</div>
             </div>
             <div class="note-body">Shared sprint progress with Michael and Rachel. They're satisfied with the velocity on the Payments module. Raised concern about the onboarding stepper timeline — committed to a revised delivery date by Friday. Next sync scheduled for Apr 22.</div>
             <div class="note-tags">
               <span class="note-tag">#client-sync</span>
               <span class="note-tag">#delivery</span>
             </div>
-            <div class="note-footer">
-              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
-              <span class="note-reply-count" onclick="toggleNoteReplies(this)">1 reply</span>
-            </div>
-            <div class="note-replies open">
-              <div class="note-reply-item">
-                <div class="note-reply-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>
-                <div class="note-reply-body"><strong>Sarah Kim</strong> — Confirmed with the team, revised stepper date is doable without affecting Sprint 4 scope.</div>
+            <div class="note-thread">
+              <div class="note-footer">
+                <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+                <span class="note-reply-count" onclick="toggleNoteReplies(this)">1 reply</span>
               </div>
-            </div>
-            <div class="note-reply-compose">
-              <textarea placeholder="Write a reply…"></textarea>
-              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+              <div class="note-replies open">
+                <div class="note-reply-item">
+                  <div class="note-reply-body">Confirmed with the team, revised stepper date is doable without affecting Sprint 4 scope.</div>
+                  <div class="note-reply-meta">
+                    <div class="note-reply-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>
+                    <span class="note-reply-name">Sarah Kim</span>
+                  </div>
+                </div>
+              </div>
+              <div class="note-reply-compose">
+                <textarea placeholder="Write a reply…"></textarea>
+                <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+              </div>
             </div>
             </div>
           </div>
@@ -7403,34 +7434,36 @@
             <div class="note-card-hdr">
               <div class="note-av" style="background:#fef3c7;color:#92400e;">AK</div>
               <span class="note-author">Anna K.</span>
-              <span class="note-time">Jan 15, 2026</span>
-              <span class="note-visibility note-vis-client">Client-visible</span>
               <div class="note-hdr-spacer"></div>
+              <span class="note-visibility note-vis-client">Client-visible</span>
               <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-time">Jan 15, 2026</div>
             <div class="note-card-detail">
             <div class="note-title">Project kickoff notes</div>
             <div class="note-participants">
               <span class="note-participants-label">With</span>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">MC</div>Michael Chen</div>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#fde8d8;color:#b45309;">JP</div>Jennifer Parker</div>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>Sarah Kim</div>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#fde8d8;color:#b45309;">LM</div>Lucas Mora</div>
+              <div class="note-participant-chip">Michael Chen</div>
+              <div class="note-participant-chip">Jennifer Parker</div>
+              <div class="note-participant-chip">Sarah Kim</div>
+              <div class="note-participant-chip">Lucas Mora</div>
             </div>
             <div class="note-body">Kickoff meeting completed with TAPP stakeholders. Key decisions: (1) Greenfield build on existing Node/React stack, (2) Stripe as primary payment processor, (3) Phase 1 delivery targeting Jun 15. Team intro done — Michael and Rachel confirmed as primary client contacts. Next step: finalize sprint 1 scope by Jan 20.</div>
             <div class="note-tags">
               <span class="note-tag">#kickoff</span>
               <span class="note-tag">#client-sync</span>
             </div>
-            <div class="note-footer">
-              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
-              <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
-            </div>
-            <div class="note-replies"></div>
-            <div class="note-reply-compose">
-              <textarea placeholder="Write a reply…"></textarea>
-              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            <div class="note-thread">
+              <div class="note-footer">
+                <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+                <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
+              </div>
+              <div class="note-replies"></div>
+              <div class="note-reply-compose">
+                <textarea placeholder="Write a reply…"></textarea>
+                <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+              </div>
             </div>
             </div>
           </div>
@@ -7439,33 +7472,35 @@
             <div class="note-card-hdr">
               <div class="note-av" style="background:#e8f4fd;color:#1d5fa6;">SK</div>
               <span class="note-author">Sarah Kim</span>
-              <span class="note-time">Mar 19, 2026 · 4:45 PM</span>
-              <span class="note-visibility note-vis-internal">Internal</span>
               <div class="note-hdr-spacer"></div>
+              <span class="note-visibility note-vis-internal">Internal</span>
               <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-time">Mar 19, 2026 · 4:45 PM</div>
             <div class="note-card-detail">
             <div class="note-title">Internal retro — Sprint 3 carryover</div>
             <div class="note-participants">
               <span class="note-participants-label">With</span>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#f0fdf4;color:#15803d;">TR</div>Tom Reeves</div>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#fff7ed;color:#c2410c;">MV</div>Marco V.</div>
-              <div class="note-participant-chip"><div class="note-p-av" style="background:#fdf2f8;color:#9d174d;">CH</div>Clara H.</div>
+              <div class="note-participant-chip">Tom Reeves</div>
+              <div class="note-participant-chip">Marco V.</div>
+              <div class="note-participant-chip">Clara H.</div>
             </div>
             <div class="note-body">Root cause of the velocity dip: QA test environment was down for 2 days mid-sprint. Action: add monitoring/alerting before Sprint 5. Permissions matrix UI to be split into smaller deliverables going forward.</div>
             <div class="note-tags">
               <span class="note-tag">#retro</span>
               <span class="note-tag">#qa</span>
             </div>
-            <div class="note-footer">
-              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
-              <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
-            </div>
-            <div class="note-replies"></div>
-            <div class="note-reply-compose">
-              <textarea placeholder="Write a reply…"></textarea>
-              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            <div class="note-thread">
+              <div class="note-footer">
+                <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+                <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
+              </div>
+              <div class="note-replies"></div>
+              <div class="note-reply-compose">
+                <textarea placeholder="Write a reply…"></textarea>
+                <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+              </div>
             </div>
             </div>
           </div>
@@ -7474,26 +7509,28 @@
             <div class="note-card-hdr">
               <div class="note-av" style="background:#fef3c7;color:#92400e;">AK</div>
               <span class="note-author">Anna K.</span>
-              <span class="note-time">Mar 9, 2026 · 11:05 AM</span>
-              <span class="note-visibility note-vis-internal">Internal</span>
               <div class="note-hdr-spacer"></div>
+              <span class="note-visibility note-vis-internal">Internal</span>
               <button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>
               <button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>
             </div>
+            <div class="note-time">Mar 9, 2026 · 11:05 AM</div>
             <div class="note-card-detail">
             <div class="note-title">Reminder — renew Figma seats before Apr 30</div>
             <div class="note-body">Our Figma team plan renews end of April. Confirmed with finance we're keeping the same seat count — no action needed from the team, just flagging so it's not a surprise on the invoice.</div>
             <div class="note-tags">
               <span class="note-tag">#admin</span>
             </div>
-            <div class="note-footer">
-              <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
-              <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
-            </div>
-            <div class="note-replies"></div>
-            <div class="note-reply-compose">
-              <textarea placeholder="Write a reply…"></textarea>
-              <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+            <div class="note-thread">
+              <div class="note-footer">
+                <button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>
+                <span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>
+              </div>
+              <div class="note-replies"></div>
+              <div class="note-reply-compose">
+                <textarea placeholder="Write a reply…"></textarea>
+                <button class="note-reply-send" onclick="submitNoteReply(this)">Send</button>
+              </div>
             </div>
             </div>
           </div>
@@ -8821,7 +8858,7 @@
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>One-time</span>
                 <span class="hist-time">—</span>
               </div>
-              <div class="hist-line"><span class="hist-obj">Stakeholder Brief</span> — not yet configured or sent <span class="hist-diff"><span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Draft</span></span></div>
+              <div class="hist-line"><span class="hist-obj">Stakeholder Brief</span> — not yet configured or sent <span class="hist-diff"><span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Unsent</span></span></div>
               <div class="hist-actions">
                 <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
                 <button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>
@@ -8829,7 +8866,7 @@
               <div class="hist-report-preview">
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Not yet configured</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>—</span></div>
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Draft only — finish setup before sending.</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Unsent — finish setup before sending.</span></div>
               </div>
             </div>
           </div>
@@ -9031,6 +9068,7 @@
             </div>
           </div>
           <div class="rev-tb-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg> Status</div>
+          <button class="rev-tb-btn" id="revCallOutFilterBtn" onclick="toggleRevCallOutFilter(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9V7a1 1 0 011-1h1.5L9 3v10L4.5 10H3a1 1 0 01-1-1z"/><path d="M11 6.5a2.5 2.5 0 010 3"/></svg> Call Outs</button>
           <div id="revActiveChips" class="rev-active-chips"></div>
           <div class="rev-tb-spacer"></div>
           <div class="rev-tb-btn primary" onclick="openNrvModal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> Add Review</div>
@@ -9081,12 +9119,13 @@
           <div class="rev-month-label">March 2026</div>
 
           <!-- Review 1 — Most recent (expanded) -->
-          <div class="rev-card stable" data-rev-type="temperature">
+          <div class="rev-card stable" data-rev-type="temperature" data-callout="true">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-temp">Temperature</span>
               <span class="rev-status rev-s-stable">Stable</span>
               <span class="rev-change up"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8V2M2 5l3-3 3 3"/></svg>from Risk</span>
+              <span class="rev-callout-flag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9V7a1 1 0 011-1h1.5L9 3v10L4.5 10H3a1 1 0 01-1-1z"/><path d="M11 6.5a2.5 2.5 0 010 3"/></svg>Call Out</span>
               <div class="rev-hdr-spacer"></div>
               <span class="rev-date">Mar 28, 2026</span>
               <div class="rev-author">
@@ -9135,6 +9174,13 @@
                 </div>
                 <div class="rev-risk-item risk-med"><strong>Token migration dependency</strong> — Redis cache layer needs to be updated before token rollout, timeline tight</div>
                 <div class="rev-risk-item risk-low">QA capacity may be stretched if Sprint 5 scope holds — monitor Clara's utilization</div>
+              </div>
+              <div class="rev-section">
+                <div class="rev-section-title">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9V7a1 1 0 011-1h1.5L9 3v10L4.5 10H3a1 1 0 01-1-1z"/><path d="M11 6.5a2.5 2.5 0 010 3"/></svg>
+                  Call Out
+                </div>
+                <div class="rev-callout-item"><strong>Client hinted at a second project</strong> — Michael mentioned a possible mobile app initiative for Q3, worth a proactive conversation with sales.</div>
               </div>
             </div>
           </div>
@@ -9256,11 +9302,12 @@
           </div>
 
           <!-- Review 4 — Velocity type (collapsed) -->
-          <div class="rev-card risk collapsed" data-rev-type="velocity">
+          <div class="rev-card risk collapsed" data-rev-type="velocity" data-callout="true">
             <div class="rev-card-hdr" onclick="toggleRevCard(this)">
               <svg class="rev-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l6 5-6 5"/></svg>
               <span class="rev-type rev-type-velocity">Velocity</span>
               <span class="rev-status rev-s-risk">Risk</span>
+              <span class="rev-callout-flag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9V7a1 1 0 011-1h1.5L9 3v10L4.5 10H3a1 1 0 01-1-1z"/><path d="M11 6.5a2.5 2.5 0 010 3"/></svg>Call Out</span>
               <div class="rev-hdr-spacer"></div>
               <span class="rev-date">Mar 7, 2026</span>
               <div class="rev-author">
@@ -9300,6 +9347,13 @@
                   <li>Add monitoring to QA test environment to prevent future downtime</li>
                   <li>Break permissions matrix into smaller deliverable chunks</li>
                 </ul>
+              </div>
+              <div class="rev-section">
+                <div class="rev-section-title">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9V7a1 1 0 011-1h1.5L9 3v10L4.5 10H3a1 1 0 01-1-1z"/><path d="M11 6.5a2.5 2.5 0 010 3"/></svg>
+                  Call Out
+                </div>
+                <div class="rev-callout-item">QA lead flagged an upcoming regulatory compliance audit in April — will need dedicated regression testing time booked in advance.</div>
               </div>
             </div>
           </div>
@@ -13488,6 +13542,9 @@
     }
   });
 
+  var _revCurrentType  = 'all';
+  var _revCallOutOnly  = false;
+
   function setRevTypeFilter(type, el) {
     document.querySelectorAll('#revTypeFilterDrop .rev-filter-item').forEach(function(i) { i.classList.remove('active'); });
     el.classList.add('active');
@@ -13502,25 +13559,43 @@
         : '<div class="filter-chip">' + revTypeLabels[type] + ' <span class="chip-x" onclick="clearRevTypeFilter()">×</span></div>';
     }
 
-    // Gaugings block only makes sense for 'all' or 'gauging'
-    var gaugingBlock = document.getElementById('revGaugingBlock');
-    if (gaugingBlock) gaugingBlock.style.display = (type === 'all' || type === 'gauging') ? '' : 'none';
-
-    // Filter the chronological timeline; hide month groups left empty
-    document.querySelectorAll('.rev-month-group').forEach(function(group) {
-      var anyVisible = false;
-      group.querySelectorAll('.rev-card').forEach(function(card) {
-        var match = type === 'all' || card.getAttribute('data-rev-type') === type;
-        card.style.display = match ? '' : 'none';
-        if (match) anyVisible = true;
-      });
-      group.style.display = anyVisible ? '' : 'none';
-    });
+    _revCurrentType = type;
+    applyRevFilters();
   }
 
   function clearRevTypeFilter() {
     var allItem = document.querySelector('#revTypeFilterDrop .rev-filter-item');
     setRevTypeFilter('all', allItem);
+  }
+
+  // "Call Outs" — filters the timeline down to reviews that recorded a call out,
+  // regardless of review type. Combines with the existing Type filter.
+  function toggleRevCallOutFilter(el) {
+    _revCallOutOnly = !_revCallOutOnly;
+    el.classList.toggle('active', _revCallOutOnly);
+    applyRevFilters();
+  }
+
+  function applyRevFilters() {
+    // Gaugings block only makes sense for 'all'/'gauging' type, and isn't part
+    // of the Call Out timeline.
+    var gaugingBlock = document.getElementById('revGaugingBlock');
+    if (gaugingBlock) {
+      gaugingBlock.style.display = (!_revCallOutOnly && (_revCurrentType === 'all' || _revCurrentType === 'gauging')) ? '' : 'none';
+    }
+
+    // Filter the chronological timeline; hide month groups left empty
+    document.querySelectorAll('.rev-month-group').forEach(function(group) {
+      var anyVisible = false;
+      group.querySelectorAll('.rev-card').forEach(function(card) {
+        var typeMatch    = _revCurrentType === 'all' || card.getAttribute('data-rev-type') === _revCurrentType;
+        var calloutMatch = !_revCallOutOnly || card.getAttribute('data-callout') === 'true';
+        var match = typeMatch && calloutMatch;
+        card.style.display = match ? '' : 'none';
+        if (match) anyVisible = true;
+      });
+      group.style.display = anyVisible ? '' : 'none';
+    });
   }
 
   function openNrvModalAs(type) {
@@ -22114,6 +22189,28 @@
           </div>
         </div>
 
+        <div class="nrv-card">
+          <div class="nrv-card-title">Call Out</div>
+          <div class="nrv-card-sub">Capture something leadership should know about — doesn't have to be negative</div>
+          <div class="nrp-field">
+            <div class="nrp-label">Any call outs to report? <span class="nrp-req">*</span></div>
+            <div class="nrp-freq-opts">
+              <div class="nrp-freq-opt active" id="nrvCallOutNo" onclick="pickNrvCallOut(false,this)">
+                <div class="nrp-freq-radio"></div>
+                No
+              </div>
+              <div class="nrp-freq-opt" id="nrvCallOutYes" onclick="pickNrvCallOut(true,this)">
+                <div class="nrp-freq-radio"></div>
+                Yes
+              </div>
+            </div>
+          </div>
+          <div class="nrp-field" id="nrvCallOutDetailWrap" style="display:none">
+            <div class="nrp-label">Call Out Details</div>
+            <textarea class="nrv-struct-textarea" id="nrvCallOutDetails" placeholder="What's the call out? e.g. an upsell opportunity, a process win worth repeating, a heads-up for leadership..."></textarea>
+          </div>
+        </div>
+
       </div>
 
       <!-- ── Step 5: Final Review ── -->
@@ -24079,7 +24176,7 @@
       participantsHtml = '<div class="note-participants"><span class="note-participants-label">With</span>'
         + participantIds.map(function(id) {
             var p = nntParticipants[id];
-            return '<div class="note-participant-chip"><div class="note-p-av" style="background:' + p.bg + ';color:' + p.color + ';">' + id + '</div>' + p.name + '</div>';
+            return '<div class="note-participant-chip">' + p.name + '</div>';
           }).join('')
         + '</div>';
     }
@@ -24092,21 +24189,26 @@
       '<div class="note-card-hdr">'
       + '<div class="note-av" style="background:#eef2ff;color:#3b5bdb;">JD</div>'
       + '<span class="note-author">John Doe</span>'
-      + '<span class="note-time">Just now</span>'
-      + '<span class="note-visibility ' + (visClient ? 'note-vis-client' : 'note-vis-internal') + '">' + (visClient ? 'Client-visible' : 'Internal') + '</span>'
       + '<div class="note-hdr-spacer"></div>'
+      + '<span class="note-visibility ' + (visClient ? 'note-vis-client' : 'note-vis-internal') + '">' + (visClient ? 'Client-visible' : 'Internal') + '</span>'
+      + '<button class="note-list-toggle" onclick="toggleNoteCardExpand(this)" title="Expand"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></button>'
       + '<button class="note-more" title="More"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg></button>'
       + '</div>'
+      + '<div class="note-time">Just now</div>'
+      + '<div class="note-card-detail">'
       + '<div class="note-title">' + title.replace(/</g, '&lt;') + '</div>'
       + participantsHtml
       + '<div class="note-body">' + body.replace(/</g, '&lt;') + '</div>'
       + (tagsHtml ? '<div class="note-tags">' + tagsHtml + '</div>' : '')
-      + '<div class="note-footer">'
-      +   '<button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>'
-      +   '<span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>'
+      + '<div class="note-thread">'
+      +   '<div class="note-footer">'
+      +     '<button class="note-reply-btn" onclick="toggleNoteReplyBox(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v8H5l-3 3V3z"/></svg>Reply</button>'
+      +     '<span class="note-reply-count" onclick="toggleNoteReplies(this)">No replies yet</span>'
+      +   '</div>'
+      +   '<div class="note-replies"></div>'
+      +   '<div class="note-reply-compose"><textarea placeholder="Write a reply…"></textarea><button class="note-reply-send" onclick="submitNoteReply(this)">Send</button></div>'
       + '</div>'
-      + '<div class="note-replies"></div>'
-      + '<div class="note-reply-compose"><textarea placeholder="Write a reply…"></textarea><button class="note-reply-send" onclick="submitNoteReply(this)">Send</button></div>';
+      + '</div>';
 
     document.getElementById('noteList').prepend(card);
     closeNntModal();
@@ -24120,8 +24222,8 @@
     var replies = card.querySelector('.note-replies');
     var item = document.createElement('div');
     item.className = 'note-reply-item';
-    item.innerHTML = '<div class="note-reply-av" style="background:#eef2ff;color:#3b5bdb;">JD</div>'
-      + '<div class="note-reply-body"><strong>John Doe</strong> — ' + text.replace(/</g, '&lt;') + '</div>';
+    item.innerHTML = '<div class="note-reply-body">' + text.replace(/</g, '&lt;') + '</div>'
+      + '<div class="note-reply-meta"><div class="note-reply-av" style="background:#eef2ff;color:#3b5bdb;">JD</div><span class="note-reply-name">John Doe</span></div>';
     replies.appendChild(item);
     replies.classList.add('open');
     textarea.value = '';
@@ -24138,6 +24240,7 @@
   var _nrvStep        = 1;
   var _nrvQaStatus    = '';
   var _nrvQaConcerns  = {};
+  var _nrvHasCallOut  = false;
 
   function openNrvModal() {
     _nrvStep = 1;
@@ -24182,7 +24285,7 @@
       if (el) el.selectedIndex = 0;
     });
     // Reset textareas
-    ['nrvKeyUpdates', 'nrvPriorities', 'nrvDeliveryNotes', 'nrvQaConcerns', 'nrvValidRisks', 'nrvQaPlanning', 'nrvBlockerDetails', 'nrvDependencies', 'nrvStaffing'].forEach(function(id) {
+    ['nrvKeyUpdates', 'nrvPriorities', 'nrvDeliveryNotes', 'nrvQaConcerns', 'nrvValidRisks', 'nrvQaPlanning', 'nrvBlockerDetails', 'nrvDependencies', 'nrvStaffing', 'nrvCallOutDetails'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.value = '';
     });
@@ -24191,6 +24294,22 @@
     if (bc) bc.textContent = '0';
     var ec = document.getElementById('nrvEscalationCount');
     if (ec) ec.textContent = '0';
+    // Reset Call Out
+    _nrvHasCallOut = false;
+    var coNo = document.getElementById('nrvCallOutNo');
+    var coYes = document.getElementById('nrvCallOutYes');
+    if (coNo) coNo.classList.add('active');
+    if (coYes) coYes.classList.remove('active');
+    var coWrap = document.getElementById('nrvCallOutDetailWrap');
+    if (coWrap) coWrap.style.display = 'none';
+  }
+
+  function pickNrvCallOut(hasCallOut, el) {
+    _nrvHasCallOut = hasCallOut;
+    el.parentElement.querySelectorAll('.nrp-freq-opt').forEach(function(o) { o.classList.remove('active'); });
+    el.classList.add('active');
+    var wrap = document.getElementById('nrvCallOutDetailWrap');
+    if (wrap) wrap.style.display = hasCallOut ? '' : 'none';
   }
 
   function pickNrvType(el, type) {
@@ -24312,7 +24431,8 @@
       { label:'QA Status',      val:qaLabels[qa] || '',                 cls:qaCls[qa] || '' },
       { label:'QA Concerns',    val:qa && qa !== 'stable' && qaConcernCount > 0 ? qaConcernCount + ' flagged' : '', cls:qaConcernCount > 0 ? (qaCls[qa] || '') : '' },
       { label:'Open Blockers',  val:blockers,    cls:parseInt(blockers,10) > 0 ? 'sc-red' : '' },
-      { label:'Escalations',    val:escalations, cls:parseInt(escalations,10) > 0 ? 'sc-yellow' : '' }
+      { label:'Escalations',    val:escalations, cls:parseInt(escalations,10) > 0 ? 'sc-yellow' : '' },
+      { label:'Call Out',       val:_nrvHasCallOut ? 'Yes' : 'No', cls:_nrvHasCallOut ? 'sc-accent' : '' }
     ];
 
     document.getElementById('nrvSummaryGrid').innerHTML = items.map(function(it) {
@@ -24505,7 +24625,7 @@
   // rather than a per-type lookup.
   var NRP_TYPE_META = { cat: 'Progress Report', cls: 'hc-project-update', bg: '#eff6ff', fg: '#1d4ed8', icon: '<path d="M2 4h12M2 8h12M2 12h8"/>' };
   var NRP_STATUS_BADGE = {
-    draft:     '<span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Draft</span>',
+    draft:     '<span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Unsent</span>',
     scheduled: '<span style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Scheduled</span>',
     sent:      '<span class="hist-new">Sent</span>'
   };
@@ -24769,7 +24889,7 @@
     if (opts.status === 'scheduled') {
       banner = '<div style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:24px;">Scheduled to send <strong>' + esc(opts.whenLabel) + '</strong> — this is a live preview of what will be included.</div>';
     } else if (opts.status === 'draft') {
-      banner = '<div style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:24px;">Draft — not yet sent. Finish setup before sending.</div>';
+      banner = '<div style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:24px;">Not yet sent — finish setup before sending.</div>';
     }
 
     var whenMeta = opts.status === 'sent' ? 'Sent ' + esc(opts.whenLabel)
