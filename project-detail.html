@@ -1090,14 +1090,9 @@
   .hist-act-btn:hover { border-color: var(--border-strong); color: var(--text-primary); }
   .hist-act-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
   .hist-act-btn.primary:hover { background: var(--accent-hover); }
-  .hist-report-preview {
-    display: none; margin-top: 10px; padding: 12px 14px; background: var(--bg-surface);
-    border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 12px; color: var(--text-secondary); line-height: 1.55;
-  }
-  .hist-report-preview.open { display: block; }
-  .hist-report-preview-row { display: flex; gap: 8px; margin-bottom: 6px; }
-  .hist-report-preview-row:last-child { margin-bottom: 0; }
-  .hist-report-preview-label { font-weight: 600; color: var(--text-primary); min-width: 90px; flex-shrink: 0; }
+  /* Hidden data source (Scope/Sent to/Summary) read by viewReport() to build the
+     full report document — never shown inline. */
+  .hist-report-preview { display: none; }
 
 /* ─── MILESTONES TAB ─── */
 .ms-wrap {
@@ -3235,6 +3230,7 @@
   .nrp-input::placeholder { color: var(--text-muted); }
   .nrp-select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
   .nrp-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .nrp-field-hint { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
 
   /* Milestone multi-select */
   .nrp-ms-search {
@@ -8731,15 +8727,6 @@
           <input type="text" class="hist-search" placeholder="Search reports…">
         </div>
         <select class="hist-filter-select">
-          <option value="">All types</option>
-          <option>Status</option>
-          <option>Hours</option>
-          <option>Budget</option>
-          <option>Sprint</option>
-          <option>Retro</option>
-          <option>Custom</option>
-        </select>
-        <select class="hist-filter-select">
           <option value="">All statuses</option>
           <option>Sent</option>
           <option>Scheduled</option>
@@ -8751,6 +8738,59 @@
 
       <div class="hist-wrap" id="reportsHistWrap">
 
+        <!-- ══════ UPCOMING ══════ (pinned to top — see fix: Upcoming/Scheduled stays on top) -->
+        <div class="hist-time-group" id="reportsUpcomingGroup">
+          <div class="hist-time-label" style="color:var(--accent)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>Upcoming · Scheduled</div>
+
+          <div class="hist-item" data-scheduled="1">
+            <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
+            </div>
+            <div class="hist-body">
+              <div class="hist-top-row">
+                <span class="hist-cat hc-project-update">Progress Report</span>
+                <span class="hist-vis hist-vis-internal">Internal</span>
+                <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Monthly · Recurring</span>
+                <span class="hist-time">Apr 1, 2026 · 9:00 AM (UTC-3 · Brasília)</span>
+              </div>
+              <div class="hist-line"><span class="hist-obj">Team Utilization Report</span> — hours logged vs. capacity <span class="hist-diff"><span style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Scheduled</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>March 2026 — all team members</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Will be generated automatically when sent on Apr 1, 2026 at 9:00 AM (UTC-3 · Brasília).</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hist-item">
+            <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
+            </div>
+            <div class="hist-body">
+              <div class="hist-top-row">
+                <span class="hist-cat hc-project-update">Progress Report</span>
+                <span class="hist-vis hist-vis-client">Client-facing</span>
+                <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>One-time</span>
+                <span class="hist-time">—</span>
+              </div>
+              <div class="hist-line"><span class="hist-obj">Stakeholder Brief</span> — not yet configured or sent <span class="hist-diff"><span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Draft</span></span></div>
+              <div class="hist-actions">
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>
+              </div>
+              <div class="hist-report-preview">
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Not yet configured</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>—</span></div>
+                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Draft only — finish setup before sending.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ══════ THIS WEEK ══════ -->
         <div class="hist-time-group">
           <div class="hist-time-label"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>This week · March 24–31, 2026</div>
@@ -8761,17 +8801,16 @@
             </div>
             <div class="hist-body">
               <div class="hist-top-row">
-                <span class="hist-cat hc-project-update">Status</span>
+                <span class="hist-cat hc-project-update">Progress Report</span>
                 <span class="hist-vis hist-vis-client">Client-facing</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Weekly · Recurring</span>
-                <span class="hist-time">Mar 24</span>
+                <span class="hist-time">Mar 24, 2026 · 9:00 AM</span>
               </div>
-              <div class="hist-line"><span class="hist-obj">Weekly Status Update</span> — auto-generated and sent to stakeholders <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-line"><span class="hist-obj">Weekly Progress Update</span> — auto-generated and sent to stakeholders <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
               <div class="hist-actions">
-                <button class="hist-act-btn" onclick="openReportPdf(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
               </div>
               <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Progress Report · Status</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>All active milestones — weekly rollup</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>michael.chen@client.com, jennifer.parker@client.com</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Sprint 4 tracking on schedule, 21% of scope complete, no new blockers this week.</span></div>
@@ -8785,22 +8824,21 @@
           <div class="hist-time-label"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>March 21, 2026</div>
 
           <div class="hist-item">
-            <div class="hist-av" style="background:#faf5ff;color:#6d28d9;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 12l3-7 3 4 2-2 4 5"/></svg>
+            <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
             </div>
             <div class="hist-body">
               <div class="hist-top-row">
-                <span class="hist-cat hc-scope-change">Sprint</span>
+                <span class="hist-cat hc-project-update">Progress Report</span>
                 <span class="hist-vis hist-vis-internal">Internal</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>One-time</span>
-                <span class="hist-time">Mar 21</span>
+                <span class="hist-time">Mar 21, 2026 · 4:00 PM</span>
               </div>
-              <div class="hist-line"><span class="hist-actor">Anna K.</span> created <span class="hist-obj">Sprint 4 Retrospective</span> — velocity, blockers, and action items <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-line"><span class="hist-actor">Anna K.</span> created <span class="hist-obj">Sprint 4 Progress Report</span> — velocity, blockers, and action items <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
               <div class="hist-actions">
-                <button class="hist-act-btn" onclick="openReportPdf(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
               </div>
               <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Sprint Retrospective</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Sprint 4 — all linked milestones</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Velocity recovered to 92%, 1 open blocker, action items assigned for Sprint 5 planning.</span></div>
@@ -8814,22 +8852,21 @@
           <div class="hist-time-label"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>March 15, 2026</div>
 
           <div class="hist-item">
-            <div class="hist-av" style="background:#ecfdf5;color:#059669;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M5 8l2 2 4-4"/><circle cx="8" cy="8" r="6"/></svg>
+            <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
             </div>
             <div class="hist-body">
               <div class="hist-top-row">
-                <span class="hist-cat hc-milestone-update">Status</span>
+                <span class="hist-cat hc-project-update">Progress Report</span>
                 <span class="hist-vis hist-vis-client">Client-facing</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>One-time</span>
-                <span class="hist-time">Mar 15</span>
+                <span class="hist-time">Mar 15, 2026 · 10:30 AM</span>
               </div>
               <div class="hist-line"><span class="hist-actor">Sarah Kim</span> generated <span class="hist-obj">Q1 Delivery Summary</span> — milestones delivered, hours logged, team utilization <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
               <div class="hist-actions">
-                <button class="hist-act-btn" onclick="openReportPdf(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
               </div>
               <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Milestone Summary</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Q1 2026 — 6 milestones</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>michael.chen@client.com, jennifer.parker@client.com</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>4 of 6 milestones delivered on schedule, 312 hours logged, team utilization averaged 78%.</span></div>
@@ -8843,22 +8880,21 @@
           <div class="hist-time-label"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>March 7, 2026</div>
 
           <div class="hist-item">
-            <div class="hist-av" style="background:#fef3c7;color:#92400e;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 12l3-7 3 4 2-2 4 5"/></svg>
+            <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
             </div>
             <div class="hist-body">
               <div class="hist-top-row">
-                <span class="hist-cat hc-effort-review">Retro</span>
+                <span class="hist-cat hc-project-update">Progress Report</span>
                 <span class="hist-vis hist-vis-internal">Internal</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>One-time</span>
-                <span class="hist-time">Mar 7</span>
+                <span class="hist-time">Mar 7, 2026 · 3:15 PM</span>
               </div>
-              <div class="hist-line"><span class="hist-actor">Anna K.</span> completed <span class="hist-obj">Sprint 3 Retrospective</span> — shared with team <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-line"><span class="hist-actor">Anna K.</span> completed <span class="hist-obj">Sprint 3 Progress Report</span> — shared with team <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
               <div class="hist-actions">
-                <button class="hist-act-btn" onclick="openReportPdf(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
               </div>
               <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Sprint Retrospective</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Sprint 3 — all linked milestones</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Velocity dipped to 60% — root cause: QA environment downtime. Action items assigned.</span></div>
@@ -8873,21 +8909,20 @@
 
           <div class="hist-item">
             <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
             </div>
             <div class="hist-body">
               <div class="hist-top-row">
-                <span class="hist-cat hc-project-update">Hours</span>
+                <span class="hist-cat hc-project-update">Progress Report</span>
                 <span class="hist-vis hist-vis-internal">Internal</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Monthly · Recurring</span>
-                <span class="hist-time">Mar 1</span>
+                <span class="hist-time">Mar 1, 2026 · 9:00 AM</span>
               </div>
-              <div class="hist-line"><span class="hist-obj">Monthly Hours Summary</span> — auto-generated, includes all team members <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
+              <div class="hist-line"><span class="hist-obj">Monthly Progress Summary</span> — auto-generated, includes all team members <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
               <div class="hist-actions">
-                <button class="hist-act-btn" onclick="openReportPdf(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
               </div>
               <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Time Tracking Report</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>February 2026 — all team members</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>412 hours logged across 7 team members, 3.2% variance from planned capacity.</span></div>
@@ -8896,80 +8931,24 @@
           </div>
 
           <div class="hist-item">
-            <div class="hist-av" style="background:#fef2f2;color:#dc2626;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M8 4v4M8 10.5v.5"/><circle cx="8" cy="8" r="6"/></svg>
+            <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
             </div>
             <div class="hist-body">
               <div class="hist-top-row">
-                <span class="hist-cat hc-budget-update">Budget</span>
+                <span class="hist-cat hc-project-update">Progress Report</span>
                 <span class="hist-vis hist-vis-client">Client-facing</span>
                 <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Monthly · Recurring</span>
-                <span class="hist-time">Mar 1</span>
+                <span class="hist-time">Mar 1, 2026 · 9:00 AM</span>
               </div>
               <div class="hist-line"><span class="hist-obj">Budget Burn Rate</span> — tracks spend vs. allocation, shared with finance <span class="hist-diff"><span class="hist-new">Sent</span></span></div>
               <div class="hist-actions">
-                <button class="hist-act-btn" onclick="openReportPdf(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
+                <button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
               </div>
               <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Budget Overview</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>February 2026 spend vs. allocation</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>michael.chen@client.com (finance)</span></div>
                 <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>68% of Q1 budget consumed, on pace with 3.1% favorable variance.</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══════ UPCOMING ══════ -->
-        <div class="hist-time-group">
-          <div class="hist-time-label" style="color:var(--accent)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>Upcoming · Scheduled</div>
-
-          <div class="hist-item" style="opacity:.65">
-            <div class="hist-av" style="background:#eff6ff;color:#1d4ed8;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
-            </div>
-            <div class="hist-body">
-              <div class="hist-top-row">
-                <span class="hist-cat hc-project-update">Hours</span>
-                <span class="hist-vis hist-vis-internal">Internal</span>
-                <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Monthly · Recurring</span>
-                <span class="hist-time">Apr 1</span>
-              </div>
-              <div class="hist-line"><span class="hist-obj">Team Utilization Report</span> — hours logged vs. capacity <span class="hist-diff"><span style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Scheduled</span></span></div>
-              <div class="hist-actions">
-                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
-                <button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>
-              </div>
-              <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Time Tracking Report</span></div>
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>March 2026 — all team members</span></div>
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>Internal team only</span></div>
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Will be generated automatically when sent on Apr 1.</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="hist-item" style="opacity:.5">
-            <div class="hist-av" style="background:#f1f5f9;color:#64748b;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>
-            </div>
-            <div class="hist-body">
-              <div class="hist-top-row">
-                <span class="hist-cat hc-note">Custom</span>
-                <span class="hist-vis hist-vis-client">Client-facing</span>
-                <span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.5 2.5l2 2-8 8H3.5v-2z"/></svg>One-time</span>
-                <span class="hist-time">—</span>
-              </div>
-              <div class="hist-line"><span class="hist-obj">Custom Stakeholder Brief</span> — not yet configured or sent <span class="hist-diff"><span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Draft</span></span></div>
-              <div class="hist-actions">
-                <button class="hist-act-btn" onclick="toggleReportPreview(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>
-                <button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>
-              </div>
-              <div class="hist-report-preview">
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>Custom Report</span></div>
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>Not yet configured</span></div>
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>—</span></div>
-                <div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Draft only — finish setup before sending.</span></div>
               </div>
             </div>
           </div>
@@ -21552,22 +21531,9 @@
       <!-- Step 1: Setup & Scope -->
       <div class="nrp-panel active" id="nrpPanel1">
         <div class="nrp-sec-title">Report setup</div>
-        <div class="nrp-row-2">
-          <div class="nrp-field">
-            <div class="nrp-label">Report Name <span class="nrp-req">*</span></div>
-            <input class="nrp-input" id="nrpName" type="text" placeholder="e.g. Weekly Status Update" oninput="updateNrpBtn()">
-          </div>
-          <div class="nrp-field">
-            <div class="nrp-label">Report Type <span class="nrp-req">*</span></div>
-            <select class="nrp-select" id="nrpType" onchange="updateNrpBtn()">
-              <option value="" disabled selected>Select type...</option>
-              <option>Progress Report</option>
-              <option>Milestone Summary</option>
-              <option>Time Tracking Report</option>
-              <option>Budget Overview</option>
-              <option>Sprint Retrospective</option>
-            </select>
-          </div>
+        <div class="nrp-field">
+          <div class="nrp-label">Report Name <span class="nrp-req">*</span></div>
+          <input class="nrp-input" id="nrpName" type="text" placeholder="e.g. Weekly Progress Update" oninput="updateNrpBtn()">
         </div>
 
         <div class="nrp-field">
@@ -21681,12 +21647,44 @@
           <div class="nrp-row-2">
             <div class="nrp-field">
               <div class="nrp-label">Time</div>
-              <input class="nrp-input" type="time" value="09:00">
+              <input class="nrp-input" type="time" id="nrpTime" value="09:00">
             </div>
             <div class="nrp-field">
-              <div class="nrp-label">End date (optional)</div>
-              <input class="nrp-input" type="date">
+              <div class="nrp-label">Timezone</div>
+              <select class="nrp-select" id="nrpTimezone">
+                <optgroup label="Americas">
+                  <option value="UTC-10 · Hawaii">UTC-10 · Hawaii</option>
+                  <option value="UTC-9 · Alaska">UTC-9 · Alaska</option>
+                  <option value="UTC-8 · Pacific">UTC-8 · Pacific</option>
+                  <option value="UTC-7 · Mountain">UTC-7 · Mountain</option>
+                  <option value="UTC-6 · Central">UTC-6 · Central</option>
+                  <option value="UTC-5 · Eastern">UTC-5 · Eastern</option>
+                  <option value="UTC-4 · Atlantic">UTC-4 · Atlantic</option>
+                  <option value="UTC-3 · Brasília">UTC-3 · Brasília</option>
+                </optgroup>
+                <optgroup label="Europe &amp; Africa">
+                  <option value="UTC+0 · London">UTC+0 · London</option>
+                  <option value="UTC+1 · Central European">UTC+1 · Central European</option>
+                  <option value="UTC+2 · Eastern European">UTC+2 · Eastern European</option>
+                  <option value="UTC+3 · Moscow">UTC+3 · Moscow</option>
+                </optgroup>
+                <optgroup label="Asia &amp; Pacific">
+                  <option value="UTC+4 · Gulf">UTC+4 · Gulf</option>
+                  <option value="UTC+5 · Pakistan">UTC+5 · Pakistan</option>
+                  <option value="UTC+5:30 · India">UTC+5:30 · India</option>
+                  <option value="UTC+7 · Bangkok">UTC+7 · Bangkok</option>
+                  <option value="UTC+8 · China · Singapore">UTC+8 · China · Singapore</option>
+                  <option value="UTC+9 · Japan · Korea">UTC+9 · Japan · Korea</option>
+                  <option value="UTC+10 · Sydney">UTC+10 · Sydney</option>
+                  <option value="UTC+12 · Auckland">UTC+12 · Auckland</option>
+                </optgroup>
+              </select>
+              <div class="nrp-field-hint" id="nrpTzHint" style="margin-top:4px"></div>
             </div>
+          </div>
+          <div class="nrp-field">
+            <div class="nrp-label">End date (optional)</div>
+            <input class="nrp-input" type="date">
           </div>
         </div>
       </div>
@@ -24290,7 +24288,34 @@
     document.getElementById('nrpVisInternal').classList.add('active');
     document.getElementById('nrpVisClient').classList.remove('active');
     renderNrpStep();
+    _nrpDetectTimezone();
     document.getElementById('nrpOverlay').classList.add('open');
+  }
+
+  // Detect the user's timezone so scheduled sends default to "now" in their
+  // own time — shown as a selected, editable option rather than a fixed value.
+  function _nrpDetectTimezone() {
+    var sel = document.getElementById('nrpTimezone');
+    var hint = document.getElementById('nrpTzHint');
+    if (!sel || sel.dataset.detected) return;
+    sel.dataset.detected = '1';
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      var offsetMin = -new Date().getTimezoneOffset();
+      var sign = offsetMin >= 0 ? '+' : '-';
+      var abs = Math.abs(offsetMin);
+      var hh = String(Math.floor(abs / 60));
+      var mm = abs % 60;
+      var utcLabel = 'UTC' + sign + hh + (mm ? ':' + String(mm).padStart(2, '0') : '');
+      var opt = document.createElement('option');
+      opt.value = utcLabel + ' · ' + tz.replace(/_/g, ' ');
+      opt.textContent = utcLabel + ' · ' + tz.replace(/_/g, ' ') + ' (detected)';
+      sel.insertBefore(opt, sel.firstChild);
+      sel.value = opt.value;
+      if (hint) hint.textContent = 'Detected from your browser — change it if reports should send in a different timezone.';
+    } catch (e) {
+      if (hint) hint.textContent = 'Choose the timezone reports should send in.';
+    }
   }
   function closeNrpModal() {
     document.getElementById('nrpOverlay').classList.remove('open');
@@ -24305,8 +24330,7 @@
     // Don't allow step 2 if step 1 isn't valid
     if (step === 2) {
       var name = document.getElementById('nrpName').value.trim();
-      var type = document.getElementById('nrpType').value;
-      if (!name || !type) return;
+      if (!name) return;
     }
     nrpStep = step;
     renderNrpStep();
@@ -24338,8 +24362,7 @@
     var footer = document.getElementById('nrpFooter');
     if (nrpStep === 1) {
       var name = document.getElementById('nrpName').value.trim();
-      var type = document.getElementById('nrpType').value;
-      var valid = name.length > 0 && type !== '';
+      var valid = name.length > 0;
       footer.innerHTML =
         '<span class="nrp-footer-left">Step <strong>1</strong> of <strong>2</strong></span>' +
         '<button class="nrp-btn" onclick="closeNrpModal()">Cancel</button>' +
@@ -24402,13 +24425,9 @@
   });
 
   // ── Reports: trackable creation + sending events ──
-  var NRP_TYPE_META = {
-    'Progress Report':      { cat: 'Status', cls: 'hc-project-update',  bg: '#eff6ff', fg: '#1d4ed8', icon: '<path d="M2 4h12M2 8h12M2 12h8"/>' },
-    'Milestone Summary':    { cat: 'Status', cls: 'hc-milestone-update',bg: '#ecfdf5', fg: '#059669', icon: '<path d="M5 8l2 2 4-4"/><circle cx="8" cy="8" r="6"/>' },
-    'Time Tracking Report': { cat: 'Hours',  cls: 'hc-project-update',  bg: '#eff6ff', fg: '#1d4ed8', icon: '<circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/>' },
-    'Budget Overview':      { cat: 'Budget', cls: 'hc-budget-update',   bg: '#fef2f2', fg: '#dc2626', icon: '<path d="M8 4v4M8 10.5v.5"/><circle cx="8" cy="8" r="6"/>' },
-    'Sprint Retrospective': { cat: 'Retro',  cls: 'hc-effort-review',   bg: '#fef3c7', fg: '#92400e', icon: '<path d="M2 12l3-7 3 4 2-2 4 5"/>' }
-  };
+  // Only one report type exists — Progress Report — so meta is a fixed constant
+  // rather than a per-type lookup.
+  var NRP_TYPE_META = { cat: 'Progress Report', cls: 'hc-project-update', bg: '#eff6ff', fg: '#1d4ed8', icon: '<path d="M2 4h12M2 8h12M2 12h8"/>' };
   var NRP_STATUS_BADGE = {
     draft:     '<span style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">Draft</span>',
     scheduled: '<span style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe">Scheduled</span>',
@@ -24423,34 +24442,77 @@
     group.className = 'hist-time-group';
     group.id = 'reportsJustNowGroup';
     group.innerHTML = '<div class="hist-time-label"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>Just now</div>';
+    // Insert after the pinned Upcoming/Scheduled section (if present) so it stays on top.
+    var upcoming = document.getElementById('reportsUpcomingGroup');
+    wrap.insertBefore(group, upcoming ? upcoming.nextSibling : wrap.firstChild);
+    return group;
+  }
+
+  // Upcoming/Scheduled is a pinned section at the top of the Reports list —
+  // newly-scheduled (recurring) reports join it instead of a "Just now" group.
+  function ensureReportsUpcomingGroup() {
+    var existing = document.getElementById('reportsUpcomingGroup');
+    if (existing) return existing;
+    var wrap = document.getElementById('reportsHistWrap');
+    var group = document.createElement('div');
+    group.className = 'hist-time-group';
+    group.id = 'reportsUpcomingGroup';
+    group.innerHTML = '<div class="hist-time-label" style="color:var(--accent)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg>Upcoming · Scheduled</div>';
     wrap.insertBefore(group, wrap.firstChild);
     return group;
   }
 
+  // Compute the next send date/time for a recurring report from its chosen
+  // weekdays + time, so the Upcoming section can show real scheduled info.
+  function _nrpComputeNextSend(timeStr, tzLabel) {
+    var dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    var dayNums  = [1, 2, 3, 4, 5];
+    var selected = Array.from(document.querySelectorAll('.nrp-day-btn.active')).map(function(b) {
+      return dayNums[dayNames.indexOf(b.textContent.trim())];
+    }).filter(function(n) { return n != null; });
+
+    var parts = (timeStr || '09:00').split(':');
+    var hh = parseInt(parts[0], 10) || 9, mm = parseInt(parts[1], 10) || 0;
+    var now = new Date();
+    var next = null;
+    for (var add = 0; add < 8; add++) {
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + add, hh, mm, 0, 0);
+      if (selected.length && selected.indexOf(d.getDay()) === -1) continue;
+      if (d <= now) continue;
+      next = d;
+      break;
+    }
+    if (!next) next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7, hh, mm);
+
+    var dateLbl = next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    var timeLbl = next.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    return { date: next, label: dateLbl + ' · ' + timeLbl + (tzLabel ? ' (' + tzLabel + ')' : '') };
+  }
+
   function buildReportHistItem(opts) {
-    var meta = NRP_TYPE_META[opts.type] || NRP_TYPE_META['Progress Report'];
+    var meta = NRP_TYPE_META;
     var visCls   = opts.visibility === 'client' ? 'hist-vis-client' : 'hist-vis-internal';
     var visLabel = opts.visibility === 'client' ? 'Client-facing' : 'Internal';
     var sendBtn  = opts.status !== 'sent'
       ? '<button class="hist-act-btn primary" onclick="sendReportNow(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg>Send Now</button>'
       : '';
     var sentTo = opts.visibility === 'client' ? (opts.recipients || 'No recipients added') : 'Internal team only';
-    return '<div class="hist-item">'
+    var timeLabel = opts.status === 'scheduled' && opts.scheduledLabel ? opts.scheduledLabel : 'Just now';
+    return '<div class="hist-item"' + (opts.status === 'scheduled' ? ' data-scheduled="1"' : '') + '>'
       + '<div class="hist-av" style="background:' + meta.bg + ';color:' + meta.fg + ';"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16">' + meta.icon + '</svg></div>'
       + '<div class="hist-body">'
       +   '<div class="hist-top-row">'
       +     '<span class="hist-cat ' + meta.cls + '">' + meta.cat + '</span>'
       +     '<span class="hist-vis ' + visCls + '">' + visLabel + '</span>'
       +     '<span class="hist-scope"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8l2 2 4-4"/></svg>' + (opts.freq === 'recurring' ? 'Recurring' : 'One-time') + '</span>'
-      +     '<span class="hist-time">Just now</span>'
+      +     '<span class="hist-time">' + timeLabel + '</span>'
       +   '</div>'
       +   '<div class="hist-line"><span class="hist-actor">' + opts.author + '</span> created <span class="hist-obj">' + opts.name + '</span> <span class="hist-diff">' + NRP_STATUS_BADGE[opts.status] + '</span></div>'
       +   '<div class="hist-actions">'
-      +     '<button class="hist-act-btn" onclick="' + (opts.status === 'sent' ? 'openReportPdf(this)' : 'toggleReportPreview(this)') + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>'
+      +     '<button class="hist-act-btn" onclick="viewReport(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg>View Report</button>'
       +     sendBtn
       +   '</div>'
       +   '<div class="hist-report-preview">'
-      +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Type</span><span>' + opts.type + '</span></div>'
       +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Scope</span><span>' + opts.scope + '</span></div>'
       +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Sent to</span><span>' + sentTo + '</span></div>'
       +     '<div class="hist-report-preview-row"><span class="hist-report-preview-label">Summary</span><span>Newly created — content generates once sent.</span></div>'
@@ -24461,54 +24523,51 @@
 
   function submitNrpReport(status) {
     var name = document.getElementById('nrpName').value.trim();
-    var type = document.getElementById('nrpType').value;
-    if (!name || !type) return;
+    if (!name) return;
 
     var msCount = document.querySelectorAll('.nrp-ms-item.checked').length;
     var recipients = Array.from(document.querySelectorAll('.nrp-email-chip'))
       .map(function(c) { return c.textContent.replace('×', '').trim(); })
       .join(', ');
 
-    var group = ensureReportsJustNowGroup();
-    group.insertAdjacentHTML('beforeend', buildReportHistItem({
+    var scheduledLabel = null;
+    if (status === 'scheduled') {
+      var tzSel = document.getElementById('nrpTimezone');
+      var tzLabel = tzSel ? tzSel.value : '';
+      scheduledLabel = _nrpComputeNextSend(document.getElementById('nrpTime').value, tzLabel).label;
+    }
+
+    var itemHtml = buildReportHistItem({
       name: name,
-      type: type,
       status: status,
       visibility: nrpVisibility,
       freq: nrpFreq,
       author: 'John Doe',
       scope: 'TAPP · ' + msCount + ' milestone' + (msCount === 1 ? '' : 's') + ' selected',
-      recipients: recipients
-    }));
+      recipients: recipients,
+      scheduledLabel: scheduledLabel
+    });
+
+    var group = status === 'scheduled' ? ensureReportsUpcomingGroup() : ensureReportsJustNowGroup();
+    group.insertAdjacentHTML('beforeend', itemHtml);
 
     closeNrpModal();
   }
 
   // Toggle the inline report preview panel (used by "View Report")
-  function toggleReportPreview(btn) {
-    var block = btn.closest('.hist-body').querySelector('.hist-report-preview');
-    if (!block) return;
-    block.classList.toggle('open');
-  }
-
   // Manually send a Draft/Scheduled report — records it as its own trackable "sent" event
   function sendReportNow(btn) {
     var item = btn.closest('.hist-item');
     var diff = item.querySelector('.hist-diff');
     if (diff) diff.innerHTML = '<span class="hist-new">Sent</span>';
     btn.remove();
-
-    // Now that it's sent, "View Report" opens the client-facing PDF instead of the draft preview
-    var viewBtn = item.querySelector('.hist-act-btn');
-    if (viewBtn) viewBtn.setAttribute('onclick', 'openReportPdf(this)');
-    var preview = item.querySelector('.hist-report-preview');
-    if (preview) preview.classList.remove('open');
+    item.removeAttribute('data-scheduled');
 
     var name    = (item.querySelector('.hist-obj') || {}).textContent || 'Report';
     var catEl   = item.querySelector('.hist-cat');
-    var catHtml = catEl ? catEl.outerHTML : '<span class="hist-cat">Report</span>';
+    var catHtml = catEl ? catEl.outerHTML : '<span class="hist-cat hc-project-update">Progress Report</span>';
     var avEl    = item.querySelector('.hist-av');
-    var avStyle = avEl ? avEl.getAttribute('style') : 'background:#ecfdf5;color:#059669;';
+    var avStyle = avEl ? avEl.getAttribute('style') : 'background:#eff6ff;color:#1d4ed8;';
     var visClient = !!item.querySelector('.hist-vis-client');
 
     var group = ensureReportsJustNowGroup();
@@ -24527,18 +24586,38 @@
     );
   }
 
-  // Sent reports open as a client-facing PDF document in a new tab (use the browser's
-  // Print dialog to save as an actual .pdf — there's no backend here to generate one).
-  function openReportPdf(btn) {
+  // Representative effort data grouped by milestone, used to render the report
+  // preview/document — modeled on the layout of an actual Pulse progress-report
+  // email (grouped sections, ticket + status + tags per effort).
+  function _reportSampleGroups() {
+    return [
+      { name: 'Push notification delivery engine', efforts: [
+          { ticket: 'TAPP:142', title: 'iOS silent push token refresh handling', status: 'Done', tags: ['Feature', 'High', 'Push Notifications'] },
+          { ticket: 'TAPP:145', title: 'Android FCM retry backoff', status: 'Done', tags: ['Feature', 'Medium', 'Push Notifications'] },
+          { ticket: 'TAPP:151', title: 'Delivery receipt webhook', status: 'Review', tags: ['Feature', 'Medium', 'Push Notifications'] }
+      ]},
+      { name: 'Offline sync conflict resolution', efforts: [
+          { ticket: 'TAPP:158', title: 'Last-write-wins merge strategy for notes', status: 'Review', tags: ['Feature', 'High', 'Offline Sync'] },
+          { ticket: 'TAPP:160', title: 'Conflict banner UI on reconnect', status: 'Unstarted', tags: ['Feature', 'Medium', 'Offline Sync'] }
+      ]},
+      { name: 'Analytics event schema v2', efforts: [
+          { ticket: 'TAPP:163', title: 'Migrate event names to v2 taxonomy', status: 'Unstarted', tags: ['Chore', 'Low', 'Analytics'] },
+          { ticket: 'TAPP:164', title: 'Backfill script for historical events', status: 'Unstarted', tags: ['Chore', 'Low', 'Analytics'] }
+      ]}
+    ];
+  }
+
+  // Unified "View Report" / "View Preview" — sent, scheduled, and draft reports
+  // all open the same document layout (styled after an actual Pulse progress-report
+  // email: dark header, greeting, milestone-grouped efforts with status + tags, CTA).
+  function viewReport(btn) {
     var item = btn.closest('.hist-item');
     var title = (item.querySelector('.hist-obj') || {}).textContent || 'Report';
-    var actorEl = item.querySelector('.hist-actor');
-    var author = actorEl ? actorEl.textContent : 'Pulse (auto-generated)';
-    var catEl = item.querySelector('.hist-cat');
-    var category = catEl ? catEl.textContent : 'Report';
     var visClient = !!item.querySelector('.hist-vis-client');
-    var dateEl = item.querySelector('.hist-time');
-    var sentDate = dateEl ? dateEl.textContent : '';
+    var whenEl = item.querySelector('.hist-time');
+    var whenLabel = whenEl ? whenEl.textContent.trim() : '';
+    var diffText = (item.querySelector('.hist-diff') || {}).textContent || '';
+    var status = /sent/i.test(diffText) ? 'sent' : /scheduled/i.test(diffText) ? 'scheduled' : 'draft';
     var projectName = (document.querySelector('.proj-name') || {}).textContent || 'Project';
 
     var fields = {};
@@ -24548,53 +24627,94 @@
       if (label) fields[label] = value;
     });
 
+    var monthLabel = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
     var win = window.open('', '_blank');
     if (!win) return; // popup blocked — nothing else to do in a static prototype
     win.document.open();
-    win.document.write(buildReportPdfDoc({
-      title: title, author: author, category: category, visClient: visClient,
-      sentDate: sentDate, projectName: projectName, fields: fields
+    win.document.write(buildReportDoc({
+      title: title, status: status, whenLabel: whenLabel,
+      visibility: visClient ? 'client' : 'internal',
+      recipients: fields['Sent to'], scope: fields['Scope'],
+      projectName: projectName, monthLabel: monthLabel,
+      groups: _reportSampleGroups()
     }));
     win.document.close();
   }
 
-  function buildReportPdfDoc(opts) {
+  function buildReportDoc(opts) {
     var esc = function(s) { return (s || '').replace(/</g, '&lt;'); };
-    var rows = ['Scope', 'Sent to', 'Summary'].filter(function(k) { return opts.fields[k]; }).map(function(k) {
-      return '<div class="rpt-row"><div class="rpt-row-label">' + k + '</div><div class="rpt-row-val">' + esc(opts.fields[k]) + '</div></div>';
+    var statusStyle = {
+      Done:      'background:#ecfdf5;color:#059669;border:1px solid #a7f3d0',
+      Review:    'background:#fff7ed;color:#c2410c;border:1px solid #fed7aa',
+      Unstarted: 'background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0'
+    };
+
+    var groupsHtml = (opts.groups || []).map(function(g) {
+      var effortsHtml = g.efforts.map(function(e, i) {
+        var tagsHtml = (e.tags || []).map(function(t) {
+          return '<span style="display:inline-block;background:#f9fafb;color:#475569;font-size:12px;padding:2px 8px;border-radius:4px;border:1px solid #e2e8f0;margin-right:4px;margin-bottom:4px">' + esc(t) + '</span>';
+        }).join('');
+        var pill = statusStyle[e.status] || statusStyle.Unstarted;
+        return '<div style="' + (i > 0 ? 'border-top:1px solid #e5e7eb;padding-top:16px;margin-top:16px;' : '') + '">'
+          + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;">'
+          +   '<div><span style="font-size:14px;font-weight:600;color:#2563eb;margin-right:8px;">' + esc(e.ticket) + '</span><span style="color:#111827;font-weight:500;">' + esc(e.title) + '</span></div>'
+          +   '<span style="display:inline-block;padding:4px 12px;font-size:12px;font-weight:500;line-height:1;border-radius:9999px;white-space:nowrap;' + pill + '">' + esc(e.status) + '</span>'
+          + '</div>'
+          + '<div>' + tagsHtml + '</div>'
+          + '</div>';
+      }).join('');
+      return '<div style="margin-bottom:24px;background-color:#f3f4f6;padding:24px;border-radius:8px;">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">'
+        +   '<h3 style="font-size:18px;font-weight:bold;color:#111827;margin:0;">' + esc(g.name) + '</h3>'
+        +   '<span style="font-size:13px;color:#4b5563;white-space:nowrap;">' + g.efforts.length + ' effort' + (g.efforts.length === 1 ? '' : 's') + '</span>'
+        + '</div>'
+        + effortsHtml
+        + '</div>';
     }).join('');
+
+    var banner = '';
+    if (opts.status === 'scheduled') {
+      banner = '<div style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:24px;">Scheduled to send <strong>' + esc(opts.whenLabel) + '</strong> — this is a live preview of what will be included.</div>';
+    } else if (opts.status === 'draft') {
+      banner = '<div style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:24px;">Draft — not yet sent. Finish setup before sending.</div>';
+    }
+
+    var whenMeta = opts.status === 'sent' ? 'Sent ' + esc(opts.whenLabel)
+      : opts.status === 'scheduled' ? 'Scheduled for ' + esc(opts.whenLabel)
+      : 'Not yet scheduled';
+    var visPill = opts.visibility === 'client'
+      ? '<span style="background:#eff6ff;color:#1d4ed8;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:700;">Client-facing</span>'
+      : '<span style="background:#f1f5f9;color:#475569;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:700;">Internal</span>';
+    var sentTo = opts.recipients || (opts.visibility === 'client' ? 'No recipients added' : 'Internal team only');
+
     return '<!doctype html><html><head><meta charset="utf-8"><title>' + esc(opts.title) + '</title><style>'
-      + 'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f5f7;margin:0;color:#0f172a;}'
-      + '.rpt-actions{position:sticky;top:0;background:#fff;border-bottom:1px solid #e2e8f0;padding:12px 24px;display:flex;justify-content:flex-end;gap:8px;}'
+      + 'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f5f7;margin:0;color:#111827;}'
+      + '.rpt-actions{position:sticky;top:0;background:#fff;border-bottom:1px solid #e2e8f0;padding:12px 24px;display:flex;justify-content:flex-end;gap:8px;z-index:10;}'
       + '.rpt-btn{font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;border:1px solid #3b5bdb;background:#3b5bdb;color:#fff;cursor:pointer;font-family:inherit;}'
-      + '.rpt-doc{max-width:720px;margin:32px auto;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:40px 48px 48px;}'
-      + '.rpt-brand{font-size:12px;font-weight:700;letter-spacing:.4px;color:#3b5bdb;text-transform:uppercase;margin-bottom:6px;}'
-      + '.rpt-proj{font-size:13px;color:#64748b;margin-bottom:18px;}'
-      + '.rpt-title{font-size:26px;font-weight:700;margin:0 0 18px;}'
-      + '.rpt-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;padding:18px 0;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;margin-bottom:24px;}'
-      + '.rpt-meta-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#94a3b8;margin-bottom:2px;}'
-      + '.rpt-meta-val{font-size:13.5px;color:#0f172a;font-weight:500;}'
-      + '.rpt-vis{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;}'
-      + '.rpt-vis-client{background:#eff6ff;color:#1d4ed8;} .rpt-vis-internal{background:#f1f5f9;color:#475569;}'
-      + '.rpt-row{margin-bottom:16px;} .rpt-row:last-child{margin-bottom:0;}'
-      + '.rpt-row-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#94a3b8;margin-bottom:4px;}'
-      + '.rpt-row-val{font-size:14px;line-height:1.6;color:#1e293b;}'
-      + '.rpt-footer{margin-top:32px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;}'
-      + '@media print{.rpt-actions{display:none;} body{background:#fff;} .rpt-doc{border:none;margin:0;max-width:none;}}'
+      + '.rpt-page{max-width:720px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);}'
+      + '.rpt-hdr{background:#111827;color:#fff;padding:24px;text-align:center;}'
+      + '.rpt-hdr-period{font-size:14px;font-weight:500;margin-bottom:8px;opacity:.85;}'
+      + '.rpt-hdr-brand{font-size:28px;font-weight:bold;}'
+      + '.rpt-body{padding:32px;}'
+      + '.rpt-meta-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:12px;color:#4b5563;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #e5e7eb;}'
+      + '.rpt-cta{text-align:center;margin:8px 0 28px;}'
+      + '.rpt-cta a{display:inline-block;padding:12px 24px;background:#9333ea;color:#fff;border-radius:8px;font-weight:500;text-decoration:none;}'
+      + '.rpt-footer{border-top:1px solid #e5e7eb;padding-top:20px;text-align:center;font-size:11px;color:#94a3b8;}'
+      + '@media print{.rpt-actions{display:none;} body{background:#fff;} .rpt-page{box-shadow:none;margin:0;max-width:none;border-radius:0;}}'
       + '</style></head><body>'
       + '<div class="rpt-actions"><button class="rpt-btn" onclick="window.print()">Print / Save as PDF</button></div>'
-      + '<div class="rpt-doc">'
-      +   '<div class="rpt-brand">Pulse</div>'
-      +   '<div class="rpt-proj">' + esc(opts.projectName) + ' &middot; ' + esc(opts.category) + '</div>'
-      +   '<div class="rpt-title">' + esc(opts.title) + '</div>'
-      +   '<div class="rpt-meta">'
-      +     '<div><div class="rpt-meta-lbl">Sent</div><div class="rpt-meta-val">' + esc(opts.sentDate) + '</div></div>'
-      +     '<div><div class="rpt-meta-lbl">Visibility</div><div class="rpt-meta-val"><span class="rpt-vis ' + (opts.visClient ? 'rpt-vis-client' : 'rpt-vis-internal') + '">' + (opts.visClient ? 'Client-facing' : 'Internal') + '</span></div></div>'
-      +     '<div><div class="rpt-meta-lbl">Prepared by</div><div class="rpt-meta-val">' + esc(opts.author) + '</div></div>'
-      +     '<div><div class="rpt-meta-lbl">Type</div><div class="rpt-meta-val">' + esc(opts.fields['Type'] || opts.category) + '</div></div>'
+      + '<div class="rpt-page">'
+      +   '<div class="rpt-hdr"><div class="rpt-hdr-period">' + esc(opts.monthLabel) + '</div><div class="rpt-hdr-brand">Pulse</div></div>'
+      +   '<div class="rpt-body">'
+      +     banner
+      +     '<div class="rpt-meta-bar">' + visPill + '<span>' + whenMeta + '</span><span>&middot;</span><span>Sent to: ' + esc(sentTo) + '</span></div>'
+      +     '<p style="color:#374151;margin:0 0 20px;">Hi team,</p>'
+      +     '<p style="color:#4b5563;margin:0 0 28px;">Here&rsquo;s an overview of <strong>' + esc(opts.projectName) + '</strong>&rsquo;s progress' + (opts.scope ? ' — ' + esc(opts.scope) : '') + '.</p>'
+      +     groupsHtml
+      +     '<div class="rpt-cta"><a href="#">Open in Pulse &rarr;</a></div>'
+      +     '<div class="rpt-footer">Generated by Pulse &middot; This document reflects the report ' + (opts.status === 'sent' ? 'as sent' : 'as it will appear') + '.</div>'
       +   '</div>'
-      +   rows
-      +   '<div class="rpt-footer">Generated by Pulse &middot; This document reflects the report as sent.</div>'
       + '</div>'
       + '</body></html>';
   }

@@ -149,7 +149,8 @@
       "Bash(git stash *)",
       "Bash(pkill -f \"http.server 8743\")",
       "Bash(awk 'NR==8830,NR==8845{print NR\": \"$0}' project-detail.html)",
-      "Bash(grep -n \"tab-team\\\\\">$\\\\|<!-- TAB: NOTES -->\\\\|id=\\\\\"tab-notes\\\\\"\" project-detail.html)"
+      "Bash(grep -n \"tab-team\\\\\">$\\\\|<!-- TAB: NOTES -->\\\\|id=\\\\\"tab-notes\\\\\"\" project-detail.html)",
+      "Bash(python3)"
     ]
   }
 }
