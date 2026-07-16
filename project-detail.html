@@ -884,16 +884,6 @@
   .note-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
   .note-toolbar .rev-search { flex: 1; max-width: 320px; }
 
-  /* Period filter is hidden by default — this icon reveals it */
-  .note-period-toggle-btn {
-    width: 32px; height: 32px; border-radius: var(--radius-md); background: transparent;
-    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--text-secondary); transition: all .12s; flex-shrink: 0;
-  }
-  .note-period-toggle-btn svg { width: 14px; height: 14px; }
-  .note-period-toggle-btn:hover { background: var(--bg-surface); color: var(--text-primary); }
-  .note-period-toggle-btn.active { color: var(--accent); background: var(--accent-light); border-color: var(--accent-border); }
-
   .note-view-toggle { display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
   .note-view-btn {
     display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; font-family: var(--font);
@@ -913,7 +903,7 @@
   .note-filter-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 
   .note-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
-  .note-list.list-view { display: flex; flex-direction: column; gap: 14px; }
+  .note-list.list-view { display: flex; flex-direction: column; gap: 14px; align-items: stretch; }
   .note-list.list-view .note-card { padding: 12px 16px; }
   .note-list.list-view .note-card.expanded { padding: 16px 20px; }
   .note-list.list-view .note-card-hdr { margin-bottom: 0; }
@@ -7349,22 +7339,6 @@
           <div class="rev-search">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
             <input type="text" placeholder="Search notes...">
-          </div>
-          <button class="note-period-toggle-btn" id="notePeriodToggleBtn" onclick="toggleNotePeriodVisibility()" title="Filter by period" data-tip="Filter by period">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6h12"/><path d="M5 1v4M11 1v4"/></svg>
-          </button>
-          <div class="ov-period-wrap" id="notePeriodWrap" style="display:none">
-            <button class="ov-period-btn" onclick="toggleNotePeriodDrop(event)">
-              <span id="notePeriodLabel">This week</span>
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
-            </button>
-            <div class="ov-period-drop" id="notePeriodDrop">
-              <div class="ov-period-opt active" onclick="setNotePeriod('week', this)">This week</div>
-              <div class="ov-period-opt" onclick="setNotePeriod('lastweek', this)">Last week</div>
-              <div class="ov-period-opt" onclick="setNotePeriod('lastmonth', this)">Last month</div>
-              <div class="ov-period-sep"></div>
-              <div class="ov-period-opt" onclick="setNotePeriod('custom', this)">Custom period…</div>
-            </div>
           </div>
           <div class="note-view-toggle">
             <button class="note-view-btn active" id="noteViewCards" onclick="setNoteView('cards')"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Grid</button>
@@ -24089,36 +24063,6 @@
   });
 
   // ── Notes tab: toolbar + filters ──
-  var notePeriodLabels = { week: 'This week', lastweek: 'Last week', lastmonth: 'Last month', custom: 'Custom period' };
-
-  // Period selection is hidden by default — this reveals/hides it.
-  function toggleNotePeriodVisibility() {
-    var wrap = document.getElementById('notePeriodWrap');
-    var btn = document.getElementById('notePeriodToggleBtn');
-    if (!wrap) return;
-    var show = wrap.style.display === 'none';
-    wrap.style.display = show ? '' : 'none';
-    if (btn) btn.classList.toggle('active', show);
-    if (!show) document.getElementById('notePeriodDrop').classList.remove('open');
-  }
-
-  function toggleNotePeriodDrop(e) {
-    e.stopPropagation();
-    document.getElementById('notePeriodDrop').classList.toggle('open');
-  }
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.note-toolbar .ov-period-wrap')) {
-      var d = document.getElementById('notePeriodDrop');
-      if (d) d.classList.remove('open');
-    }
-  });
-  function setNotePeriod(period, el) {
-    document.querySelectorAll('#notePeriodDrop .ov-period-opt').forEach(function(o) { o.classList.remove('active'); });
-    el.classList.add('active');
-    document.getElementById('notePeriodDrop').classList.remove('open');
-    document.getElementById('notePeriodLabel').textContent = notePeriodLabels[period];
-  }
-
   function setNoteView(mode) {
     document.getElementById('noteViewCards').classList.toggle('active', mode === 'cards');
     document.getElementById('noteViewList').classList.toggle('active', mode === 'list');
