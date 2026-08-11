@@ -12,7 +12,7 @@ pulse-app/
 │   └── pulse.js           ← Shared utilities (navigation, tag inputs, kanban DnD, toast)
 ├── index.html             ← Dashboard (PM / Developer / Designer / QA role switcher)
 ├── projects.html          ← Current Projects (card grid + table view, search & filter)
-├── project-detail.html    ← Project Detail (Overview tab + Efforts Kanban board)
+├── project-detail.html    ← Project Detail (Overview, Efforts board, Milestones, Reviews, …)
 ├── new-project.html       ← New Project Wizard (5-step guided form)
 └── README.md              ← This file
 ```
@@ -37,7 +37,24 @@ Workspace view for all assigned projects.
 ### `project-detail.html` — Project Detail
 Full project view with tab navigation.
 - **Overview tab**: KPI cards, project info, work summary, recent activity, team members
-- **Efforts tab**: Full Kanban board with 5 columns, drag-and-drop, blocked card highlighting
+- **Efforts tab**: Kanban / Grouped / Sprint views over one dataset, with faceted filters,
+  search, CSV export, drag-and-drop, flagging, in-app time tracking, a minimize dock and
+  board settings (column ⇄ status-tag mapping)
+
+#### Efforts data model
+Three fields are modelled separately on purpose, because collapsing them is what makes
+status tags drift out of step with the board:
+
+| Field | Meaning |
+| --- | --- |
+| `state` | which board column the effort sits in (changes on drag) |
+| `statusTag` | the project-wide status vocabulary other teams and reports read |
+| `customState` | an optional team nuance a column can't express (*Waiting on client*, *Needs spec*, …) |
+
+A board sets `autoStatus: true` to keep `statusTag` in step with `state` on every move, or
+`false` to leave it manual — in which case **Board settings** reports the drift and offers a
+one-click realign. `Blocked` belongs in `customState`; flagging is separate again, and marks
+anything needing attention, not only blockers.
 
 ### `new-project.html` — New Project Wizard
 5-step guided project creation flow (no scroll, wizard pattern).
