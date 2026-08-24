@@ -45,6 +45,23 @@
     --radius-lg: 10px;
     --radius-xl: 12px;
 
+    /* ── PULSE Master design-system colours (Figma file MkxROR0nFkrUGtNbD4zutv).
+         Named after the file's own variables so Figma work maps straight on. ── */
+    --fig-gainsboro:     #DCD9DF;   /* Basic/Gainsboro      — card frame + rail */
+    --fig-silver:        #B5B2B8;   /* Basic/Silver Metalic — hairlines, badge text */
+    --fig-gray:          #9A9A9A;   /* Basic/Gray           — milestone/sprint, dates */
+    --fig-raising-black: #69676C;   /* Basic/Raising Black  — footer icons */
+    --fig-slate:         #545257;   /* review + footer labels */
+    --fig-ink:           #3E3A42;   /* card title */
+    --fig-accepted:      #2FD398;   /* State/Accepted */
+    --fig-denied:        #F53759;   /* State/Denied */
+    --fig-warning:       #F5C037;   /* State/Warning */
+    --fig-green-dark:    #3B9C79;   /* Pill/Green Dark */
+    --fig-yellow:        #BD9F02;   /* Pill/Yellow — priority meter */
+    --fig-gray-50:       #F9FAFB;   /* gray/50  — checkbox face */
+    --fig-gray-100:      #F3F4F6;   /* gray/100 — tag badges */
+    --fig-id:            rgba(142,84,233,.92);  /* effort-id pill */
+
     /* ── Typography scale ── */
     --fs-xs:   10px;   /* tiny badges, pills, uppercase labels */
     --fs-sm:   12px;   /* captions, metadata, helper text */
@@ -23886,8 +23903,11 @@ function toggleSidebarCollapse(){
   .ef-board::-webkit-scrollbar-thumb { background: #cbd2dc; border-radius: 99px; }
   .ef-board.grabbing { cursor: grabbing; }
 
+  /* 320px gives the card its designed 296px width once the 8px gutters in
+     .ef-cards and a possible 4px column scrollbar are taken off, so the Figma
+     card renders at its intended size rather than compressed. */
   .ef-col {
-    display: flex; flex-direction: column; width: 272px; min-width: 272px;
+    display: flex; flex-direction: column; width: 320px; min-width: 320px;
     max-height: 100%; background: #e4e6ec; border-radius: var(--radius-xl);
     flex-shrink: 0; transition: background .12s, box-shadow .12s;
   }
@@ -23936,60 +23956,12 @@ function toggleSidebarCollapse(){
   .ef-col-add svg { width: 11px; height: 11px; }
   .ef-col-empty { font-size: 12px; color: #8b93a3; text-align: center; padding: 18px 10px; line-height: 1.5; }
 
-  /* ─── EFFORT CARD ─── */
-  .ef-card {
-    position: relative; background: var(--bg-white); border: 1px solid var(--border);
-    border-radius: var(--radius-lg); padding: 10px 11px 10px 13px; cursor: grab;
-    transition: border-color .12s, box-shadow .12s, transform .12s;
-  }
-  .ef-card::before {
-    content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px;
-    border-radius: 0 3px 3px 0; background: var(--ef-accent, transparent);
-  }
-  .ef-card:hover { border-color: var(--border-strong); box-shadow: 0 3px 10px rgba(15,23,42,.08); }
-  .ef-card.dragging { opacity: .45; transform: rotate(1.5deg) scale(.97); cursor: grabbing; }
-  .ef-card.drop-before { box-shadow: 0 -3px 0 -1px var(--accent); }
-  .ef-card.drop-after  { box-shadow: 0 3px 0 -1px var(--accent); }
-
-  /* Flagged — amber wash + amber rail. Reserved for "needs attention",
-     which is broader than (and not the same as) a Blocked custom state. */
-  .ef-card.flagged { background: #fffcf3; border-color: #fde68a; }
-  .ef-card.flagged::before { background: #f59e0b !important; }
-  .ef-card.flagged:hover { border-color: #fcd34d; box-shadow: 0 3px 10px rgba(180,83,9,.12); }
-  .ef-card.done { background: #fbfcfd; }
-  .ef-card.done .ef-card-title { color: var(--text-secondary); text-decoration: line-through; text-decoration-color: var(--border-strong); }
-
-  .ef-card-top { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
-  .ef-card-id { font-size: 10px; font-family: var(--font-mono); font-weight: 500; color: var(--text-muted); letter-spacing: .2px; }
+  /* ─── SHARED PILLS, AVATARS & DOTS ───
+     Used by the grouped rows, sprint rows, effort detail, effort form and the
+     minimize dock — not just the board card, so they live outside the card
+     block below. */
   .ef-type-dot { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; }
-  .ef-card-flag-ico { width: 12px; height: 12px; color: #d97706; flex-shrink: 0; }
-  .ef-card-opts {
-    margin-left: auto; width: 20px; height: 20px; border-radius: var(--radius-sm);
-    background: transparent; border: none; color: var(--text-muted); cursor: pointer;
-    display: flex; align-items: center; justify-content: center; font-size: 14px;
-    opacity: 0; transition: opacity .1s, background .1s; line-height: 1; padding: 0; flex-shrink: 0;
-  }
-  .ef-card:hover .ef-card-opts { opacity: 1; }
-  .ef-card-opts:hover { background: var(--bg-surface); color: var(--text-primary); }
 
-  /* Clamped at 4 lines so an unusually long name can't turn one card into a
-     column. The full name is always available in the detail view and tooltip. */
-  .ef-card-title {
-    font-size: 13.5px; font-weight: 500; color: var(--text-primary); line-height: 1.4; margin-bottom: 6px;
-    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-    overflow-wrap: anywhere;   /* a pasted URL in the name must wrap, not clip */
-  }
-  .ef-card-flagnote {
-    display: flex; align-items: flex-start; gap: 5px; font-size: 11px; line-height: 1.45;
-    color: #92400e; background: #fef3c7; border: 1px solid #fde68a;
-    border-radius: var(--radius-sm); padding: 5px 7px; margin-bottom: 7px;
-  }
-  .ef-card-flagnote svg { width: 11px; height: 11px; flex-shrink: 0; margin-top: 1.5px; }
-  .ef-card-flagnote span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-  .ef-card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
-
-  /* Pills — one shape, colour carries the meaning */
   .ef-pill { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: var(--radius-sm); line-height: 1.6; white-space: nowrap; }
   .ef-pill-prio { display: inline-flex; align-items: center; gap: 4px; }
   .ef-pill-prio::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
@@ -24002,25 +23974,170 @@ function toggleSidebarCollapse(){
   .ef-pill-cstate.neutral { background: #f1f5f9; color: #475569; border: 1px solid #dbe3ec; }
   .ef-pill-ms { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border); font-weight: 500; }
 
-  .ef-card-foot { display: flex; align-items: center; gap: 8px; }
   .ef-av {
     width: 21px; height: 21px; border-radius: 50%; display: flex; align-items: center;
     justify-content: center; font-size: 8.5px; font-weight: 700; flex-shrink: 0;
   }
   .ef-av-empty { background: var(--bg-surface); color: var(--text-muted); border: 1px dashed var(--border-strong); }
-  .ef-meta { display: flex; align-items: center; gap: 3px; font-size: 11.5px; color: var(--text-secondary); white-space: nowrap; }
-  .ef-meta svg { width: 11px; height: 11px; opacity: .65; }
-  .ef-meta.overdue { color: #b91c1c; font-weight: 500; }
-  .ef-meta.overdue svg { opacity: 1; }
-  .ef-meta.running { color: var(--accent); font-weight: 600; }
-  .ef-meta-sep { flex: 1; }
-  .ef-card-est { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; }
-  .ef-est-row { display: flex; align-items: center; justify-content: space-between; font-size: 10.5px; color: var(--text-muted); }
-  .ef-est-track { height: 3px; background: var(--bg-surface2); border-radius: 99px; overflow: hidden; }
-  .ef-est-fill { height: 100%; border-radius: 99px; background: var(--accent); }
-  .ef-est-fill.over { background: #f59e0b; }
-  .ef-done-mark { display: flex; align-items: center; gap: 3px; font-size: 11.5px; color: var(--success); font-weight: 500; }
-  .ef-done-mark svg { width: 11px; height: 11px; }
+  .ef-av-empty svg { width: 11px; height: 11px; }
+
+  /* Flag glyph shown on grouped/sprint rows */
+  .ef-card-flag-ico { width: 12px; height: 12px; color: #d97706; flex-shrink: 0; }
+  /* ─── EFFORT CARD — PULSE Master, Figma node 13088:8512 ───
+     Geometry is taken from the Figma frame: a 16px "Task conditions" rail plus
+     a white panel (2px gainsboro frame, 4px radius, 4/8/4/10 padding), stacked
+     as body → hairline divider → 20px footer. Spacing values below are the
+     frame's own numbers, so they read oddly precise on purpose (2.5px bars,
+     14.3px avatars, 0.41px pill borders).
+     Colours come from the file's named variables, declared as --fig-* tokens
+     in :root so later Figma work maps onto them directly. */
+  .ef-card {
+    display: flex; align-items: stretch;
+    background: var(--fig-gainsboro); border-radius: 4px;
+    cursor: grab; position: relative;
+    transition: box-shadow .12s, background .12s;
+  }
+  .ef-card:hover { box-shadow: 0 3px 10px rgba(15,23,42,.10); }
+  .ef-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .ef-card.dragging { opacity: .45; transform: rotate(1.5deg) scale(.97); cursor: grabbing; }
+  .ef-card.drop-before { box-shadow: 0 -3px 0 -1px var(--accent); }
+  .ef-card.drop-after  { box-shadow: 0 3px 0 -1px var(--accent); }
+
+  /* Task-conditions rail: 12px slots, 8px apart, hairline centred in each gap */
+  .ef-card-rail {
+    width: 16px; min-width: 16px; padding: 10px 2px 0;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .ef-cond { width: 12px; height: 12px; flex-shrink: 0; display: block; }
+  .ef-cond svg { display: block; width: 12px; height: 12px; }
+  .ef-cond-grip { color: #000; cursor: grab; }
+  .ef-cond-sep { width: 5px; height: .5px; background: var(--fig-silver); margin: 3.75px 0; flex-shrink: 0; }
+
+  /* White panel */
+  .ef-card-panel {
+    flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px;
+    background: var(--bg-white); border: 2px solid var(--fig-gainsboro);
+    border-radius: 4px; padding: 4px 8px 4px 10px;
+  }
+  /* Flagged efforts get a warm panel so they read at column level; the amber
+     warning marker in the rail is the design's own signal for the same thing. */
+  .ef-card.flagged .ef-card-panel { background: #fffdf6; }
+  .ef-card.selected .ef-card-panel { box-shadow: inset 0 0 0 1px var(--accent); }
+
+  .ef-card-body { display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
+  .ef-card-blk { display: flex; flex-direction: column; gap: 6px; }
+
+  .ef-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 5px; }
+  .ef-card-headmain { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .ef-card-headside { width: 16px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  .ef-card-idpill {
+    align-self: flex-start; display: inline-flex; align-items: center; justify-content: center;
+    min-width: 29px; padding: 4px; border-radius: 82px;
+    font-family: var(--font); font-size: 12px; font-weight: 500; line-height: 1;
+    letter-spacing: .24px; color: var(--fig-id); white-space: nowrap;
+  }
+  .ef-card-title {
+    font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 20px;
+    letter-spacing: .14px; color: var(--fig-ink); overflow-wrap: anywhere;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .ef-card-opts {
+    width: 16px; height: 16px; padding: 0; border: none; background: transparent;
+    color: #000; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    opacity: .85; transition: opacity .1s; flex-shrink: 0;
+  }
+  .ef-card:hover .ef-card-opts, .ef-card-opts:focus-visible { opacity: 1; }
+  .ef-card-opts svg { width: 16px; height: 16px; display: block; }
+
+  .ef-card-check {
+    width: 12px; height: 12px; flex-shrink: 0; cursor: pointer; padding: 0;
+    background: var(--fig-gray-50); border: .26px solid var(--fig-silver);
+    border-radius: 2.078px; display: flex; align-items: center; justify-content: center;
+    transition: background .1s, border-color .1s;
+  }
+  .ef-card-check:hover { border-color: var(--accent); }
+  .ef-card-check svg { width: 8px; height: 8px; stroke: #fff; stroke-width: 3; display: none; }
+  .ef-card.selected .ef-card-check { background: var(--accent); border-color: var(--accent); }
+  .ef-card.selected .ef-card-check svg { display: block; }
+
+  .ef-card-badges { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 4px; }
+  .ef-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 27px; padding: 4px; border-radius: 6px;
+    background: var(--fig-gray-100); color: var(--fig-silver);
+    font-family: var(--font); font-size: 8px; font-weight: 500; line-height: 1.5;
+    text-align: center; white-space: nowrap;
+  }
+
+  /* Per-discipline review state */
+  .ef-card-reviews { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 4px; }
+  .ef-rev {
+    display: inline-flex; align-items: center; gap: 2px;
+    font-family: var(--font); font-size: 12px; line-height: 11px; letter-spacing: .24px;
+    color: var(--fig-slate); white-space: nowrap;
+  }
+  .ef-rev svg { width: 10px; height: 10px; display: block; flex-shrink: 0; }
+
+  /* Milestone + sprint, each behind a left-rounded accepted-green bar */
+  .ef-card-msrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 4px; }
+  .ef-ms { display: inline-flex; align-items: center; gap: 2.5px; min-width: 0; }
+  .ef-ms-bar { width: 2.5px; height: 10px; border-radius: 8px 0 0 8px; background: var(--fig-accepted); flex-shrink: 0; }
+  .ef-ms-txt {
+    font-family: var(--font); font-size: 12px; line-height: 11px; letter-spacing: .24px;
+    color: var(--fig-gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .ef-card-divider { border-top: 1px solid var(--fig-gainsboro); }
+
+  .ef-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 8px; row-gap: 6px; flex-wrap: wrap; min-height: 20px;
+  }
+  .ef-card-kind {
+    font-family: var(--font); font-size: 12px; font-weight: 500; line-height: 20px;
+    color: var(--fig-slate); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .ef-card-avstack { display: flex; align-items: center; flex-shrink: 0; }
+  .ef-fig-av {
+    width: 14.3px; height: 14.3px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font); font-size: 6.5px; font-weight: 700; color: #fff;
+    box-shadow: 0 0 0 .55px #fff;
+  }
+  .ef-card-avstack .ef-fig-av + .ef-fig-av { margin-left: -5px; }
+  .ef-fig-av.more { background: var(--fig-silver); }
+
+  .ef-card-footright { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+  .ef-statepill {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 29px; padding: 6px 8px; border-radius: 24px; border: .41px solid;
+    font-family: var(--font); font-size: 12px; line-height: 1.2; white-space: nowrap;
+  }
+  .ef-card-date {
+    display: inline-flex; align-items: center; gap: 1.6px;
+    font-family: var(--font); font-size: 12px; font-weight: 300; line-height: 11px;
+    letter-spacing: .24px; color: var(--fig-gray); white-space: nowrap;
+  }
+  .ef-card-date svg { width: 13px; height: 13px; display: block; flex-shrink: 0; }
+  .ef-card-date.overdue { color: var(--fig-denied); font-weight: 500; }
+  .ef-card-date.overdue svg path { fill: var(--fig-denied); }
+
+  .ef-card-time { display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0; }
+  .ef-card-time svg { width: 13px; height: 13px; display: block; }
+  .ef-card-time-val { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--accent); }
+  .ef-card-time.running svg path { fill: var(--accent); }
+
+  /* Priority meter: four exported chevrons, rotated -90° and overlapped by 1px
+     exactly as the frame stacks them. Left/top offsets compensate for rotating
+     a 4.03×10.77 box about its centre. */
+  .ef-card-prio { position: relative; width: 11px; height: 13px; flex-shrink: 0; }
+  .ef-prio-ch {
+    position: absolute; left: 3.369px; width: 4.0289px; height: 10.7673px;
+    transform: rotate(-90deg); transform-origin: center; display: block;
+  }
 
   /* ─── GROUPED VIEW ─── */
   .ef-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 24px 24px; }
@@ -25724,6 +25841,7 @@ function toggleSidebarCollapse(){
   var efTimerTick = null;
   var efDetailTab = 'comments';
   var efUndo     = null;                        /* last undoable action */
+  var efSelected = {};                          /* card checkbox selection, by effort id */
 
   /* ══ Helpers ══════════════════════════════════════════════════════════════ */
   function esc(s) {
@@ -25887,48 +26005,172 @@ function toggleSidebarCollapse(){
     var isBlock = /block/i.test(e.customState);
     return '<span class="ef-pill ef-pill-cstate' + (isBlock ? '' : ' neutral') + '">' + esc(e.customState) + '</span>';
   }
-  function timerBadge(e) {
-    if (!efTimer || efTimer.id !== e.id) return '';
-    return '<span class="ef-meta running">' + svg(ICO.clock, 1.8) + '<span data-eftimer="1">' + elapsedStr() + '</span></span>';
+  /* ── Exported Figma assets (node 13088:8512) ────────────────────────────────
+     Path data is copied verbatim from the SVGs Figma exported, so the glyphs
+     are the designed ones rather than redrawings. Each entry keeps its own
+     viewBox — the three rail markers deliberately carry the y-offset they had
+     inside the 12×63 "Task conditions" sprite (0/20/40) instead of being
+     re-originned, which keeps their paths byte-identical to the export. */
+  var FIG = {
+    grip:  { vb: '0 0 12 12', d: '<path d="M5.25 9.75H3.75V8.25H5.25V9.75ZM8.25 8.25V9.75H6.75V8.25H8.25ZM5.25 6.75H3.75V5.25H5.25V6.75ZM8.25 6.75H6.75V5.25H8.25V6.75ZM5.25 3.75H3.75V2.25H5.25V3.75ZM8.25 3.75H6.75V2.25H8.25V3.75Z" fill="currentColor"/>' },
+    bug:   { vb: '0 20 12 12', d: '<path d="M11.1863 27.5L11.3138 26.75L9.375 26.4312V24.875C9.375 24.845 9.375 24.8188 9.375 24.7888L11.2725 24.2787L11.0813 23.555L9.27 24.0388C9.14667 23.5726 8.92488 23.1382 8.61956 22.765C8.31424 22.3918 7.93248 22.0883 7.5 21.875V20.75H6.75V21.5863C6.25661 21.4712 5.74339 21.4712 5.25 21.5863V20.75H4.5V21.875C4.0662 22.0907 3.68392 22.3973 3.37915 22.7739C3.07438 23.1505 2.85426 23.5883 2.73375 24.0575L0.9225 23.555L0.75 24.2787L2.625 24.7888C2.625 24.8188 2.625 24.845 2.625 24.875V26.4312L0.69 26.75L0.81 27.5L2.625 27.1925C2.63357 27.6552 2.73828 28.1111 2.9325 28.5312L1.23375 30.2338L1.76625 30.7662L3.3375 29.1912C3.65308 29.5964 4.05694 29.9241 4.51833 30.1496C4.97972 30.375 5.48648 30.4922 6 30.4922C6.51352 30.4922 7.02028 30.375 7.48167 30.1496C7.94306 29.9241 8.34692 29.5964 8.6625 29.1912L10.2338 30.7662L10.7663 30.2338L9.06375 28.5312C9.25926 28.1114 9.36526 27.6555 9.375 27.1925L11.1863 27.5ZM5.625 29.72C5.00078 29.6299 4.42986 29.3181 4.01669 28.8416C3.60353 28.365 3.37574 27.7557 3.375 27.125V24.875H5.625V29.72ZM3.48375 24.125C3.64489 23.5827 3.9769 23.107 4.43032 22.7688C4.88373 22.4305 5.4343 22.2477 6 22.2477C6.5657 22.2477 7.11627 22.4305 7.56968 22.7688C8.0231 23.107 8.35511 23.5827 8.51625 24.125H3.48375ZM8.625 27.125C8.62426 27.7557 8.39647 28.365 7.98331 28.8416C7.57014 29.3181 6.99922 29.6299 6.375 29.72V24.875H8.625V27.125Z" fill="currentColor"/>' },
+    warn:  { vb: '0 40 12 12', d: '<path d="M0.968925 45.4714L5.47125 40.9689C5.61145 40.8288 5.80159 40.75 5.99985 40.75C6.19811 40.75 6.38825 40.8288 6.52845 40.9689L11.0311 45.4714C11.1713 45.6116 11.25 45.8018 11.25 46C11.25 46.1983 11.1713 46.3884 11.0311 46.5286L6.52856 51.0311C6.38836 51.1713 6.19822 51.25 5.99996 51.25C5.80171 51.25 5.61157 51.1713 5.47136 51.0311L0.968925 46.5288C0.899488 46.4593 0.844407 46.3769 0.806827 46.2862C0.769247 46.1955 0.749904 46.0983 0.749904 46.0001C0.749904 45.9019 0.769247 45.8047 0.806827 45.714C0.844407 45.6233 0.899488 45.5409 0.968925 45.4714ZM4.125 46.75H7.875V45.25H4.125V46.75Z" fill="#F5C037"/>' },
+    dots:  { vb: '0 0 16 16', d: '<path d="M8 11C8.55228 11 9 11.4477 9 12C9 12.5523 8.55228 13 8 13C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11ZM8 7C8.55228 7 9 7.44772 9 8C9 8.55228 8.55228 9 8 9C7.44772 9 7 8.55228 7 8C7 7.44772 7.44772 7 8 7ZM8 3C8.55228 3 9 3.44772 9 4C9 4.55228 8.55228 5 8 5C7.44772 5 7 4.55228 7 4C7 3.44772 7.44772 3 8 3Z" fill="currentColor"/>' },
+    pass:  { vb: '0 0 10 10', d: '<path d="M4.99973 0.625C6.15998 0.625 7.27302 1.08587 8.09348 1.90625C8.91395 2.72672 9.37473 3.83968 9.37473 5C9.37473 5.86529 9.11815 6.7112 8.63742 7.43066C8.15674 8.14998 7.4738 8.71087 6.67453 9.04199C5.8751 9.37313 4.99488 9.45983 4.14621 9.29102C3.29764 9.12217 2.51777 8.70554 1.90598 8.09375C1.2942 7.48192 0.877508 6.70212 0.70871 5.85352C0.539952 5.00503 0.626767 4.12545 0.957734 3.32617C1.28883 2.52683 1.8497 1.84303 2.56906 1.3623C3.28845 0.881626 4.13453 0.625056 4.99973 0.625ZM6.43527 1.53516C5.75005 1.25133 4.99571 1.17757 4.26828 1.32227C3.54092 1.46698 2.87276 1.82423 2.34836 2.34863C1.82399 2.87306 1.46667 3.54119 1.32199 4.26855C1.17734 4.99594 1.25205 5.75037 1.53586 6.43555C1.81972 7.12053 2.3002 7.70622 2.91672 8.11816C3.53329 8.53011 4.2582 8.74994 4.99973 8.75C5.99429 8.75 6.94881 8.35463 7.65207 7.65137C8.35511 6.94814 8.74973 5.9944 8.74973 5C8.74973 4.2584 8.52986 3.53363 8.11789 2.91699C7.70585 2.30033 7.12047 1.81899 6.43527 1.53516ZM7.18723 3.87988L4.37473 6.69141L2.81223 5.12891L3.25363 4.6875L4.37473 5.80859L6.74484 3.4375L7.18723 3.87988Z" fill="#2FD398"/>' },
+    fail:  { vb: '0 0 10 10', d: '<path d="M5 0.625C7.4375 0.625 9.375 2.5625 9.375 5C9.375 7.4375 7.4375 9.375 5 9.375C2.5625 9.375 0.625 7.4375 0.625 5C0.625 2.5625 2.5625 0.625 5 0.625ZM5 1.25C2.9375 1.25 1.25 2.9375 1.25 5C1.25 7.0625 2.9375 8.75 5 8.75C7.0625 8.75 8.75 7.0625 8.75 5C8.75 2.9375 7.0625 1.25 5 1.25ZM7.1875 3.3125L5.5 5L7.1875 6.6875L6.6875 7.1875L5 5.5L3.3125 7.1875L2.8125 6.6875L4.5 5L2.8125 3.3125L3.3125 2.8125L5 4.5L6.6875 2.8125L7.1875 3.3125Z" fill="#F53759"/>' },
+    wait:  { vb: '0 0 10 10', d: '<path d="M5 0.625C7.40625 0.625 9.375 2.59375 9.375 5C9.375 7.40625 7.40625 9.375 5 9.375C2.59375 9.375 0.625 7.40625 0.625 5C0.625 2.59375 2.59375 0.625 5 0.625ZM5 1.25C2.9375 1.25 1.25 2.9375 1.25 5C1.25 7.0625 2.9375 8.75 5 8.75C7.0625 8.75 8.75 7.0625 8.75 5C8.75 2.9375 7.0625 1.25 5 1.25ZM7.5 4.6875V5.3125H2.5V4.6875H7.5Z" fill="#F5C037"/>' },
+    cal:   { vb: '0 0 13 13', d: '<path d="M10.5625 1.625H8.9375V0.8125H8.125V1.625H4.875V0.8125H4.0625V1.625H2.4375C1.99062 1.625 1.625 1.99062 1.625 2.4375V10.5625C1.625 11.0094 1.99062 11.375 2.4375 11.375H10.5625C11.0094 11.375 11.375 11.0094 11.375 10.5625V2.4375C11.375 1.99062 11.0094 1.625 10.5625 1.625ZM10.5625 10.5625H2.4375V4.875H10.5625V10.5625ZM10.5625 4.0625H2.4375V2.4375H4.0625V3.25H4.875V2.4375H8.125V3.25H8.9375V2.4375H10.5625V4.0625Z" fill="#B5B2B8"/>' },
+    time:  { vb: '0 0 13 13', d: '<path d="M5.3905 0.921751C6.49372 0.702323 7.63742 0.814549 8.67663 1.24499C9.71583 1.67544 10.6044 2.40449 11.2294 3.33972C11.8543 4.27499 12.1873 5.37504 12.1874 6.49988C12.1874 8.00829 11.588 9.45475 10.5214 10.5214C9.45475 11.588 8.00829 12.1874 6.49987 12.1874C5.37504 12.1874 4.27499 11.8543 3.33972 11.2294C2.40449 10.6044 1.67544 9.71583 1.24499 8.67663C0.814547 7.63742 0.702321 6.49372 0.921749 5.3905C1.1412 4.28723 1.68298 3.2738 2.47839 2.47839C3.2738 1.68298 4.28723 1.1412 5.3905 0.921751ZM6.49987 1.62488C5.53589 1.6249 4.59344 1.91068 3.79187 2.44617C2.99018 2.98184 2.36495 3.74385 1.99597 4.63464C1.62707 5.52536 1.53054 6.50548 1.71862 7.45105C1.90672 8.39665 2.3709 9.26538 3.05261 9.94714C3.73433 10.6289 4.60315 11.093 5.5487 11.2811C6.49423 11.4692 7.47441 11.3726 8.36511 11.0038C9.25581 10.6348 10.0179 10.0104 10.5536 9.20886C11.0893 8.40717 11.3749 7.46406 11.3749 6.49988C11.3748 5.20699 10.8613 3.96682 9.94714 3.05261C9.03291 2.13845 7.79275 1.62488 6.49987 1.62488ZM6.90612 6.32898L8.93737 8.36511L8.36511 8.93738L6.09362 6.66687V2.84363H6.90612V6.32898Z" fill="#69676C"/>' },
+    chev:  { vb: '0 0 4.0289 10.7673', d: '<path d="M0.782964 1.33172e-07L3.70555 4.2486C3.91258 4.54965 4.02888 4.9579 4.02888 5.38359C4.02888 5.80927 3.91258 6.21753 3.70555 6.51858L0.782964 10.7672L0.00220793 9.63218L2.92259 5.38359L-2.08737e-07 1.13499L0.782964 1.33172e-07Z" fill="#BD9F02"/>' }
+  };
+  /* Renders one exported asset at its designed size. */
+  function fig(name, cls, style) {
+    var a = FIG[name];
+    return '<svg class="' + (cls || '') + '"' + (style ? ' style="' + style + '"' : '') +
+           ' viewBox="' + a.vb + '" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + a.d + '</svg>';
+  }
+
+  /* State pill colours, keyed by status tag and built from the file's
+     State/* and Pill/* variables. "Completed" is the design's own Done pill. */
+  var FIG_PILL = {
+    'Not Started': { bg: 'rgba(181,178,184,.16)', bd: '#B5B2B8', fg: '#69676C' },
+    'Working':     { bg: 'rgba(245,192,55,.16)',  bd: '#BD9F02', fg: '#BD9F02' },
+    'In Review':   { bg: 'rgba(142,84,233,.12)',  bd: '#8E54E9', fg: '#7C4DD4' },
+    'In QA':       { bg: 'rgba(0,93,180,.12)',    bd: '#005DB4', fg: '#005DB4' },
+    'Blocked':     { bg: 'rgba(245,55,89,.15)',   bd: '#F53759', fg: '#E0233F' },
+    'On Hold':     { bg: 'rgba(154,154,154,.16)', bd: '#9A9A9A', fg: '#69676C' },
+    'Completed':   { bg: 'rgba(47,211,152,.15)',  bd: '#3B9C79', fg: '#3B9C79' },
+    'Cancelled':   { bg: 'rgba(105,103,108,.12)', bd: '#69676C', fg: '#69676C' }
+  };
+
+  /* "Apr/ 15" — the footer date format used in the frame */
+  function fmtFigDate(iso) {
+    if (!iso) return '';
+    var p = iso.slice(0, 10).split('-');
+    return MON[parseInt(p[1], 10) - 1] + '/ ' + parseInt(p[2], 10);
+  }
+
+  /* Reviews collapse to one row per discipline, latest verdict winning, so the
+     card shows "QA ✓  Design ✕  Requirements –" the way the frame does. */
+  var FIG_DISCIPLINE = { QA: 'QA', DESIGN: 'Design', PM: 'Requirements', DEV: 'Code' };
+  var FIG_VERDICT_ICON = { pass: 'pass', fail: 'fail', changes: 'wait', pending: 'wait' };
+  function figReviewRow(e) {
+    var seen = {}, order = [];
+    (e.reviews || []).forEach(function (r) {
+      var p = person(r.who); if (!p) return;
+      var label = FIG_DISCIPLINE[p.role] || p.role;
+      if (!(label in seen)) order.push(label);
+      seen[label] = r.verdict;
+    });
+    if (!order.length) return '';
+    return '<div class="ef-card-reviews">' + order.map(function (label) {
+      var v = seen[label];
+      return '<span class="ef-rev" title="' + esc(label + ' review: ' + label) + '">' +
+             fig(FIG_VERDICT_ICON[v] || 'wait') + esc(label) + '</span>';
+    }).join('') + '</div>';
+  }
+
+  /* Everyone touching the effort: assignee first, then time loggers, then
+     reviewers. Capped at three with a +N, matching the frame's stack. */
+  function figAvatars(e) {
+    var ids = [];
+    function add(id) { if (id && ids.indexOf(id) === -1 && person(id)) ids.push(id); }
+    add(e.assignee);
+    (e.timeLogs || []).forEach(function (l) { add(l.who); });
+    (e.reviews || []).forEach(function (r) { add(r.who); });
+    if (!ids.length) return '';
+    var shown = ids.slice(0, 3), extra = ids.length - shown.length;
+    return '<span class="ef-card-avstack">' + shown.map(function (id) {
+      var p = person(id);
+      return '<span class="ef-fig-av" style="background:' + p.fg + '" title="' + esc(p.name + ' · ' + p.role) + '">' + p.ini + '</span>';
+    }).join('') + (extra ? '<span class="ef-fig-av more" title="' + extra + ' more">+' + extra + '</span>' : '') + '</span>';
+  }
+
+  /* Four-step priority meter. The frame only shipped the Critical variant, so
+     the number of lit chevrons is derived from priority here; geometry, colour
+     and the 1px overlap are the frame's. */
+  var FIG_PRIO_STEPS = { critical: 4, high: 3, medium: 2, low: 1 };
+  var FIG_PRIO_TOPS = [-3.369, -0.349, 2.671, 5.881];
+  function figPriority(e) {
+    var lit = FIG_PRIO_STEPS[e.priority] || 1, h = '';
+    for (var i = 0; i < 4; i++) {
+      h += fig('chev', 'ef-prio-ch', 'top:' + FIG_PRIO_TOPS[3 - i] + 'px;opacity:' + (i < lit ? 1 : .12));
+    }
+    return '<span class="ef-card-prio" title="' + prioOf(e.priority).name + ' priority">' + h + '</span>';
   }
 
   function cardHtml(e) {
-    var t = typeOf(e.type), done = isDone(e), lg = logged(e), over = e.estimate > 0 && lg > e.estimate;
+    var t = typeOf(e.type), c = col(e.board, e.state), lg = logged(e);
+    var tm = efTimer && efTimer.id === e.id;
+    var pill = FIG_PILL[e.statusTag] || FIG_PILL['Not Started'];
+    var flagTip = e.flagged && e.flag ? 'Flagged by ' + (person(e.flag.by) ? person(e.flag.by).name : e.flag.by) + ': ' + e.flag.reason : '';
     var h = '';
-    h += '<div class="ef-card' + (e.flagged ? ' flagged' : '') + (done ? ' done' : '') + '" draggable="true" data-ef="' + e.id + '"' +
-         ' style="--ef-accent:' + (EF_PRIO_ACCENT[e.priority] || '#cbd5e1') + '" tabindex="0" role="button" aria-label="' + esc(e.id + ' ' + e.name) + '">';
-    h +=   '<div class="ef-card-top">';
-    h +=     '<span class="ef-type-dot" style="background:' + t.color + '" title="' + t.name + '"></span>';
-    h +=     '<span class="ef-card-id">' + e.id + '</span>';
-    if (e.flagged) h += '<span class="ef-card-flag-ico" title="Flagged for attention">' + svg(ICO.flag) + '</span>';
-    h +=     '<button class="ef-card-opts" onclick="efCardMenu(event,\'' + e.id + '\')" aria-label="Effort actions">' + svg(ICO.dots) + '</button>';
-    h +=   '</div>';
-    h +=   '<div class="ef-card-title">' + esc(e.name) + '</div>';
-    if (e.flagged && e.flag) {
-      h += '<div class="ef-card-flagnote" title="' + esc(e.flag.reason) + '">' + svg(ICO.flag) + '<span>' + esc(e.flag.reason) + '</span></div>';
+
+    h += '<div class="ef-card' + (e.flagged ? ' flagged' : '') + (efSelected[e.id] ? ' selected' : '') +
+         '" draggable="true" data-ef="' + e.id + '" tabindex="0" role="button" aria-label="' + esc(e.id + ' ' + e.name) + '">';
+
+    /* Task-conditions rail */
+    h +=   '<div class="ef-card-rail">';
+    h +=     '<span class="ef-cond ef-cond-grip" title="Drag to move">' + fig('grip') + '</span>';
+    if (e.type === 'bug') {
+      h +=   '<span class="ef-cond-sep"></span>';
+      h +=   '<span class="ef-cond" title="Bug">' + fig('bug') + '</span>';
     }
-    h +=   '<div class="ef-card-tags">' + priorityPill(e) + customStatePill(e) +
-             (e.tags || []).slice(0, 2).map(function (tg) { return '<span class="ef-pill ef-pill-tag">' + esc(tg) + '</span>'; }).join('') +
-             ((e.tags || []).length > 2 ? '<span class="ef-pill ef-pill-tag">+' + ((e.tags || []).length - 2) + '</span>' : '') +
-           '</div>';
-    h +=   '<div class="ef-card-foot">' + avatar(e.assignee);
-    if (done) {
-      h += '<div class="ef-meta-sep"></div><span class="ef-done-mark">' + svg(ICO.check, 2) + 'Done</span>';
-    } else {
-      if (e.due) h += '<span class="ef-meta' + (isOverdue(e) ? ' overdue' : '') + '" title="Due ' + fmtDateFull(e.due) + (isOverdue(e) ? ' — overdue' : '') + '">' + svg(ICO.cal) + fmtDate(e.due) + '</span>';
-      h += timerBadge(e);
-      h += '<div class="ef-meta-sep"></div>';
-      if ((e.subs || []).length) h += '<span class="ef-meta" title="Sub-efforts">' + svg(ICO.branch) + (e.subs.filter(function (s) { return s.done; }).length) + '/' + e.subs.length + '</span>';
-      if ((e.comments || []).length) h += '<span class="ef-meta" title="Comments">' + svg(ICO.chat) + e.comments.length + '</span>';
+    if (e.flagged || e.customState) {
+      h +=   '<span class="ef-cond-sep"></span>';
+      h +=   '<span class="ef-cond" title="' + esc(flagTip || e.customState) + '">' + fig('warn') + '</span>';
     }
     h +=   '</div>';
-    if (!done && (e.estimate > 0 || lg > 0)) {
-      var pct = e.estimate > 0 ? Math.min(100, Math.round(lg / e.estimate * 100)) : 100;
-      h += '<div class="ef-card-est">' +
-             '<div class="ef-est-row"><span>' + fmtShort(lg) + ' logged</span><span>' + (e.estimate > 0 ? fmtShort(e.estimate) + ' est' : 'no estimate') + '</span></div>' +
-             '<div class="ef-est-track"><div class="ef-est-fill' + (over ? ' over' : '') + '" style="width:' + pct + '%"></div></div>' +
-           '</div>';
+
+    /* White panel */
+    h +=   '<div class="ef-card-panel">';
+    h +=     '<div class="ef-card-body">';
+    h +=       '<div class="ef-card-blk">';
+    h +=         '<div class="ef-card-head">';
+    h +=           '<div class="ef-card-headmain">';
+    h +=             '<span class="ef-card-idpill">' + e.id + '</span>';
+    h +=             '<div class="ef-card-title"' + (flagTip ? ' title="' + esc(flagTip) + '"' : '') + '>' + esc(e.name) + '</div>';
+    h +=           '</div>';
+    h +=           '<div class="ef-card-headside">';
+    h +=             '<button class="ef-card-opts" onclick="efCardMenu(event,\'' + e.id + '\')" aria-label="Effort actions">' + fig('dots') + '</button>';
+    h +=             '<button class="ef-card-check" onclick="efToggleSelect(event,\'' + e.id + '\')" role="checkbox" aria-checked="' + !!efSelected[e.id] + '" aria-label="Select ' + e.id + '">' + svg(ICO.check, 3) + '</button>';
+    h +=           '</div>';
+    h +=         '</div>';
+    if ((e.tags || []).length) {
+      h +=       '<div class="ef-card-badges">' +
+                   (e.tags || []).slice(0, 3).map(function (tg) { return '<span class="ef-badge">' + esc(tg) + '</span>'; }).join('') +
+                   ((e.tags || []).length > 3 ? '<span class="ef-badge">+' + ((e.tags || []).length - 3) + '</span>' : '') +
+                 '</div>';
     }
+    h +=       '</div>';
+    var revRow = figReviewRow(e);
+    var msRow = (e.milestone || e.sprint)
+      ? '<div class="ef-card-msrow">' +
+          (e.milestone ? '<span class="ef-ms" title="Milestone"><span class="ef-ms-bar"></span><span class="ef-ms-txt">' + esc(e.milestone) + '</span></span>' : '<span></span>') +
+          (e.sprint && sprint(e.sprint) ? '<span class="ef-ms" title="Sprint"><span class="ef-ms-bar"></span><span class="ef-ms-txt">' + esc(sprint(e.sprint).name) + '</span></span>' : '') +
+        '</div>'
+      : '';
+    if (revRow || msRow) h += '<div class="ef-card-blk" style="gap:12px">' + revRow + msRow + '</div>';
+    h +=     '</div>';
+
+    h +=     '<div class="ef-card-divider"></div>';
+
+    h +=     '<div class="ef-card-footer">';
+    h +=       '<span class="ef-card-kind">' + esc(t.name) + '</span>';
+    h +=       figAvatars(e);
+    h +=       '<span class="ef-card-footright">';
+    h +=         '<span class="ef-statepill" style="background:' + pill.bg + ';border-color:' + pill.bd + ';color:' + pill.fg +
+                 '" title="' + esc(c.name + ' · status tag ' + e.statusTag) + '">' + esc(c.name) + '</span>';
+    if (e.due) {
+      h +=       '<span class="ef-card-date' + (isOverdue(e) ? ' overdue' : '') + '" title="Due ' + fmtDateFull(e.due) + (isOverdue(e) ? ' — overdue' : '') + '">' + fig('cal') + fmtFigDate(e.due) + '</span>';
+    }
+    h +=         '<span class="ef-card-time' + (tm ? ' running' : '') + '" title="' +
+                 (tm ? 'Timer running' : esc(fmtDur(lg) + ' logged' + (e.estimate ? ' of ' + fmtDur(e.estimate) : ''))) + '">' +
+                 fig('time') + (tm ? '<span class="ef-card-time-val" data-eftimer="1">' + elapsedStr() + '</span>' : '') + '</span>';
+    h +=         figPriority(e);
+    h +=       '</span>';
+    h +=     '</div>';
+    h +=   '</div>';
     h += '</div>';
     return h;
   }
@@ -26203,6 +26445,8 @@ function toggleSidebarCollapse(){
       if (efState.toggles[k]) h += '<span class="ef-chip ' + TOG[k][1] + '">' + TOG[k][0] + '<button class="ef-chip-x" onclick="efSetToggle(\'' + k + '\',false)" aria-label="Remove">✕</button></span>';
     });
     if (efState.search) h += '<span class="ef-chip"><span class="ef-chip-key">Search:</span>' + esc(efState.search) + '<button class="ef-chip-x" onclick="efClearSearch()" aria-label="Remove">✕</button></span>';
+    var selN = Object.keys(efSelected).length;
+    if (selN) h += '<span class="ef-chip">' + selN + ' selected<button class="ef-chip-x" onclick="efClearSelection()" aria-label="Clear selection">✕</button></span>';
 
     if (h) {
       bar.innerHTML = '<span class="ef-chipbar-label">Filtering by</span>' + h +
@@ -26272,7 +26516,8 @@ function toggleSidebarCollapse(){
       card.addEventListener('mousedown', function () { moved = false; });
       card.addEventListener('mousemove', function () { moved = true; });
       card.addEventListener('click', function (ev) {
-        if (moved || ev.target.closest('.ef-card-opts')) return;
+        /* the ⋮ menu and the select checkbox are their own targets */
+        if (moved || ev.target.closest('.ef-card-opts') || ev.target.closest('.ef-card-check')) return;
         efOpenDetail(card.dataset.ef);
       });
       card.addEventListener('keydown', function (ev) {
@@ -26415,6 +26660,14 @@ function toggleSidebarCollapse(){
   };
   window.efSetToggle = function (key, on) { efState.toggles[key] = !!on; renderAll(); };
   window.efToggleFlaggedOnly = function () { efState.toggles.flagged = !efState.toggles.flagged; renderAll(); };
+  /* Card checkbox — selection is surfaced as a count in the chip bar so the
+     control does something real; bulk actions can hang off efSelected later. */
+  window.efToggleSelect = function (ev, id) {
+    ev.stopPropagation();
+    if (efSelected[id]) delete efSelected[id]; else efSelected[id] = true;
+    renderAll();
+  };
+  window.efClearSelection = function () { efSelected = {}; renderAll(); };
   window.efClearFilters = function () {
     efState.filters = { assignee: [], state: [], priority: [], type: [], tag: [] };
     efState.toggles = { flagged: false, overdue: false, unestimated: false, mine: false };
