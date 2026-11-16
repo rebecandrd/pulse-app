@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/pulse.css">
+<link rel="stylesheet" href="css/pulse-hours.css">
 <style>
 /* ── Dashboard body ── */
 .dash-body { flex:1; overflow-y:auto; overflow-x:hidden; padding:14px 20px 16px; background:var(--bg-page); display:flex; flex-direction:column; gap:12px; }
@@ -445,16 +446,57 @@
 
     <!-- ═══ PM PANEL ═══ -->
     <div class="role-panel" id="rp-pm">
+
+      <!-- ══════ DASHBOARD CONTROLS ══════
+           1.3 which week is in view and when it resets
+           3.5 which sections are shown -->
+      <div class="ph-ctl">
+        <div id="phPmWeek" class="ph-ctl-week"></div>
+        <div class="ph-vis-wrap">
+          <button class="ph-vis-btn" id="phVisBtn" aria-haspopup="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4h12M2 8h12M2 12h12" stroke-linecap="round"/></svg>
+            Sections
+          </button>
+          <div class="ph-vis-menu" id="phVisMenu"></div>
+        </div>
+      </div>
+
       <!-- KPIs -->
-      <div class="kpi-row">
+      <div class="kpi-row" data-section="pm-kpis">
         <div class="kpi-card kpi-blue"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg></div><div class="kpi-body"><div class="kpi-num">5</div><div class="kpi-label">Active projects</div><div class="kpi-delta up"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8V2M2 5l3-3 3 3"/></svg>+1 this month</div></div></div>
         <div class="kpi-card kpi-green"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-num">49</div><div class="kpi-label">Open efforts</div><div class="kpi-delta">across 5 projects</div></div></div>
         <div class="kpi-card kpi-purple"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">8</div><div class="kpi-label">Pending reviews</div><div class="kpi-delta down"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 2v6M2 5l3 3 3-3"/></svg>3 overdue</div></div></div>
         <div class="kpi-card kpi-red"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">2</div><div class="kpi-label">Active blockers</div><div class="kpi-delta down" style="color:var(--error)">critical</div></div></div>
       </div>
 
+      <!-- ══════ WEEKLY HOURS ══════
+           2.1 every project I manage, with the week's hours
+           2.2 whether it was active, and whether design time went unused -->
+      <div class="card" data-section="pm-hours">
+        <div class="card-hdr">
+          <div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.2 1.3" stroke-linecap="round"/></svg>Weekly hours</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span id="phPmSummary" style="font-size:11.5px;color:var(--text-muted)"></span>
+          </div>
+        </div>
+        <div id="phPmList"></div>
+      </div>
+
+      <!-- ══════ ON THE BOARD ══════
+           3.1 efforts in Working across every project I manage -->
+      <div class="card" data-section="pm-working">
+        <div class="card-hdr">
+          <div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="4" height="10" rx="1"/><rect x="7" y="3" width="4" height="7" rx="1"/><rect x="12" y="3" width="2" height="5" rx="1"/></svg>On the board now</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span id="phWorkingCount" style="font-size:11.5px;color:var(--text-muted)"></span>
+            <a href="project-detail.html" class="card-hdr-action">Open boards</a>
+          </div>
+        </div>
+        <div class="all-list" id="phWorkingList" style="padding:4px 0"></div>
+      </div>
+
       <!-- Projects table -->
-      <div class="card">
+      <div class="card" data-section="pm-projects">
         <div class="card-hdr"><div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg>All Projects</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:11.5px;color:var(--text-muted)">5 projects</span><a href="projects.html" class="card-hdr-action">View all</a></div></div>
         <table class="data-table">
           <thead><tr><th>Project</th><th>Temperature</th><th>Sprint</th><th>Team</th><th>Efforts</th><th>Due date</th></tr></thead>
@@ -469,7 +511,7 @@
       </div>
 
       <!-- ── Upcoming OOO ── -->
-      <div class="card" style="padding:14px 16px 16px">
+      <div class="card" data-section="pm-ooo" style="padding:14px 16px 16px">
         <div class="card-hdr" style="margin-bottom:12px">
           <div class="card-hdr-title">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>
@@ -508,7 +550,7 @@
 
       <div class="pa-act-grid">
       <!-- ── Pending Actions ── -->
-      <div class="card" style="padding:0;overflow:hidden">
+      <div class="card" data-section="pm-pending" style="padding:0;overflow:hidden">
         <!-- Header -->
         <div class="card-hdr" style="padding:16px 20px;border-bottom:1px solid var(--border)">
           <div class="card-hdr-title" style="gap:8px">
@@ -831,7 +873,7 @@
       </div><!-- end Pending Actions card -->
 
       <!-- Recent activity -->
-        <div class="card">
+        <div class="card" data-section="pm-activity">
           <div class="card-hdr"><div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Recent activity</div><span class="card-hdr-action">View all</span></div>
           <div class="act-list" style="flex:1">
             <div class="act-item"><div class="av av-sm" style="background:#e8f4fd;color:#1d5fa6;margin-top:1px">SK</div><div class="act-body"><div class="act-line"><span class="act-name">Sarah Kim</span> <span class="act-verb">submitted for review</span> <span class="act-task">Onboarding stepper</span></div><div class="act-meta">2 min ago<span class="act-meta-dot"></span><span class="act-proj">EventSquid</span></div></div><div class="act-time">2m</div></div>
@@ -963,7 +1005,7 @@
         <!-- All Projects -->
         <div class="dev-tab-content active" id="dtd-all">
           <div class="kpi-strip">
-            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-hours"><span class="kh-actual">22h</span><span class="kh-sep">/</span><span class="kh-exp">20h</span></div><div class="kpi-label">Logged · Budgeted</div><div class="kpi-delta down" style="color:var(--error)">+2h over budget</div></div></div>
+            <div class="kpi-card kpi-blue" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-hours"><span class="kh-actual" id="phDsnLogged">—</span><span class="kh-sep">/</span><span class="kh-exp" id="phDsnBudget">—</span></div><div class="kpi-label">Logged · Budgeted</div><div class="kpi-delta" id="phDsnDelta"></div></div></div>
             <div class="kpi-card kpi-purple" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg></div><div class="kpi-body"><div class="kpi-num">13</div><div class="kpi-label">Design tasks</div><div class="kpi-delta">across 3 projects</div></div></div>
             <div class="kpi-card kpi-green" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">5</div><div class="kpi-label">Awaiting feedback</div><div class="kpi-delta warn">2 overdue</div></div></div>
             <div class="kpi-card kpi-red" style="flex:1;min-width:0"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">0</div><div class="kpi-label">Blocked</div><div class="kpi-delta up">all clear</div></div></div>
@@ -976,6 +1018,21 @@
             <div class="kpi-vdiv"></div>
             <div class="cta-col"><a href="project-detail.html" class="cta-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>View Project</a><span class="cta-sub">Open in Figma</span></div>
           </div>
+          <!-- ══════ MY WEEKLY HOURS ══════
+               1.1 the design ceiling each project gives me
+               1.3 the Monday-to-Sunday window
+               A3  used and remaining, per project -->
+          <div class="card" style="margin-bottom:12px">
+            <div class="card-hdr">
+              <div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.2 1.3" stroke-linecap="round"/></svg>My weekly hours</div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span id="phDsnSummary" style="font-size:11.5px;color:var(--text-muted)"></span>
+              </div>
+            </div>
+            <div style="padding:12px 16px 0"><div id="phDsnWeek"></div></div>
+            <div id="phDsnList" style="margin-top:10px"></div>
+          </div>
+
           <div class="toolbar">
             <div class="view-sw"><button class="view-sw-btn active"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h12"/></svg>List</button><button class="view-sw-btn">By Status</button><button class="view-sw-btn">Kanban</button></div>
             <div class="toolbar-right"><span class="toolbar-count">13 design tasks · 3 projects</span><button class="btn btn-primary" onclick="location.href='new-project.html'"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>New Effort</button></div>
@@ -1056,6 +1113,7 @@
 <div id="toast" class="toast"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2.5"><path d="M3 8l3.5 3.5L13 4.5"/></svg><span class="toast-msg"></span></div>
 
 <script src="js/pulse.js"></script>
+<script src="js/pulse-hours.js"></script>
 <script>
 // Dev tabs
 function switchDevTab(tabEl, contentId) {
@@ -1067,12 +1125,16 @@ function switchDevTab(tabEl, contentId) {
   if (content) content.classList.add('active');
 }
 // Sidebar toggle
-document.getElementById('sbProjects').addEventListener('click', function() {
-  var sub = document.getElementById('sbSub');
-  sub.style.display = sub.style.display === 'none' ? '' : 'none';
-});
+var sbProjects = document.getElementById('sbProjects');
+if (sbProjects) {
+  sbProjects.addEventListener('click', function() {
+    var sub = document.getElementById('sbSub');
+    if (sub) sub.style.display = sub.style.display === 'none' ? '' : 'none';
+  });
+}
 // Set active nav
-document.querySelector('[data-nav="index.html"]').classList.add('active');
+var navHere = document.querySelector('[data-nav="index.html"]');
+if (navHere) navHere.classList.add('active');
 </script>
 
 <!-- ── New Time Log Modal ── -->
@@ -1526,5 +1588,141 @@ function sbToggle(){
   }
 })();
 </script>
+<!-- ══════════ WEEKLY HOURS — dashboard wiring ══════════ -->
+<script>
+/* PM and Designer panels both read PulseHours, so the design budget shown
+   here is the same figure Project > Details computes from the dev count. */
+(function () {
+  'use strict';
+  if (typeof PulseHours === 'undefined') return;
+  var PH = PulseHours;
+
+  function byId(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  /* ───────── PM panel ───────── */
+  var pmOffset = -1;              /* the last complete week is what a PM reports on */
+
+  function paintPm() {
+    if (!byId('phPmList')) return;
+    var projects = PH.PROJECTS;
+
+    byId('phPmWeek').innerHTML = PH.weekStripHTML(pmOffset, 'phPmSetWeek');
+    byId('phPmList').innerHTML = PH.projectListHTML(projects, pmOffset, 'pm');
+
+    /* Headline: what actually needs the PM's attention this period. */
+    var idle = 0, inactive = 0, over = 0;
+    projects.forEach(function (p) {
+      var pw = PH.projectWeek(p, pmOffset);
+      var d = pw.rows.filter(function (r) { return r.key === 'design'; })[0];
+      if (d.state.key === 'unused') idle++;
+      if (d.over > 0) over++;
+      if (!pw.active) inactive++;
+    });
+    var bits = [projects.length + ' projects'];
+    if (idle)     bits.push(idle + ' with design time unused');
+    if (inactive) bits.push(inactive + ' with no efforts');
+    if (over)     bits.push(over + ' over budget');
+    byId('phPmSummary').textContent = bits.join(' · ');
+  }
+
+  window.phPmSetWeek = function (o) { pmOffset = o; paintPm(); };
+
+  /* ───────── On the board now (3.1) ───────── */
+  var WORKING = [
+    { id: 'CM-033', title: 'Audio player interface — dark mode', proj: 'Chantmasters', due: '2d overdue', tone: 'due-late' },
+    { id: 'TA-118', title: 'Payment retry queue — idempotency',  proj: 'TAPP',         due: 'Nov 18',     tone: 'due-soon' },
+    { id: 'ES-036', title: 'Seat map UI — venue editor',          proj: 'EventSquid',   due: 'Nov 18',     tone: 'due-soon' },
+    { id: 'TA-121', title: 'Notification digest scheduler',       proj: 'TAPP',         due: 'Nov 20',     tone: '' },
+    { id: 'ES-040', title: 'Notification preferences screen',     proj: 'EventSquid',   due: 'Nov 20',     tone: '' },
+    { id: 'CN-014', title: 'Vehicle telemetry ingest',            proj: 'Carmnet',      due: 'Nov 23',     tone: '' },
+    { id: 'DO-011', title: 'Design system tokens — spacing',      proj: 'DesignOps',    due: 'Nov 24',     tone: '' }
+  ];
+
+  function paintWorking() {
+    var el = byId('phWorkingList');
+    if (!el) return;
+    el.innerHTML = WORKING.map(function (e) {
+      return '<div class="al-row" onclick="location.href=\'project-detail.html\'">' +
+               '<span class="task-id">' + esc(e.id) + '</span>' +
+               '<span class="task-title">' + esc(e.title) + '</span>' +
+               '<span class="al-proj-badge">' + esc(e.proj) + '</span>' +
+               '<span class="task-chip chip-prog" style="margin-left:4px">Working</span>' +
+               '<div class="due-chip ' + e.tone + '" style="margin-left:auto">' + esc(e.due) + '</div>' +
+             '</div>';
+    }).join('');
+    var late = WORKING.filter(function (e) { return e.tone === 'due-late'; }).length;
+    byId('phWorkingCount').textContent =
+      WORKING.length + ' in Working' + (late ? ' · ' + late + ' overdue' : '');
+  }
+
+  /* ───────── Designer panel ───────── */
+  var dsnOffset = 0;              /* a designer looks at the week in progress */
+  var ME = 'CH';
+
+  function myProjects() {
+    return PH.PROJECTS.filter(function (p) { return p.designers.indexOf(ME) !== -1; });
+  }
+
+  function paintDesigner() {
+    if (!byId('phDsnList')) return;
+    var mine = myProjects();
+
+    byId('phDsnWeek').innerHTML = PH.weekStripHTML(dsnOffset, 'phDsnSetWeek');
+    byId('phDsnList').innerHTML = PH.projectListHTML(mine, dsnOffset, 'designer');
+
+    var logged = 0, budget = 0;
+    mine.forEach(function (p) {
+      var d = PH.projectWeek(p, dsnOffset).rows.filter(function (r) { return r.key === 'design'; })[0];
+      logged += d.logged; budget += d.allocated;
+    });
+
+    if (byId('phDsnLogged')) byId('phDsnLogged').textContent = PH.fmtH(logged);
+    if (byId('phDsnBudget')) byId('phDsnBudget').textContent = PH.fmtH(budget);
+
+    var delta = byId('phDsnDelta');
+    if (delta) {
+      var win = PH.weekWindow(dsnOffset);
+      if (logged > budget) {
+        delta.className = 'kpi-delta down';
+        delta.style.color = 'var(--error)';
+        delta.textContent = PH.fmtH(logged - budget) + ' over budget';
+      } else {
+        delta.className = 'kpi-delta';
+        delta.style.color = '';
+        delta.textContent = PH.fmtH(budget - logged) + ' left' +
+          (win.inProgress ? ' · ' + PH.daysUntilReset() + 'd to Monday' : '');
+      }
+    }
+    byId('phDsnSummary').textContent =
+      mine.length + ' projects · ' + PH.fmtH(budget) + ' of design time allocated to me';
+  }
+
+  window.phDsnSetWeek = function (o) { dsnOffset = o; paintDesigner(); };
+
+  /* ───────── Section visibility (3.5) ───────── */
+  function initSections() {
+    PH.initVisibilityMenu('phVisBtn', 'phVisMenu', [
+      { id: 'pm-kpis',     label: 'KPI cards' },
+      { id: 'pm-hours',    label: 'Weekly hours' },
+      { id: 'pm-working',  label: 'On the board now' },
+      { id: 'pm-projects', label: 'All projects' },
+      { id: 'pm-ooo',      label: 'Upcoming time off' },
+      { id: 'pm-pending',  label: 'Pending actions' },
+      { id: 'pm-activity', label: 'Recent activity' }
+    ]);
+  }
+
+  function start() { paintPm(); paintWorking(); paintDesigner(); initSections(); }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+
 </body>
 </html>

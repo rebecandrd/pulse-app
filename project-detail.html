@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pulse-hours.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -5519,6 +5520,34 @@
           <div class="kpi-card kpi-red"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">2</div><div class="kpi-label">Blocked Efforts</div><div class="kpi-delta down">needs attention</div></div></div>
           <div class="kpi-card kpi-purple"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg></div><div class="kpi-body"><div class="kpi-num">5</div><div class="kpi-label">Pending Reviews</div><div class="kpi-delta">unchanged</div></div></div>
           <div class="kpi-card kpi-amber"><div class="kpi-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 13h12L8 3z"/><path d="M8 7v2.5M8 11.5h.01"/></svg></div><div class="kpi-body"><div class="kpi-num">3</div><div class="kpi-label">Upcoming Milestones</div><div class="kpi-delta">next: Apr 30</div></div></div>
+        </div>
+
+        <!-- ══════ WEEKLY HOURS ══════
+             1.1 the design hours field and the formula behind it
+             1.2 the macro view across every department
+             1.3 the Monday-to-Sunday window and its reset -->
+        <div class="ov-card" style="margin-bottom:16px;">
+          <div class="ov-card-hdr">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.2 1.3" stroke-linecap="round"/></svg>
+            <div class="ov-card-title">Weekly hours</div>
+            <div class="ov-card-link" onclick="phOpenTimeLogs()">Full time logs</div>
+          </div>
+          <div class="ov-card-body">
+
+            <div id="phWeekStrip"></div>
+
+            <!-- Design budget — the computed field -->
+            <div id="phDesignBudget"
+                 style="margin-top:14px;padding:15px 16px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-white)"></div>
+
+            <!-- Macro view by department -->
+            <div style="margin-top:18px">
+              <div class="ov-about-label" style="margin-bottom:2px;">Used and remaining by department</div>
+              <div id="phDisciplines"></div>
+              <div id="phTotal"></div>
+            </div>
+
+          </div>
         </div>
 
         <!-- Latest reviews highlights -->
@@ -28071,6 +28100,43 @@ function toggleSidebarCollapse(){
 
   /* Paint the dock once the module is live (part 1 already ran its first paint) */
   renderDock();
+})();
+</script>
+
+<!-- ══════ WEEKLY HOURS ══════ -->
+<script src="js/pulse-hours.js"></script>
+<script>
+/* Overview > Weekly hours. Every figure comes from PulseHours, so the
+   design budget here and the one on the Dashboard cannot disagree. */
+(function () {
+  var PROJECT_ID = 'tapp';
+  var offset = -1;                 /* last complete week by default */
+
+  function byId(id) { return document.getElementById(id); }
+
+  function paint() {
+    var p = PulseHours.getProject(PROJECT_ID);
+    if (!p || !byId('phWeekStrip')) return;
+    var pw = PulseHours.projectWeek(p, offset);
+    byId('phWeekStrip').innerHTML     = PulseHours.weekStripHTML(offset, 'phSetWeek');
+    byId('phDesignBudget').innerHTML  = PulseHours.designBudgetHTML(p);
+    byId('phDisciplines').innerHTML   = PulseHours.disciplineRowsHTML(pw);
+    byId('phTotal').innerHTML         = PulseHours.totalHTML(pw);
+  }
+
+  window.phSetWeek = function (o) { offset = o; paint(); };
+
+  /* Jump to Team > Time Logs without assuming a tab index. */
+  window.phOpenTimeLogs = function () {
+    var tabs = document.querySelectorAll('.tabs .tab, .tab');
+    for (var i = 0; i < tabs.length; i++) {
+      if (/team/i.test(tabs[i].textContent || '')) { tabs[i].click(); break; }
+    }
+    if (typeof setTmSubTab === 'function') setTmSubTab('time');
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paint);
+  else paint();
 })();
 </script>
 
