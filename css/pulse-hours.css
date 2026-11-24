@@ -12,15 +12,15 @@
   --ph-radius-md: 8px;
   --ph-radius-lg: 10px;
   --ph-radius-xl: 12px;
-  --ph-error:        #dc2626;
-  --ph-error-light:  #fef2f2;
-  --ph-error-border: #fecaca;
-  --ph-warn-ink:     #92400e;
-  --ph-warn-light:   #fffbeb;
-  --ph-warn-border:  #fde68a;
-  --ph-good-ink:     #047857;
-  --ph-good-light:   #ecfdf5;
-  --ph-good-border:  #a7f3d0;
+  --ph-error:        var(--error,          #dc2626);
+  --ph-error-light:  var(--error-light,    #fef2f2);
+  --ph-error-border: var(--error-border,   #fecaca);
+  --ph-warn-ink:     var(--warning-ink,    #92400e);
+  --ph-warn-light:   var(--warning-light,  #fffbeb);
+  --ph-warn-border:  var(--warning-border, #fde68a);
+  --ph-good-ink:     var(--success-ink,    #047857);
+  --ph-good-light:   var(--success-light,  #ecfdf5);
+  --ph-good-border:  var(--success-border, #a7f3d0);
 }
 
 /* ── Week strip: which window you are looking at ── */

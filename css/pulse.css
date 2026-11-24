@@ -48,6 +48,23 @@
   --error-border:  #fecaca;
   --warning:       #f59e0b;
   --warning-light: #fffbeb;
+  --warning-border:#fde68a;
+  --warning-ink:   #92400e;
+  --success-border:#a7f3d0;
+  --success-ink:   #047857;
+  --error-ink:     #991b1b;
+
+  /* Badge palettes — bg / ink / border, one triplet per semantic.
+     Values are exactly those the badge rules below used inline. */
+  --badge-good-bg:   #ecfdf5;  --badge-good-ink:   #065f46;  --badge-good-bd:   #a7f3d0;
+  --badge-warn-bg:   #fffbeb;  --badge-warn-ink:   #92400e;  --badge-warn-bd:   #fde68a;
+  --badge-bad-bg:    #fef2f2;  --badge-bad-ink:    #991b1b;  --badge-bad-bd:    #fecaca;
+  --badge-info-bg:   #faf5ff;  --badge-info-ink:   #6d28d9;  --badge-info-bd:   #ddd6fe;
+  --badge-dev-bg:    #eff6ff;  --badge-dev-ink:    #1d4ed8;  --badge-dev-bd:    #bfdbfe;
+  --badge-design-bg: #fdf2f8;  --badge-design-ink: #9d174d;  --badge-design-bd: #fbcfe8;
+  --badge-be-bg:     #fff7ed;  --badge-be-ink:     #9a3412;  --badge-be-bd:     #fed7aa;
+  --tag-hi-bg:       #fff1f0;  --tag-hi-ink:       #b91c1c;  --tag-hi-bd:       #fecaca;
+  --tag-lo-bg:       #f0fdf4;  --tag-lo-ink:       #166534;  --tag-lo-bd:       #bbf7d0;
 
   /* Radius */
   --r-sm: 6px;
@@ -55,6 +72,23 @@
   --r-lg: 10px;
   --r-xl: 12px;
   --r-2xl:16px;
+  --r-pill:99px;
+
+  /* Aliases. The page HTML files declare these same values inline under the
+     longer names; mapping them here keeps one source of truth so the two
+     spellings cannot drift apart. */
+  --sidebar-bg:          var(--sb-bg);
+  --sidebar-text:        var(--sb-text);
+  --sidebar-active-bg:   var(--sb-active-bg);
+  --sidebar-active-text: var(--sb-active-text);
+  --sidebar-hover-bg:    var(--sb-hover-bg);
+  --sidebar-section:     var(--sb-section);
+  --sidebar-divider:     var(--sb-divider);
+  --radius-sm:  var(--r-sm);
+  --radius-md:  var(--r-md);
+  --radius-lg:  var(--r-lg);
+  --radius-xl:  var(--r-xl);
+  --radius-2xl: var(--r-2xl);
 }
 
 /* ── Base ── */
@@ -261,23 +295,23 @@ a { color: inherit; text-decoration: none; }
 .badge-dot { width: 5px; height: 5px; border-radius: 50%; }
 
 /* Status badges */
-.s-ontrack  { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-.s-atrisk   { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
-.s-delayed  { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
-.s-review   { background: #faf5ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+.s-ontrack  { background: var(--badge-good-bg); color: var(--badge-good-ink); border: 1px solid var(--badge-good-bd); }
+.s-atrisk   { background: var(--badge-warn-bg); color: var(--badge-warn-ink); border: 1px solid var(--badge-warn-bd); }
+.s-delayed  { background: var(--badge-bad-bg);  color: var(--badge-bad-ink);  border: 1px solid var(--badge-bad-bd); }
+.s-review   { background: var(--badge-info-bg); color: var(--badge-info-ink); border: 1px solid var(--badge-info-bd); }
 .s-planning { background: var(--bg-surface2); color: var(--text-secondary); border: 1px solid var(--border); }
 
 /* Role badges */
-.r-pm     { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-.r-dev    { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-.r-design { background: #fdf2f8; color: #9d174d; border: 1px solid #fbcfe8; }
-.r-qa     { background: #faf5ff; color: #6d28d9; border: 1px solid #ddd6fe; }
-.r-be     { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+.r-pm     { background: var(--badge-good-bg);   color: var(--badge-good-ink);   border: 1px solid var(--badge-good-bd); }
+.r-dev    { background: var(--badge-dev-bg);    color: var(--badge-dev-ink);    border: 1px solid var(--badge-dev-bd); }
+.r-design { background: var(--badge-design-bg); color: var(--badge-design-ink); border: 1px solid var(--badge-design-bd); }
+.r-qa     { background: var(--badge-info-bg);   color: var(--badge-info-ink);   border: 1px solid var(--badge-info-bd); }
+.r-be     { background: var(--badge-be-bg);     color: var(--badge-be-ink);     border: 1px solid var(--badge-be-bd); }
 
 /* Priority tags */
-.t-hi { background: #fff1f0; color: #b91c1c; border: 1px solid #fecaca; }
-.t-md { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
-.t-lo { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.t-hi { background: var(--tag-hi-bg);   color: var(--tag-hi-ink);   border: 1px solid var(--tag-hi-bd); }
+.t-md { background: var(--badge-warn-bg); color: var(--badge-warn-ink); border: 1px solid var(--badge-warn-bd); }
+.t-lo { background: var(--tag-lo-bg);   color: var(--tag-lo-ink);   border: 1px solid var(--tag-lo-bd); }
 
 /* ════════════════════════════════════════════════════
    AVATARS
