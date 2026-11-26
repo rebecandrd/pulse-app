@@ -78,6 +78,13 @@
   --red-950:   #450a0a;
 
   --orange-100: #fff9e6;
+
+  /* Cyan. Not a ramp in the library: Color/Board state/working is a bare
+     #06b6d4 with nothing behind it. Both steps are attested in the Efforts
+     reference frame (13243:17439), where the Working pill is #cffafe on
+     a #06b6d4 border. */
+  --cyan-100:  #cffafe;
+  --cyan-500:  #06b6d4;
   --orange-200: #fcedbd;
   --orange-300: #fade96;
   --orange-400: #fed7aa;
@@ -195,11 +202,47 @@
   --board-icebox:    var(--indigo-500);
   --board-backlog:   var(--indigo-500);
   --board-unstarted: var(--gray-500);
-  --board-working:   #06b6d4;
+  --board-working:   var(--cyan-500);
   --board-review:    var(--orange-500);
   --board-pending:   var(--yellow-400);
-  --board-done:      #14b8a6;
+  --board-done:      #14b8a6;   /* no ramp behind it in the library */
   --board-blocked:   var(--red-500);
+
+  /* Three states the Efforts board shows that the library has no board
+     state for. Each borrows the nearest colour the library does define;
+     none of the three is attested, so treat them as open questions. */
+  --board-qa:        var(--purple-500);  /* Department/quality-assurance */
+  --board-onhold:    var(--indigo-500);  /* nearest is Board state/icebox */
+  --board-cancelled: var(--gray-400);    /* nothing nearer than neutral  */
+
+  /* Pill fills. The effort-state pill is a tint behind a 1px border of the
+     state colour, with the label in that same colour -- the construction
+     the Efforts reference frame uses. The first four fills are that frame's
+     exact values; the rest have no reference, so they are the state colour
+     at 12% over white, which lands where a -100 step would. */
+  --board-unstarted-tint: var(--gray-100);      /* #eaeaeb, attested */
+  --board-working-tint:   var(--cyan-100);      /* #cffafe, attested */
+  --board-review-tint:    var(--orange-100);    /* #fff9e6, attested */
+  --board-blocked-tint:   var(--red-100);       /* #fbebea, attested */
+  --board-qa-tint:        var(--purple-100);
+  --board-onhold-tint:    var(--indigo-100);
+  --board-done-tint:      rgba(20, 184, 166, .12);
+  --board-cancelled-tint: var(--gray-100);
+
+  /* ─── Avatar and category palette ───────────────────────────────────────
+     Five light/ink pairs the prototype uses for person avatars and category
+     chips, written inline at ~290 call sites. The library has no equivalent:
+     Color/Department exists but is a flat set of 12 inks with no fills, and
+     these five are not those twelve. They are recorded here as they are --
+     naming them changes nothing on screen -- so the call sites stop carrying
+     raw hexes and the gap is visible. Whether the library should gain an
+     avatar palette, or these should be recoloured onto Pulse hues, is a
+     question for the design side; nothing here answers it. */
+  --avatar-blue-bg:    #e8f4fd;   --avatar-blue-ink:    #1d5fa6;
+  --avatar-amber-bg:   #fde8d8;   --avatar-amber-ink:   #b45309;
+  --avatar-violet-bg:  #f5eeff;   --avatar-violet-ink:  #6d28d9;
+  --avatar-pink-bg:    #fdf2f8;   --avatar-pink-ink:    #9d174d;
+  --avatar-green-bg:   #f0fdf4;   --avatar-green-ink:   #15803d;
 
   /* ─── Work type ─────────────────────────────────────────────────────── */
   --feature: var(--green-500);
@@ -297,6 +340,11 @@
   --r-2xl:  16px;
   --r-pill: 9999px;
 
+  /* A radius derived from one of these for a nested box -- for example
+     calc(var(--r-md) - 2px) on a tab sitting inside a 6px track with 2px of
+     padding -- is geometry, not a step. It will not match a token and should
+     not be rounded to one. .pa-vtab is the only such case here. */
+
   --radius-sm:  var(--r-sm);
   --radius-md:  var(--r-md);
   --radius-lg:  var(--r-lg);
@@ -372,26 +420,13 @@
 
   /* ─── Legacy effort-card palette ────────────────────────────────────────
      The effort card (Figma node 13088:8512) was built against an earlier
-     state of the library, when these were Basic/*, State/* and Pill/*
-     variables. Where the current library still carries the same colour the
-     alias points at it; the rest are literals the library no longer
-     defines, left here so the card keeps rendering and the drift is
-     visible rather than hidden. */
-  --fig-ink:           var(--gray-500);    /* #3e3a42 — Color/Gray/gray-500  */
-  --fig-denied:        var(--red-500);     /* #f53759 — Color/Red/red-500    */
-  --fig-warning:       var(--yellow-500);  /* #f5c037 — Color/Yellow/yellow-500 */
-  --fig-green-dark:    var(--green-600);   /* #3b9c79 — Color/Green/green-600 */
-  --fig-id:            rgba(142, 84, 233, .92);  /* purple-500 at 92% */
-
-  --fig-gainsboro:     #dcd9df;   /* no current equivalent (was Basic/Gainsboro)      */
-  --fig-silver:        #b5b2b8;   /* no current equivalent (was Basic/Silver Metalic) */
-  --fig-gray:          #9a9a9a;   /* no current equivalent (was Basic/Gray)           */
-  --fig-raising-black: #69676c;   /* no current equivalent (was Basic/Raising Black)  */
-  --fig-slate:         #545257;   /* no current equivalent                            */
-  --fig-accepted:      #2fd398;   /* no current equivalent (was State/Accepted)       */
-  --fig-yellow:        #bd9f02;   /* no current equivalent (was Pill/Yellow)          */
-  --fig-gray-50:       #f9fafb;   /* no current equivalent                            */
-  --fig-gray-100:      #f3f4f6;   /* no current equivalent                            */
+     state of the library, when these were Basic/*, State/* and Pill/* ─── Retired: the legacy effort-card palette ───────────────────────────
+     The Efforts board used to carry its own --fig-* colours, kept here when
+     the board was first tokenised because several had no library equivalent.
+     The board now draws entirely from the library -- its card chrome from the
+     Efforts reference frame (13243:17439), its state pills from Color/Board
+     state -- so every one of them is dead and they are gone. Nothing in the
+     prototype references --fig-* any more. */
 
   /* ─── Short aliases ─────────────────────────────────────────────────────
      pulse.css spells the sidebar tokens --sb-*; the rest of the prototype
