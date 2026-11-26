@@ -147,7 +147,7 @@
 }
 .ph-good  { background: var(--ph-good-light);  color: var(--ph-good-ink);  border-color: var(--ph-good-border); }
 .ph-warn  { background: var(--ph-warn-light);  color: var(--ph-warn-ink);  border-color: var(--ph-warn-border); }
-.ph-bad   { background: var(--ph-error-light); color: #b91c1c;             border-color: var(--ph-error-border); }
+.ph-bad   { background: var(--ph-error-light); color: var(--error-ink);    border-color: var(--ph-error-border); }
 .ph-muted { background: var(--bg-surface); color: var(--text-muted); border-color: var(--border); }
 
 /* ── Totals footer ── */
