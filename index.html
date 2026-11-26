@@ -6,14 +6,15 @@
 <title>Pulse — Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pulse-tokens.css">
 <link rel="stylesheet" href="css/pulse.css">
 <link rel="stylesheet" href="css/pulse-hours.css">
 <style>
 /* ── Dashboard body ── */
 .dash-body { flex:1; overflow-y:auto; overflow-x:hidden; padding:14px 20px 16px; background:var(--bg-page); display:flex; flex-direction:column; gap:12px; }
 .dash-body::-webkit-scrollbar { width:4px; }
-.dash-body::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:99px; }
+.dash-body::-webkit-scrollbar-thumb { background:var(--border-strong); border-radius: var(--r-pill); }
 
 /* Role panels */
 .role-radio { display:none; }
@@ -107,7 +108,7 @@
 .pt-name { font-weight:500; color:var(--text-primary); }
 .pt-client { font-size:11px; color:var(--text-muted); margin-top:1px; }
 .pt-prog { display:flex; align-items:center; gap:7px; }
-.pt-prog-bar { width:64px; height:4px; background:var(--bg-surface2); border-radius:99px; overflow:hidden; flex-shrink:0; }
+.pt-prog-bar { width:64px; height:4px; background:var(--bg-surface2); border-radius: var(--r-pill); overflow:hidden; flex-shrink:0; }
 .pt-avs { display:flex; align-items:center; }
 .pt-av { width:18px; height:18px; border-radius:50%; font-size:7px; font-weight:700; display:flex; align-items:center; justify-content:center; border:1.5px solid var(--bg-white); margin-left:-4px; flex-shrink:0; }
 .pt-av:first-child { margin-left:0; }
@@ -159,17 +160,17 @@
 /* My tasks list */
 .task-list { overflow-y:auto; flex:1; }
 .task-list::-webkit-scrollbar { width:3px; }
-.task-list::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:99px; }
+.task-list::-webkit-scrollbar-thumb { background:var(--border-strong); border-radius: var(--r-pill); }
 .task-row { display:flex; align-items:center; gap:8px; padding:8px 14px; border-bottom:1px solid var(--border); cursor:pointer; transition:background .1s; }
 .task-row:last-child { border-bottom:none; }
 .task-row:hover { background:var(--bg-surface); }
 .task-id { font-size:10px; color:var(--text-muted); font-family:var(--font-mono); min-width:52px; flex-shrink:0; }
 .task-title { flex:1; font-size:12.5px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.task-chip { font-size:10.5px; font-weight:500; padding:2px 7px; border-radius:99px; flex-shrink:0; }
+.task-chip { font-size:10.5px; font-weight:500; padding:2px 7px; border-radius: var(--r-pill); flex-shrink:0; }
 .chip-prog { background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; }
 .chip-rev  { background:#faf5ff; color:#6d28d9; border:1px solid #ddd6fe; }
 .chip-todo { background:var(--bg-surface2); color:var(--text-secondary); border:1px solid var(--border); }
-.chip-block{ background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+.chip-block{ background:var(--error-light); color:var(--error-ink); border:1px solid var(--error-border); }
 .due-chip { display:flex; align-items:center; gap:3px; font-size:10.5px; color:var(--text-muted); flex-shrink:0; }
 .due-chip svg { width:10px; height:10px; }
 .due-soon { color:#d97706; font-weight:500; }
@@ -201,7 +202,7 @@
 .alert-item:hover { background:var(--bg-surface); }
 .alert-ico { width:30px; height:30px; border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .alert-ico svg { width:13px; height:13px; }
-.ai-red    { background:#fef2f2; color:var(--error); }
+.ai-red    { background:var(--error-light); color:var(--error); }
 .ai-amber  { background:var(--warning-light); color:#d97706; }
 .ai-blue   { background:var(--accent-light); color:var(--accent); }
 .ai-purple { background:#faf5ff; color:#7c3aed; }
@@ -228,7 +229,7 @@
 /* Consolidated effort list (All tab) */
 .all-list { flex:1; overflow-y:auto; }
 .all-list::-webkit-scrollbar { width:3px; }
-.all-list::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:99px; }
+.all-list::-webkit-scrollbar-thumb { background:var(--border-strong); border-radius: var(--r-pill); }
 .al-grp-hdr { display:flex; align-items:center; gap:8px; padding:7px 24px; background:var(--bg-page); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:1; }
 .al-grp-hdr + .al-grp-hdr { border-top:1px solid var(--border); }
 .al-grp-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; }
@@ -239,7 +240,7 @@
 
 /* ── Log Time tooltip ── */
 .tb-icon { position:relative; }
-.tb-icon[data-tip]::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#111827; color:#fff; font-size:11px; font-family:var(--font); white-space:nowrap; padding:3px 8px; border-radius:5px; pointer-events:none; opacity:0; transition:opacity .15s; z-index:9999; }
+.tb-icon[data-tip]::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:var(--text-primary); color:#fff; font-size:11px; font-family:var(--font); white-space:nowrap; padding:3px 8px; border-radius:5px; pointer-events:none; opacity:0; transition:opacity .15s; z-index:9999; }
 .tb-icon[data-tip]:hover::after { opacity:1; }
 
 /* ── New Time Log Modal ── */
@@ -247,72 +248,72 @@
 .ntl-overlay.open{display:flex}
 .ntl-modal{background:#fff;border-radius:16px;width:600px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 28px 70px rgba(0,0,0,.22);animation:ntlIn .18s ease}
 @keyframes ntlIn{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
-.ntl-hdr{display:flex;align-items:center;gap:10px;padding:18px 22px 15px;border-bottom:1px solid var(--r-border,#e5e7eb);flex-shrink:0}
+.ntl-hdr{display:flex;align-items:center;gap:10px;padding:18px 22px 15px;border-bottom:1px solid var(--r-border, var(--border));flex-shrink:0}
 .ntl-hdr-ico{width:32px;height:32px;border-radius:9px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ntl-hdr-ico svg{width:15px;height:15px;color:#3b5bdb}
+.ntl-hdr-ico svg{width:15px;height:15px;color:var(--accent)}
 .ntl-hdr-text{flex:1}
-.ntl-hdr-title{font-size:14px;font-weight:600;color:#111827;line-height:1.2}
-.ntl-hdr-sub{font-size:11.5px;color:#9ca3af;margin-top:1px}
-.ntl-close{width:28px;height:28px;border-radius:7px;border:1px solid #e5e7eb;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#9ca3af;transition:all .1s;flex-shrink:0}
-.ntl-close:hover{background:#f5f6f8;color:#111827}
+.ntl-hdr-title{font-size:14px;font-weight:600;color:var(--text-primary);line-height:1.2}
+.ntl-hdr-sub{font-size:11.5px;color:var(--text-muted);margin-top:1px}
+.ntl-close{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .1s;flex-shrink:0}
+.ntl-close:hover{background:var(--bg-surface);color:var(--text-primary)}
 .ntl-close svg{width:11px;height:11px}
 .ntl-body{padding:18px 22px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;flex:1}
 .ntl-body::-webkit-scrollbar{width:3px}
-.ntl-body::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:99px}
+.ntl-body::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius: var(--r-pill)}
 .ntl-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ntl-full-col{grid-column:1/-1}
 .ntl-field{display:flex;flex-direction:column;gap:5px}
-.ntl-label{font-size:11.5px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px}
-.ntl-opt{font-weight:400;color:#9ca3af;text-transform:none;letter-spacing:0}
-.ntl-field input,.ntl-field select,.ntl-field textarea{width:100%;padding:8px 10px;font-size:13px;font-family:var(--font,'DM Sans',sans-serif);color:#111827;background:#fff;border:1px solid #e5e7eb;border-radius:8px;outline:none;transition:border-color .12s;resize:none}
-.ntl-field input:focus,.ntl-field select:focus,.ntl-field textarea:focus{border-color:#3b5bdb;box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ntl-label{font-size:11.5px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px}
+.ntl-opt{font-weight:400;color:var(--text-muted);text-transform:none;letter-spacing:0}
+.ntl-field input,.ntl-field select,.ntl-field textarea{width:100%;padding:8px 10px;font-size:13px;font-family:var(--font);color:var(--text-primary);background:#fff;border:1px solid var(--border);border-radius:8px;outline:none;transition:border-color .12s;resize:none}
+.ntl-field input:focus,.ntl-field select:focus,.ntl-field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,91,219,.07)}
 .ntl-effort-search{position:relative}
-.ntl-effort-search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:#9ca3af;pointer-events:none}
+.ntl-effort-search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--text-muted);pointer-events:none}
 .ntl-effort-search input{padding-left:28px!important}
-.ntl-effort-selected{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1.5px solid #3b5bdb;border-radius:8px;background:#eff6ff;cursor:pointer}
+.ntl-effort-selected{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1.5px solid var(--accent);border-radius:8px;background:#eff6ff;cursor:pointer}
 .ntl-effort-selected-text{flex:1;min-width:0}
-.ntl-effort-selected-title{font-size:12.5px;font-weight:500;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ntl-effort-selected-title{font-size:12.5px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ntl-effort-selected-meta{display:none}
-.ntl-effort-clear{width:18px;height:18px;border-radius:50%;border:none;background:rgba(59,91,219,.15);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#3b5bdb;flex-shrink:0;font-size:10px;line-height:1}
+.ntl-effort-clear{width:18px;height:18px;border-radius:50%;border:none;background:rgba(59,91,219,.15);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;font-size:10px;line-height:1}
 .ntl-effort-clear:hover{background:rgba(59,91,219,.25)}
-.ntl-tags-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-height:36px;cursor:text;transition:border-color .12s}
-.ntl-tags-wrap:focus-within{border-color:#3b5bdb;box-shadow:0 0 0 3px rgba(59,91,219,.07)}
-.ntl-tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:#eff6ff;color:#3b5bdb;border-radius:99px;font-size:11.5px;font-weight:500}
-.ntl-tag-chip button{border:none;background:none;cursor:pointer;color:#3b5bdb;opacity:.6;font-size:11px;line-height:1;padding:0;display:flex;align-items:center}
+.ntl-tags-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:6px 8px;border:1px solid var(--border);border-radius:8px;min-height:36px;cursor:text;transition:border-color .12s}
+.ntl-tags-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,91,219,.07)}
+.ntl-tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:#eff6ff;color:var(--accent);border-radius: var(--r-pill);font-size:11.5px;font-weight:500}
+.ntl-tag-chip button{border:none;background:none;cursor:pointer;color:var(--accent);opacity:.6;font-size:11px;line-height:1;padding:0;display:flex;align-items:center}
 .ntl-tag-chip button:hover{opacity:1}
-.ntl-tags-input{border:none;outline:none;font-size:12.5px;font-family:var(--font,'DM Sans',sans-serif);color:#111827;background:transparent;flex:1;min-width:80px;padding:1px 2px}
+.ntl-tags-input{border:none;outline:none;font-size:12.5px;font-family:var(--font);color:var(--text-primary);background:transparent;flex:1;min-width:80px;padding:1px 2px}
 .ntl-suggest{display:flex;flex-direction:column;gap:8px}
 .ntl-suggest-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
-.ntl-suggest-label{font-size:11.5px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:6px}
-.ntl-suggest-label svg{width:11px;height:11px;color:#3b5bdb}
-.ntl-suggest-viewall{font-size:11.5px;color:#3b5bdb;background:none;border:none;cursor:pointer;font-family:inherit;padding:0}
+.ntl-suggest-label{font-size:11.5px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:6px}
+.ntl-suggest-label svg{width:11px;height:11px;color:var(--accent)}
+.ntl-suggest-viewall{font-size:11.5px;color:var(--accent);background:none;border:none;cursor:pointer;font-family:inherit;padding:0}
 .ntl-suggest-viewall:hover{text-decoration:underline}
-.ntl-scard{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;cursor:pointer;transition:all .12s;background:#fff}
-.ntl-scard:hover{border-color:#c5cffa;background:#eff6ff}
-.ntl-scard.sel{border-color:#3b5bdb;background:#eff6ff}
-.ntl-scard-check{width:16px;height:16px;border-radius:50%;border:1.5px solid #d1d5db;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
-.ntl-scard.sel .ntl-scard-check{background:#3b5bdb;border-color:#3b5bdb}
+.ntl-scard{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;cursor:pointer;transition:all .12s;background:#fff}
+.ntl-scard:hover{border-color:var(--accent-border);background:#eff6ff}
+.ntl-scard.sel{border-color:var(--accent);background:#eff6ff}
+.ntl-scard-check{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border-strong);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.ntl-scard.sel .ntl-scard-check{background:var(--accent);border-color:var(--accent)}
 .ntl-scard.sel .ntl-scard-check::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff;display:block}
 .ntl-scard-body{flex:1;min-width:0}
-.ntl-scard-title{font-size:12.5px;font-weight:500;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ntl-scard-meta{font-size:11px;color:#9ca3af;margin-top:2px;display:flex;align-items:center;gap:5px}
-.ntl-scard-dot{width:3px;height:3px;border-radius:50%;background:#9ca3af;flex-shrink:0}
+.ntl-scard-title{font-size:12.5px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ntl-scard-meta{font-size:11px;color:var(--text-muted);margin-top:2px;display:flex;align-items:center;gap:5px}
+.ntl-scard-dot{width:3px;height:3px;border-radius:50%;background:var(--text-muted);flex-shrink:0}
 .ntl-scard-badges{display:flex;gap:4px;flex-shrink:0;align-items:center}
-.ntl-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;white-space:nowrap}
+.ntl-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius: var(--r-pill);white-space:nowrap}
 .ntl-badge-unstarted{background:#f1f5f9;color:#64748b}
 .ntl-badge-worked{background:#eff6ff;color:#2563eb}
 .ntl-badge-review{background:#fef9c3;color:#a16207}
 .ntl-badge-done{background:#f0fdf4;color:#16a34a}
-.ntl-suggest-empty{padding:12px 14px;background:#f8fafc;border:1px dashed #e5e7eb;border-radius:9px;font-size:12px;color:#9ca3af;text-align:center;line-height:1.5}
-.ntl-divider{height:1px;background:#e5e7eb;margin:2px 0}
+.ntl-suggest-empty{padding:12px 14px;background:#f8fafc;border:1px dashed var(--border);border-radius:9px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.5}
+.ntl-divider{height:1px;background:var(--border);margin:2px 0}
 .ntl-cal-wrap{position:relative}.ntl-cal-search-wrap{position:relative}.ntl-cal-search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--text-muted);pointer-events:none}.ntl-cal-search-wrap input{padding-left:28px!important}.ntl-cal-dd{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:9px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;overflow:hidden}.ntl-cal-dd.open{display:block}.ntl-cal-item{display:flex;align-items:center;gap:9px;padding:8px 11px;cursor:pointer;transition:background .1s}.ntl-cal-item:hover,.ntl-cal-item.foc{background:var(--accent-light)}.ntl-cal-item-ico{width:26px;height:26px;border-radius:6px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0}.ntl-cal-item-ico svg{width:12px;height:12px;color:var(--accent)}.ntl-cal-item-info{flex:1;min-width:0}.ntl-cal-item-title{font-size:12.5px;font-weight:500;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ntl-cal-item-time{font-size:11px;color:var(--text-muted);margin-top:1px}.ntl-cal-item-dur{font-size:11px;font-weight:600;color:var(--text-secondary);white-space:nowrap;flex-shrink:0}.ntl-cal-chip{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:#f8fafc}.ntl-cal-chip-ico{width:24px;height:24px;border-radius:5px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0}.ntl-cal-chip-ico svg{width:11px;height:11px;color:var(--accent)}.ntl-cal-chip-text{flex:1;min-width:0}.ntl-cal-chip-title{font-size:12.5px;font-weight:500;color:var(--text-primary)}.ntl-cal-chip-meta{font-size:10.5px;color:var(--text-muted);margin-top:1px}.ntl-cal-chip-clear{width:18px;height:18px;border-radius:50%;border:none;background:var(--bg-surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:10px;line-height:1;flex-shrink:0;transition:all .1s}.ntl-cal-chip-clear:hover{background:var(--border-strong);color:var(--text-primary)}
-.ntl-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 22px;border-top:1px solid #e5e7eb;flex-shrink:0}
-.ntl-footer-left{font-size:11.5px;color:#9ca3af}
-.ntl-footer-left strong{color:#111827;font-weight:600}
+.ntl-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 22px;border-top:1px solid var(--border);flex-shrink:0}
+.ntl-footer-left{font-size:11.5px;color:var(--text-muted)}
+.ntl-footer-left strong{color:var(--text-primary);font-weight:600}
 .ntl-footer-actions{display:flex;gap:8px}
-.ntl-cancel{font-size:13px;padding:7px 16px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;color:#6b7280;cursor:pointer;font-family:inherit;transition:all .12s}
-.ntl-cancel:hover{border-color:#d1d5db;color:#111827}
-.ntl-submit{font-size:13px;font-weight:500;padding:7px 20px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;cursor:pointer;font-family:inherit;transition:background .12s;display:flex;align-items:center;gap:6px}
-.ntl-submit:hover{background:#2f4ac4}
+.ntl-cancel{font-size:13px;padding:7px 16px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:all .12s}
+.ntl-cancel:hover{border-color:var(--border-strong);color:var(--text-primary)}
+.ntl-submit{font-size:13px;font-weight:500;padding:7px 20px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;font-family:inherit;transition:background .12s;display:flex;align-items:center;gap:6px}
+.ntl-submit:hover{background:var(--accent-hover)}
 .ntl-submit svg{width:13px;height:13px}
 </style>
 </head>
@@ -429,7 +430,7 @@
         <div class="udrop-mi"><div class="udrop-mi-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg></div><div class="udrop-mi-lbl">Settings</div></div>
         <div class="udrop-divider"></div>
         <div class="udrop-sw-hdr"><span class="udrop-sw-label">Switch Role</span><svg class="udrop-sw-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg></div>
-        <label class="role-item" for="r-pm" id="role-pm"><div class="role-ico" style="background:#eef2ff"><svg viewBox="0 0 16 16" fill="none" stroke="#3b5bdb" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></div><div><div class="role-name role-name-pm">Product Manager</div><div class="role-desc">Product reviews &amp; planning</div></div><svg class="role-check" id="ck-pm" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
+        <label class="role-item" for="r-pm" id="role-pm"><div class="role-ico" style="background:var(--accent-light)"><svg viewBox="0 0 16 16" fill="none" stroke="#3b5bdb" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></div><div><div class="role-name role-name-pm">Product Manager</div><div class="role-desc">Product reviews &amp; planning</div></div><svg class="role-check" id="ck-pm" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
         <label class="role-item" for="r-dev" id="role-dev"><div class="role-ico" style="background:#eff6ff"><svg viewBox="0 0 16 16" fill="none" stroke="#2563eb" stroke-width="1.5"><path d="M5 4l-3 4 3 4M11 4l3 4-3 4M9 3l-2 10"/></svg></div><div><div class="role-name role-name-dev">Developer</div><div class="role-desc">Code reviews &amp; dev tasks</div></div><svg class="role-check" id="ck-dev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
         <label class="role-item" for="r-design" id="role-design"><div class="role-ico" style="background:#fdf2f8"><svg viewBox="0 0 16 16" fill="none" stroke="#9d174d" stroke-width="1.5"><circle cx="10" cy="6" r="3"/><path d="M2 14c0-2.8 2.2-5 6-5"/><path d="M4 9l2 2"/></svg></div><div><div class="role-name role-name-design">Designer</div><div class="role-desc">Design reviews &amp; assets</div></div><svg class="role-check" id="ck-design" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
         <label class="role-item" for="r-qa" id="role-qa"><div class="role-ico" style="background:#faf5ff"><svg viewBox="0 0 16 16" fill="none" stroke="#6d28d9" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><path d="M5.5 8.5l2 2 3-3.5"/></svg></div><div><div class="role-name role-name-qa">QA Engineer</div><div class="role-desc">QA reviews &amp; testing</div></div><svg class="role-check" id="ck-qa" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><path d="M3 8l3.5 3.5L13 4.5"/></svg></label>
@@ -501,10 +502,10 @@
         <table class="data-table">
           <thead><tr><th>Project</th><th>Temperature</th><th>Sprint</th><th>Team</th><th>Efforts</th><th>Due date</th></tr></thead>
           <tbody>
-            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">ES</div><div><div class="pt-name">EventSquid</div><div class="pt-client">Squid Events Ltd.</div></div></div></td><td><span class="badge s-ontrack"><div class="badge-dot" style="background:#059669"></div>On Track</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 3 · Apr 1–30</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:38%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">38%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:#ecfdf5;color:#065f46">TR</div><div class="pt-av" style="background:#fdf2f8;color:#9d174d">CH</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">11</span><span style="font-size:11px;color:var(--error);font-weight:500">1 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 30, 2026</span></td></tr>
-            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">CM</div><div><div class="pt-name">Chantmasters</div><div class="pt-client">Chantmasters LLC</div></div></div></td><td><span class="badge s-atrisk"><div class="badge-dot" style="background:#d97706"></div>At Risk</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 5 · Mar 15–Apr 14</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:52%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">52%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:#f5eeff;color:#6d28d9">AK</div><div class="pt-av" style="background:#ecfdf5;color:#065f46">TR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">16</span><span style="font-size:11px;color:var(--error);font-weight:500">4 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 30, 2026</span></td></tr>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">ES</div><div><div class="pt-name">EventSquid</div><div class="pt-client">Squid Events Ltd.</div></div></div></td><td><span class="badge s-ontrack"><div class="badge-dot" style="background:#059669"></div>On Track</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 3 · Apr 1–30</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:38%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">38%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:var(--success-light);color:#065f46">TR</div><div class="pt-av" style="background:#fdf2f8;color:#9d174d">CH</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">11</span><span style="font-size:11px;color:var(--error);font-weight:500">1 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 30, 2026</span></td></tr>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">CM</div><div><div class="pt-name">Chantmasters</div><div class="pt-client">Chantmasters LLC</div></div></div></td><td><span class="badge s-atrisk"><div class="badge-dot" style="background:#d97706"></div>At Risk</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 5 · Mar 15–Apr 14</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:52%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">52%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:#f5eeff;color:#6d28d9">AK</div><div class="pt-av" style="background:var(--success-light);color:#065f46">TR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">16</span><span style="font-size:11px;color:var(--error);font-weight:500">4 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 30, 2026</span></td></tr>
             <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">CN</div><div><div class="pt-name">Carmnet</div><div class="pt-client">Carmnet Automotive</div></div></div></td><td><span class="badge s-ontrack"><div class="badge-dot" style="background:#059669"></div>On Track</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl">Sprint 2 · Mar 1–Apr 15</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:63%"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--text-secondary)">63%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fff7ed;color:#9a3412">MV</div><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">JR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">8</span><span style="font-size:11px;color:var(--text-muted)">0 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">May 15, 2026</span></td></tr>
-            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">TA</div><div><div class="pt-name">TAPP</div><div class="pt-client">TAPP Corp</div></div></div></td><td><span class="badge s-delayed"><div class="badge-dot" style="background:var(--error)"></div>Delayed</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl" style="color:var(--error)">Sprint 4 · Behind</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:21%;background:var(--error)"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--error)">21%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:#ecfdf5;color:#065f46">TR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">19</span><span style="font-size:11px;color:var(--error);font-weight:500">3 blocked</span></td><td><span style="font-size:12px;color:var(--error);font-weight:500">May 30 — late</span></td></tr>
+            <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">TA</div><div><div class="pt-name">TAPP</div><div class="pt-client">TAPP Corp</div></div></div></td><td><span class="badge s-delayed"><div class="badge-dot" style="background:var(--error)"></div>Delayed</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl" style="color:var(--error)">Sprint 4 · Behind</span><div class="pt-prog"><div class="pt-prog-bar"><div class="prog-fill" style="width:21%;background:var(--error)"></div></div><span style="font-size:11.5px;font-weight:600;color:var(--error)">21%</span></div></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div><div class="pt-av" style="background:var(--success-light);color:#065f46">TR</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">19</span><span style="font-size:11px;color:var(--error);font-weight:500">3 blocked</span></td><td><span style="font-size:12px;color:var(--error);font-weight:500">May 30 — late</span></td></tr>
             <tr onclick="location.href='project-detail.html'"><td><div style="display:flex;align-items:center;gap:9px"><div class="pt-icon">DO</div><div><div class="pt-name">DesignOps</div><div class="pt-client">Internal</div></div></div></td><td><span class="badge s-review"><div class="badge-dot" style="background:#7c3aed"></div>In Review</span></td><td><div class="pt-sprint"><span class="pt-sprint-lbl" style="color:var(--text-muted);font-style:italic">Continuous</span></div></td><td><div class="pt-avs"><div class="pt-av" style="background:#fdf2f8;color:#9d174d">CH</div><div class="pt-av" style="background:#fde8d8;color:#b45309">LM</div></div></td><td><span style="font-size:12px;font-weight:500;margin-right:6px">6</span><span style="font-size:11px;color:var(--text-muted)">0 blocked</span></td><td><span style="font-size:12px;color:var(--text-secondary)">Apr 26, 2026</span></td></tr>
           </tbody>
         </table>
@@ -531,7 +532,7 @@
             <div class="ooo-meta"><div class="ooo-date">03/09</div><div class="ooo-dur">3 days</div></div>
           </div>
           <div class="ooo-card">
-            <div class="av av-md" style="background:#ecfdf5;color:#065f46">TR</div>
+            <div class="av av-md" style="background:var(--success-light);color:#065f46">TR</div>
             <div class="ooo-info"><div class="ooo-name">Tom Reeves</div><div class="ooo-proj">Carmnet</div></div>
             <div class="ooo-meta"><div class="ooo-date">03/12</div><div class="ooo-dur">1 day</div></div>
           </div>
@@ -575,7 +576,7 @@
               <span class="pa-gcount">2</span>
               <span class="pa-gsep"></span>
             </div>
-            <div class="pa-row" style="--pa-accent:#3b5bdb">
+            <div class="pa-row" style="--pa-accent:var(--accent)">
               <div class="pa-accent-bar"></div>
               <div class="pa-info">
                 <div class="pa-task-name">Stripe billing portal refactor</div>
@@ -590,7 +591,7 @@
                 <button class="pa-btn">Assign Dev</button>
               </div>
             </div>
-            <div class="pa-row" style="--pa-accent:#3b5bdb">
+            <div class="pa-row" style="--pa-accent:var(--accent)">
               <div class="pa-accent-bar"></div>
               <div class="pa-info">
                 <div class="pa-task-name">Push notification service</div>
@@ -690,7 +691,7 @@
           <!-- Group: Reviews -->
           <div class="pa-group">
             <div class="pa-group-hdr">
-              <span class="pa-gdot" style="background:#fef3c7;color:#92400e"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3.5l2 1"/></svg></span>
+              <span class="pa-gdot" style="background:#fef3c7;color:var(--warning-ink)"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3.5l2 1"/></svg></span>
               <span class="pa-glabel">Pending Reviews</span>
               <span class="pa-gcount pa-gcount-warn">2</span>
               <span class="pa-gsep"></span>
@@ -730,12 +731,12 @@
           <!-- Group: Setup -->
           <div class="pa-group">
             <div class="pa-group-hdr">
-              <span class="pa-gdot" style="background:#f3f4f6;color:#374151"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7l1.5 1"/></svg></span>
+              <span class="pa-gdot" style="background:#f3f4f6;color:var(--text-secondary)"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7l1.5 1"/></svg></span>
               <span class="pa-glabel">Setup Items</span>
               <span class="pa-gcount">1</span>
               <span class="pa-gsep"></span>
             </div>
-            <div class="pa-row" style="--pa-accent:#6b7280">
+            <div class="pa-row" style="--pa-accent:var(--text-secondary)">
               <div class="pa-accent-bar"></div>
               <div class="pa-info">
                 <div class="pa-task-name">Sprint goal not defined</div>
@@ -765,7 +766,7 @@
               <span class="pa-gcount pa-gcount-warn">5</span>
               <span class="pa-gsep"></span>
             </div>
-            <div class="pa-row" style="--pa-accent:#3b5bdb">
+            <div class="pa-row" style="--pa-accent:var(--accent)">
               <div class="pa-accent-bar"></div>
               <div class="pa-info">
                 <div class="pa-task-name">Stripe billing portal refactor</div>
@@ -810,12 +811,12 @@
           <!-- EventSquid -->
           <div class="pa-group">
             <div class="pa-group-hdr">
-              <span class="pa-proj-icon" style="background:#ecfdf5;color:#065f46">ES</span>
+              <span class="pa-proj-icon" style="background:var(--success-light);color:#065f46">ES</span>
               <span class="pa-glabel">EventSquid</span>
               <span class="pa-gcount">2</span>
               <span class="pa-gsep"></span>
             </div>
-            <div class="pa-row" style="--pa-accent:#3b5bdb">
+            <div class="pa-row" style="--pa-accent:var(--accent)">
               <div class="pa-accent-bar"></div>
               <div class="pa-info">
                 <div class="pa-task-name">Push notification service</div>
@@ -859,7 +860,7 @@
               <span class="pa-gcount">1</span>
               <span class="pa-gsep"></span>
             </div>
-            <div class="pa-row" style="--pa-accent:#6b7280">
+            <div class="pa-row" style="--pa-accent:var(--text-secondary)">
               <div class="pa-accent-bar"></div>
               <div class="pa-info">
                 <div class="pa-task-name">Sprint goal not defined</div>
@@ -877,7 +878,7 @@
           <div class="card-hdr"><div class="card-hdr-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>Recent activity</div><span class="card-hdr-action">View all</span></div>
           <div class="act-list" style="flex:1">
             <div class="act-item"><div class="av av-sm" style="background:#e8f4fd;color:#1d5fa6;margin-top:1px">SK</div><div class="act-body"><div class="act-line"><span class="act-name">Sarah Kim</span> <span class="act-verb">submitted for review</span> <span class="act-task">Onboarding stepper</span></div><div class="act-meta">2 min ago<span class="act-meta-dot"></span><span class="act-proj">EventSquid</span></div></div><div class="act-time">2m</div></div>
-            <div class="act-item"><div class="av av-sm" style="background:#ecfdf5;color:#065f46;margin-top:1px">TR</div><div class="act-body"><div class="act-line"><span class="act-name">Tom Reeves</span> <span class="act-verb">marked as blocked</span> <span class="act-task">Websocket sync</span></div><div class="act-meta">18 min<span class="act-meta-dot"></span><span class="act-proj">EventSquid</span></div></div><div class="act-time">18m</div></div>
+            <div class="act-item"><div class="av av-sm" style="background:var(--success-light);color:#065f46;margin-top:1px">TR</div><div class="act-body"><div class="act-line"><span class="act-name">Tom Reeves</span> <span class="act-verb">marked as blocked</span> <span class="act-task">Websocket sync</span></div><div class="act-meta">18 min<span class="act-meta-dot"></span><span class="act-proj">EventSquid</span></div></div><div class="act-time">18m</div></div>
             <div class="act-item"><div class="av av-sm" style="background:#fde8d8;color:#b45309;margin-top:1px">LM</div><div class="act-body"><div class="act-line"><span class="act-name">Lucas Mora</span> <span class="act-verb">completed</span> <span class="act-task">User profile page v2</span></div><div class="act-meta">1h<span class="act-meta-dot"></span><span class="act-proj">TAPP</span></div></div><div class="act-time">1h</div></div>
             <div class="act-item"><div class="av av-sm" style="background:#f5eeff;color:#6d28d9;margin-top:1px">AK</div><div class="act-body"><div class="act-line"><span class="act-name">Anna K.</span> <span class="act-verb">commented on</span> <span class="act-task">Permissions matrix UI</span></div><div class="act-meta">3h<span class="act-meta-dot"></span><span class="act-proj">TAPP</span></div></div><div class="act-time">3h</div></div>
             <div class="act-item"><div class="av av-sm" style="background:#fdf2f8;color:#9d174d;margin-top:1px">CH</div><div class="act-body"><div class="act-line"><span class="act-name">Clara H.</span> <span class="act-verb">moved to progress</span> <span class="act-task">Mobile responsive audit</span></div><div class="act-meta">5h<span class="act-meta-dot"></span><span class="act-proj">TAPP</span></div></div><div class="act-time">5h</div></div>
@@ -960,14 +961,14 @@
             <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:var(--error)"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="var(--error)" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h.01"/></svg>Blocked<span class="kb-cnt">2</span></div><button class="kb-plus">+</button></div></div>
               <div class="kb-cards">
                 <div class="kb-card blocked" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-037</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Real-time seat map — websocket</div><div class="kbc-tags"><span class="kbt t-hi">High</span><span class="kbt r-be">BE</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fff7ed;color:#9a3412">MV</div><div class="blocked-label">⚑ Blocked</div><div style="flex:1"></div></div></div>
-                <div class="kb-card blocked" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-018</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Cross-browser QA — Safari iOS</div><div class="kbc-tags"><span class="kbt t-md">Medium</span><span class="kbt r-qa">QA</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#ecfdf5;color:#065f46">TR</div><div class="blocked-label">⚑ Stalled</div><div style="flex:1"></div></div></div>
+                <div class="kb-card blocked" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-018</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Cross-browser QA — Safari iOS</div><div class="kbc-tags"><span class="kbt t-md">Medium</span><span class="kbt r-qa">QA</span></div><div class="kbc-meta"><div class="av av-xs" style="background:var(--success-light);color:#065f46">TR</div><div class="blocked-label">⚑ Stalled</div><div style="flex:1"></div></div></div>
               </div><div class="kb-add-row">+ Add task</div></div>
             <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:#8b5cf6"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="#8b5cf6" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M9 6l2 2-2 2"/></svg>Review<span class="kb-cnt">2</span></div><button class="kb-plus">+</button></div></div>
               <div class="kb-cards">
                 <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-024</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Homepage hero — mobile breakpoint</div><div class="kbc-tags"><span class="kbt t-md">Medium</span><span class="kbt r-design">DESIGN</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fdf2f8;color:#9d174d">CH</div><div style="flex:1"></div><div class="kbc-comment"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h12a1 1 0 0 1 1 1v7H5l-3 3V3a1 1 0 0 1 1-1z"/></svg>4</div></div></div>
                 <div class="kb-card" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-026</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Email notifications — booking confirms</div><div class="kbc-tags"><span class="kbt t-hi">High</span><span class="kbt r-be">BE</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fff7ed;color:#9a3412">MV</div><div style="flex:1"></div></div></div>
               </div><div class="kb-add-row">+ Add task</div></div>
-            <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:#10b981"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M5.5 8.5l2 2 3-4"/></svg>Done<span class="kb-cnt">4</span></div><button class="kb-plus">+</button></div></div>
+            <div class="kb-col"><div class="kb-col-hdr"><div class="kb-accent" style="background:var(--success)"></div><div style="display:flex;align-items:center;justify-content:space-between"><div class="kb-title"><svg viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="1.8" style="width:12px;height:12px"><circle cx="8" cy="8" r="6"/><path d="M5.5 8.5l2 2 3-4"/></svg>Done<span class="kb-cnt">4</span></div><button class="kb-plus">+</button></div></div>
               <div class="kb-cards">
                 <div class="kb-card done" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-010</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">Landing page redesign — hero</div><div class="kbc-tags"><span class="kbt r-design">DESIGN</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#fdf2f8;color:#9d174d">CH</div><div class="kb-done-mark"><svg viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 8l3.5 3.5L13 4.5"/></svg>Done</div></div></div>
                 <div class="kb-card done" draggable="true"><div class="kbc-top"><span class="kbc-id">ES-012</span><button class="kbc-opts">⋯</button></div><div class="kbc-title">User auth — OAuth Google</div><div class="kbc-tags"><span class="kbt r-dev">DEV</span></div><div class="kbc-meta"><div class="av av-xs" style="background:#e8f4fd;color:#1d5fa6">SK</div><div class="kb-done-mark"><svg viewBox="0 0 16 16" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 8l3.5 3.5L13 4.5"/></svg>Done</div></div></div>

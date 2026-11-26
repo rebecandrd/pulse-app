@@ -179,10 +179,10 @@ var PulseHours = (function () {
   ];
 
   var DISCIPLINES = [
-    { key: 'dev',    label: 'Dev',    color: '#3b82f6' },
-    { key: 'design', label: 'Design', color: '#d1457f' },
-    { key: 'qa',     label: 'QA',     color: '#8b5cf6' },
-    { key: 'pm',     label: 'PM',     color: '#0ea5a4' }
+    { key: 'dev',    label: 'Dev',    color: 'var(--dept-development)' },
+    { key: 'design', label: 'Design', color: 'var(--dept-design)' },
+    { key: 'qa',     label: 'QA',     color: 'var(--dept-quality-assurance)' },
+    { key: 'pm',     label: 'PM',     color: 'var(--dept-project-management)' }
   ];
 
   function getProject(id) {

@@ -6,67 +6,11 @@
 <title>Clara H. — Q1 2026 Review · Pulse</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pulse-tokens.css">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --font:'DM Sans',system-ui,sans-serif;
-    --font-mono:'DM Mono',monospace;
-    --bg-page:#eef0f4;
-    --bg-white:#ffffff;
-    --bg-surface:#f5f6f8;
-    --sidebar-bg:#0d0f18;
-    --sidebar-text:#8b90a8;
-    --sidebar-active-bg:#1a1f35;
-    --sidebar-active-text:#e8eaf2;
-    --sidebar-hover-bg:#161b2e;
-    --sidebar-section:#3a3f55;
-    --sidebar-divider:#1c2035;
-    --text-primary:#111827;
-    --text-secondary:#374151;
-    --text-muted:#9ca3af;
-    --border:#e5e7eb;
-    --border-strong:#d1d5db;
-    --accent:#3b5bdb;
-    --accent-hover:#2f4ac4;
-    --accent-light:#eef2ff;
-    --accent-border:#c5cffa;
-    --radius-sm:6px;
-    --radius-md:8px;
-    --radius-lg:10px;
   
-  /* State. */
-  --opacity-disabled:  .5;
-  --opacity-done:      .7;
-  --opacity-done-text: .55;
-  --rail-blocked: 2.5px;
-  --tab-active:   2px;
-  --focus-ring:   3px;
-
-  /* Motion. Durations only -- easing is the browser default throughout. */
-  --dur-fast: .1s;
-  --dur-base: .12s;
-  --dur-slow: .2s;
-
-  /* Elevation. Figma stores the tints as variables and the composed shadows as
-     effect styles (Elevation/*, Focus/Ring), because Figma has no shadow
-     variable type. Keep both tiers in step with that file. */
-  --shadow-tint-soft:          rgba(0,0,0,.06);
-  --shadow-tint-menu:          rgba(0,0,0,.08);
-  --shadow-tint-popover:       rgba(0,0,0,.14);
-  --shadow-tint-modal:         rgba(0,0,0,.22);
-  --shadow-tint-modal-contact: rgba(0,0,0,.1);
-  --shadow-tint-toast:         rgba(0,0,0,.2);
-  --shadow-tint-focus-ring:    rgba(59,91,219,.08);
-
-  --shadow-card:    0 2px 8px   var(--shadow-tint-soft);
-  --shadow-card-lg: 0 4px 16px  var(--shadow-tint-soft);
-  --shadow-menu:    0 1px 3px   var(--shadow-tint-menu);
-  --shadow-popover: 0 12px 34px var(--shadow-tint-popover);
-  --shadow-modal:   0 28px 80px var(--shadow-tint-modal), 0 4px 20px var(--shadow-tint-modal-contact);
-  --shadow-toast:   0 8px 24px  var(--shadow-tint-toast);
-  --shadow-focus:   0 0 0 var(--focus-ring) var(--shadow-tint-focus-ring);
-}
   html,body{height:100%;-webkit-font-smoothing:antialiased}
   body{font-family:var(--font);font-size:13px;color:var(--text-primary);background:var(--bg-page);overflow:hidden}
   .app{display:flex;height:100%;overflow:hidden}
@@ -74,25 +18,25 @@
   /* ─── Sidebar ─── */
   .sidebar{width:232px;min-width:232px;height:100%;background:var(--sidebar-bg);display:flex;flex-direction:column;overflow:hidden;border-right:1px solid #0a0c14}
   .sb-top{padding:18px 16px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--sidebar-divider)}
-  .sb-logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#3b5bdb,#6b35b5);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sb-logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#6b35b5);display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .sb-logo svg{width:17px;height:17px}
-  .sb-brand{font-size:15px;font-weight:600;color:#e8eaf2;letter-spacing:-.2px}
+  .sb-brand{font-size:15px;font-weight:600;color:var(--sidebar-active-text);letter-spacing:-.2px}
   .sb-scroll{flex:1;overflow-y:auto;padding:10px 0}
   .sb-scroll::-webkit-scrollbar{width:0}
   .sb-section{padding:12px 16px 4px;font-size:10px;color:var(--sidebar-section);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
   .sb-item{display:flex;align-items:center;gap:9px;padding:7px 14px;font-size:13px;color:var(--sidebar-text);cursor:pointer;border-radius:var(--radius-md);margin:1px 8px;transition:all var(--dur-base);position:relative;text-decoration:none}
   .sb-item:hover{background:var(--sidebar-hover-bg);color:#c8cce0}
-  .sb-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-text)}
+  .sb-item.active{background: var(--sidebar-active);color:var(--sidebar-active-text)}
   .sb-item svg{width:15px;height:15px;flex-shrink:0;opacity:.65}
   .sb-item.active svg{opacity:1}
-  .sb-item .badge{margin-left:auto;font-size:10px;background:#1e2440;color:#5a6280;padding:1px 6px;border-radius:99px;font-weight:500}
+  .sb-item .badge{margin-left:auto;font-size:10px;background:#1e2440;color:#5a6280;padding:1px 6px;border-radius: var(--r-pill);font-weight:500}
   .sb-item .chevron{margin-left:auto;width:12px;height:12px;opacity:.4;transition:transform var(--dur-slow)}
   .sb-item.open .chevron{transform:rotate(180deg)}
   .sb-sub{padding-left:16px;display:none}
   .sb-sub.open{display:block}
   .sb-sub .sb-item{font-size:12.5px;padding:6px 12px;color:#545870}
   .sb-sub .sb-item:hover{color:#9ca0b8}
-  .sb-sub .sb-item.active{color:#d0d4e8;background:#151a2e}
+  .sb-sub .sb-item.active{color: var(--slate-200);background: var(--sidebar-hover-bg)}
   .sb-sub .sb-item::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.4}
   .sb-sub .sb-item.active::before{opacity:1;background:var(--accent)}
   .sb-divider{height:1px;background:var(--sidebar-divider);margin:8px 14px}
@@ -116,7 +60,7 @@
   .cr-back svg{width:12px;height:12px}
   .cr-bread-sep{font-size:13px;color:var(--border-strong);flex-shrink:0;margin:0 2px}
   .cr-hdr-name{font-size:13.5px;font-weight:600;color:var(--text-primary);white-space:nowrap}
-  .cr-hdr-cycle{display:inline-flex;align-items:center;font-size:11px;font-weight:500;color:#4338ca;background:#eef2ff;border:1px solid #c7d2fe;border-radius:5px;padding:2px 7px}
+  .cr-hdr-cycle{display:inline-flex;align-items:center;font-size:11px;font-weight:500;color:#4338ca;background:var(--accent-light);border:1px solid #c7d2fe;border-radius:5px;padding:2px 7px}
   .cr-status-pip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:3px 9px;border-radius:6px;border:1px solid #bfdbfe;background:#eff6ff;color:#2563eb;flex-shrink:0}
   .cr-status-pip-dot{width:6px;height:6px;border-radius:50%;background:#2563eb;flex-shrink:0}
   .cr-hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
@@ -157,14 +101,14 @@
   .cr-tl-item:last-child{padding-bottom:4px}
   .cr-tl-item:not(:last-child)::before{content:'';position:absolute;left:8px;top:18px;bottom:0;width:1.5px;background:var(--border)}
   .cr-tl-marker{width:17px;height:17px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:8px;border:2px solid}
-  .cr-tl-item.done .cr-tl-marker{background:#10b981;border-color:#10b981;color:#fff}
+  .cr-tl-item.done .cr-tl-marker{background:var(--success);border-color:var(--success);color:#fff}
   .cr-tl-item.promo .cr-tl-marker{background:var(--accent);border-color:var(--accent);color:#fff}
   .cr-tl-item.current .cr-tl-marker{background:var(--bg-white);border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
   .cr-tl-period{font-size:10.5px;color:var(--text-muted);margin-bottom:2px}
   .cr-tl-tier{font-size:12.5px;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:6px}
   .cr-tl-score{font-size:11px;color:var(--text-muted);margin-top:2px}
   .cr-promo-badge{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:4px;background:#dbeafe;color:#1d4ed8;letter-spacing:.2px}
-  .cr-current-badge{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:4px;background:#fffbeb;color:#b45309}
+  .cr-current-badge{font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:4px;background:var(--warning-light);color:#b45309}
 
   /* ─── Right Panel ─── */
   .cr-right{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg-surface)}
@@ -192,17 +136,17 @@
   .cr-pipe-step{display:flex;align-items:center;gap:0;flex-shrink:0}
   .cr-pipe-node{display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 4px}
   .cr-pipe-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--border);background:var(--bg-white);transition:all var(--dur-slow);position:relative}
-  .cr-pipe-circle.done{background:#10b981;border-color:#10b981}
+  .cr-pipe-circle.done{background:var(--success);border-color:var(--success)}
   .cr-pipe-circle.done svg{color:#fff}
   .cr-pipe-circle.current{background:var(--bg-white);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
   .cr-pipe-circle.current::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--accent);position:absolute}
   .cr-pipe-circle.pending{background:var(--bg-surface);border-color:var(--border)}
   .cr-pipe-circle svg{width:12px;height:12px;color:var(--text-muted);position:relative}
   .cr-pipe-lbl{font-size:10px;font-weight:500;color:var(--text-muted);text-align:center;white-space:nowrap;max-width:72px}
-  .cr-pipe-lbl.done{color:#10b981;font-weight:600}
+  .cr-pipe-lbl.done{color:var(--success);font-weight:600}
   .cr-pipe-lbl.current{color:var(--accent);font-weight:600}
   .cr-pipe-line{flex:1;min-width:24px;height:2px;background:var(--border);margin-bottom:20px}
-  .cr-pipe-line.done{background:#10b981}
+  .cr-pipe-line.done{background:var(--success)}
 
   /* ─── Review Sections ─── */
   .cr-rev-sections{display:flex;flex-direction:column;gap:0}
@@ -215,21 +159,21 @@
   .cr-rev-sec-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
   .cr-rev-sec-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
   .cr-rev-sec-prog{display:flex;align-items:center;gap:6px}
-  .cr-rev-sec-track{width:80px;height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden}
-  .cr-rev-sec-fill{height:100%;border-radius:99px}
+  .cr-rev-sec-track{width:80px;height:4px;background:var(--border);border-radius: var(--r-pill);overflow:hidden}
+  .cr-rev-sec-fill{height:100%;border-radius: var(--r-pill)}
   .cr-rev-sec-pct{font-size:10.5px;font-weight:600;color:var(--text-secondary);font-family:var(--font-mono);min-width:26px}
   .cr-badge-done{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
-  .cr-badge-pending{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#fffbeb;color:#b45309;border:1px solid #fde68a}
+  .cr-badge-pending{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:var(--warning-light);color:#b45309;border:1px solid var(--warning-border)}
   .cr-badge-draft{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#f8fafc;color:#64748b;border:1px solid #e2e8f0}
-  .cr-badge-na{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:#f5f6f8;color:#9ca3af;border:1px solid #e5e7eb}
+  .cr-badge-na{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:5px;background:var(--bg-surface);color:var(--text-muted);border:1px solid var(--border)}
   .cr-sec-btn{font-size:11.5px;font-weight:500;padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all var(--dur-base)}
   .cr-sec-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-light)}
 
   /* ─── Automation notices ─── */
   .cr-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:12px;line-height:1.5}
-  .cr-notice-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+  .cr-notice-warn{background:var(--warning-light);border:1px solid var(--warning-border);color:var(--warning-ink)}
   .cr-notice-info{background:#f0f9ff;border:1px solid #bae6fd;color:#0369a1}
-  .cr-notice-err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+  .cr-notice-err{background:var(--error-light);border:1px solid var(--error-border);color:var(--error-ink)}
   .cr-notice svg{width:14px;height:14px;flex-shrink:0;margin-top:1px}
   .cr-notice strong{font-weight:600}
 
@@ -245,7 +189,7 @@
   .cr-hist-tier-dot{width:7px;height:7px;border-radius:50%}
   .cr-hist-score{font-family:var(--font-mono);font-weight:600}
   .cr-delta-up{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:#16a34a;background:#dcfce7;border-radius:4px;padding:1px 6px}
-  .cr-delta-same{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:500;color:#9ca3af;background:#f5f6f8;border-radius:4px;padding:1px 6px}
+  .cr-delta-same{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:500;color:var(--text-muted);background:var(--bg-surface);border-radius:4px;padding:1px 6px}
 
   /* ─── Rubric Tab ─── */
   .cr-rub-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
@@ -253,9 +197,9 @@
   .cr-rub-sum-val{font-size:20px;font-weight:700;color:var(--text-primary);font-family:var(--font-mono);letter-spacing:-.5px}
   .cr-rub-sum-max{font-size:12px;color:var(--text-muted);font-family:var(--font-mono)}
   .cr-rub-sum-lbl{font-size:10.5px;color:var(--text-muted);margin-top:3px}
-  .cr-rub-sum-bar{height:3px;border-radius:99px;margin-top:8px;background:#e5e7eb;overflow:hidden}
-  .cr-rub-sum-fill{height:100%;border-radius:99px}
-  .cr-rub-benchmark{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;background:#eef2ff;border:1px solid var(--accent-border);border-radius:8px;font-size:12px;color:var(--accent);margin-bottom:16px}
+  .cr-rub-sum-bar{height:3px;border-radius: var(--r-pill);margin-top:8px;background:var(--border);overflow:hidden}
+  .cr-rub-sum-fill{height:100%;border-radius: var(--r-pill)}
+  .cr-rub-benchmark{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:8px;font-size:12px;color:var(--accent);margin-bottom:16px}
   .cr-rub-benchmark svg{width:14px;height:14px;flex-shrink:0}
   .cr-rub-bench-left{display:flex;align-items:center;gap:8px}
   .cr-rub-legend{display:flex;align-items:center;gap:12px;flex-shrink:0}
@@ -270,8 +214,8 @@
   .cr-rub-group-arr.open{transform:rotate(90deg)}
   .cr-rub-group-name{font-size:13px;font-weight:600;color:var(--text-primary);flex:1}
   .cr-rub-group-score{font-size:12px;font-weight:600;font-family:var(--font-mono);color:var(--text-secondary)}
-  .cr-rub-group-bar{width:80px;height:5px;border-radius:99px;background:#e5e7eb;overflow:hidden}
-  .cr-rub-group-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .3s}
+  .cr-rub-group-bar{width:80px;height:5px;border-radius: var(--r-pill);background:var(--border);overflow:hidden}
+  .cr-rub-group-fill{height:100%;border-radius: var(--r-pill);background:var(--accent);transition:width .3s}
   .cr-rub-comps{border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0}
 
   /* Competency card */
@@ -282,7 +226,7 @@
   .cr-rub-comp-name{font-size:12.5px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
   .cr-rub-comp-exp-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
   .cr-rub-exp-badge{font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-border)}
-  .cr-rub-comp-gap{font-size:10.5px;color:#dc2626;font-weight:500}
+  .cr-rub-comp-gap{font-size:10.5px;color:var(--error);font-weight:500}
   .cr-rub-comp-gap.ok{color:#16a34a}
   .cr-rub-comp-gap.neutral{color:var(--text-muted)}
   .cr-rub-scoring{display:flex;flex-direction:column;gap:7px;flex-shrink:0}
@@ -293,8 +237,8 @@
   .cr-rub-dot:hover{border-color:var(--accent);transform:scale(1.1)}
   .cr-rub-dot.mgr-filled{background:var(--accent);border-color:var(--accent)}
   .cr-rub-dot.self-filled{background:#7c3aed;border-color:#7c3aed}
-  .cr-rub-dot.exp-mark{border-color:#f59e0b;background:transparent}
-  .cr-rub-dot.exp-mark::after{content:'';width:5px;height:5px;border-radius:50%;background:#f59e0b;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .cr-rub-dot.exp-mark{border-color:var(--warning);background:transparent}
+  .cr-rub-dot.exp-mark::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--warning);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
   .cr-rub-score-num{font-size:11.5px;font-weight:700;color:var(--text-secondary);font-family:var(--font-mono);min-width:24px}
   .cr-rub-score-num.mgr{color:var(--accent)}
   .cr-rub-score-num.self{color:#7c3aed}
@@ -308,7 +252,7 @@
   .cr-rub-lvl-panel.open{display:block}
   .cr-rub-lvl-row{display:grid;grid-template-columns:36px 1fr;border-bottom:1px solid var(--border)}
   .cr-rub-lvl-row:last-child{border-bottom:none}
-  .cr-rub-lvl-row.current-lvl{background:#eef2ff}
+  .cr-rub-lvl-row.current-lvl{background:var(--accent-light)}
   .cr-rub-lvl-num{display:flex;align-items:flex-start;justify-content:center;padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);font-family:var(--font-mono);border-right:1px solid var(--border)}
   .cr-rub-lvl-row.current-lvl .cr-rub-lvl-num{color:var(--accent)}
   .cr-rub-lvl-desc{padding:10px 12px;font-size:11.5px;color:var(--text-secondary);line-height:1.55}
@@ -316,7 +260,7 @@
   .cr-rub-lvl-tag{display:inline-block;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:1px 5px;border-radius:3px;margin-right:4px;vertical-align:middle}
   .cr-rub-lvl-tag.mgr{background:var(--accent-light);color:var(--accent)}
   .cr-rub-lvl-tag.self{background:#f5f3ff;color:#7c3aed}
-  .cr-rub-lvl-tag.exp{background:#fffbeb;color:#b45309}
+  .cr-rub-lvl-tag.exp{background:var(--warning-light);color:#b45309}
 
   /* Reviewer note */
   .cr-rub-note-area{margin-top:10px}
@@ -346,7 +290,7 @@
   .cr-promo-opt.selected{border-color:var(--accent-border);background:var(--accent-light);color:var(--accent)}
   .cr-promo-opt svg{width:12px;height:12px}
   .cr-fb-pending{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;border-top:1px solid var(--border)}
-  .cr-fb-pending-icon{width:40px;height:40px;border-radius:10px;background:#fffbeb;border:1px solid #fde68a;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+  .cr-fb-pending-icon{width:40px;height:40px;border-radius:10px;background:var(--warning-light);border:1px solid var(--warning-border);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
   .cr-fb-pending-icon svg{width:18px;height:18px;color:#d97706}
   .cr-fb-pending-title{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:4px}
   .cr-fb-pending-sub{font-size:12px;color:var(--text-muted);line-height:1.5;max-width:280px}
@@ -699,7 +643,7 @@
               </div>
 
               <div class="cr-rev-sec">
-                <div class="cr-rev-sec-icon" style="background:#fffbeb">
+                <div class="cr-rev-sec-icon" style="background:var(--warning-light)">
                   <svg viewBox="0 0 16 16" fill="none" stroke="#f59e0b" stroke-width="1.6"><circle cx="8" cy="6" r="3"/><path d="M3 14c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg>
                 </div>
                 <div class="cr-rev-sec-body">
@@ -708,7 +652,7 @@
                 </div>
                 <div class="cr-rev-sec-right">
                   <div class="cr-rev-sec-prog">
-                    <div class="cr-rev-sec-track"><div class="cr-rev-sec-fill" style="width:0%;background:#f59e0b"></div></div>
+                    <div class="cr-rev-sec-track"><div class="cr-rev-sec-fill" style="width:0%;background:var(--warning)"></div></div>
                     <span class="cr-rev-sec-pct">0%</span>
                   </div>
                   <span class="cr-badge-pending">Pending</span>
@@ -762,28 +706,28 @@
             <div class="cr-card-body" style="padding:0">
               <div style="display:flex;flex-direction:column">
                 <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border)">
-                  <div style="width:8px;height:8px;border-radius:50%;background:#f59e0b;flex-shrink:0"></div>
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--warning);flex-shrink:0"></div>
                   <div style="flex:1">
                     <div style="font-size:12.5px;font-weight:500;color:var(--text-primary)">PM reminder — Anna K.</div>
                     <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Scheduled for May 24, 2026 · If PM notes still incomplete</div>
                   </div>
-                  <span style="font-size:10.5px;font-weight:600;color:#b45309;background:#fffbeb;border:1px solid #fde68a;padding:2px 8px;border-radius:5px">Pending</span>
+                  <span style="font-size:10.5px;font-weight:600;color:#b45309;background:var(--warning-light);border:1px solid var(--warning-border);padding:2px 8px;border-radius:5px">Pending</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border)">
-                  <div style="width:8px;height:8px;border-radius:50%;background:#e5e7eb;flex-shrink:0"></div>
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0"></div>
                   <div style="flex:1">
                     <div style="font-size:12.5px;font-weight:500;color:var(--text-primary)">Calibration invite — All reviewers</div>
                     <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Triggers when all sections are complete</div>
                   </div>
-                  <span style="font-size:10.5px;font-weight:600;color:#9ca3af;background:#f5f6f8;border:1px solid #e5e7eb;padding:2px 8px;border-radius:5px">Waiting</span>
+                  <span style="font-size:10.5px;font-weight:600;color:var(--text-muted);background:var(--bg-surface);border:1px solid var(--border);padding:2px 8px;border-radius:5px">Waiting</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;padding:12px 18px">
-                  <div style="width:8px;height:8px;border-radius:50%;background:#e5e7eb;flex-shrink:0"></div>
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0"></div>
                   <div style="flex:1">
                     <div style="font-size:12.5px;font-weight:500;color:var(--text-primary)">Report delivery — Clara H.</div>
                     <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Sends when status is set to Employee Visible</div>
                   </div>
-                  <span style="font-size:10.5px;font-weight:600;color:#9ca3af;background:#f5f6f8;border:1px solid #e5e7eb;padding:2px 8px;border-radius:5px">Waiting</span>
+                  <span style="font-size:10.5px;font-weight:600;color:var(--text-muted);background:var(--bg-surface);border:1px solid var(--border);padding:2px 8px;border-radius:5px">Waiting</span>
                 </div>
               </div>
             </div>
@@ -855,7 +799,7 @@
               <div style="display:flex;align-items:flex-end;gap:14px;padding:8px 0;height:100px">
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
                   <div style="font-size:11px;font-weight:600;color:var(--text-muted);font-family:var(--font-mono)">68</div>
-                  <div style="width:100%;border-radius:5px 5px 0 0;background:#e5e7eb" style="height:68%">
+                  <div style="width:100%;border-radius:5px 5px 0 0;background:var(--border)" style="height:68%">
                     <div style="width:100%;height:60px;background:linear-gradient(to top,#94a3b8,#cbd5e1);border-radius:5px 5px 0 0"></div>
                   </div>
                   <div style="font-size:10.5px;color:var(--text-muted)">Q1 '24</div>
@@ -872,7 +816,7 @@
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
                   <div style="font-size:11px;font-weight:600;color:var(--text-muted);font-family:var(--font-mono)">—</div>
-                  <div style="width:100%;height:40px;background:repeating-linear-gradient(45deg,#f0f2f7,#f0f2f7 3px,#e5e7eb 3px,#e5e7eb 6px);border-radius:5px 5px 0 0;border:1px dashed var(--border-strong)"></div>
+                  <div style="width:100%;height:40px;background:repeating-linear-gradient(45deg,#f0f2f7,#f0f2f7 3px,var(--border) 3px,var(--border) 6px);border-radius:5px 5px 0 0;border:1px dashed var(--border-strong)"></div>
                   <div style="font-size:10.5px;color:var(--text-muted)">Q1 '26</div>
                 </div>
               </div>
@@ -896,7 +840,7 @@
             <div class="cr-rub-legend">
               <div class="cr-rub-leg-item"><div class="cr-rub-leg-dot" style="background:var(--accent)"></div>Manager</div>
               <div class="cr-rub-leg-item"><div class="cr-rub-leg-dot" style="background:#7c3aed"></div>Self</div>
-              <div class="cr-rub-leg-item"><div class="cr-rub-leg-dot" style="background:#f59e0b"></div>Expected</div>
+              <div class="cr-rub-leg-item"><div class="cr-rub-leg-dot" style="background:var(--warning)"></div>Expected</div>
             </div>
           </div>
 
@@ -914,12 +858,12 @@
             <div class="cr-rub-sum-card">
               <div><span class="cr-rub-sum-val">3.25</span><span class="cr-rub-sum-max"> /5</span></div>
               <div class="cr-rub-sum-lbl">Delivery</div>
-              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:65%;background:#f59e0b"></div></div>
+              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:65%;background:var(--warning)"></div></div>
             </div>
             <div class="cr-rub-sum-card">
               <div><span class="cr-rub-sum-val">4.5</span><span class="cr-rub-sum-max"> /5</span></div>
               <div class="cr-rub-sum-lbl">Collaboration</div>
-              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:90%;background:#10b981"></div></div>
+              <div class="cr-rub-sum-bar"><div class="cr-rub-sum-fill" style="width:90%;background:var(--success)"></div></div>
             </div>
             <div class="cr-rub-sum-card">
               <div><span class="cr-rub-sum-val">3.5</span><span class="cr-rub-sum-max"> /5</span></div>
@@ -995,9 +939,9 @@
           <div class="cr-fb-section">
             <div class="cr-fb-hdr">
               <div class="cr-fb-who">
-                <div class="cr-fb-av" style="background:#f59e0b">AK</div>
+                <div class="cr-fb-av" style="background:var(--warning)">AK</div>
                 <div>
-                  <div class="cr-fb-name">Anna K. <span style="font-size:10.5px;font-weight:500;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:4px;padding:1px 6px;margin-left:4px">PM</span></div>
+                  <div class="cr-fb-name">Anna K. <span style="font-size:10.5px;font-weight:500;color:#b45309;background:var(--warning-light);border:1px solid var(--warning-border);border-radius:4px;padding:1px 6px;margin-left:4px">PM</span></div>
                   <div class="cr-fb-role">Assigned · Not started · Reminder on May 24</div>
                 </div>
               </div>
@@ -1066,11 +1010,11 @@
                   <div class="cr-report-sec-val">Strong backend proficiency and code quality. Growth needed in front-end skills and documentation consistency. Shows early leadership signals and readiness for sub-team ownership.</div>
                 </div>
                 <div class="cr-report-sec" style="opacity:.45">
-                  <div class="cr-report-sec-lbl" style="color:#d97706">PM Feedback <span style="font-size:10px;background:#fffbeb;border:1px solid #fde68a;color:#b45309;padding:1px 6px;border-radius:4px;font-weight:600;letter-spacing:.2px;margin-left:4px">PENDING</span></div>
+                  <div class="cr-report-sec-lbl" style="color:#d97706">PM Feedback <span style="font-size:10px;background:var(--warning-light);border:1px solid var(--warning-border);color:#b45309;padding:1px 6px;border-radius:4px;font-weight:600;letter-spacing:.2px;margin-left:4px">PENDING</span></div>
                   <div class="cr-report-sec-val" style="font-style:italic;color:var(--text-muted)">Awaiting Anna K. to complete PM notes section.</div>
                 </div>
                 <div class="cr-report-sec" style="opacity:.45">
-                  <div class="cr-report-sec-lbl" style="color:#9ca3af">Calibration Summary <span style="font-size:10px;background:#f5f6f8;border:1px solid #e5e7eb;color:#9ca3af;padding:1px 6px;border-radius:4px;font-weight:600;letter-spacing:.2px;margin-left:4px">NOT STARTED</span></div>
+                  <div class="cr-report-sec-lbl" style="color:var(--text-muted)">Calibration Summary <span style="font-size:10px;background:var(--bg-surface);border:1px solid var(--border);color:var(--text-muted);padding:1px 6px;border-radius:4px;font-weight:600;letter-spacing:.2px;margin-left:4px">NOT STARTED</span></div>
                   <div class="cr-report-sec-val" style="font-style:italic;color:var(--text-muted)">Will be completed during calibration session.</div>
                 </div>
                 <div class="cr-report-sec">
