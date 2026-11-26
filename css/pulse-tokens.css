@@ -259,6 +259,36 @@
   --fs-3xl:  30px;   /* Font size/30                  */
   --fs-4xl:  32px;   /* Typography/H3 -- Heading/H3   */
 
+  /* ─── Line height ───────────────────────────────────────────────────────
+     Every one of the library's 43 text styles -- headings, body, mono --
+     carries the same 140% line height. There is no second value to choose
+     from, so there is one token.
+
+     Two uses of line-height in this prototype are NOT typography and keep
+     their literal values: "line-height: 1" on a standalone numeral, where it
+     sets the box to the glyph height rather than leading between lines, and
+     a px line-height paired with zero vertical padding, which is the idiom
+     for giving a control a fixed height. Applying 140% to either would move
+     layout, not improve reading. */
+  --lh-base: 1.4;
+
+  /* ─── Weight ────────────────────────────────────────────────────────────
+     The six weights the library's text styles are drawn in. Light and Extra
+     Bold appear only in the Text/* groups; the Heading/* styles are all Bold
+     and Heading/Tagline is Medium. */
+  --fw-light:     300;
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-extrabold: 800;
+
+  /* ─── Tracking ──────────────────────────────────────────────────────────
+     All 43 text styles specify 0% letter spacing. The library offers no
+     tracked style, not even for the uppercase micro-labels this prototype
+     used to track at .5px, so no element sets letter-spacing at all and
+     there is no token to set it to. */
+
   /* ─── Radius ────────────────────────────────────────────────────────── */
   --r-sm:   2px;
   --r-md:   6px;
