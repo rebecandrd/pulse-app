@@ -71,7 +71,7 @@
   .ct-btn-ghost{display:flex;align-items:center;gap:5px;font-size:var(--fs-xs);font-weight:var(--fw-medium);padding:6px 13px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all var(--dur-base);white-space:nowrap}
   .ct-btn-ghost:hover{border-color:var(--border-strong);color:var(--text-primary)}
   .ct-btn-ghost svg{width:13px;height:13px;opacity:.7}
-  .ct-btn-primary{display:flex;align-items:center;gap:5px;font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:7px 16px;border:none;border-radius:var(--radius-md);background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);transition:background var(--dur-base);white-space:nowrap}
+  .ct-btn-primary{display:flex;align-items:center;gap:5px;font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:7px 16px;border:none;border-radius:var(--radius-md);background:var(--accent);color:var(--bg-white);cursor:pointer;font-family:var(--font);transition:background var(--dur-base);white-space:nowrap}
   .ct-btn-primary:hover{background:var(--accent-hover)}
   .ct-btn-primary svg{width:13px;height:13px}
 
@@ -124,8 +124,8 @@
   .hub-sec:hover{background:rgba(0,0,0,.01)}
   .hub-sec-ov{background:#fef9f9;color:var(--error);border-bottom-color:#fde8e8}
   .hub-sec-active{background:#f8faff;color:var(--accent)}
-  .hub-sec-cal{background:#f8f7ff;color:#4338ca}
-  .hub-sec-done{background:#f0fdf4;color:#15803d}
+  .hub-sec-cal{background:#f8f7ff;color:var(--info-ink)}
+  .hub-sec-done{background:var(--avatar-green-bg);color:var(--avatar-green-ink)}
   .hub-sec-up{color:var(--text-muted)}
   .hub-sec-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
   .hub-sec-cnt{font-size:var(--fs-xs);font-weight:var(--fw-medium);font-family:var(--font-mono);opacity:.7;margin-left:2px}
@@ -141,7 +141,7 @@
   .hub-tr.ov:hover{background:#fff9f9}
   .hub-td{padding:10px 8px;display:flex;align-items:center}
   .hub-col-emp{gap:10px;min-width:0}
-  .hub-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:#fff;flex-shrink:0}
+  .hub-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:var(--bg-white);flex-shrink:0}
   .hub-nm{font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--text-primary)}
   .hub-role{font-size:var(--fs-xs);color:var(--text-muted);margin-top:2px}
   .hub-dept{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:2px 7px;border-radius:var(--radius-md);white-space:nowrap}
@@ -151,7 +151,7 @@
   .hub-prog-fill{height:100%;border-radius: var(--r-pill)}
   .hub-prog-pct{font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--text-secondary);white-space:nowrap;min-width:26px;text-align:right;font-family:var(--font-mono)}
   .hub-revs{display:flex;align-items:center}
-  .hub-rev{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:#fff;border:2px solid #fff;margin-left:-5px;flex-shrink:0}
+  .hub-rev{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:var(--bg-white);border:2px solid var(--bg-white);margin-left:-5px;flex-shrink:0}
   .hub-rev:first-child{margin-left:0}
   .hub-unassigned{font-size:var(--fs-xs);color:var(--text-muted);font-style:italic}
   .hub-due-d{font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--text-primary)}
@@ -165,7 +165,7 @@
   .hub-prog-wrap{display:flex;flex-direction:column;gap:3px;width:100%}
   .hub-prog-secs{font-size:var(--fs-xs);color:var(--text-muted)}
   /* Reviewer cell — unassigned warning */
-  .hub-rev-alert{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);font-weight:var(--fw-semibold);color:#b45309;background:var(--warning-light);border:1px solid var(--warning-border);border-radius:var(--radius-md);padding:2px 7px;white-space:nowrap;cursor:pointer}
+  .hub-rev-alert{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);font-weight:var(--fw-semibold);color:var(--avatar-amber-ink);background:var(--warning-light);border:1px solid var(--warning-border);border-radius:var(--radius-md);padding:2px 7px;white-space:nowrap;cursor:pointer}
   .hub-rev-alert svg{width:9px;height:9px;flex-shrink:0}
   /* Due date — reminder indicator */
   .hub-due-reminder{display:flex;align-items:center;gap:3px;font-size:var(--fs-xs);color:var(--text-muted);margin-top:3px}
@@ -184,7 +184,7 @@
   .ct-modified-badge{font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--warning-ink);background:var(--warning-light);border:1px solid var(--warning-border);border-radius: var(--r-pill);padding:3px 10px;margin-right:2px}
   .ct-btn-discard{font-size:var(--fs-xs);font-weight:var(--fw-medium);padding:7px 16px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all var(--dur-base)}
   .ct-btn-discard:hover{border-color:var(--border-strong);color:var(--text-primary)}
-  .ct-btn-save{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:7px 18px;border:none;border-radius:var(--radius-md);background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);transition:background var(--dur-base)}
+  .ct-btn-save{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:7px 18px;border:none;border-radius:var(--radius-md);background:var(--accent);color:var(--bg-white);cursor:pointer;font-family:var(--font);transition:background var(--dur-base)}
   .ct-btn-save:hover{background:var(--accent-hover)}
   .ct-disc-nav{display:flex;gap:2px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:2px;margin-bottom:20px;width:fit-content}
   .ct-disc-btn{font-size:var(--fs-xs);font-family:var(--font);font-weight:var(--fw-medium);color:var(--text-muted);background:transparent;border:none;cursor:pointer;padding:6px 18px;border-radius:var(--radius-md);white-space:nowrap;transition:all var(--dur-base);display:flex;align-items:center;gap:6px}
@@ -226,7 +226,7 @@
   .ct-prev-tier-count{font-size:var(--fs-xs);color:var(--text-muted);margin-left:auto;background:var(--bg-surface);border-radius: var(--r-pill);padding:0 5px;line-height:18px}
   .ct-prev-member{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #f3f4f6}
   .ct-prev-member:last-child{border-bottom:none}
-  .ct-prev-av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:#fff;flex-shrink:0}
+  .ct-prev-av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:var(--bg-white);flex-shrink:0}
   .ct-prev-name{font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ct-prev-level{font-size:var(--fs-xs);color:var(--text-muted)}
   .ct-prev-empty{font-size:var(--fs-xs);color:var(--text-muted);padding:6px 0;font-style:italic}
@@ -532,7 +532,7 @@
             </div>
             <div class="ct-xp-section">
               <div class="ct-xp-sec-title">Experience Score per Tier</div>
-              <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#f1f5f9;border:1.5px solid #e2e8f0"></div><span class="ct-xp-tier">Junior</span><span class="ct-xp-num">30</span><span class="ct-xp-unit">/ 100</span></div>
+              <div class="ct-xp-row"><div class="ct-xp-dot" style="background:var(--slate-100);border:1.5px solid var(--slate-200)"></div><span class="ct-xp-tier">Junior</span><span class="ct-xp-num">30</span><span class="ct-xp-unit">/ 100</span></div>
               <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#dbeafe;border:1.5px solid #bfdbfe"></div><span class="ct-xp-tier">Mid-level</span><span class="ct-xp-num">55</span><span class="ct-xp-unit">/ 100</span></div>
               <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#3b82f6"></div><span class="ct-xp-tier">Senior</span><span class="ct-xp-num">80</span><span class="ct-xp-unit">/ 100</span></div>
               <div class="ct-xp-row"><div class="ct-xp-dot" style="background:#1e3a8a"></div><span class="ct-xp-tier">Lead</span><span class="ct-xp-num">95</span><span class="ct-xp-unit">/ 100</span></div>
@@ -549,7 +549,7 @@
                 <div><div class="ct-effect-title">Risk Signals</div><div class="ct-effect-desc">Staffing risk flags activate when a discipline lacks sufficient senior or lead coverage.</div></div>
               </div>
               <div class="ct-effect-item">
-                <div class="ct-effect-icon" style="background:#f0fdf4"><svg viewBox="0 0 16 16" fill="none" stroke="#16a34a" stroke-width="1.6"><path d="M3 8h10M8 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="ct-effect-icon" style="background:var(--avatar-green-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="#16a34a" stroke-width="1.6"><path d="M3 8h10M8 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                 <div><div class="ct-effect-title">Allocation Benchmarks</div><div class="ct-effect-desc">Expected experience targets for new project scopes are auto-calculated from active tier distributions.</div></div>
               </div>
             </div>

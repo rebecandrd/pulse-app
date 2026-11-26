@@ -229,6 +229,21 @@
   --board-done-tint:      rgba(20, 184, 166, .12);
   --board-cancelled-tint: var(--gray-100);
 
+  /* ─── Avatar and category palette ───────────────────────────────────────
+     Five light/ink pairs the prototype uses for person avatars and category
+     chips, written inline at ~290 call sites. The library has no equivalent:
+     Color/Department exists but is a flat set of 12 inks with no fills, and
+     these five are not those twelve. They are recorded here as they are --
+     naming them changes nothing on screen -- so the call sites stop carrying
+     raw hexes and the gap is visible. Whether the library should gain an
+     avatar palette, or these should be recoloured onto Pulse hues, is a
+     question for the design side; nothing here answers it. */
+  --avatar-blue-bg:    #e8f4fd;   --avatar-blue-ink:    #1d5fa6;
+  --avatar-amber-bg:   #fde8d8;   --avatar-amber-ink:   #b45309;
+  --avatar-violet-bg:  #f5eeff;   --avatar-violet-ink:  #6d28d9;
+  --avatar-pink-bg:    #fdf2f8;   --avatar-pink-ink:    #9d174d;
+  --avatar-green-bg:   #f0fdf4;   --avatar-green-ink:   #15803d;
+
   /* ─── Work type ─────────────────────────────────────────────────────── */
   --feature: var(--green-500);
   --defect:  var(--red-500);

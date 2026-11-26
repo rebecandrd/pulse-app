@@ -60,7 +60,7 @@
   .cr-back svg{width:12px;height:12px}
   .cr-bread-sep{font-size:var(--fs-sm);color:var(--border-strong);flex-shrink:0;margin:0 2px}
   .cr-hdr-name{font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--text-primary);white-space:nowrap}
-  .cr-hdr-cycle{display:inline-flex;align-items:center;font-size:var(--fs-xs);font-weight:var(--fw-medium);color:#4338ca;background:var(--accent-light);border:1px solid #c7d2fe;border-radius:var(--radius-md);padding:2px 7px}
+  .cr-hdr-cycle{display:inline-flex;align-items:center;font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--info-ink);background:var(--accent-light);border:1px solid var(--indigo-200);border-radius:var(--radius-md);padding:2px 7px}
   .cr-status-pip{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-xs);font-weight:var(--fw-medium);padding:3px 9px;border-radius:var(--radius-md);border:1px solid #bfdbfe;background:#eff6ff;color:#2563eb;flex-shrink:0}
   .cr-status-pip-dot{width:6px;height:6px;border-radius:50%;background:#2563eb;flex-shrink:0}
   .cr-hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
@@ -75,7 +75,7 @@
   .cr-btn-ghost{display:flex;align-items:center;gap:5px;font-size:var(--fs-xs);font-weight:var(--fw-medium);padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all var(--dur-base)}
   .cr-btn-ghost:hover{border-color:var(--border-strong);color:var(--text-primary)}
   .cr-btn-ghost svg{width:12px;height:12px;opacity:.7}
-  .cr-btn-primary{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:6px 14px;border:none;border-radius:var(--radius-md);background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);transition:background var(--dur-base)}
+  .cr-btn-primary{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:6px 14px;border:none;border-radius:var(--radius-md);background:var(--accent);color:var(--bg-white);cursor:pointer;font-family:var(--font);transition:background var(--dur-base)}
   .cr-btn-primary:hover{background:var(--accent-hover)}
 
   /* ─── Body ─── */
@@ -84,7 +84,7 @@
   /* ─── Left Panel ─── */
   .cr-left{width:248px;min-width:248px;background:var(--bg-white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
   .cr-emp-card{padding:20px 18px 16px;border-bottom:1px solid var(--border);text-align:center}
-  .cr-emp-av{width:52px;height:52px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-size:var(--fs-lg);font-weight:var(--fw-bold);color:#fff;margin:0 auto 10px}
+  .cr-emp-av{width:52px;height:52px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--bg-white);margin:0 auto 10px}
   .cr-emp-name{font-size:var(--fs-sm);font-weight:var(--fw-bold);color:var(--text-primary);margin-bottom:3px}
   .cr-emp-role{font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:10px}
   .cr-emp-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:10px}
@@ -101,14 +101,14 @@
   .cr-tl-item:last-child{padding-bottom:4px}
   .cr-tl-item:not(:last-child)::before{content:'';position:absolute;left:8px;top:18px;bottom:0;width:1.5px;background:var(--border)}
   .cr-tl-marker{width:17px;height:17px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);border:2px solid}
-  .cr-tl-item.done .cr-tl-marker{background:var(--success);border-color:var(--success);color:#fff}
-  .cr-tl-item.promo .cr-tl-marker{background:var(--accent);border-color:var(--accent);color:#fff}
+  .cr-tl-item.done .cr-tl-marker{background:var(--success);border-color:var(--success);color:var(--bg-white)}
+  .cr-tl-item.promo .cr-tl-marker{background:var(--accent);border-color:var(--accent);color:var(--bg-white)}
   .cr-tl-item.current .cr-tl-marker{background:var(--bg-white);border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
   .cr-tl-period{font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:2px}
   .cr-tl-tier{font-size:var(--fs-xs);font-weight:var(--fw-semibold);color:var(--text-primary);display:flex;align-items:center;gap:6px}
   .cr-tl-score{font-size:var(--fs-xs);color:var(--text-muted);margin-top:2px}
   .cr-promo-badge{font-size:var(--fs-xs);font-weight:var(--fw-bold);padding:1px 6px;border-radius:var(--radius-md);background:#dbeafe;color:#1d4ed8}
-  .cr-current-badge{font-size:var(--fs-xs);font-weight:var(--fw-bold);padding:1px 6px;border-radius:var(--radius-md);background:var(--warning-light);color:#b45309}
+  .cr-current-badge{font-size:var(--fs-xs);font-weight:var(--fw-bold);padding:1px 6px;border-radius:var(--radius-md);background:var(--warning-light);color:var(--avatar-amber-ink)}
 
   /* ─── Right Panel ─── */
   .cr-right{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg-surface)}
@@ -137,7 +137,7 @@
   .cr-pipe-node{display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 4px}
   .cr-pipe-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--border);background:var(--bg-white);transition:all var(--dur-slow);position:relative}
   .cr-pipe-circle.done{background:var(--success);border-color:var(--success)}
-  .cr-pipe-circle.done svg{color:#fff}
+  .cr-pipe-circle.done svg{color:var(--bg-white)}
   .cr-pipe-circle.current{background:var(--bg-white);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
   .cr-pipe-circle.current::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--accent);position:absolute}
   .cr-pipe-circle.pending{background:var(--bg-surface);border-color:var(--border)}
@@ -163,8 +163,8 @@
   .cr-rev-sec-fill{height:100%;border-radius: var(--r-pill)}
   .cr-rev-sec-pct{font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--text-secondary);font-family:var(--font-mono);min-width:26px}
   .cr-badge-done{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:3px 9px;border-radius:var(--radius-md);background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
-  .cr-badge-pending{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:3px 9px;border-radius:var(--radius-md);background:var(--warning-light);color:#b45309;border:1px solid var(--warning-border)}
-  .cr-badge-draft{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:3px 9px;border-radius:var(--radius-md);background:#f8fafc;color:#64748b;border:1px solid #e2e8f0}
+  .cr-badge-pending{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:3px 9px;border-radius:var(--radius-md);background:var(--warning-light);color:var(--avatar-amber-ink);border:1px solid var(--warning-border)}
+  .cr-badge-draft{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:3px 9px;border-radius:var(--radius-md);background:var(--slate-50);color:#64748b;border:1px solid var(--slate-200)}
   .cr-badge-na{font-size:var(--fs-xs);font-weight:var(--fw-semibold);padding:3px 9px;border-radius:var(--radius-md);background:var(--bg-surface);color:var(--text-muted);border:1px solid var(--border)}
   .cr-sec-btn{font-size:var(--fs-xs);font-weight:var(--fw-medium);padding:5px 12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-white);color:var(--text-secondary);cursor:pointer;font-family:var(--font);transition:all var(--dur-base)}
   .cr-sec-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-light)}
@@ -260,13 +260,13 @@
   .cr-rub-lvl-tag{display:inline-block;font-size:var(--fs-xs);font-weight:var(--fw-bold);text-transform:uppercase;padding:1px 5px;border-radius:var(--radius-sm);margin-right:4px;vertical-align:middle}
   .cr-rub-lvl-tag.mgr{background:var(--accent-light);color:var(--accent)}
   .cr-rub-lvl-tag.self{background:#f5f3ff;color:#7c3aed}
-  .cr-rub-lvl-tag.exp{background:var(--warning-light);color:#b45309}
+  .cr-rub-lvl-tag.exp{background:var(--warning-light);color:var(--avatar-amber-ink)}
 
   /* Reviewer note */
   .cr-rub-note-area{margin-top:10px}
   .cr-rub-note-lbl{font-size:var(--fs-xs);font-weight:var(--fw-bold);text-transform:uppercase;color:var(--text-muted);margin-bottom:5px}
   .cr-rub-note-field{width:100%;font-size:var(--fs-xs);font-family:var(--font);color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:8px 10px;resize:none;line-height:var(--lh-base);min-height:48px;transition:border-color var(--dur-base);box-sizing:border-box}
-  .cr-rub-note-field:focus{outline:none;border-color:var(--accent-border);background:#fff}
+  .cr-rub-note-field:focus{outline:none;border-color:var(--accent-border);background:var(--bg-white)}
   .cr-rub-note-field::placeholder{color:var(--text-muted);font-style:italic}
   .cr-rub-note-saved{font-size:var(--fs-xs);color:var(--text-secondary);font-style:italic;line-height:var(--lh-base);background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:8px 10px}
 
@@ -274,7 +274,7 @@
   .cr-fb-section{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:14px}
   .cr-fb-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
   .cr-fb-who{display:flex;align-items:center;gap:8px}
-  .cr-fb-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:#fff;flex-shrink:0}
+  .cr-fb-av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:var(--bg-white);flex-shrink:0}
   .cr-fb-name{font-size:var(--fs-xs);font-weight:var(--fw-semibold);color:var(--text-primary)}
   .cr-fb-role{font-size:var(--fs-xs);color:var(--text-muted);margin-top:1px}
   .cr-fb-locked-notice{display:flex;align-items:center;gap:5px;font-size:var(--fs-xs);color:var(--text-muted);background:var(--bg-surface);border:1px solid var(--border);padding:3px 8px;border-radius:var(--radius-md)}
@@ -299,7 +299,7 @@
   .cr-report-pending{display:flex;flex-direction:column;align-items:center;padding:32px 24px 20px;text-align:center;border-bottom:1px solid var(--border)}
   .cr-report-pending-icon{width:44px;height:44px;border-radius:var(--radius-xl);background:#f5f3ff;border:1px solid #ddd6fe;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
   .cr-report-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:14px}
-  .cr-report-preview{padding:22px 24px;background:linear-gradient(135deg,#f8faff 0%,#fff 100%)}
+  .cr-report-preview{padding:22px 24px;background:linear-gradient(135deg,#f8faff 0%,var(--bg-white) 100%)}
   .cr-report-name{font-size:var(--fs-base);font-weight:var(--fw-bold);color:var(--text-primary);margin-bottom:4px}
   .cr-report-detail{font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:14px}
   .cr-report-outcome{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg-surface);border-radius:var(--radius-lg);margin-bottom:14px;border:1px solid var(--border)}
@@ -707,7 +707,7 @@
               </div>
 
               <div class="cr-rev-sec">
-                <div class="cr-rev-sec-icon" style="background:#f8fafc">
+                <div class="cr-rev-sec-icon" style="background:var(--slate-50)">
                   <svg viewBox="0 0 16 16" fill="none" stroke="#94a3b8" stroke-width="1.6"><circle cx="8" cy="8" r="6"/><path d="M5.5 8h5M8 5.5v5" stroke-linecap="round"/></svg>
                 </div>
                 <div class="cr-rev-sec-body">
@@ -739,7 +739,7 @@
                     <div style="font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--text-primary)">PM reminder — Anna K.</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-muted);margin-top:2px">Scheduled for May 24, 2026 · If PM notes still incomplete</div>
                   </div>
-                  <span style="font-size:var(--fs-xs);font-weight:var(--fw-semibold);color:#b45309;background:var(--warning-light);border:1px solid var(--warning-border);padding:2px 8px;border-radius:var(--radius-md)">Pending</span>
+                  <span style="font-size:var(--fs-xs);font-weight:var(--fw-semibold);color:var(--avatar-amber-ink);background:var(--warning-light);border:1px solid var(--warning-border);padding:2px 8px;border-radius:var(--radius-md)">Pending</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border)">
                   <div style="width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0"></div>
@@ -792,7 +792,7 @@
               </div>
               <div class="cr-hist-row">
                 <div class="cr-hist-td cr-hist-period">Q1 2025</div>
-                <div class="cr-hist-td"><div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:#6366f1"></div>Mid II</div></div>
+                <div class="cr-hist-td"><div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:var(--board-icebox)"></div>Mid II</div></div>
                 <div class="cr-hist-td cr-hist-score">84</div>
                 <div class="cr-hist-td"><span class="cr-delta-same">+5 pts</span></div>
                 <div class="cr-hist-td" style="font-size:var(--fs-xs);color:var(--text-muted)">Marco V., HR Admin</div>
@@ -801,7 +801,7 @@
               <div class="cr-hist-row">
                 <div class="cr-hist-td cr-hist-period">Q3 2024</div>
                 <div class="cr-hist-td">
-                  <div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:#6366f1"></div>Mid I <span class="cr-promo-badge" style="margin-left:4px">↑ Promoted</span></div>
+                  <div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:var(--board-icebox)"></div>Mid I <span class="cr-promo-badge" style="margin-left:4px">↑ Promoted</span></div>
                 </div>
                 <div class="cr-hist-td cr-hist-score">79</div>
                 <div class="cr-hist-td"><span class="cr-delta-up">↑ +11</span></div>
@@ -810,7 +810,7 @@
               </div>
               <div class="cr-hist-row">
                 <div class="cr-hist-td cr-hist-period">Q1 2024</div>
-                <div class="cr-hist-td"><div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:#94a3b8"></div>Junior II</div></div>
+                <div class="cr-hist-td"><div class="cr-hist-tier"><div class="cr-hist-tier-dot" style="background:var(--slate-400)"></div>Junior II</div></div>
                 <div class="cr-hist-td cr-hist-score">68</div>
                 <div class="cr-hist-td">—</div>
                 <div class="cr-hist-td" style="font-size:var(--fs-xs);color:var(--text-muted)">Marco V.</div>
@@ -828,18 +828,18 @@
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
                   <div style="font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--text-muted);font-family:var(--font-mono)">68</div>
                   <div style="width:100%;border-radius:var(--radius-md) var(--radius-md) 0 0;background:var(--border)" style="height:68%">
-                    <div style="width:100%;height:60px;background:linear-gradient(to top,#94a3b8,#cbd5e1);border-radius:var(--radius-md) var(--radius-md) 0 0"></div>
+                    <div style="width:100%;height:60px;background:linear-gradient(to top,var(--slate-400),#cbd5e1);border-radius:var(--radius-md) var(--radius-md) 0 0"></div>
                   </div>
                   <div style="font-size:var(--fs-xs);color:var(--text-muted)">Q1 '24</div>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
                   <div style="font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--accent);font-family:var(--font-mono)">79</div>
-                  <div style="width:100%;height:70px;background:linear-gradient(to top,var(--accent),#818cf8);border-radius:var(--radius-md) var(--radius-md) 0 0"></div>
+                  <div style="width:100%;height:70px;background:linear-gradient(to top,var(--accent),var(--indigo-400));border-radius:var(--radius-md) var(--radius-md) 0 0"></div>
                   <div style="font-size:var(--fs-xs);color:var(--text-muted)">Q3 '24</div>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
                   <div style="font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--accent);font-family:var(--font-mono)">84</div>
-                  <div style="width:100%;height:75px;background:linear-gradient(to top,var(--accent),#818cf8);border-radius:var(--radius-md) var(--radius-md) 0 0"></div>
+                  <div style="width:100%;height:75px;background:linear-gradient(to top,var(--accent),var(--indigo-400));border-radius:var(--radius-md) var(--radius-md) 0 0"></div>
                   <div style="font-size:var(--fs-xs);color:var(--text-muted)">Q1 '25</div>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex:1">
@@ -969,7 +969,7 @@
               <div class="cr-fb-who">
                 <div class="cr-fb-av" style="background:var(--warning)">AK</div>
                 <div>
-                  <div class="cr-fb-name">Anna K. <span style="font-size:var(--fs-xs);font-weight:var(--fw-medium);color:#b45309;background:var(--warning-light);border:1px solid var(--warning-border);border-radius:var(--radius-md);padding:1px 6px;margin-left:4px">PM</span></div>
+                  <div class="cr-fb-name">Anna K. <span style="font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--avatar-amber-ink);background:var(--warning-light);border:1px solid var(--warning-border);border-radius:var(--radius-md);padding:1px 6px;margin-left:4px">PM</span></div>
                   <div class="cr-fb-role">Assigned · Not started · Reminder on May 24</div>
                 </div>
               </div>
@@ -1038,7 +1038,7 @@
                   <div class="cr-report-sec-val">Strong backend proficiency and code quality. Growth needed in front-end skills and documentation consistency. Shows early leadership signals and readiness for sub-team ownership.</div>
                 </div>
                 <div class="cr-report-sec" style="opacity:.45">
-                  <div class="cr-report-sec-lbl" style="color:#d97706">PM Feedback <span style="font-size:var(--fs-xs);background:var(--warning-light);border:1px solid var(--warning-border);color:#b45309;padding:1px 6px;border-radius:var(--radius-md);font-weight:var(--fw-semibold);margin-left:4px">PENDING</span></div>
+                  <div class="cr-report-sec-lbl" style="color:#d97706">PM Feedback <span style="font-size:var(--fs-xs);background:var(--warning-light);border:1px solid var(--warning-border);color:var(--avatar-amber-ink);padding:1px 6px;border-radius:var(--radius-md);font-weight:var(--fw-semibold);margin-left:4px">PENDING</span></div>
                   <div class="cr-report-sec-val" style="font-style:italic;color:var(--text-muted)">Awaiting Anna K. to complete PM notes section.</div>
                 </div>
                 <div class="cr-report-sec" style="opacity:.45">
