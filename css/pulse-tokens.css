@@ -325,6 +325,11 @@
   --r-2xl:  16px;
   --r-pill: 9999px;
 
+  /* A radius derived from one of these for a nested box -- for example
+     calc(var(--r-md) - 2px) on a tab sitting inside a 6px track with 2px of
+     padding -- is geometry, not a step. It will not match a token and should
+     not be rounded to one. .pa-vtab is the only such case here. */
+
   --radius-sm:  var(--r-sm);
   --radius-md:  var(--r-md);
   --radius-lg:  var(--r-lg);

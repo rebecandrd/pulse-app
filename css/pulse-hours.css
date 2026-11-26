@@ -108,7 +108,7 @@
   font-size: var(--fs-xs); font-weight: var(--fw-semibold); color: var(--text-primary);
   display: flex; align-items: center; gap: 6px;
 }
-.ph-row-dot { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; }
+.ph-row-dot { width: 7px; height: 7px; border-radius: var(--radius-sm); flex-shrink: 0; }
 .ph-row-formula {
   font-size: var(--fs-xs); color: var(--text-muted);
   font-family: var(--font-mono);
