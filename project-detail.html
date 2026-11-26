@@ -23690,14 +23690,14 @@ function toggleSidebarCollapse(){
   .ef-tb-btn.on { background: var(--accent-light); border-color: var(--accent-border); color: var(--accent); font-weight: var(--fw-medium); }
   .ef-tb-count {
     font-size: var(--fs-xs); font-weight: var(--fw-bold); min-width: 15px; height: 15px; padding: 0 4px;
-    border-radius: var(--r-pill); background: var(--accent); color: #fff;
+    border-radius: var(--r-pill); background: var(--accent); color: var(--bg-white);
     display: none; align-items: center; justify-content: center; line-height: 1;
   }
   .ef-tb-count.show { display: flex; }
 
   /* Flag pill in the toolbar — amber, so "needs attention" reads distinctly
      from the blue accent used for ordinary selection. */
-  .ef-tb-btn.ef-flag-pill.on { background: var(--warning-light); border-color: var(--warning-border); color: #b45309; }
+  .ef-tb-btn.ef-flag-pill.on { background: var(--warning-light); border-color: var(--warning-border); color: var(--warning-ink); }
   .ef-tb-btn.ef-flag-pill .ef-tb-count { background: var(--warning); }
 
   .ef-progress { display: flex; align-items: center; gap: 7px; font-size: var(--fs-xs); color: var(--text-secondary); white-space: nowrap; }
@@ -23708,7 +23708,7 @@ function toggleSidebarCollapse(){
   .ef-new-btn {
     display: flex; align-items: center; gap: 6px;
     font-size: var(--fs-xs); padding: 7px 14px; border: none; border-radius: var(--radius-md);
-    background: var(--accent); color: #fff; cursor: pointer;
+    background: var(--accent); color: var(--bg-white); cursor: pointer;
     font-family: var(--font); font-weight: var(--fw-medium); transition: background var(--dur-base); white-space: nowrap;
   }
   .ef-new-btn:hover { background: var(--accent-hover); }
@@ -23729,8 +23729,8 @@ function toggleSidebarCollapse(){
   }
   .ef-menu-item:hover { background: var(--bg-surface); }
   .ef-menu-item svg { width: 13px; height: 13px; color: var(--text-muted); flex-shrink: 0; }
-  .ef-menu-item.danger { color: #b91c1c; }
-  .ef-menu-item.danger svg { color: #b91c1c; }
+  .ef-menu-item.danger { color: var(--error-ink); }
+  .ef-menu-item.danger svg { color: var(--error-ink); }
   .ef-menu-hint { margin-left: auto; font-size: var(--fs-xs); color: var(--text-muted); font-family: var(--font-mono); }
   .ef-menu-sep { height: 1px; background: var(--border); margin: 4px 0; }
   .ef-menu-label { font-size: var(--fs-xs); font-weight: var(--fw-bold); text-transform: uppercase; color: var(--text-muted); padding: 7px 10px 4px; }
@@ -23760,7 +23760,7 @@ function toggleSidebarCollapse(){
     border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
   }
   .ef-fopt.on .ef-fbox { background: var(--accent); border-color: var(--accent); }
-  .ef-fbox svg { width: 9px; height: 9px; stroke: #fff; stroke-width: 3; display: none; }
+  .ef-fbox svg { width: 9px; height: 9px; stroke: var(--bg-white); stroke-width: 3; display: none; }
   .ef-fopt.on .ef-fbox svg { display: block; }
   .ef-fopt-count { margin-left: auto; font-size: var(--fs-xs); color: var(--text-muted); font-family: var(--font-mono); }
   .ef-filter-foot { display: flex; align-items: center; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
@@ -23780,7 +23780,7 @@ function toggleSidebarCollapse(){
     background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border);
   }
   .ef-chip svg { width: 11px; height: 11px; flex-shrink: 0; }
-  .ef-chip.amber { background: var(--warning-light); color: #b45309; border-color: var(--warning-border); white-space: nowrap; }
+  .ef-chip.amber { background: var(--warning-light); color: var(--warning-ink); border-color: var(--warning-border); white-space: nowrap; }
   .ef-chip-key { font-weight: var(--fw-regular); opacity: .75; }
   .ef-chip-x {
     width: 15px; height: 15px; border: none; background: transparent; color: inherit;
@@ -23803,7 +23803,7 @@ function toggleSidebarCollapse(){
     padding: 14px 24px 18px; display: flex; gap: 12px; align-items: flex-start;
   }
   .ef-board::-webkit-scrollbar { height: 6px; }
-  .ef-board::-webkit-scrollbar-thumb { background: #cbd2dc; border-radius: var(--r-pill); }
+  .ef-board::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: var(--r-pill); }
   .ef-board.grabbing { cursor: grabbing; }
 
   /* 320px gives the card its designed 296px width once the 8px gutters in
@@ -23811,11 +23811,11 @@ function toggleSidebarCollapse(){
      card renders at its intended size rather than compressed. */
   .ef-col {
     display: flex; flex-direction: column; width: 320px; min-width: 320px;
-    max-height: 100%; background: #e4e6ec; border-radius: var(--radius-xl);
+    max-height: 100%; background: var(--bg-surface2); border-radius: var(--radius-xl);
     flex-shrink: 0; transition: background var(--dur-base), box-shadow var(--dur-base);
   }
-  .ef-col.drop-active { background: #dbe2f8; box-shadow: inset 0 0 0 2px var(--accent-border); }
-  .ef-col.over-wip { box-shadow: inset 0 0 0 2px #fcd34d; }
+  .ef-col.drop-active { background: var(--blue-100); box-shadow: inset 0 0 0 2px var(--accent-border); }
+  .ef-col.over-wip { box-shadow: inset 0 0 0 2px var(--amber-400); }
 
   .ef-col-hdr { padding: 10px 11px 8px; flex-shrink: 0; }
   .ef-col-accent { height: 3px; width: 30px; border-radius: var(--r-pill); margin-bottom: 8px; }
@@ -23823,7 +23823,7 @@ function toggleSidebarCollapse(){
   .ef-col-title { font-size: var(--fs-xs); font-weight: var(--fw-semibold); color: var(--text-primary); display: flex; align-items: center; gap: 6px; min-width: 0; }
   .ef-col-title svg { width: 13px; height: 13px; flex-shrink: 0; }
   .ef-col-cnt { font-size: var(--fs-xs); font-weight: var(--fw-semibold); color: var(--text-secondary); background: rgba(255,255,255,.7); padding: 1px 7px; border-radius: var(--r-pill); }
-  .ef-col-cnt.wip-over { background: #fef3c7; color: var(--warning-ink); }
+  .ef-col-cnt.wip-over { background: var(--amber-100); color: var(--warning-ink); }
   .ef-col-actions { display: flex; align-items: center; gap: 1px; margin-left: auto; }
   .ef-col-btn {
     width: 22px; height: 22px; border-radius: var(--radius-sm); background: transparent;
@@ -23857,7 +23857,7 @@ function toggleSidebarCollapse(){
   }
   .ef-col-add:hover { background: rgba(0,0,0,.05); color: var(--text-primary); }
   .ef-col-add svg { width: 11px; height: 11px; }
-  .ef-col-empty { font-size: var(--fs-xs); color: #8b93a3; text-align: center; padding: 18px 10px; line-height: var(--lh-base); }
+  .ef-col-empty { font-size: var(--fs-xs); color: var(--text-muted); text-align: center; padding: 18px 10px; line-height: var(--lh-base); }
 
   /* ─── SHARED PILLS, AVATARS & DOTS ───
      Used by the grouped rows, sprint rows, effort detail, effort form and the
@@ -23869,12 +23869,12 @@ function toggleSidebarCollapse(){
   .ef-pill-prio { display: inline-flex; align-items: center; gap: 4px; }
   .ef-pill-prio::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
   .ef-p-critical { background: var(--error-light); color: var(--error-ink); border: 1px solid var(--error-border); }
-  .ef-p-high     { background: #fff1f0; color: #b91c1c; border: 1px solid var(--error-border); }
+  .ef-p-high     { background: var(--error-light); color: var(--error-ink); border: 1px solid var(--error-border); }
   .ef-p-medium   { background: var(--warning-light); color: var(--warning-ink); border: 1px solid var(--warning-border); }
-  .ef-p-low      { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+  .ef-p-low      { background: var(--success-light); color: var(--success-ink); border: 1px solid var(--success-border); }
   .ef-pill-tag { background: var(--bg-surface); color: var(--text-secondary); border: 1px solid var(--border); font-weight: var(--fw-medium); }
   .ef-pill-cstate { background: var(--error-light); color: var(--error-ink); border: 1px solid var(--error-border); }
-  .ef-pill-cstate.neutral { background: #f1f5f9; color: #475569; border: 1px solid #dbe3ec; }
+  .ef-pill-cstate.neutral { background: var(--slate-100); color: var(--text-secondary); border: 1px solid var(--border-strong); }
   .ef-pill-ms { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border); font-weight: var(--fw-medium); }
 
   .ef-av {
@@ -23885,7 +23885,7 @@ function toggleSidebarCollapse(){
   .ef-av-empty svg { width: 11px; height: 11px; }
 
   /* Flag glyph shown on grouped/sprint rows */
-  .ef-card-flag-ico { width: 12px; height: 12px; color: #d97706; flex-shrink: 0; }
+  .ef-card-flag-ico { width: 12px; height: 12px; color: var(--warning-ink); flex-shrink: 0; }
   /* ─── EFFORT CARD — PULSE Master, Figma node 13088:8512 ───
      Geometry is taken from the Figma frame: a 16px "Task conditions" rail plus
      a white panel (2px gainsboro frame, 4px radius, 4/8/4/10 padding), stacked
@@ -23896,7 +23896,7 @@ function toggleSidebarCollapse(){
      in :root so later Figma work maps onto them directly. */
   .ef-card {
     display: flex; align-items: stretch;
-    background: var(--fig-gainsboro); border-radius: 4px;
+    background: var(--gray-200); border-radius: var(--r-lg);
     cursor: grab; position: relative;
     transition: box-shadow var(--dur-base), background var(--dur-base);
   }
@@ -23913,18 +23913,18 @@ function toggleSidebarCollapse(){
   }
   .ef-cond { width: 12px; height: 12px; flex-shrink: 0; display: block; }
   .ef-cond svg { display: block; width: 12px; height: 12px; }
-  .ef-cond-grip { color: #000; cursor: grab; }
-  .ef-cond-sep { width: 5px; height: .5px; background: var(--fig-silver); margin: 3.75px 0; flex-shrink: 0; }
+  .ef-cond-grip { color: var(--text-primary); cursor: grab; }
+  .ef-cond-sep { width: 5px; height: .5px; background: var(--gray-300); margin: 3.75px 0; flex-shrink: 0; }
 
   /* White panel */
   .ef-card-panel {
     flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px;
-    background: var(--bg-white); border: 2px solid var(--fig-gainsboro);
-    border-radius: 4px; padding: 4px 8px 4px 10px;
+    background: var(--bg-white); border: 1px solid var(--gray-200);
+    border-radius: var(--r-lg); padding: 4px 8px 4px 10px;
   }
   /* Flagged efforts get a warm panel so they read at column level; the amber
      warning marker in the rail is the design's own signal for the same thing. */
-  .ef-card.flagged .ef-card-panel { background: #fffdf6; }
+  .ef-card.flagged .ef-card-panel { background: var(--warning-light); }
   .ef-card.selected .ef-card-panel { box-shadow: inset 0 0 0 1px var(--accent); }
 
   .ef-card-body { display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
@@ -23936,19 +23936,19 @@ function toggleSidebarCollapse(){
 
   .ef-card-idpill {
     align-self: flex-start; display: inline-flex; align-items: center; justify-content: center;
-    min-width: 29px; padding: 4px; border-radius: 82px;
+    min-width: 29px; padding: 4px; border-radius: var(--r-pill);
     font-family: var(--font); font-size: var(--fs-xs); font-weight: var(--fw-medium); line-height: 1;
-    color: var(--fig-id); white-space: nowrap;
+    color: var(--purple-500); white-space: nowrap;
   }
   .ef-card-title {
     font-family: var(--font); font-size: var(--fs-sm); font-weight: var(--fw-medium); line-height: 20px;
-    color: var(--fig-ink); overflow-wrap: anywhere;
+    color: var(--gray-900); overflow-wrap: anywhere;
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
 
   .ef-card-opts {
     width: 16px; height: 16px; padding: 0; border: none; background: transparent;
-    color: #000; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center;
     opacity: .85; transition: opacity var(--dur-fast); flex-shrink: 0;
   }
   .ef-card:hover .ef-card-opts, .ef-card-opts:focus-visible { opacity: 1; }
@@ -23956,12 +23956,12 @@ function toggleSidebarCollapse(){
 
   .ef-card-check {
     width: 12px; height: 12px; flex-shrink: 0; cursor: pointer; padding: 0;
-    background: var(--fig-gray-50); border: .26px solid var(--fig-silver);
-    border-radius: 2.078px; display: flex; align-items: center; justify-content: center;
+    background: var(--bg-white); border: 1px solid var(--gray-300);
+    border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
     transition: background var(--dur-fast), border-color var(--dur-fast);
   }
   .ef-card-check:hover { border-color: var(--accent); }
-  .ef-card-check svg { width: 8px; height: 8px; stroke: #fff; stroke-width: 3; display: none; }
+  .ef-card-check svg { width: 8px; height: 8px; stroke: var(--bg-white); stroke-width: 3; display: none; }
   .ef-card.selected .ef-card-check { background: var(--accent); border-color: var(--accent); }
   .ef-card.selected .ef-card-check svg { display: block; }
 
@@ -23969,7 +23969,7 @@ function toggleSidebarCollapse(){
   .ef-badge {
     display: inline-flex; align-items: center; justify-content: center;
     min-width: 27px; padding: 4px; border-radius: 6px;
-    background: var(--fig-gray-100); color: var(--fig-silver);
+    background: var(--bg-surface); color: var(--gray-300);
     font-family: var(--font); font-size: var(--fs-xs); font-weight: var(--fw-medium); line-height: var(--lh-base);
     text-align: center; white-space: nowrap;
   }
@@ -23978,19 +23978,19 @@ function toggleSidebarCollapse(){
   .ef-card-reviews { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 4px; }
   .ef-rev {
     display: inline-flex; align-items: center; gap: 2px;
-    font-family: var(--font); font-size: var(--fs-xs); line-height: 11px; color: var(--fig-slate); white-space: nowrap;
+    font-family: var(--font); font-size: var(--fs-xs); line-height: 11px; color: var(--text-secondary); white-space: nowrap;
   }
   .ef-rev svg { width: 10px; height: 10px; display: block; flex-shrink: 0; }
 
   /* Milestone + sprint, each behind a left-rounded accepted-green bar */
   .ef-card-msrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 4px; }
   .ef-ms { display: inline-flex; align-items: center; gap: 2.5px; min-width: 0; }
-  .ef-ms-bar { width: 2.5px; height: 10px; border-radius: 8px 0 0 8px; background: var(--fig-accepted); flex-shrink: 0; }
+  .ef-ms-bar { width: 2.5px; height: 10px; border-radius: 8px 0 0 8px; background: var(--success); flex-shrink: 0; }
   .ef-ms-txt {
-    font-family: var(--font); font-size: var(--fs-xs); line-height: 11px; color: var(--fig-gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-family: var(--font); font-size: var(--fs-xs); line-height: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
-  .ef-card-divider { border-top: 1px solid var(--fig-gainsboro); }
+  .ef-card-divider { border-top: 1px solid var(--border); }
 
   .ef-card-footer {
     display: flex; align-items: center; justify-content: space-between;
@@ -23998,33 +23998,33 @@ function toggleSidebarCollapse(){
   }
   .ef-card-kind {
     font-family: var(--font); font-size: var(--fs-xs); font-weight: var(--fw-medium); line-height: 20px;
-    color: var(--fig-slate); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
   .ef-card-avstack { display: flex; align-items: center; flex-shrink: 0; }
   .ef-fig-av {
-    width: 14.3px; height: 14.3px; border-radius: 50%; flex-shrink: 0;
+    width: 24px; height: 24px; border-radius: var(--r-pill); flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--font); font-size: var(--fs-xs); font-weight: var(--fw-bold); color: #fff;
-    box-shadow: 0 0 0 .55px #fff;
+    font-family: var(--font); font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--bg-white);
+    box-shadow: 0 0 0 2px var(--bg-white);
   }
-  .ef-card-avstack .ef-fig-av + .ef-fig-av { margin-left: -5px; }
-  .ef-fig-av.more { background: var(--fig-silver); }
+  .ef-card-avstack .ef-fig-av + .ef-fig-av { margin-left: -2px; }
+  .ef-fig-av.more { background: var(--gray-300); }
 
   .ef-card-footright { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
   .ef-statepill {
     display: inline-flex; align-items: center; justify-content: center;
-    min-width: 29px; padding: 6px 8px; border-radius: 24px; border: .41px solid;
+    min-width: 29px; padding: 2px 10px; border-radius: var(--r-pill); border: 1px solid;
     font-family: var(--font); font-size: var(--fs-xs); line-height: var(--lh-base); white-space: nowrap;
   }
   .ef-card-date {
     display: inline-flex; align-items: center; gap: 1.6px;
     font-family: var(--font); font-size: var(--fs-xs); font-weight: var(--fw-light); line-height: 11px;
-    color: var(--fig-gray); white-space: nowrap;
+    color: var(--text-muted); white-space: nowrap;
   }
   .ef-card-date svg { width: 13px; height: 13px; display: block; flex-shrink: 0; }
-  .ef-card-date.overdue { color: var(--fig-denied); font-weight: var(--fw-medium); }
-  .ef-card-date.overdue svg path { fill: var(--fig-denied); }
+  .ef-card-date.overdue { color: var(--error); font-weight: var(--fw-medium); }
+  .ef-card-date.overdue svg path { fill: var(--error); }
 
   .ef-card-time { display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0; }
   .ef-card-time svg { width: 13px; height: 13px; display: block; }
@@ -24043,7 +24043,7 @@ function toggleSidebarCollapse(){
   /* ─── GROUPED VIEW ─── */
   .ef-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 24px 24px; }
   .ef-scroll::-webkit-scrollbar { width: 6px; }
-  .ef-scroll::-webkit-scrollbar-thumb { background: #cbd2dc; border-radius: var(--r-pill); }
+  .ef-scroll::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: var(--r-pill); }
 
   .ef-group { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-xl); margin-bottom: 10px; overflow: hidden; }
   .ef-group-hdr {
@@ -24083,8 +24083,8 @@ function toggleSidebarCollapse(){
   }
   .ef-row:last-child { border-bottom: none; }
   .ef-row:hover { background: var(--bg-surface); }
-  .ef-row.flagged { background: #fffcf3; }
-  .ef-row.flagged:hover { background: #fff8e6; }
+  .ef-row.flagged { background: var(--amber-50); }
+  .ef-row.flagged:hover { background: var(--warning-light); }
   .ef-row.flagged::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--warning); }
   .ef-row-id { font-size: var(--fs-xs); font-family: var(--font-mono); color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
   .ef-row-name { display: flex; align-items: center; gap: 7px; min-width: 0; }
@@ -24128,8 +24128,8 @@ function toggleSidebarCollapse(){
   .ef-sprint-stat:last-child { border-right: none; }
   .ef-sprint-stat-val { font-size: var(--fs-base); font-weight: var(--fw-semibold); color: var(--text-primary); line-height: var(--lh-base); }
   .ef-sprint-stat-val.good { color: var(--success); }
-  .ef-sprint-stat-val.warn { color: #b45309; }
-  .ef-sprint-stat-val.bad { color: #b91c1c; }
+  .ef-sprint-stat-val.warn { color: var(--warning-ink); }
+  .ef-sprint-stat-val.bad { color: var(--error-ink); }
   .ef-sprint-stat-lbl { font-size: var(--fs-xs); font-weight: var(--fw-semibold); text-transform: uppercase; color: var(--text-muted); }
   .ef-cap {
     display: flex; flex-direction: column; gap: 4px; min-width: 190px;
@@ -24139,7 +24139,7 @@ function toggleSidebarCollapse(){
   .ef-cap-track { height: 6px; background: var(--bg-surface2); border-radius: var(--r-pill); overflow: hidden; display: flex; }
   .ef-cap-fill { height: 100%; background: var(--accent); }
   .ef-cap-fill.logged { background: var(--success); }
-  .ef-cap-fill.over { background: #ef4444; }
+  .ef-cap-fill.over { background: var(--error); }
 
   /* ─── EMPTY STATE ─── */
   .ef-empty {
@@ -24919,18 +24919,18 @@ function toggleSidebarCollapse(){
   /* ── Toast ── */
   .ef-toast {
     position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(10px);
-    z-index: 1200; background: var(--text-primary); color: #fff; font-size: var(--fs-xs); font-weight: var(--fw-medium);
+    z-index: 1200; background: var(--text-primary); color: var(--bg-white); font-size: var(--fs-xs); font-weight: var(--fw-medium);
     padding: 10px 16px; border-radius: var(--radius-md); box-shadow: 0 10px 30px rgba(15,23,42,.24);
     display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none;
     transition: opacity .18s, transform .18s; max-width: 460px;
   }
   .ef-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .ef-toast svg { width: 14px; height: 14px; flex-shrink: 0; color: #6ee7b7; }
+  .ef-toast svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--green-400); }
   .ef-toast-undo {
-    margin-left: 4px; background: transparent; border: none; color: #93c5fd;
+    margin-left: 4px; background: transparent; border: none; color: var(--blue-300);
     font-size: var(--fs-xs); font-weight: var(--fw-semibold); font-family: var(--font); cursor: pointer; text-decoration: underline; padding: 0;
   }
-  .ef-toast-undo:hover { color: #bfdbfe; }
+  .ef-toast-undo:hover { color: var(--blue-200); }
 
   /* ── Responsive ── */
   @media (max-width: 1240px) {
@@ -25932,14 +25932,14 @@ function toggleSidebarCollapse(){
   /* State pill colours, keyed by status tag and built from the file's
      State/* and Pill/* variables. "Completed" is the design's own Done pill. */
   var FIG_PILL = {
-    'Not Started': { bg: 'rgba(181,178,184,.16)', bd: '#B5B2B8', fg: '#69676C' },
-    'Working':     { bg: 'rgba(245,192,55,.16)',  bd: '#BD9F02', fg: '#BD9F02' },
-    'In Review':   { bg: 'rgba(142,84,233,.12)',  bd: '#8E54E9', fg: '#7C4DD4' },
-    'In QA':       { bg: 'rgba(0,93,180,.12)',    bd: '#005DB4', fg: '#005DB4' },
-    'Blocked':     { bg: 'rgba(245,55,89,.15)',   bd: '#F53759', fg: '#E0233F' },
-    'On Hold':     { bg: 'rgba(154,154,154,.16)', bd: '#9A9A9A', fg: '#69676C' },
-    'Completed':   { bg: 'rgba(47,211,152,.15)',  bd: '#3B9C79', fg: '#3B9C79' },
-    'Cancelled':   { bg: 'rgba(105,103,108,.12)', bd: '#69676C', fg: '#69676C' }
+    'Not Started': { bg: 'var(--board-unstarted-tint)', bd: 'var(--board-unstarted)', fg: 'var(--board-unstarted)' },
+    'Working':     { bg: 'var(--board-working-tint)',   bd: 'var(--board-working)',   fg: 'var(--board-working)'   },
+    'In Review':   { bg: 'var(--board-review-tint)',    bd: 'var(--board-review)',    fg: 'var(--board-review)'    },
+    'In QA':       { bg: 'var(--board-qa-tint)',        bd: 'var(--board-qa)',        fg: 'var(--board-qa)'        },
+    'Blocked':     { bg: 'var(--board-blocked-tint)',   bd: 'var(--board-blocked)',   fg: 'var(--board-blocked)'   },
+    'On Hold':     { bg: 'var(--board-onhold-tint)',    bd: 'var(--board-onhold)',    fg: 'var(--board-onhold)'    },
+    'Completed':   { bg: 'var(--board-done-tint)',      bd: 'var(--board-done)',      fg: 'var(--board-done)'      },
+    'Cancelled':   { bg: 'var(--board-cancelled-tint)', bd: 'var(--board-cancelled)', fg: 'var(--board-cancelled)' }
   };
 
   /* "Apr/ 15" — the footer date format used in the frame */
