@@ -13,7 +13,8 @@
        file follows the first and aliases --radius-* onto it.
      - Type scale. "Semantic Colors / Font size/*" is 12/14/16/18/24/30 and
        matches production; "Responsive / Typography/H1-H6" is 56/48/32/24/20/16.
-       This file follows the first.
+       This file takes the first as the body scale and borrows 20 and 32 from
+       the second, which are live there and absent from the first.
 
    Variables the library files under _deprecated/ are kept at the bottom with
    the values the library still records for them, so existing rules keep
@@ -23,9 +24,9 @@
   /* ─── Typeface ──────────────────────────────────────────────────────────
      Primitives/font-body and Primitives/heading-typeface are both Inter. */
   --font: Inter, system-ui, -apple-system, sans-serif;
-  /* The library defines no monospace face. This is the stack production
-     actually serves; it is measured, not specified. */
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* The library's "MONO" text style is DM Mono Regular. The rest of the
+     stack is a fallback for before the webfont lands. */
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* ─── Colour ramps ──────────────────────────────────────────────────── */
   --gray-50:   #f5f5f5;
@@ -243,14 +244,50 @@
   --tag-lo-bg:       var(--success-light);  --tag-lo-ink:       var(--success-ink);  --tag-lo-bd:       var(--success-border);
 
   /* ─── Type scale ────────────────────────────────────────────────────────
-     Semantic Colors / Font size/*. Six steps, no more: the library files
-     10, 10.5, 11, 11.5, 12.5, 13, 17 and 34 under _deprecated/. */
-  --fs-xs:   12px;
-  --fs-sm:   14px;
-  --fs-base: 16px;
-  --fs-lg:   18px;
-  --fs-2xl:  24px;
-  --fs-3xl:  30px;
+     Semantic Colors / Font size/* supplies 12, 14, 16, 18, 24 and 30; the
+     library files 10, 10.5, 11, 11.5, 12.5, 13, 17 and 34 under _deprecated/,
+     so none of those is a step any more. 20 and 32 are live elsewhere in the
+     same system -- 20 is Responsive / Typography/H5 and the whole Text/Large
+     group, 32 is Responsive / Typography/H3 -- so they are steps too.
+     Every font-size in this prototype resolves to one of these eight. */
+  --fs-xs:   12px;   /* Font size/12  -- Text/Tiny    */
+  --fs-sm:   14px;   /* Font size/14  -- Text/Small   */
+  --fs-base: 16px;   /* Font size/16  -- Text/Regular */
+  --fs-lg:   18px;   /* Font size/18  -- Text/Medium  */
+  --fs-xl:   20px;   /* Typography/H5 -- Text/Large   */
+  --fs-2xl:  24px;   /* Font size/24  -- Heading/H4   */
+  --fs-3xl:  30px;   /* Font size/30                  */
+  --fs-4xl:  32px;   /* Typography/H3 -- Heading/H3   */
+
+  /* ─── Line height ───────────────────────────────────────────────────────
+     Every one of the library's 43 text styles -- headings, body, mono --
+     carries the same 140% line height. There is no second value to choose
+     from, so there is one token.
+
+     Two uses of line-height in this prototype are NOT typography and keep
+     their literal values: "line-height: 1" on a standalone numeral, where it
+     sets the box to the glyph height rather than leading between lines, and
+     a px line-height paired with zero vertical padding, which is the idiom
+     for giving a control a fixed height. Applying 140% to either would move
+     layout, not improve reading. */
+  --lh-base: 1.4;
+
+  /* ─── Weight ────────────────────────────────────────────────────────────
+     The six weights the library's text styles are drawn in. Light and Extra
+     Bold appear only in the Text/* groups; the Heading/* styles are all Bold
+     and Heading/Tagline is Medium. */
+  --fw-light:     300;
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-extrabold: 800;
+
+  /* ─── Tracking ──────────────────────────────────────────────────────────
+     All 43 text styles specify 0% letter spacing. The library offers no
+     tracked style, not even for the uppercase micro-labels this prototype
+     used to track at .5px, so no element sets letter-spacing at all and
+     there is no token to set it to. */
 
   /* ─── Radius ────────────────────────────────────────────────────────── */
   --r-sm:   2px;
@@ -367,3 +404,15 @@
   --sb-active-bg:   var(--sidebar-active-bg);   /* deprecated: see --sidebar-active */
   --sb-section:     var(--sidebar-section);     /* deprecated */
 }
+
+/* ─── Type binding ────────────────────────────────────────────────────────
+   The tokens above are inert until something applies them. Form controls are
+   the one case the cascade will not do on its own: button, input, select and
+   textarea do not inherit font-family or font-size from their parent, so
+   without this rule they render in the UA default -- Arial at 13.3333px --
+   which is neither the library's typeface nor a step on its scale.
+
+   This lives here rather than in pulse.css because only index.html links
+   pulse.css; the other five pages carry their own styles and link this sheet
+   alone. Call sites that set their own family or size still win on specificity. */
+button, input, select, textarea { font-family: inherit; font-size: inherit; }
