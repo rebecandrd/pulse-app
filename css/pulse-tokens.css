@@ -1,0 +1,369 @@
+/* Pulse design tokens — generated from the PULSE Master Figma library.
+
+   Source: Figma file MkxROR0nFkrUGtNbD4zutv, collection "Semantic Colors"
+   (223 variables), plus the two typeface primitives. Every value below is the
+   resolved value of a variable in that collection; aliases are preserved as
+   var() references so the ramp -> semantic chain matches Figma's own.
+
+   Two things in the library are deliberately NOT applied here, because the
+   library states them twice and the duplication has not been reconciled:
+
+     - Radius. "Semantic Colors / Radius/r-*" is 2/6/8/12/16/9999 and matches
+       production; "UI Styles / Radius/radius-*" is 4/8/12/16/24/9999. This
+       file follows the first and aliases --radius-* onto it.
+     - Type scale. "Semantic Colors / Font size/*" is 12/14/16/18/24/30 and
+       matches production; "Responsive / Typography/H1-H6" is 56/48/32/24/20/16.
+       This file follows the first.
+
+   Variables the library files under _deprecated/ are kept at the bottom with
+   the values the library still records for them, so existing rules keep
+   working. Do not reach for them in new work. */
+
+:root {
+  /* ─── Typeface ──────────────────────────────────────────────────────────
+     Primitives/font-body and Primitives/heading-typeface are both Inter. */
+  --font: Inter, system-ui, -apple-system, sans-serif;
+  /* The library defines no monospace face. This is the stack production
+     actually serves; it is measured, not specified. */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ─── Colour ramps ──────────────────────────────────────────────────── */
+  --gray-50:   #f5f5f5;
+  --gray-100:  #eaeaeb;
+  --gray-200:  #cccbcd;
+  --gray-300:  #adabae;
+  --gray-400:  #6f6d72;
+  --gray-500:  #3e3a42;
+  --gray-600:  #2c2930;
+  --gray-700:  #252328;
+  --gray-800:  #1d1c20;
+  --gray-900:  #18171a;
+  --gray-950:  #030712;
+
+  --blue-50:   #f2f7fd;
+  --blue-100:  #e6effc;
+  --blue-200:  #bfd6f7;
+  --blue-300:  #99bdf3;
+  --blue-400:  #4d8ce9;
+  --blue-500:  #005ae0;
+  --blue-600:  #3451d3;
+  --blue-700:  #0044a8;
+  --blue-800:  #003686;
+  --blue-900:  #002c6e;
+  --blue-950:  #172554;
+
+  --green-50:  #f6fbf9;
+  --green-100: #ecf7f3;
+  --green-200: #d0eae1;
+  --green-300: #b4ddce;
+  --green-400: #7bc4aa;
+  --green-500: #00a65b;
+  --green-600: #3b9c79;
+  --green-700: #328064;
+  --green-800: #286650;
+  --green-900: #215341;
+  --green-950: #052e16;
+
+  --red-50:    #fdf5f4;
+  --red-100:   #fbebea;
+  --red-200:   #f6cdca;
+  --red-300:   #f1afaa;
+  --red-400:   #e9746a;
+  --red-500:   #f53759;
+  --red-600:   #d14636;
+  --red-700:   #8f2f25;
+  --red-800:   #6c241d;
+  --red-900:   #591e18;
+  --red-950:   #450a0a;
+
+  --orange-100: #fff9e6;
+  --orange-200: #fcedbd;
+  --orange-300: #fade96;
+  --orange-400: #fed7aa;
+  --orange-500: #f39300;
+  --orange-600: #db7c00;
+  --orange-700: #9a3412;
+  --orange-800: #914600;
+  --orange-900: #6e3000;
+  --orange-950: #471b00;
+
+  --purple-50:  #f9f6fe;
+  --purple-100: #f4eefd;
+  --purple-200: #e3d4fa;
+  --purple-300: #d2bbf6;
+  --purple-400: #b087f0;
+  --purple-500: #8e54e9;
+  --purple-600: #804cd2;
+  --purple-650: #7043aa;
+  --purple-700: #6b3faf;
+  --purple-800: #55328c;
+  --purple-850: #543b9c;
+  --purple-900: #462972;
+  --purple-950: #3b0764;
+
+  --indigo-50:  #eef2ff;
+  --indigo-100: #e0e7ff;
+  --indigo-200: #c7d2fe;
+  --indigo-400: #818cf8;
+  --indigo-500: #6366f1;
+  --indigo-600: #4f46e5;
+  --indigo-700: #4338ca;
+
+  --yellow-50:  #fffdf5;
+  --yellow-100: #fffceb;
+  --yellow-200: #fcf4cc;
+  --yellow-300: #faeaac;
+  --yellow-400: #f7d86f;
+  --yellow-500: #f5c037;
+  --yellow-600: #dba42c;
+  --yellow-700: #b87f1d;
+  --yellow-800: #945c13;
+  --yellow-900: #6e3e0b;
+  --yellow-950: #472404;
+
+  --amber-50:  #fffbeb;
+  --amber-100: #fef3c7;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+
+  --slate-50:  #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-400: #94a3b8;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+
+  /* ─── Surfaces ──────────────────────────────────────────────────────── */
+  --bg-page:     var(--gray-50);
+  --bg-white:    #ffffff;
+  --ghost-white: #fdfbff;
+
+  /* ─── Text ──────────────────────────────────────────────────────────── */
+  --text-primary:   var(--gray-700);
+  --text-secondary: var(--gray-400);
+  --text-muted:     var(--gray-300);
+
+  /* ─── Borders ───────────────────────────────────────────────────────── */
+  --border:        var(--gray-100);
+  --border-strong: var(--gray-200);
+
+  /* ─── Accent ────────────────────────────────────────────────────────── */
+  --accent:        var(--blue-500);
+  --accent-hover:  var(--blue-600);
+  --accent-light:  var(--blue-100);
+  --accent-border: var(--blue-200);
+
+  /* ─── Status ────────────────────────────────────────────────────────── */
+  --success:        var(--green-500);
+  --success-light:  var(--green-100);
+  --success-border: var(--green-200);
+  --success-ink:    var(--green-700);
+
+  --error:        var(--red-500);
+  --error-light:  var(--red-50);
+  --error-border: var(--red-200);
+  --error-ink:    var(--red-700);
+
+  --warning:        var(--orange-500);
+  --warning-light:  var(--orange-100);
+  --warning-border: var(--orange-200);
+  --warning-ink:    var(--orange-700);
+
+  --info-light:  var(--indigo-50);
+  --info-border: var(--indigo-200);
+  --info-ink:    var(--indigo-700);
+
+  --purple-light:  var(--purple-100);
+  --purple-border: var(--purple-200);
+  --purple-ink:    var(--purple-700);
+
+  /* ─── Sidebar ───────────────────────────────────────────────────────────
+     The active item is a gradient in the library (sidebar-active-from ->
+     sidebar-active-to), not a flat fill. --sidebar-active-bg is kept below
+     under the deprecated block for rules that still want a solid colour. */
+  --sidebar-bg:          var(--slate-900);
+  --sidebar-text:        var(--slate-400);
+  --sidebar-hover-bg:    var(--slate-800);
+  --sidebar-divider:     var(--gray-500);
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-from: var(--blue-400);
+  --sidebar-active-to:   var(--purple-500);
+  --sidebar-active:      linear-gradient(90deg, var(--sidebar-active-from), var(--sidebar-active-to));
+
+  /* ─── Board state ───────────────────────────────────────────────────── */
+  --board-icebox:    var(--indigo-500);
+  --board-backlog:   var(--indigo-500);
+  --board-unstarted: var(--gray-500);
+  --board-working:   #06b6d4;
+  --board-review:    var(--orange-500);
+  --board-pending:   var(--yellow-400);
+  --board-done:      #14b8a6;
+  --board-blocked:   var(--red-500);
+
+  /* ─── Work type ─────────────────────────────────────────────────────── */
+  --feature: var(--green-500);
+  --defect:  var(--red-500);
+  --chore:   var(--amber-500);
+
+  /* ─── Priority ──────────────────────────────────────────────────────── */
+  --priority-high:   var(--red-600);
+  --priority-medium: var(--yellow-400);
+  --priority-low:    var(--green-400);
+
+  /* ─── Department ────────────────────────────────────────────────────── */
+  --dept-design:              #43aa85;
+  --dept-development:         #005ae0;
+  --dept-quality-assurance:   #8e54e9;
+  --dept-testing:             #f39300;
+  --dept-project-management:  #f55737;
+  --dept-marketing:           #37f5f5;
+  --dept-fulfillment:         #4397aa;
+  --dept-onboarding:          #ef37f5;
+  --dept-reporting:           #f53759;
+  --dept-resources:           #8b1717;
+  --dept-diligence:           #cd712e;
+  --dept-inflow:              #f5c037;
+
+  /* ─── Days off ──────────────────────────────────────────────────────── */
+  --days-off-accent: #9810fa;
+  --days-off-card:   #f5effd;
+
+  /* ─── Badge triplets ────────────────────────────────────────────────────
+     bg / ink / border, built from the library's status families. The three
+     category badges (dev, design, be) have no status family of their own;
+     each is mapped to the nearest library family and noted. */
+  --badge-good-bg:   var(--success-light);  --badge-good-ink:   var(--success-ink);  --badge-good-bd:   var(--success-border);
+  --badge-warn-bg:   var(--warning-light);  --badge-warn-ink:   var(--warning-ink);  --badge-warn-bd:   var(--warning-border);
+  --badge-bad-bg:    var(--error-light);    --badge-bad-ink:    var(--error-ink);    --badge-bad-bd:    var(--error-border);
+  --badge-info-bg:   var(--purple-light);   --badge-info-ink:   var(--purple-ink);   --badge-info-bd:   var(--purple-border);
+  --badge-dev-bg:    var(--blue-50);        --badge-dev-ink:    var(--blue-700);     --badge-dev-bd:    var(--blue-200);     /* -> Blue */
+  --badge-design-bg: var(--purple-50);      --badge-design-ink: var(--purple-700);   --badge-design-bd: var(--purple-200);  /* -> Purple (was pink; library has no pink) */
+  --badge-be-bg:     var(--orange-100);     --badge-be-ink:     var(--orange-700);   --badge-be-bd:     var(--orange-200);  /* -> Orange */
+  --tag-hi-bg:       var(--error-light);    --tag-hi-ink:       var(--error-ink);    --tag-hi-bd:       var(--error-border);
+  --tag-lo-bg:       var(--success-light);  --tag-lo-ink:       var(--success-ink);  --tag-lo-bd:       var(--success-border);
+
+  /* ─── Type scale ────────────────────────────────────────────────────────
+     Semantic Colors / Font size/*. Six steps, no more: the library files
+     10, 10.5, 11, 11.5, 12.5, 13, 17 and 34 under _deprecated/. */
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-base: 16px;
+  --fs-lg:   18px;
+  --fs-2xl:  24px;
+  --fs-3xl:  30px;
+
+  /* ─── Radius ────────────────────────────────────────────────────────── */
+  --r-sm:   2px;
+  --r-md:   6px;
+  --r-lg:   8px;
+  --r-xl:   12px;
+  --r-2xl:  16px;
+  --r-pill: 9999px;
+
+  --radius-sm:  var(--r-sm);
+  --radius-md:  var(--r-md);
+  --radius-lg:  var(--r-lg);
+  --radius-xl:  var(--r-xl);
+  --radius-2xl: var(--r-2xl);
+
+  /* ─── Spacing ───────────────────────────────────────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-16: 64px;
+
+  /* ─── Size ──────────────────────────────────────────────────────────── */
+  --sidebar-width:  240px;
+  --topbar-height:  46px;
+  --kanban-column:  230px;
+
+  /* ─── State ─────────────────────────────────────────────────────────── */
+  --focus-ring:       3px;
+  --opacity-disabled: .5;
+
+  /* ─── Motion ────────────────────────────────────────────────────────────
+     The library carries an easing curve; the prototype previously used the
+     browser default. It has no tier below 150ms, so --dur-fast is an alias. */
+  --ease:          cubic-bezier(.4, 0, .2, 1);
+  --dur-base:      150ms;
+  --dur-slow:      200ms;
+  --dur-slowest:   300ms;
+  --dur-fast:      var(--dur-base);
+
+  /* ─── Elevation ─────────────────────────────────────────────────────────
+     Figma has no shadow variable type, so the library stores the tints as
+     colour variables and composes the shadows as effect styles. Both tiers
+     are reproduced here. */
+  --shadow-tint-black-05:      rgba(0, 0, 0, .05);
+  --shadow-tint-black-10:      rgba(0, 0, 0, .1);
+  --shadow-tint-black-25:      rgba(0, 0, 0, .25);
+  --shadow-tint-custom:        rgba(28, 0, 55, .15);
+  --shadow-tint-drawer:        rgba(15, 23, 42, .14);
+  --shadow-tint-modal:         rgba(0, 0, 0, .25);
+  --shadow-tint-modal-contact: rgba(0, 0, 0, .1);
+  --shadow-tint-ring:          rgba(8, 0, 16, .05);
+  --shadow-tint-tooltip:       rgba(0, 0, 0, .18);
+  --shadow-tint-focus-ring:    rgba(0, 90, 224, .5);
+
+  --shadow-ring:    0 0 0 1px    var(--shadow-tint-ring);
+  --shadow-card:    0 1px 2px 0  var(--shadow-tint-black-05);
+  --shadow-card-lg: 0 4px 6px -1px var(--shadow-tint-black-10), 0 2px 4px -2px var(--shadow-tint-black-10);
+  --shadow-menu:    0 10px 15px -3px var(--shadow-tint-black-10), 0 4px 6px -4px var(--shadow-tint-black-10);
+  --shadow-popover: 0 0 15px    var(--shadow-tint-custom);
+  --shadow-modal:   0 32px 90px var(--shadow-tint-modal), 0 4px 24px var(--shadow-tint-modal-contact);
+  --shadow-drawer:  -8px 0 40px var(--shadow-tint-drawer);
+  --shadow-toast:   0 4px 14px  var(--shadow-tint-tooltip);
+  --shadow-tooltip: 0 4px 14px  var(--shadow-tint-tooltip);
+  --shadow-focus:   0 0 0 var(--focus-ring) var(--shadow-tint-focus-ring);
+
+  /* ─── Deprecated ────────────────────────────────────────────────────────
+     Filed under _deprecated/ in the library, which still records these
+     values. Kept so existing rules keep working. Not for new work. */
+  --bg-surface:        #f5f6f8;
+  --bg-surface2:       #ebebee;
+  --sidebar-active-bg: #1a1f35;
+  --sidebar-section:   #3a3f55;
+  --rail-blocked:      2.5px;
+  --tab-active:        2px;
+  --opacity-done:      .7;
+  --opacity-done-text: .55;
+
+  /* ─── Legacy effort-card palette ────────────────────────────────────────
+     The effort card (Figma node 13088:8512) was built against an earlier
+     state of the library, when these were Basic/*, State/* and Pill/*
+     variables. Where the current library still carries the same colour the
+     alias points at it; the rest are literals the library no longer
+     defines, left here so the card keeps rendering and the drift is
+     visible rather than hidden. */
+  --fig-ink:           var(--gray-500);    /* #3e3a42 — Color/Gray/gray-500  */
+  --fig-denied:        var(--red-500);     /* #f53759 — Color/Red/red-500    */
+  --fig-warning:       var(--yellow-500);  /* #f5c037 — Color/Yellow/yellow-500 */
+  --fig-green-dark:    var(--green-600);   /* #3b9c79 — Color/Green/green-600 */
+  --fig-id:            rgba(142, 84, 233, .92);  /* purple-500 at 92% */
+
+  --fig-gainsboro:     #dcd9df;   /* no current equivalent (was Basic/Gainsboro)      */
+  --fig-silver:        #b5b2b8;   /* no current equivalent (was Basic/Silver Metalic) */
+  --fig-gray:          #9a9a9a;   /* no current equivalent (was Basic/Gray)           */
+  --fig-raising-black: #69676c;   /* no current equivalent (was Basic/Raising Black)  */
+  --fig-slate:         #545257;   /* no current equivalent                            */
+  --fig-accepted:      #2fd398;   /* no current equivalent (was State/Accepted)       */
+  --fig-yellow:        #bd9f02;   /* no current equivalent (was Pill/Yellow)          */
+  --fig-gray-50:       #f9fafb;   /* no current equivalent                            */
+  --fig-gray-100:      #f3f4f6;   /* no current equivalent                            */
+
+  /* ─── Short aliases ─────────────────────────────────────────────────────
+     pulse.css spells the sidebar tokens --sb-*; the rest of the prototype
+     spells them --sidebar-*. Both resolve to the same library variable. */
+  --sb-bg:          var(--sidebar-bg);
+  --sb-text:        var(--sidebar-text);
+  --sb-hover-bg:    var(--sidebar-hover-bg);
+  --sb-divider:     var(--sidebar-divider);
+  --sb-active-text: var(--sidebar-active-text);
+  --sb-active-bg:   var(--sidebar-active-bg);   /* deprecated: see --sidebar-active */
+  --sb-section:     var(--sidebar-section);     /* deprecated */
+}

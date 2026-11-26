@@ -152,7 +152,14 @@
       "Bash(grep -n \"tab-team\\\\\">$\\\\|<!-- TAB: NOTES -->\\\\|id=\\\\\"tab-notes\\\\\"\" project-detail.html)",
       "Bash(python3)",
       "Bash(curl -sL -o /private/tmp/claude-501/-Users-gabrielakimura-Downloads-pulse-app/3925448b-f2d0-4a88-aa6b-44ceb6c53db5/scratchpad/figma_note_card.png \"https://www.figma.com/api/mcp/asset/706deb94-d37d-46c0-81dd-985df0ba540e\")",
-      "mcp__4fc9bcbd-21c1-404d-8d32-f09b50c31997__get_design_context"
+      "mcp__4fc9bcbd-21c1-404d-8d32-f09b50c31997__get_design_context",
+      "mcp__4fc9bcbd-21c1-404d-8d32-f09b50c31997__get_figma_skill",
+      "Bash(curl -sL -o /private/tmp/claude-501/-Users-gabrielakimura-Downloads-pulse-app/3925448b-f2d0-4a88-aa6b-44ceb6c53db5/scratchpad/figma_frame_current.png \"https://www.figma.com/api/mcp/asset/30456c4f-0516-4f82-973b-db40805f5123\")",
+      "Bash(curl -sL -o /tmp/figma-target-screenshot.png \"https://www.figma.com/api/mcp/asset/8ff5d2c2-7504-42ae-ae7a-5ac0c797ff3c\")",
+      "Bash(grep -oE \"text-\\\\[[0-9]+px\\\\]|font-\\\\[[^]]+\\\\]|#[0-9a-fA-F]{3,6}|rounded-\\\\[[0-9]+px\\\\]|gap-\\\\[[0-9]+px\\\\]|p-\\\\[[0-9]+px\\\\]|px-\\\\[[0-9]+px\\\\]|py-\\\\[[0-9]+px\\\\]\" /tmp/design_context_code.txt)",
+      "Bash(awk '/id=\"tab-reviews\"/{f=1} f{print NR} /\\\\/tab-reviews/{if\\(f\\)exit}' /Users/gabrielakimura/Downloads/pulse-app/project-detail.html)",
+      "Bash(nohup python3 serve.py)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/project-detail.html)"
     ]
   }
 }
