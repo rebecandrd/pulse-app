@@ -43,7 +43,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-right: 1px solid #0a0c14;
+    border-right: 1px solid var(--sidebar-bg);
   }
 
   .sb-top {
@@ -58,7 +58,7 @@
     width: 32px;
     height: 32px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--accent), #6b35b5);
+    background: linear-gradient(135deg, var(--accent), var(--purple-700));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,7 +111,7 @@
     position: relative;
   }
 
-  .sb-item:hover { background: var(--sidebar-hover-bg); color: #c8cce0; }
+  .sb-item:hover { background: var(--sidebar-hover-bg); color: var(--slate-200); }
   .sb-item.active { background: var(--sidebar-active); color: var(--sidebar-active-text); }
 
   .sb-item svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.65; }
@@ -120,8 +120,8 @@
   .sb-item .badge {
     margin-left: auto;
     font-size: var(--fs-xs);
-    background: #1e2440;
-    color: #5a6280;
+    background: var(--sidebar-hover-bg);
+    color: var(--sidebar-text);
     padding: 1px 6px;
     border-radius: var(--r-pill);
     font-weight: var(--fw-medium);
@@ -142,10 +142,10 @@
   .sb-sub .sb-item {
     font-size: var(--fs-xs);
     padding: 8px 12px;
-    color: #545870;
+    color: var(--sidebar-text);
   }
 
-  .sb-sub .sb-item:hover { color: #9ca0b8; }
+  .sb-sub .sb-item:hover { color: var(--slate-200); }
   .sb-sub .sb-item.active { color: var(--slate-200); background: var(--sidebar-hover-bg); }
 
   .sb-sub .sb-item::before {
@@ -187,13 +187,13 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: #1e2a50;
+    background: var(--sidebar-hover-bg);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: var(--fs-xs);
     font-weight: var(--fw-semibold);
-    color: #7a90db;
+    color: var(--blue-300);
     flex-shrink: 0;
   }
 
@@ -202,7 +202,7 @@
   .sb-user-name {
     font-size: var(--fs-xs);
     font-weight: var(--fw-medium);
-    color: #c8cce0;
+    color: var(--slate-200);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -210,14 +210,14 @@
 
   .sb-user-role {
     font-size: var(--fs-xs);
-    color: #3a3f58;
+    color: var(--sidebar-text);
     margin-top: 1px;
   }
 
   .sb-more {
     width: 14px;
     height: 14px;
-    color: #3a3f58;
+    color: var(--sidebar-text);
     flex-shrink: 0;
   }
 
@@ -238,7 +238,7 @@
     flex-shrink: 0;
     transition: all var(--dur-base);
   }
-  .sb-collapse-btn:hover { background: var(--sidebar-hover-bg); color: #c8cce0; }
+  .sb-collapse-btn:hover { background: var(--sidebar-hover-bg); color: var(--slate-200); }
   .sb-collapse-btn svg { width: 12px; height: 12px; transition: transform var(--dur-slow); }
 
   .sidebar.collapsed { width: 64px; min-width: 64px; }
@@ -5290,6 +5290,40 @@
         <span class="sb-label">Career Tracks</span>
       </a>
 
+      <div class="sb-item" title="Days Off">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 6.5h12M5.5 2v2M10.5 2v2"/></svg>
+        <span class="sb-label">Days Off</span>
+      </div>
+
+      <div class="sb-item" title="Track Time">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.5 1.5"/></svg>
+        <span class="sb-label">Track Time</span>
+      </div>
+
+      <div class="sb-item" title="Settings">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4"/></svg>
+        <span class="sb-label">Settings</span>
+      </div>
+
+      <div class="sb-item" title="AI agents">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4.5" width="10" height="8" rx="2"/><path d="M6 8.5h.01M10 8.5h.01M8 2v2.5M3 8H1.5M14.5 8H13"/></svg>
+        <span class="sb-label">AI agents</span>
+      </div>
+
+      <div class="sb-item" title="Guides">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3.5h3.5A1.5 1.5 0 0 1 8 5v8a1.2 1.2 0 0 0-1.2-1H3zM13 3.5H9.5A1.5 1.5 0 0 0 8 5v8a1.2 1.2 0 0 1 1.2-1H13z"/></svg>
+        <span class="sb-label">Guides</span>
+      </div>
+
+      <div class="sb-item" title="Send Feedback">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 9.5A1.5 1.5 0 0 1 12.5 11H5l-3 3V3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5z"/></svg>
+        <span class="sb-label">Send Feedback</span>
+      </div>
+
+      <div class="sb-item" title="Logout">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 14H3.5A1.5 1.5 0 0 1 2 12.5v-9A1.5 1.5 0 0 1 3.5 2H6M10.5 11L14 8l-3.5-3M14 8H6"/></svg>
+        <span class="sb-label">Logout</span>
+      </div>
       <div class="sb-divider"></div>
 
       <div class="sb-section">Admin</div>
@@ -5304,9 +5338,9 @@
         <span class="sb-label">Organizations</span>
       </div>
 
-      <div class="sb-item" title="Settings">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v10H3z M3 7h10 M7 3v10"/></svg>
-        <span class="sb-label">Settings</span>
+      <div class="sb-item" title="Admin">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5l5 2v4c0 3-2.1 5.6-5 7-2.9-1.4-5-4-5-7v-4z"/></svg>
+        <span class="sb-label">Admin</span>
       </div>
     </div>
 
